@@ -1,5 +1,6 @@
+<h1 align="center"><img src="./doc/logos/caresoft-logo.png" alt="Caresoft Logo" width=200> </h1>
 <h1 align="center">Caresoft</h1>
-<h2 align="center">Sistema de Gestión y Automatización para Hospitales</h2>
+<h3 align="center">Sistema de Gestión y Automatización para Hospitales</h2>
 
 Caresoft es un software integral diseñado para la gestión y automatización eficiente de hospitales. Este README proporciona una visión general de la estructura básica del proyecto, que consta de los siguientes componentes principales:
 
