@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caresoft.Integration", "Caresoft.Integration\Caresoft.Integration.csproj", "{F785C3C9-D749-4C0E-8226-B42FBCB36C3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caresoft.Vending", "Caresoft.Vending\Caresoft.Vending.csproj", "{19D89189-5167-48B2-9586-37F61B7AAD9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caresoft.Frontend", "Caresoft.Frontend\Caresoft.Frontend.csproj", "{C716B730-9F7F-48C6-9652-C71E7649E00D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caresoft.Core", "Caresoft.Core\Caresoft.Core.csproj", "{5AB97433-DC7A-4E56-B931-9A7DBBB30703}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F785C3C9-D749-4C0E-8226-B42FBCB36C3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F785C3C9-D749-4C0E-8226-B42FBCB36C3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F785C3C9-D749-4C0E-8226-B42FBCB36C3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F785C3C9-D749-4C0E-8226-B42FBCB36C3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19D89189-5167-48B2-9586-37F61B7AAD9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19D89189-5167-48B2-9586-37F61B7AAD9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19D89189-5167-48B2-9586-37F61B7AAD9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19D89189-5167-48B2-9586-37F61B7AAD9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C716B730-9F7F-48C6-9652-C71E7649E00D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C716B730-9F7F-48C6-9652-C71E7649E00D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C716B730-9F7F-48C6-9652-C71E7649E00D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C716B730-9F7F-48C6-9652-C71E7649E00D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AB97433-DC7A-4E56-B931-9A7DBBB30703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AB97433-DC7A-4E56-B931-9A7DBBB30703}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AB97433-DC7A-4E56-B931-9A7DBBB30703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AB97433-DC7A-4E56-B931-9A7DBBB30703}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
