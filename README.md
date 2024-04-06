@@ -1,4 +1,4 @@
-<h1 align="center"><img src="./caresoft_doc/logos/caresoft-logo.png" alt="Caresoft Logo" width=200> </h1>
+<h1 align="center"><img src="./caresoft_doc/assets/caresoft-logo.png" alt="Caresoft Logo" width=200> </h1>
 <h1 align="center">Caresoft</h1>
 <h3 align="center">Sistema de Gestión y Automatización para Hospitales</h2>
 
@@ -37,7 +37,7 @@ Los demás directorios son:
 
 Esta arquitectura se puede visualizar en el siguiente diagrama:
 
-![Diagrama de componentes del sistema](./caresoft_doc/diagrams/system-components.jpg)
+![Diagrama de componentes del sistema](./caresoft_doc/diagrams/system-architecture/system-architecture.jpg)
 
 ## Tecnologías Utilizadas
 
