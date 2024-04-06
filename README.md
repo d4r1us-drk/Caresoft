@@ -52,7 +52,7 @@ Esta arquitectura se puede visualizar en el siguiente diagrama:
 Para empezar a contribuir en el proyecto debes de hacer lo siguiente:
 
 1. Configura tus claves SSH en los ajustes de tu perfil, genera una si no tienes una a disposición y agrégala a tu perfil.
-2. Fork del repositorio (`git clone git@ssh.dev.azure.com:v3/IDS345-Caresoft/Caresoft/Caresoft`)
+2. Fork del repositorio (`git clone git@github.com:d4r1us-drk/Caresoft`)
 3. Crea una nueva branch (`git checkout -b feature/nueva-funcionalidad`).
 4. Realiza tus cambios y haz commit de ellos (`git commit -am 'Agrega una nueva funcionalidad'`).
 5. Haz push a la branch (`git push origin feature/nueva-funcionalidad`).
