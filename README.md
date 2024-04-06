@@ -1,4 +1,4 @@
-<h1 align="center"><img src="./doc/logos/caresoft-logo.png" alt="Caresoft Logo" width=200> </h1>
+<h1 align="center"><img src="./caresoft_doc/logos/caresoft-logo.png" alt="Caresoft Logo" width=200> </h1>
 <h1 align="center">Caresoft</h1>
 <h3 align="center">Sistema de Gestión y Automatización para Hospitales</h2>
 
