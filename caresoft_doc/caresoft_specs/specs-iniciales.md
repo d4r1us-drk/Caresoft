@@ -165,7 +165,7 @@ registrados en el sistema o no pueden proporcionar detalles sobre su historial
 médico. A continuación, se presentan una serie de casos interrelacionados que
 describen el flujo de operaciones en una situación de emergencia:
 
-### Caso 1: Llegada del Paciente a la Sala de Emergencias
+#### Caso 1: Llegada del Paciente a la Sala de Emergencias
 
 1. Un paciente llega a la sala de emergencias del hospital debido a una lesión
    o afección médica urgente.
@@ -178,7 +178,7 @@ describen el flujo de operaciones en una situación de emergencia:
    información médica, se procede a brindar atención médica de emergencia sin
    demora mientras se recopila información adicional si es posible.
 
-### Caso 2: Evaluación y Estabilización del Paciente
+#### Caso 2: Evaluación y Estabilización del Paciente
 
 1. El paciente es trasladado a una sala de evaluación donde un médico de
    emergencias realiza una evaluación inicial de su condición.
@@ -187,7 +187,7 @@ describen el flujo de operaciones en una situación de emergencia:
 3. Mientras se esperan los resultados de las pruebas, se inicia el tratamiento
    para estabilizar al paciente y aliviar cualquier síntoma o malestar agudo.
 
-### Caso 3: Registro de Paciente en el Sistema
+#### Caso 3: Registro de Paciente en el Sistema
 
 1. Una vez que el paciente está estabilizado y su condición ha sido evaluada,
    se procede a registrar su información en el sistema del hospital.
@@ -197,7 +197,7 @@ describen el flujo de operaciones en una situación de emergencia:
    perfil de paciente provisional con información básica, como nombre, edad y
    contacto de emergencia.
 
-### Caso 4: Continuación del Tratamiento y Seguimiento
+#### Caso 4: Continuación del Tratamiento y Seguimiento
 
 1. Con base en los resultados de las pruebas diagnósticas y la evaluación
    médica, se establece un plan de tratamiento continuo para el paciente.
@@ -207,7 +207,7 @@ describen el flujo de operaciones en una situación de emergencia:
    recomendación de seguimiento, así como sobre cómo acceder a su historial
    médico en el futuro.
 
-### Caso 5: Facturación y Coordinación con Aseguradoras
+#### Caso 5: Facturación y Coordinación con Aseguradoras
 
 1. Una vez que el paciente ha recibido atención médica de emergencia, se genera
    una factura por los servicios prestados.
