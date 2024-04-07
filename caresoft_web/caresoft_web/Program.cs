@@ -1,4 +1,4 @@
-using caresoft_web.Components;
+using Caresoft_web.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
