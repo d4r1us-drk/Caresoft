@@ -15,7 +15,8 @@ procedimientos médicos y la facturación correspondiente.
 
 ## 2. Roles y Usuarios del Sistema
 
-El sistema contemplará varios roles de usuario, cada uno con sus respectivos permisos y funciones:
+El sistema contemplará varios roles de usuario, cada uno con sus respectivos
+permisos y funciones:
 
 - **Administrador:** Encargado de gestionar usuarios, configurar parámetros del
   sistema y supervisar el funcionamiento general.
@@ -108,10 +109,12 @@ pueden darse en el sistema.
 
 #### Caso 2: Resultados de Análisis de Laboratorio
 
-1. El paciente recibe una orden de análisis de laboratorio del médico durante la consulta.
+1. El paciente recibe una orden de análisis de laboratorio del médico durante
+   la consulta.
 2. El paciente se dirige al laboratorio externo o interno al hospital para la
    toma de muestras, según lo indique el médico.
-3. El laboratorio realiza los análisis correspondientes a partir de las muestras tomadas.
+3. El laboratorio realiza los análisis correspondientes a partir de las
+   muestras tomadas.
 4. Una vez completados los análisis, el laboratorio proporciona al paciente los
    resultados en formato físico o digital.
 5. El paciente introduce los resultados de los análisis en el sistema del hospital.
