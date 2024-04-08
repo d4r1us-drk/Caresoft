@@ -27,12 +27,19 @@
           "ASPNETCORE_ENVIRONMENT": "Development"
         }
       },
-      "IIS Express": {
+      "IIS_Express": {
         "commandName": "IISExpress",
         "launchBrowser": true,
+        "hotReloadEnabled": true,
         "environmentVariables": {
           "ASPNETCORE_ENVIRONMENT": "Development"
         }
+      },
+      "Watch": {
+        "commandName": "Executable",
+        "workingDirectory": "$(ProjectDir)",
+        "executablePath": "dotnet",
+        "commandLineArgs": "watch run debug --launch-profile IIS_Express"
       }
     }
   }
