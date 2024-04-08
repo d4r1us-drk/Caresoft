@@ -1,37 +1,43 @@
-﻿.bevan-regular {
-    font-family: "Bevan", serif;
-    font-weight: 400;
-    font-style: normal;
+﻿
+@font-face{
+    font-family: "BebasNeue";
+    src: url(fonts/BebasNeue-Regular.ttf)
 }
 
-.bevan-regular-italic {
-    font-family: "Bevan", serif;
-    font-weight: 400;
-    font-style: italic;
+@font-face{
+    font-family: "Kanit";
+    src: url(fonts/Kanit-Regular.ttf);
 }
 
+@font-face{
+    font-family: "PTSansNarrow";
+    src: url("fonts/PTSansNarrow-Regular.ttf");
+}
 
 body{
 }
 
 h1{
-    font-family:"Bevan", serif;
-    font-size:3rem;
+    font-family: BebasNeue; 
+    font-size:4rem;
     margin: auto;
     text-align: center;
 }
 
 .about-us {
+    font-family: Kanit;
     align-items: center;
 }
 
 .about-us-text {
+    font-family: PTSansNarrow;
     justify-content: left;
     font-size: 1rem;
     margin-right: 700px;
 }
 
 .about-us-image {
+    display:flex;
     margin-left: 900px;
 }
 
