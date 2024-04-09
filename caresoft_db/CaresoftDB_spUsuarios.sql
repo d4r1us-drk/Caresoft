@@ -1,7 +1,7 @@
 -- STORED PROCEDURES RELACIONADOS AL MANEJO DE USUARIOS
 USE CaresoftDB;
 
--- 1. Eliminar el stored procedure si existe y luego crearlo
+-- 1. Creación de un usuario de rol Paciente
 DROP PROCEDURE IF EXISTS CrearUsuarioPaciente;
 DELIMITER //
 CREATE PROCEDURE CrearUsuarioPaciente(
@@ -60,7 +60,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- 2. Eliminar el stored procedure si existe y luego crearlo
+-- 2. Creación de un usuario de Rol Administrador o Cajero
 DROP PROCEDURE IF EXISTS CrearUsuarioPersonal;
 DELIMITER //
 CREATE PROCEDURE CrearUsuarioPersonal(
@@ -117,7 +117,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- 3. Eliminar el stored procedure si existe y luego crearlo
+-- 3. Creación de un usuario de rol Médico o Enfermero
 DROP PROCEDURE IF EXISTS CrearUsuarioPersonalMedico;
 DELIMITER //
 CREATE PROCEDURE CrearUsuarioPersonalMedico(
@@ -225,17 +225,17 @@ DELIMITER ;
 --    puede buscar usuario filtrando por dicho parametro,
 --    si no se le provee parametro, solo lista todos los
 --    usuarios del sistema.
-DROP PROCEDURE IF EXISTS ListarUsuarios;
+DROP PROCEDURE IF EXISTS ListarUsuario;
 DELIMITER //
-CREATE PROCEDURE ObtenerUsuariosConFiltro(
+CREATE PROCEDURE ListarUsuario(
     IN p_documento VARCHAR(30),
-    IN p_nombre NVARCHAR(100),
-    IN p_apellido NVARCHAR(100),
+    IN p_genero ENUM('M', 'F'),
+    IN p_fechaNacimiento DATE,
     IN p_rol ENUM('P', 'A', 'M', 'E', 'C')
 )
 BEGIN
     -- Verificar si se han proporcionado filtros
-    IF p_documento IS NULL AND p_nombre IS NULL AND p_apellido IS NULL AND p_rol IS NULL THEN
+    IF p_documento IS NULL AND p_genero IS NULL AND p_fechaNacimiento IS NULL AND p_rol IS NULL THEN
         -- Si no se han proporcionado filtros, devolver todos los usuarios
         SELECT *
         FROM PerfilUsuario;
@@ -247,12 +247,12 @@ BEGIN
             SET @sql = CONCAT(@sql, ' AND documento = "', p_documento, '"');
         END IF;
         
-        IF p_nombre IS NOT NULL THEN
-            SET @sql = CONCAT(@sql, ' AND nombre = "', p_nombre, '"');
+        IF p_genero IS NOT NULL THEN
+            SET @sql = CONCAT(@sql, ' AND genero = "', p_genero, '"');
         END IF;
         
-        IF p_apellido IS NOT NULL THEN
-            SET @sql = CONCAT(@sql, ' AND apellido = "', p_apellido, '"');
+        IF p_fechaNacimiento IS NOT NULL THEN
+            SET @sql = CONCAT(@sql, ' AND fechaNacimiento = "', p_fechaNacimiento, '"');
         END IF;
         
         IF p_rol IS NOT NULL THEN
@@ -263,6 +263,31 @@ BEGIN
         PREPARE stmt FROM @sql;
         EXECUTE stmt;
         DEALLOCATE PREPARE stmt;
+    END IF;
+END //
+DELIMITER ;
+
+-- 7. Eliminación de un usuario a partir de su documento o de su código de usuario
+DROP PROCEDURE IF EXISTS EliminarUsuario;
+DELIMITER //
+CREATE PROCEDURE EliminarUsuario(
+    IN p_documentoOUsuarioCodigo VARCHAR(30)
+)
+BEGIN
+    DECLARE esUsuarioCodigo INT;
+    DECLARE documentoUsuario VARCHAR(30);
+
+    -- Verificar si el parámetro es un código de usuario o un documento
+    SELECT COUNT(*) INTO esUsuarioCodigo FROM Usuario WHERE usuarioCodigo = p_documentoOUsuarioCodigo;
+
+    IF esUsuarioCodigo > 0 THEN
+        -- Obtener el documento del usuario a partir del código de usuario
+        SELECT documentoUsuario INTO documentoUsuario FROM Usuario WHERE usuarioCodigo = p_documentoOUsuarioCodigo;
+        -- Eliminar usuario por código de usuario y su perfil asociado
+        DELETE FROM PerfilUsuario WHERE documento = documentoUsuario;
+    ELSE
+        -- Eliminar usuario por documento y su perfil asociado
+        DELETE FROM PerfilUsuario WHERE documento = p_documentoOUsuarioCodigo;
     END IF;
 END //
 DELIMITER ;

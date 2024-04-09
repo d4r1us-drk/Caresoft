@@ -263,4 +263,3 @@ CREATE TABLE Proveedor_Producto(
     FOREIGN KEY (consultaCodigo)    REFERENCES  Consulta(consultaCodigo)    ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (idProducto)        REFERENCES  Producto(idProducto)        ON DELETE CASCADE
 );
-
