@@ -9,7 +9,6 @@ CREATE PROCEDURE spFacturaCrearConsulta(
     IN p_consultaCodigo VARCHAR(30),
     IN p_idSucursal INT UNSIGNED,
     IN p_documentoCajero VARCHAR(30),
-    IN p_montoTotal DECIMAL(10,2)
 )
 BEGIN
     START TRANSACTION;
@@ -20,8 +19,8 @@ BEGIN
         RESIGNAL;
     END;
 
-    INSERT INTO Factura (facturaCodigo, idCuenta, consultaCodigo, idSucursal, documentoCajero, montoTotal)
-    VALUES (p_facturaCodigo, p_idCuenta, p_consultaCodigo, p_idSucursal, p_documentoCajero, p_montoTotal);
+    INSERT INTO Factura (facturaCodigo, idCuenta, consultaCodigo, idSucursal, documentoCajero)
+    VALUES (p_facturaCodigo, p_idCuenta, p_consultaCodigo, p_idSucursal, p_documentoCajero);
 
     COMMIT;
 END //
@@ -36,7 +35,6 @@ CREATE PROCEDURE spFacturaCrearIngreso(
     IN p_idIngreso INT UNSIGNED,
     IN p_idSucursal INT UNSIGNED,
     IN p_documentoCajero VARCHAR(30),
-    IN p_montoTotal DECIMAL(10,2)
 )
 BEGIN
     START TRANSACTION;
@@ -47,8 +45,8 @@ BEGIN
         RESIGNAL;
     END;
 
-    INSERT INTO Factura (facturaCodigo, idCuenta, idIngreso, idSucursal, documentoCajero, montoTotal)
-    VALUES (p_facturaCodigo, p_idCuenta, p_idIngreso, p_idSucursal, p_documentoCajero, p_montoTotal);
+    INSERT INTO Factura (facturaCodigo, idCuenta, idIngreso, idSucursal, documentoCajero)
+    VALUES (p_facturaCodigo, p_idCuenta, p_idIngreso, p_idSucursal, p_documentoCajero);
 
     COMMIT;
 END //
@@ -62,7 +60,6 @@ CREATE PROCEDURE spFacturaCrear(
     IN p_idCuenta INT UNSIGNED,
     IN p_idSucursal INT UNSIGNED,
     IN p_documentoCajero VARCHAR(30),
-    IN p_montoTotal DECIMAL(10,2)
 )
 BEGIN
     START TRANSACTION;
@@ -73,8 +70,8 @@ BEGIN
         RESIGNAL;
     END;
 
-    INSERT INTO Factura (facturaCodigo, idCuenta, idSucursal, documentoCajero, montoTotal)
-    VALUES (p_facturaCodigo, p_idCuenta, p_idSucursal, p_documentoCajero, p_montoTotal);
+    INSERT INTO Factura (facturaCodigo, idCuenta, idSucursal, documentoCajero)
+    VALUES (p_facturaCodigo, p_idCuenta, p_idSucursal, p_documentoCajero);
 
     COMMIT;
 END //

@@ -5,18 +5,49 @@ DROP PROCEDURE IF EXISTS spAutorizacionCrear;
 DELIMITER //
 CREATE PROCEDURE spAutorizacionCrear(
     IN p_idAseguradora INT UNSIGNED,
-    IN p_montoAsegurado DECIMAL(10,2)
+    IN p_montoAsegurado DECIMAL(10,2),
+    IN p_facturaCodigo VARCHAR(30) NULL,
+    IN p_idIngreso INT UNSIGNED NULL,
+    IN p_consultaCodigo VARCHAR(30) NULL,
+    IN p_servicioCodigo VARCHAR(30) NULL,
+    IN p_idProducto INT UNSIGNED NULL
 )
 BEGIN
     START TRANSACTION;
 
+    DECLARE autorizacion_id INT UNSIGNED;
+    
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
 
+    -- Insertar la autorización
     INSERT INTO Autorizacion (idAseguradora, montoAsegurado) VALUES (p_idAseguradora, p_montoAsegurado);
+    
+    -- Obtener el ID de la autorización recién insertada
+    SELECT LAST_INSERT_ID() INTO autorizacion_id;
+    
+    -- Verificar si se proporcionó un ingreso y asociar la autorización con él
+    IF p_idIngreso IS NOT NULL THEN
+        UPDATE Ingreso SET idAutorizacion = autorizacion_id WHERE idIngreso = p_idIngreso;
+    END IF;
+
+    -- Verificar si se proporcionó una consulta y asociar la autorización con ella
+    IF p_consultaCodigo IS NOT NULL THEN
+        UPDATE Consulta SET idAutorizacion = autorizacion_id WHERE consultaCodigo = p_consultaCodigo;
+    END IF;
+
+    -- Verificar si se proporcionó un servicio y asociar la autorización con él
+    IF p_servicioCodigo IS NOT NULL AND p_facturaCodigo IS NOT NULL THEN
+        UPDATE Factura_Servicio SET idAutorizacion = autorizacion_id WHERE servicioCodigo = p_servicioCodigo;
+    END IF;
+
+    -- Verificar si se proporcionó un producto y asociar la autorización con él
+    IF p_idProducto IS NOT NULL AND p_facturaCodigo IS NOT NULL  THEN
+        UPDATE Factura_Producto SET idAutorizacion = autorizacion_id WHERE idProducto = p_idProducto;
+    END IF;
 
     COMMIT;
 END //
@@ -61,104 +92,6 @@ BEGIN
     END;
 
     DELETE FROM Autorizacion WHERE idAutorizacion = p_idAutorizacion;
-
-    COMMIT;
-END //
-DELIMITER ;
-
--- 4. Autorizar un ingreso
-DROP PROCEDURE IF EXISTS spAutorizarIngreso;
-DELIMITER //
-CREATE PROCEDURE spAutorizarIngreso(
-    IN p_idIngreso INT UNSIGNED,
-    IN p_idAutorizacion INT UNSIGNED
-)
-BEGIN
-    START TRANSACTION;
-
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    UPDATE Ingreso
-    SET idAutorizacion = p_idAutorizacion
-    WHERE idIngreso = p_idIngreso;
-
-    COMMIT;
-END //
-DELIMITER ;
-
--- 5. Autorizar una consulta
-DROP PROCEDURE IF EXISTS spAutorizarConsulta;
-DELIMITER //
-CREATE PROCEDURE spAutorizarConsulta(
-    IN p_consultaCodigo VARCHAR(30),
-    IN p_idAutorizacion INT UNSIGNED
-)
-BEGIN
-    START TRANSACTION;
-
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    UPDATE Consulta
-    SET idAutorizacion = p_idAutorizacion
-    WHERE consultaCodigo = p_consultaCodigo;
-
-    COMMIT;
-END //
-DELIMITER ;
-
--- 6. Autorizar un servicio relacionado a una factura
-DROP PROCEDURE IF EXISTS spAutorizarServicio;
-DELIMITER //
-CREATE PROCEDURE spAutorizarServicio(
-    IN p_facturaCodigo VARCHAR(30),
-    IN p_servicioCodigo VARCHAR(30),
-    IN p_idAutorizacion INT UNSIGNED
-)
-BEGIN
-    START TRANSACTION;
-
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    UPDATE Factura_Servicio
-    SET idAutorizacion = p_idAutorizacion
-    WHERE facturaCodigo = p_facturaCodigo AND servicioCodigo = p_servicioCodigo;
-
-    COMMIT;
-END //
-DELIMITER ;
-
--- 7. Autorizar un producto relacionado a una factura
-DROP PROCEDURE IF EXISTS spAutorizarProducto;
-DELIMITER //
-CREATE PROCEDURE spAutorizarProducto(
-    IN p_facturaCodigo VARCHAR(30),
-    IN p_idProducto INT UNSIGNED,
-    IN p_idAutorizacion INT UNSIGNED
-)
-BEGIN
-    START TRANSACTION;
-
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    UPDATE Factura_Producto
-    SET idAutorizacion = p_idAutorizacion
-    WHERE facturaCodigo = p_facturaCodigo AND idProducto = p_idProducto;
 
     COMMIT;
 END //
