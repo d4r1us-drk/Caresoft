@@ -216,11 +216,16 @@ CREATE TABLE Factura_MetodoPago(
 
 CREATE TABLE ReservaServicio(
     idReserva           INT UNSIGNED AUTO_INCREMENT,
-    documentoUsuario    VARCHAR(30),
+    documentoPaciente   VARCHAR(30),
+    documentoMedico     VARCHAR(30),
     servicioCodigo      VARCHAR(30),
-    PRIMARY KEY (idReserva, documentoUsuario, servicioCodigo),
-    FOREIGN KEY (documentoUsuario)  REFERENCES  PerfilUsuario(documento)    ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (servicioCodigo)    REFERENCES  Servicio(servicioCodigo)    ON UPDATE CASCADE ON DELETE CASCADE
+    fechaReservada      DATETIME        NOT NULL,
+    estado              ENUM('P', 'R')  NOT NULL    DEFAULT 'P',
+    PRIMARY KEY (idReserva, documentoPaciente, documentoMedico, servicioCodigo),
+    FOREIGN KEY (documentoPaciente) REFERENCES  PerfilUsuario(documento)    ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (documentoMedico)   REFERENCES  PerfilUsuario(documento)    ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (servicioCodigo)    REFERENCES  Servicio(servicioCodigo)    ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT chk_documento_diferente_reserva CHECK (documentoPaciente != documentoMedico) -- No permitir que un solo registro de documento ocupe ambos campos
 );
 
 CREATE TABLE PrescripcionServicio(

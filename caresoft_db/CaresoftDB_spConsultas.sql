@@ -1,0 +1,3 @@
+-- STORED PROCEDURES RELACIONADOS A LAS CONSULTAS
+
+-- 1. Creación de consulta
