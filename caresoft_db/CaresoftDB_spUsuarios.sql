@@ -2,9 +2,9 @@
 USE CaresoftDB;
 
 -- 1. Creación de un usuario de rol Paciente
-DROP PROCEDURE IF EXISTS spCrearUsuarioPaciente;
+DROP PROCEDURE IF EXISTS spUsuarioCrearPaciente;
 DELIMITER //
-CREATE PROCEDURE spCrearUsuarioPaciente(
+CREATE PROCEDURE spUsuarioCrearPaciente(
     IN p_documento VARCHAR(30),
     IN p_tipoDocumento ENUM('I', 'P'),
     IN p_nombre NVARCHAR(100),
@@ -61,9 +61,9 @@ END //
 DELIMITER ;
 
 -- 2. Creación de un usuario de Rol Administrador o Cajero
-DROP PROCEDURE IF EXISTS spCrearUsuarioPersonal;
+DROP PROCEDURE IF EXISTS spUsuarioCrearPersonal;
 DELIMITER //
-CREATE PROCEDURE spCrearUsuarioPersonal(
+CREATE PROCEDURE spUsuarioCrearPersonal(
     IN p_documento VARCHAR(30),
     IN p_tipoDocumento ENUM('I', 'P'),
     IN p_nombre NVARCHAR(100),
@@ -118,9 +118,9 @@ END //
 DELIMITER ;
 
 -- 3. Creación de un usuario de rol Médico o Enfermero
-DROP PROCEDURE IF EXISTS spCrearUsuarioPersonalMedico;
+DROP PROCEDURE IF EXISTS spUsuarioCrearPersonalMedico;
 DELIMITER //
-CREATE PROCEDURE spCrearUsuarioPersonalMedico(
+CREATE PROCEDURE spUsuarioCrearPersonalMedico(
     IN p_documento VARCHAR(30),
     IN p_tipoDocumento ENUM('I', 'P'),
     IN p_numLicenciaMedica INT UNSIGNED,
@@ -176,9 +176,9 @@ END //
 DELIMITER ;
 
 -- 4. Eliminar el stored procedure si existe y luego crearlo
-DROP PROCEDURE IF EXISTS spActualizarDatosUsuario;
+DROP PROCEDURE IF EXISTS spUsuarioActualizarDatos;
 DELIMITER //
-CREATE PROCEDURE spActualizarDatosUsuario(
+CREATE PROCEDURE spUsuarioActualizarDatos(
     IN p_documento VARCHAR(30),
     IN p_tipoDocumento ENUM('I', 'P'),
     IN p_nombre NVARCHAR(100),
@@ -225,9 +225,9 @@ DELIMITER ;
 --    puede buscar usuario filtrando por dicho parametro,
 --    si no se le provee parametro, solo lista todos los
 --    usuarios del sistema.
-DROP PROCEDURE IF EXISTS spListarUsuario;
+DROP PROCEDURE IF EXISTS spUsuarioListar;
 DELIMITER //
-CREATE PROCEDURE spListarUsuario(
+CREATE PROCEDURE spUsuarioListar(
     IN p_documento VARCHAR(30),
     IN p_genero ENUM('M', 'F'),
     IN p_fechaNacimiento DATE,
@@ -268,9 +268,9 @@ END //
 DELIMITER ;
 
 -- 6. Eliminación de un usuario a partir de su documento o de su código de usuario
-DROP PROCEDURE IF EXISTS spEliminarUsuario;
+DROP PROCEDURE IF EXISTS spUsuarioEliminar;
 DELIMITER //
-CREATE PROCEDURE spEliminarUsuario(
+CREATE PROCEDURE spUsuarioEliminar(
     IN p_documentoOUsuarioCodigo VARCHAR(30)
 )
 BEGIN

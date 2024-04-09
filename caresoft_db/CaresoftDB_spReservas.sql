@@ -10,7 +10,17 @@ CREATE PROCEDURE CrearReservaServicio(
     IN p_fechaReserva DATETIME
 )
 BEGIN
-    DECLARE exit_handler CONDITION FOR SQLEXCEPTION;
+    DECLARE exit handler for sqlexception
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    DECLARE exit handler for sqlwarning
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
     
     START TRANSACTION;
     
@@ -63,7 +73,17 @@ CREATE PROCEDURE ActualizarDatosReservaServicio(
     IN p_fechaReserva DATETIME
 )
 BEGIN
-    DECLARE exit_handler CONDITION FOR SQLEXCEPTION;
+    DECLARE exit handler for sqlexception
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    DECLARE exit handler for sqlwarning
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     START TRANSACTION;
 
@@ -122,7 +142,17 @@ CREATE PROCEDURE CambiarEstadoReservaServicio(
     IN p_idReserva INT UNSIGNED
 )
 BEGIN
-    DECLARE exit_handler CONDITION FOR SQLEXCEPTION;
+    DECLARE exit handler for sqlexception
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    DECLARE exit handler for sqlwarning
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     START TRANSACTION;
 
@@ -205,7 +235,17 @@ CREATE PROCEDURE EliminarReserva(
     IN p_idReserva INT UNSIGNED
 )
 BEGIN
-    DECLARE exit_handler CONDITION FOR SQLEXCEPTION;
+    DECLARE exit handler for sqlexception
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    DECLARE exit handler for sqlwarning
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     START TRANSACTION;
 

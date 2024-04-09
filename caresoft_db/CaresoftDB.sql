@@ -60,7 +60,8 @@ CREATE TABLE Producto(
     idProducto      INT UNSIGNED    PRIMARY KEY AUTO_INCREMENT,
     nombre          NVARCHAR(100)   NOT NULL,
     descripcion     NVARCHAR(255)   NOT NULL,
-    costo           DECIMAL(10,2)   NOT NULL
+    costo           DECIMAL(10,2)   NOT NULL,
+    loteDisponible  INT UNSIGNED    NOT NULL
 );
 
 CREATE TABLE Proveedor(
