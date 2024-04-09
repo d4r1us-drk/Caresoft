@@ -14,19 +14,13 @@ CREATE PROCEDURE spConsultaCrear(
     IN p_estado ENUM('P', 'R')  -- Estado de la consulta
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     -- Verificar si el paciente y el médico existen
     SELECT COUNT(*) INTO @pacienteExiste FROM PerfilUsuario WHERE documento = p_documentoPaciente;
@@ -49,9 +43,9 @@ END //
 DELIMITER ;
 
 -- 2. Actualización de los datos de una consulta
-DROP PROCEDURE IF EXISTS spSalaActualizar;
+DROP PROCEDURE IF EXISTS spConsultaActualizar;
 DELIMITER //
-CREATE PROCEDURE spSalaActualizar(
+CREATE PROCEDURE spConsultaActualizar(
     IN p_consultaCodigo VARCHAR(30),
     IN p_documentoPaciente VARCHAR(30),
     IN p_documentoMedico VARCHAR(30),
@@ -61,19 +55,13 @@ CREATE PROCEDURE spSalaActualizar(
     IN p_costo DECIMAL(10,2)
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
     
     -- Verificar si la consulta existe
     SELECT COUNT(*) INTO @consultaExiste FROM Consulta WHERE consultaCodigo = p_consultaCodigo;
@@ -115,19 +103,13 @@ CREATE PROCEDURE spConsultaEliminar(
     IN p_consultaCodigo VARCHAR(30)
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     DELETE FROM Consulta WHERE consultaCodigo = p_consultaCodigo;
 
@@ -143,19 +125,13 @@ CREATE PROCEDURE spConsultaPrescribirServicio(
     IN p_servicioCodigo VARCHAR(30)
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     -- Verificar si la consulta y el servicio existen
     SELECT COUNT(*) INTO @consultaExiste FROM Consulta WHERE consultaCodigo = p_consultaCodigo;
@@ -185,19 +161,13 @@ CREATE PROCEDURE spConsultaPrescribirProducto(
     IN p_cantidad INT
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     -- Verificar si la consulta y el producto existen
     SELECT COUNT(*) INTO @consultaExiste FROM Consulta WHERE consultaCodigo = p_consultaCodigo;
@@ -226,19 +196,13 @@ CREATE PROCEDURE spConsultaInsertarAfeccion(
     IN p_idAfeccion INT UNSIGNED
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     -- Verificar si la consulta y la afección existen
     SELECT COUNT(*) INTO @consultaExiste FROM Consulta WHERE consultaCodigo = p_consultaCodigo;
@@ -256,5 +220,48 @@ BEGIN
     INSERT INTO ConsultaAfeccion (consultaCodigo, idAfeccion) VALUES (p_consultaCodigo, p_idAfeccion);
 
     COMMIT;
+END //
+DELIMITER ;
+
+-- 7. Listar consultas con filtros opcionales
+DROP PROCEDURE IF EXISTS spListarConsultas;
+DELIMITER //
+CREATE PROCEDURE spListarConsultas(
+    IN p_documentoPaciente VARCHAR(30) NULL,
+    IN p_documentoMedico VARCHAR(30) NULL,
+    IN p_fechaInicio DATETIME NULL,
+    IN p_fechaFin DATETIME NULL
+)
+BEGIN
+    -- Verificar si se han proporcionado filtros
+    IF p_documentoPaciente IS NULL AND p_documentoMedico IS NULL AND p_fechaInicio IS NULL AND p_fechaFin IS NULL THEN
+        -- Si no se han proporcionado filtros, devolver todas las consultas
+        SELECT *
+        FROM Consulta;
+    ELSE
+        -- Si se han proporcionado filtros, construir la consulta dinámicamente
+        SET @sql = 'SELECT * FROM Consulta WHERE 1 = 1';
+        
+        IF p_documentoPaciente IS NOT NULL THEN
+            SET @sql = CONCAT(@sql, ' AND documentoPaciente = "', p_documentoPaciente, '"');
+        END IF;
+        
+        IF p_documentoMedico IS NOT NULL THEN
+            SET @sql = CONCAT(@sql, ' AND documentoMedico = "', p_documentoMedico, '"');
+        END IF;
+        
+        IF p_fechaInicio IS NOT NULL THEN
+            SET @sql = CONCAT(@sql, ' AND fecha >= "', p_fechaInicio, '"');
+        END IF;
+        
+        IF p_fechaFin IS NOT NULL THEN
+            SET @sql = CONCAT(@sql, ' AND fecha <= "', p_fechaFin, '"');
+        END IF;
+        
+        -- Ejecutar la consulta dinámica
+        PREPARE stmt FROM @sql;
+        EXECUTE stmt;
+        DEALLOCATE PREPARE stmt;
+    END IF;
 END //
 DELIMITER ;

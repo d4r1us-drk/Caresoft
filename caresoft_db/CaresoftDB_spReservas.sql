@@ -10,19 +10,13 @@ CREATE PROCEDURE CrearReservaServicio(
     IN p_fechaReserva DATETIME
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-    
     START TRANSACTION;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
     
     -- Verificar si el paciente y el médico existen
     SELECT COUNT(*) INTO @pacienteExiste FROM PerfilUsuario WHERE documento = p_documentoPaciente;
@@ -73,19 +67,13 @@ CREATE PROCEDURE ActualizarDatosReservaServicio(
     IN p_fechaReserva DATETIME
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     -- Verificar si la reserva existe
     SELECT COUNT(*) INTO @reservaExiste FROM ReservaServicio WHERE idReserva = p_idReserva;
@@ -142,19 +130,13 @@ CREATE PROCEDURE CambiarEstadoReservaServicio(
     IN p_idReserva INT UNSIGNED
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     -- Verificar si la reserva existe
     SELECT COUNT(*) INTO @reservaExiste FROM ReservaServicio WHERE idReserva = p_idReserva;
@@ -235,19 +217,13 @@ CREATE PROCEDURE EliminarReserva(
     IN p_idReserva INT UNSIGNED
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     DELETE FROM ReservaServicio WHERE idReserva = p_idReserva;
 

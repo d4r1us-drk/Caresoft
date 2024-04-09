@@ -18,19 +18,13 @@ CREATE PROCEDURE spUsuarioCrearPaciente(
     IN p_usuarioContra NVARCHAR(255)
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     DECLARE perfil_doc_exist INT;
     DECLARE cuenta_doc_exist INT;
@@ -78,19 +72,13 @@ CREATE PROCEDURE spUsuarioCrearPersonal(
     IN p_usuarioContra NVARCHAR(255)
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     DECLARE perfil_doc_exist INT;
     DECLARE cuenta_doc_exist INT;
@@ -136,19 +124,13 @@ CREATE PROCEDURE spUsuarioCrearPersonalMedico(
     IN p_usuarioContra NVARCHAR(255)
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     DECLARE perfil_doc_exist INT;
     DECLARE cuenta_doc_exist INT;
@@ -190,19 +172,13 @@ CREATE PROCEDURE spUsuarioActualizarDatos(
     IN p_direccion NVARCHAR(255)
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     -- Actualizar los datos de PerfilUsuario
     UPDATE PerfilUsuario
@@ -274,6 +250,14 @@ CREATE PROCEDURE spUsuarioEliminar(
     IN p_documentoOUsuarioCodigo VARCHAR(30)
 )
 BEGIN
+    START TRANSACTION;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
     DECLARE esUsuarioCodigo INT;
     DECLARE documentoUsuario VARCHAR(30);
 
@@ -289,5 +273,7 @@ BEGIN
         -- Eliminar usuario por documento y su perfil asociado
         DELETE FROM PerfilUsuario WHERE documento = p_documentoOUsuarioCodigo;
     END IF;
+
+    COMMIT;
 END //
 DELIMITER ;
