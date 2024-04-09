@@ -13,27 +13,13 @@ CREATE PROCEDURE spIngresoCrear(
     IN p_costoEstancia DECIMAL(10,2)
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
 
-    -- Verificar si la consulta existe si se proporciona
-    IF p_consultaCodigo IS NOT NULL THEN
-        SELECT COUNT(*) INTO @consultaExiste FROM Consulta WHERE consultaCodigo = p_consultaCodigo;
-        IF @consultaExiste = 0 THEN
-            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La consulta especificada no existe';
-        END IF;
-    END IF;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     -- Insertar el ingreso
     INSERT INTO Ingreso (documentoPaciente, documentoEnfermero, documentoMedico, consultaCodigo, idAutorizacion, numSala, costoEstancia)
@@ -51,31 +37,13 @@ CREATE PROCEDURE spIngresoRelacionarAfeccion(
     IN p_idAfeccion INT UNSIGNED
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
 
-    -- Verificar si el ingreso y la afección existen
-    SELECT COUNT(*) INTO @ingresoExiste FROM Ingreso WHERE idIngreso = p_idIngreso;
-    SELECT COUNT(*) INTO @afeccionExiste FROM Afeccion WHERE idAfeccion = p_idAfeccion;
-
-    IF @ingresoExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El ingreso especificado no existe';
-    END IF;
-
-    IF @afeccionExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La afección especificada no existe';
-    END IF;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     -- Relacionar la afección al ingreso
     INSERT INTO IngresoAfeccion (idIngreso, idAfeccion) VALUES (p_idIngreso, p_idAfeccion);
@@ -99,26 +67,13 @@ CREATE PROCEDURE spIngresoActualizar(
     IN p_fechaAlta DATETIME
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
 
-    -- Verificar si el ingreso existe
-    SELECT COUNT(*) INTO @ingresoExiste FROM Ingreso WHERE idIngreso = p_idIngreso;
-
-    IF @ingresoExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El ingreso especificado no existe';
-    END IF;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     -- Actualizar los datos del ingreso
     UPDATE Ingreso SET
@@ -143,26 +98,13 @@ CREATE PROCEDURE spIngresoEliminar(
     IN p_idIngreso INT UNSIGNED
 )
 BEGIN
-    DECLARE exit handler for sqlexception
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    DECLARE exit handler for sqlwarning
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
     START TRANSACTION;
 
-    -- Verificar si el ingreso existe
-    SELECT COUNT(*) INTO @ingresoExiste FROM Ingreso WHERE idIngreso = p_idIngreso;
-
-    IF @ingresoExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El ingreso especificado no existe';
-    END IF;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
 
     -- Eliminar el ingreso
     DELETE FROM Ingreso WHERE idIngreso = p_idIngreso;

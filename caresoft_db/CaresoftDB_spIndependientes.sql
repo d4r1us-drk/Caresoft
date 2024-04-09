@@ -46,13 +46,6 @@ BEGIN
         RESIGNAL;
     END;
 
-    -- Verificar si la sala existe
-    SELECT COUNT(*) INTO @salaExiste FROM Sala WHERE numSala = p_numSala;
-
-    IF @salaExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La sala especificada no existe';
-    END IF;
-
     -- Obtener el estado actual de la sala
     SELECT estado INTO @estadoActual FROM Sala WHERE numSala = p_numSala;
 
@@ -81,13 +74,6 @@ BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
-
-    -- Verificar si la sala existe
-    SELECT COUNT(*) INTO @salaExiste FROM Sala WHERE numSala = p_numSala;
-
-    IF @salaExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La sala especificada no existe';
-    END IF;
 
     -- Eliminar la sala
     DELETE FROM Sala WHERE numSala = p_numSala;

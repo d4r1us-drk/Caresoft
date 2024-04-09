@@ -22,18 +22,6 @@ BEGIN
         RESIGNAL;
     END;
 
-    -- Verificar si el paciente y el médico existen
-    SELECT COUNT(*) INTO @pacienteExiste FROM PerfilUsuario WHERE documento = p_documentoPaciente;
-    SELECT COUNT(*) INTO @medicoExiste FROM PerfilUsuario WHERE documento = p_documentoMedico;
-
-    IF @pacienteExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El paciente especificado no existe';
-    END IF;
-
-    IF @medicoExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El médico especificado no existe';
-    END IF;
-
     -- Crear la nueva consulta
     INSERT INTO Consulta (consultaCodigo, documentoPaciente, documentoMedico, idConsultorio, motivo, comentarios, costo, estado)
     VALUES (p_consultaCodigo, p_documentoPaciente, p_documentoMedico, p_idConsultorio, p_motivo, p_comentarios, p_costo, p_estado);
@@ -62,25 +50,6 @@ BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
-    
-    -- Verificar si la consulta existe
-    SELECT COUNT(*) INTO @consultaExiste FROM Consulta WHERE consultaCodigo = p_consultaCodigo;
-    
-    IF @consultaExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La consulta especificada no existe';
-    END IF;
-
-    -- Verificar si el paciente y el médico existen
-    SELECT COUNT(*) INTO @pacienteExiste FROM PerfilUsuario WHERE documento = p_documentoPaciente;
-    SELECT COUNT(*) INTO @medicoExiste FROM PerfilUsuario WHERE documento = p_documentoMedico;
-    
-    IF @pacienteExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El paciente especificado no existe';
-    END IF;
-    
-    IF @medicoExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El médico especificado no existe';
-    END IF;
 
     -- Actualizar los datos de la consulta
     UPDATE Consulta
@@ -133,18 +102,6 @@ BEGIN
         RESIGNAL;
     END;
 
-    -- Verificar si la consulta y el servicio existen
-    SELECT COUNT(*) INTO @consultaExiste FROM Consulta WHERE consultaCodigo = p_consultaCodigo;
-    SELECT COUNT(*) INTO @servicioExiste FROM Servicio WHERE servicioCodigo = p_servicioCodigo;
-
-    IF @consultaExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La consulta especificada no existe';
-    END IF;
-
-    IF @servicioExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El servicio especificado no existe';
-    END IF;
-
     -- Prescribir el servicio en la consulta
     INSERT INTO PrescripcionServicio (consultaCodigo, servicioCodigo) VALUES (p_consultaCodigo, p_servicioCodigo);
 
@@ -169,18 +126,6 @@ BEGIN
         RESIGNAL;
     END;
 
-    -- Verificar si la consulta y el producto existen
-    SELECT COUNT(*) INTO @consultaExiste FROM Consulta WHERE consultaCodigo = p_consultaCodigo;
-    SELECT COUNT(*) INTO @productoExiste FROM Producto WHERE idProducto = p_idProducto;
-
-    IF @consultaExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La consulta especificada no existe';
-    END IF;
-
-    IF @productoExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El producto especificado no existe';
-    END IF;
-
     -- Prescribir el producto en la consulta
     INSERT INTO PrescripcionProducto (consultaCodigo, idProducto, cantidad) VALUES (p_consultaCodigo, p_idProducto, p_cantidad);
 
@@ -203,18 +148,6 @@ BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
-
-    -- Verificar si la consulta y la afección existen
-    SELECT COUNT(*) INTO @consultaExiste FROM Consulta WHERE consultaCodigo = p_consultaCodigo;
-    SELECT COUNT(*) INTO @afeccionExiste FROM Afeccion WHERE idAfeccion = p_idAfeccion;
-
-    IF @consultaExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La consulta especificada no existe';
-    END IF;
-
-    IF @afeccionExiste = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La afección especificada no existe';
-    END IF;
 
     -- Registrar la afección tratada en la consulta
     INSERT INTO ConsultaAfeccion (consultaCodigo, idAfeccion) VALUES (p_consultaCodigo, p_idAfeccion);
