@@ -7,7 +7,7 @@ USE CaresoftDB;
 CREATE TABLE PerfilUsuario(
     documento           VARCHAR(30)                     PRIMARY KEY,
     tipoDocumento       ENUM('I', 'P')                  NOT NULL    DEFAULT 'I', -- Identificación, Pasaporte
-    numLicenciaMedica   INT UNSIGNED                    NULL,                    -- Número de licencia médica de un médico
+    numLicenciaMedica   INT UNSIGNED                    UNIQUE NULL,             -- Número de licencia médica de un médico
     nombre              NVARCHAR(100)                   NOT NULL,
     apellido            NVARCHAR(100)                   NOT NULL,
     genero              ENUM('M', 'F')                  NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE Usuario(
     usuarioCodigo       VARCHAR(30)     PRIMARY KEY,
     documentoUsuario    VARCHAR(30)     UNIQUE      NOT NULL,          -- Un usuario solo tiene un perfil asociado
     usuarioContra       NVARCHAR(255)   NOT NULL,
-    FOREIGN KEY (documentoUsuario) REFERENCES PerfilUsuario(documento)
+    FOREIGN KEY (documentoUsuario) REFERENCES PerfilUsuario(documento) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Cuenta(
@@ -32,7 +32,7 @@ CREATE TABLE Cuenta(
     documentoUsuario    VARCHAR(30)     UNIQUE      NOT NULL,           -- Un usuario solo tiene una cuenta asociada
     balance             DECIMAL(10,2)   NOT NULL    DEFAULT 0.00,       -- Balance en cero por defecto
     estado              ENUM('A', 'D')  NOT NULL    DEFAULT 'A',        -- Activa, Desctivada
-    FOREIGN KEY (documentoUsuario) REFERENCES PerfilUsuario(documento)
+    FOREIGN KEY (documentoUsuario) REFERENCES PerfilUsuario(documento) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Pago(
@@ -40,7 +40,7 @@ CREATE TABLE Pago(
     idCuenta    INT UNSIGNED    NOT NULL,
     montoPagado DECIMAL(10,2)   NOT NULL,
     fecha       DATETIME        NOT NULL    DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (idCuenta)      REFERENCES  Cuenta(idCuenta)
+    FOREIGN KEY (idCuenta)      REFERENCES  Cuenta(idCuenta) ON DELETE CASCADE
 );
 
 -- TABLAS INDEPENDIENTES
@@ -81,9 +81,9 @@ CREATE TABLE Aseguradora(
 
 CREATE TABLE Sucursal(
     idSucursal   INT UNSIGNED    PRIMARY KEY AUTO_INCREMENT,
-    nombre          NVARCHAR(100)   NOT NULL,
-    direccion       NVARCHAR(255)   NOT NULL,
-    telefono        VARCHAR(18)     NOT NULL
+    nombre       NVARCHAR(100)   NOT NULL,
+    direccion    NVARCHAR(255)   NOT NULL,
+    telefono     VARCHAR(18)     NOT NULL
 );
 
 CREATE TABLE Consultorio(
@@ -111,7 +111,7 @@ CREATE TABLE Servicio(
     nombre          NVARCHAR(100)   NOT NULL,
     descripcion     NVARCHAR(255)   NOT NULL,
     costo           DECIMAL(10,2)   NOT NULL,
-    FOREIGN KEY (idTipoServicio)    REFERENCES TipoServicio(idTipoServicio)
+    FOREIGN KEY (idTipoServicio)    REFERENCES TipoServicio(idTipoServicio) ON DELETE CASCADE
 );
 
 CREATE TABLE Autorizacion(
@@ -119,7 +119,7 @@ CREATE TABLE Autorizacion(
     idAseguradora   INT UNSIGNED    NOT NULL,
     fecha           DATETIME        NOT NULL    DEFAULT CURRENT_TIMESTAMP,
     montoAsegurado  DECIMAL(10,2)   NOT NULL,
-    FOREIGN KEY (idAseguradora) REFERENCES Aseguradora(idAseguradora)
+    FOREIGN KEY (idAseguradora) REFERENCES Aseguradora(idAseguradora) ON DELETE CASCADE
 );
 
 CREATE TABLE Consulta(
@@ -133,10 +133,10 @@ CREATE TABLE Consulta(
     comentarios         TEXT            NULL,
     estado              ENUM('P', 'R')  NOT NULL DEFAULT 'P',
     costo               DECIMAL(4,2)    NOT NULL,
-    FOREIGN KEY (documentoPaciente) REFERENCES PerfilUsuario(documento),
-    FOREIGN KEY (documentoMedico)   REFERENCES PerfilUsuario(documento),
-    FOREIGN KEY (idConsultorio)     REFERENCES Consultorio(idConsultorio),
-    FOREIGN KEY (idAutorizacion)    REFERENCES Autorizacion(idAutorizacion),
+    FOREIGN KEY (documentoPaciente) REFERENCES PerfilUsuario(documento)     ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (documentoMedico)   REFERENCES PerfilUsuario(documento)     ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (idConsultorio)     REFERENCES Consultorio(idConsultorio)   ON DELETE CASCADE,
+    FOREIGN KEY (idAutorizacion)    REFERENCES Autorizacion(idAutorizacion) ON DELETE CASCADE,
     CONSTRAINT chk_documento_diferente_consulta CHECK (documentoPaciente != documentoMedico) -- No permitir que un solo registro de documento ocupe ambos campos
 );
 
@@ -151,11 +151,11 @@ CREATE TABLE Ingreso(
     costoEstancia       DECIMAL(10,2)   NOT NULL    DEFAULT 5000.00,
     fechaIngreso        DATETIME        NOT NULL    DEFAULT CURRENT_TIMESTAMP,
     fechaAlta           DATETIME        NULL,
-    FOREIGN KEY (documentoPaciente)     REFERENCES PerfilUsuario(documento),
-    FOREIGN KEY (documentoMedico)       REFERENCES PerfilUsuario(documento),
-    FOREIGN KEY (documentoEnfermero)    REFERENCES PerfilUsuario(documento),
-    FOREIGN KEY (idAutorizacion)        REFERENCES Autorizacion(idAutorizacion),
-    FOREIGN KEY (numSala)               REFERENCES Sala(numSala),
+    FOREIGN KEY (documentoPaciente)     REFERENCES PerfilUsuario(documento)     ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (documentoMedico)       REFERENCES PerfilUsuario(documento)     ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (documentoEnfermero)    REFERENCES PerfilUsuario(documento)     ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (idAutorizacion)        REFERENCES Autorizacion(idAutorizacion) ON DELETE CASCADE,
+    FOREIGN KEY (numSala)               REFERENCES Sala(numSala)                ON DELETE CASCADE,
     CONSTRAINT chk_documento_diferente_ingreso CHECK (
         documentoPaciente != documentoEnfermero 
         AND documentoPaciente != documentoMedico 
@@ -174,10 +174,10 @@ CREATE TABLE Factura(
     montoTotal      DECIMAL(10,2)   NOT NULL    DEFAULT 0.00,
     fecha           DATETIME        NOT NULL    DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (idCuenta)          REFERENCES  Cuenta(idCuenta),
-    FOREIGN KEY (consultaCodigo)    REFERENCES  Consulta(consultaCodigo),
-    FOREIGN KEY (idIngreso)         REFERENCES  Ingreso(idIngreso),
-    FOREIGN KEY (idSucursal)        REFERENCES  Sucursal(idSucursal),
-    FOREIGN KEY (documentoCajero)   REFERENCES  PerfilUsuario(documento)
+    FOREIGN KEY (consultaCodigo)    REFERENCES  Consulta(consultaCodigo) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (idIngreso)         REFERENCES  Ingreso(idIngreso)       ON DELETE CASCADE,
+    FOREIGN KEY (idSucursal)        REFERENCES  Sucursal(idSucursal)     ON DELETE CASCADE,
+    FOREIGN KEY (documentoCajero)   REFERENCES  PerfilUsuario(documento) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 -- TABLAS PUENTE, RELACIONES M:M
@@ -189,9 +189,9 @@ CREATE TABLE Factura_Servicio(
     resultados          TEXT,
     costo               DECIMAL(10,2)   NOT NULL DEFAULT 0.00,
     PRIMARY KEY (facturaCodigo, servicioCodigo),
-    FOREIGN KEY (facturaCodigo)    REFERENCES  Factura(facturaCodigo),
-    FOREIGN KEY (servicioCodigo)   REFERENCES  Servicio(servicioCodigo),
-    FOREIGN KEY (idAutorizacion)   REFERENCES  Autorizacion(idAutorizacion)
+    FOREIGN KEY (facturaCodigo)    REFERENCES  Factura(facturaCodigo)       ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (servicioCodigo)   REFERENCES  Servicio(servicioCodigo)     ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (idAutorizacion)   REFERENCES  Autorizacion(idAutorizacion) ON DELETE CASCADE
 );
 
 CREATE TABLE Factura_Producto(
@@ -201,17 +201,17 @@ CREATE TABLE Factura_Producto(
     resultados          TEXT,
     costo               DECIMAL(10,2)   NOT NULL DEFAULT 0.00,
     PRIMARY KEY (facturaCodigo, idProducto),
-    FOREIGN KEY (facturaCodigo)     REFERENCES  Factura(facturaCodigo),
-    FOREIGN KEY (idProducto)        REFERENCES  Producto(idProducto),
-    FOREIGN KEY (idAutorizacion)    REFERENCES  Autorizacion(idAutorizacion)
+    FOREIGN KEY (facturaCodigo)     REFERENCES  Factura(facturaCodigo)          ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (idProducto)        REFERENCES  Producto(idProducto)            ON DELETE CASCADE,
+    FOREIGN KEY (idAutorizacion)    REFERENCES  Autorizacion(idAutorizacion)    ON DELETE CASCADE
 );
 
 CREATE TABLE Factura_MetodoPago(
     facturaCodigo       VARCHAR(30),
     idMetodoPago        INT UNSIGNED,
     PRIMARY KEY (facturaCodigo, idMetodoPago),
-    FOREIGN KEY (facturaCodigo) REFERENCES  Factura(facturaCodigo),
-    FOREIGN KEY (idMetodoPago)  REFERENCES  MetodoPago(idMetodoPago)
+    FOREIGN KEY (facturaCodigo) REFERENCES  Factura(facturaCodigo)      ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (idMetodoPago)  REFERENCES  MetodoPago(idMetodoPago)    ON DELETE CASCADE
 );
 
 CREATE TABLE ReservaServicio(
@@ -219,16 +219,16 @@ CREATE TABLE ReservaServicio(
     documentoUsuario    VARCHAR(30),
     servicioCodigo      VARCHAR(30),
     PRIMARY KEY (idReserva, documentoUsuario, servicioCodigo),
-    FOREIGN KEY (documentoUsuario)      REFERENCES  PerfilUsuario(documento),
-    FOREIGN KEY (servicioCodigo)   REFERENCES  Servicio(servicioCodigo)
+    FOREIGN KEY (documentoUsuario)  REFERENCES  PerfilUsuario(documento)    ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (servicioCodigo)    REFERENCES  Servicio(servicioCodigo)    ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE PrescripcionServicio(
     consultaCodigo  VARCHAR(30),
     servicioCodigo  VARCHAR(30),
     PRIMARY KEY (consultaCodigo, servicioCodigo),
-    FOREIGN KEY (consultaCodigo)   REFERENCES  Consulta(consultaCodigo),
-    FOREIGN KEY (servicioCodigo)   REFERENCES  Servicio(servicioCodigo)
+    FOREIGN KEY (consultaCodigo)   REFERENCES  Consulta(consultaCodigo) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (servicioCodigo)   REFERENCES  Servicio(servicioCodigo) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE PrescripcionProducto(
@@ -236,30 +236,31 @@ CREATE TABLE PrescripcionProducto(
     idProducto      INT UNSIGNED,
     cantidad        INT NOT NULL DEFAULT 1,
     PRIMARY KEY (consultaCodigo, idProducto),
-    FOREIGN KEY (consultaCodigo)    REFERENCES  Consulta(consultaCodigo),
-    FOREIGN KEY (idProducto)        REFERENCES  Producto(idProducto)
+    FOREIGN KEY (consultaCodigo)    REFERENCES  Consulta(consultaCodigo) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (idProducto)        REFERENCES  Producto(idProducto)     ON DELETE CASCADE
 );
 
 CREATE TABLE ConsultaAfeccion(
     consultaCodigo  VARCHAR(30),
     idAfeccion      INT UNSIGNED,
     PRIMARY KEY (consultaCodigo, idAfeccion),
-    FOREIGN KEY (consultaCodigo)    REFERENCES  Consulta(consultaCodigo),
-    FOREIGN KEY (idAfeccion)        REFERENCES  Afeccion(idAfeccion)
+    FOREIGN KEY (consultaCodigo)    REFERENCES  Consulta(consultaCodigo) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (idAfeccion)        REFERENCES  Afeccion(idAfeccion)     ON DELETE CASCADE
 );
 
 CREATE TABLE IngresoAfeccion(
     idIngreso   INT UNSIGNED,
     idAfeccion  INT UNSIGNED,
     PRIMARY KEY (idIngreso, idAfeccion),
-    FOREIGN KEY (idIngreso)     REFERENCES  Ingreso(idIngreso),
-    FOREIGN KEY (idAfeccion)    REFERENCES  Afeccion(idAfeccion)
+    FOREIGN KEY (idIngreso)     REFERENCES  Ingreso(idIngreso)      ON DELETE CASCADE,
+    FOREIGN KEY (idAfeccion)    REFERENCES  Afeccion(idAfeccion)    ON DELETE CASCADE
 );
 
 CREATE TABLE Proveedor_Producto(
     idProducto      INT UNSIGNED,
     rncProveedor    INT UNSIGNED,
     PRIMARY KEY (idProducto, idProveedor),
-    FOREIGN KEY (consultaCodigo)    REFERENCES  Consulta(consultaCodigo),
-    FOREIGN KEY (idProducto)        REFERENCES  Producto(idProducto)
+    FOREIGN KEY (consultaCodigo)    REFERENCES  Consulta(consultaCodigo)    ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (idProducto)        REFERENCES  Producto(idProducto)        ON DELETE CASCADE
 );
+
