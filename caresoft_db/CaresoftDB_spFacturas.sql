@@ -1,4 +1,5 @@
 -- STORED PROCEDURES RELACIONADOS CON LA FACTURACION EN EL SISTEMA
+USE CaresoftDB;
 
 -- 1. Creación de factura para consulta
 DROP PROCEDURE IF EXISTS spFacturaCrearConsulta;
@@ -8,16 +9,16 @@ CREATE PROCEDURE spFacturaCrearConsulta(
     IN p_idCuenta INT UNSIGNED,
     IN p_consultaCodigo VARCHAR(30),
     IN p_idSucursal INT UNSIGNED,
-    IN p_documentoCajero VARCHAR(30),
+    IN p_documentoCajero VARCHAR(30)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     INSERT INTO Factura (facturaCodigo, idCuenta, consultaCodigo, idSucursal, documentoCajero)
     VALUES (p_facturaCodigo, p_idCuenta, p_consultaCodigo, p_idSucursal, p_documentoCajero);
@@ -34,16 +35,16 @@ CREATE PROCEDURE spFacturaCrearIngreso(
     IN p_idCuenta INT UNSIGNED,
     IN p_idIngreso INT UNSIGNED,
     IN p_idSucursal INT UNSIGNED,
-    IN p_documentoCajero VARCHAR(30),
+    IN p_documentoCajero VARCHAR(30)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     INSERT INTO Factura (facturaCodigo, idCuenta, idIngreso, idSucursal, documentoCajero)
     VALUES (p_facturaCodigo, p_idCuenta, p_idIngreso, p_idSucursal, p_documentoCajero);
@@ -59,16 +60,16 @@ CREATE PROCEDURE spFacturaCrear(
     IN p_facturaCodigo VARCHAR(30),
     IN p_idCuenta INT UNSIGNED,
     IN p_idSucursal INT UNSIGNED,
-    IN p_documentoCajero VARCHAR(30),
+    IN p_documentoCajero VARCHAR(30)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     INSERT INTO Factura (facturaCodigo, idCuenta, idSucursal, documentoCajero)
     VALUES (p_facturaCodigo, p_idCuenta, p_idSucursal, p_documentoCajero);
@@ -83,21 +84,21 @@ DELIMITER //
 CREATE PROCEDURE spFacturaActualizar(
     IN p_facturaCodigo VARCHAR(30),
     IN p_idCuenta INT UNSIGNED,
-    IN p_consultaCodigo VARCHAR(30) NULL,
-    IN p_idIngreso INT UNSIGNED NULL,
+    IN p_consultaCodigo VARCHAR(30),
+    IN p_idIngreso INT UNSIGNED,
     IN p_idSucursal INT UNSIGNED,
     IN p_documentoCajero VARCHAR(30),
     IN p_montoSubtotal DECIMAL(10,2),
     IN p_montoTotal DECIMAL(10,2)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     UPDATE Factura
     SET idCuenta = p_idCuenta,
@@ -120,13 +121,13 @@ CREATE PROCEDURE spFacturaEliminar(
     IN p_facturaCodigo VARCHAR(30)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     DELETE FROM Factura WHERE facturaCodigo = p_facturaCodigo;
 
@@ -138,9 +139,9 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS spFacturaListar;
 DELIMITER //
 CREATE PROCEDURE spFacturaListar(
-    IN p_documentoCajero VARCHAR(30) NULL,
-    IN p_fechaInicio DATETIME NULL,
-    IN p_fechaFin DATETIME NULL
+    IN p_documentoCajero VARCHAR(30),
+    IN p_fechaInicio DATETIME,
+    IN p_fechaFin DATETIME
 )
 BEGIN
     -- Verificar si se han proporcionado filtros
@@ -182,13 +183,13 @@ CREATE PROCEDURE spFacturaRelacionarServicio(
     IN p_costo DECIMAL(10,2)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     INSERT INTO Factura_Servicio (facturaCodigo, servicioCodigo, resultados, costo)
     VALUES (p_facturaCodigo, p_servicioCodigo, p_resultados, p_costo);
@@ -207,13 +208,13 @@ CREATE PROCEDURE spFacturaRelacionarProducto(
     IN p_costo DECIMAL(10,2)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     INSERT INTO Factura_Producto (facturaCodigo, idProducto, resultados, costo)
     VALUES (p_facturaCodigo, p_idProducto, p_resultados, p_costo);

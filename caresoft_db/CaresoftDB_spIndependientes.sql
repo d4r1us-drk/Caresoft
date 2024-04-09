@@ -1,19 +1,20 @@
 -- STORED PROCEDURES RELACIONADOS A TABLAS INDEPENDIENTES
+USE CaresoftDB;
 
 -- 1. Crear una nueva sala
 DROP PROCEDURE IF EXISTS spSalaCrear;
 DELIMITER //
 CREATE PROCEDURE spSalaCrear(
-    IN p_estado ENUM('D', 'O') DEFAULT 'D' -- Disponible por defecto
+    IN p_estado ENUM('D', 'O') -- Disponible por defecto
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     -- Insertar la nueva sala
     INSERT INTO Sala (estado) VALUES (p_estado);
@@ -38,13 +39,13 @@ CREATE PROCEDURE spSalaToggleEstado(
     IN p_numSala INT UNSIGNED
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     -- Obtener el estado actual de la sala
     SELECT estado INTO @estadoActual FROM Sala WHERE numSala = p_numSala;
@@ -67,13 +68,13 @@ CREATE PROCEDURE spSalaEliminar(
     IN p_numSala INT UNSIGNED
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     -- Eliminar la sala
     DELETE FROM Sala WHERE numSala = p_numSala;
@@ -89,13 +90,13 @@ CREATE PROCEDURE spTipoServicioCrear(
     IN p_nombre NVARCHAR(100)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
     
     INSERT INTO TipoServicio(nombre) VALUES (p_nombre);
 
@@ -120,13 +121,13 @@ CREATE PROCEDURE spTipoServicioActualizar(
     IN p_nuevoNombre NVARCHAR(100)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
     
     UPDATE TipoServicio SET nombre = p_nuevoNombre WHERE idTipoServicio = p_idTipoServicio;
 
@@ -141,13 +142,13 @@ CREATE PROCEDURE spTipoServicioEliminar(
     IN p_idTipoServicio INT UNSIGNED
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     DELETE FROM TipoServicio WHERE idTipoServicio = p_idTipoServicio;
 
@@ -165,13 +166,13 @@ CREATE PROCEDURE spAseguradoraCrear(
     IN p_correo NVARCHAR(255)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
     
     INSERT INTO Aseguradora(nombre, direccion, telefono, correo) VALUES (p_nombre, p_direccion, p_telefono, p_correo);
 
@@ -232,14 +233,14 @@ CREATE PROCEDURE spAseguradoraActualizar(
     IN p_correo NVARCHAR(255)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
-    
+
+    START TRANSACTION;
+
     UPDATE Aseguradora SET
         nombre = p_nombre,
         direccion = p_direccion,
@@ -258,13 +259,13 @@ CREATE PROCEDURE spAseguradoraEliminar(
     IN p_idAseguradora INT UNSIGNED
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     DELETE FROM Aseguradora WHERE idAseguradora = p_idAseguradora;
 
@@ -281,13 +282,13 @@ CREATE PROCEDURE spSucursalCrear(
     IN p_telefono VARCHAR(18)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     INSERT INTO Sucursal (nombre, direccion, telefono)
     VALUES (p_nombre, p_direccion, p_telefono);
@@ -315,13 +316,13 @@ CREATE PROCEDURE spSucursalActualizar(
     IN p_telefono VARCHAR(18)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     UPDATE Sucursal
     SET nombre = p_nombre, direccion = p_direccion, telefono = p_telefono
@@ -338,13 +339,13 @@ CREATE PROCEDURE spSucursalEliminar(
     IN p_idSucursal INT UNSIGNED
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     DELETE FROM Sucursal WHERE idSucursal = p_idSucursal;
 
@@ -359,13 +360,13 @@ CREATE PROCEDURE spMetodoPagoCrear(
     IN p_nombre NVARCHAR(100)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     INSERT INTO MetodoPago (nombre)
     VALUES (p_nombre);
@@ -391,13 +392,13 @@ CREATE PROCEDURE spMetodoPagoActualizar(
     IN p_nombre NVARCHAR(100)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     UPDATE MetodoPago
     SET nombre = p_nombre
@@ -414,13 +415,13 @@ CREATE PROCEDURE spMetodoPagoEliminar(
     IN p_idMetodoPago INT UNSIGNED
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     DELETE FROM MetodoPago WHERE idMetodoPago = p_idMetodoPago;
 
@@ -439,13 +440,13 @@ CREATE PROCEDURE spProveedorCrear(
     IN p_correo NVARCHAR(255)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     INSERT INTO Proveedor (rncProveedor, nombre, direccion, telefono, correo)
     VALUES (p_rncProveedor, p_nombre, p_direccion, p_telefono, p_correo);
@@ -475,13 +476,13 @@ CREATE PROCEDURE spProveedorActualizar(
     IN p_correo NVARCHAR(255)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     UPDATE Proveedor
     SET nombre = p_nombre, direccion = p_direccion, telefono = p_telefono, correo = p_correo
@@ -498,13 +499,13 @@ CREATE PROCEDURE spProveedorEliminar(
     IN p_rncProveedor INT UNSIGNED
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     DELETE FROM Proveedor WHERE rncProveedor = p_rncProveedor;
 
@@ -523,13 +524,13 @@ CREATE PROCEDURE spServicioCrear(
     IN p_costo DECIMAL(10,2)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     INSERT INTO Servicio (servicioCodigo, idTipoServicio, nombre, descripcion, costo)
     VALUES (p_servicioCodigo, p_idTipoServicio, p_nombre, p_descripcion, p_costo);
@@ -558,13 +559,13 @@ CREATE PROCEDURE spServicioActualizar(
     IN p_costo DECIMAL(10,2)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     UPDATE Servicio
     SET idTipoServicio = p_idTipoServicio, nombre = p_nombre, descripcion = p_descripcion, costo = p_costo
@@ -581,13 +582,13 @@ CREATE PROCEDURE spServicioEliminar(
     IN p_servicioCodigo VARCHAR(30)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     DELETE FROM Servicio WHERE servicioCodigo = p_servicioCodigo;
 

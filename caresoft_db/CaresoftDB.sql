@@ -68,8 +68,8 @@ CREATE TABLE Proveedor(
     rncProveedor    INT UNSIGNED    PRIMARY KEY,
     nombre          NVARCHAR(100)   NOT NULL,
     direccion       NVARCHAR(255)   NOT NULL,
-    telefono        VARCHAR(18)     NOT NULL
-    correo          NVARCHAR(255)   NOT NULL,
+    telefono        VARCHAR(18)     NOT NULL,
+    correo          NVARCHAR(255)   NOT NULL
 );
 
 CREATE TABLE Aseguradora(
@@ -137,8 +137,7 @@ CREATE TABLE Consulta(
     FOREIGN KEY (documentoPaciente) REFERENCES PerfilUsuario(documento)     ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (documentoMedico)   REFERENCES PerfilUsuario(documento)     ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (idConsultorio)     REFERENCES Consultorio(idConsultorio)   ON DELETE CASCADE,
-    FOREIGN KEY (idAutorizacion)    REFERENCES Autorizacion(idAutorizacion) ON DELETE CASCADE,
-    CONSTRAINT chk_documento_diferente_consulta CHECK (documentoPaciente != documentoMedico) -- No permitir que un solo registro de documento ocupe ambos campos
+    FOREIGN KEY (idAutorizacion)    REFERENCES Autorizacion(idAutorizacion) ON DELETE CASCADE
 );
 
 CREATE TABLE Ingreso(
@@ -156,12 +155,7 @@ CREATE TABLE Ingreso(
     FOREIGN KEY (documentoMedico)       REFERENCES PerfilUsuario(documento)     ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (documentoEnfermero)    REFERENCES PerfilUsuario(documento)     ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (idAutorizacion)        REFERENCES Autorizacion(idAutorizacion) ON DELETE CASCADE,
-    FOREIGN KEY (numSala)               REFERENCES Sala(numSala)                ON DELETE CASCADE,
-    CONSTRAINT chk_documento_diferente_ingreso CHECK (
-        documentoPaciente != documentoEnfermero 
-        AND documentoPaciente != documentoMedico 
-        AND documentoEnfermero != documentoMedico
-    ) -- No permitir que un solo registro de documento ocupe mas de un campo
+    FOREIGN KEY (numSala)               REFERENCES Sala(numSala)                ON DELETE CASCADE
 );
 
 CREATE TABLE Factura(
@@ -225,8 +219,7 @@ CREATE TABLE ReservaServicio(
     PRIMARY KEY (idReserva, documentoPaciente, documentoMedico, servicioCodigo),
     FOREIGN KEY (documentoPaciente) REFERENCES  PerfilUsuario(documento)    ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (documentoMedico)   REFERENCES  PerfilUsuario(documento)    ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (servicioCodigo)    REFERENCES  Servicio(servicioCodigo)    ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT chk_documento_diferente_reserva CHECK (documentoPaciente != documentoMedico) -- No permitir que un solo registro de documento ocupe ambos campos
+    FOREIGN KEY (servicioCodigo)    REFERENCES  Servicio(servicioCodigo)    ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE PrescripcionServicio(
@@ -265,7 +258,7 @@ CREATE TABLE IngresoAfeccion(
 CREATE TABLE Proveedor_Producto(
     idProducto      INT UNSIGNED,
     rncProveedor    INT UNSIGNED,
-    PRIMARY KEY (idProducto, idProveedor),
-    FOREIGN KEY (consultaCodigo)    REFERENCES  Consulta(consultaCodigo)    ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (idProducto)        REFERENCES  Producto(idProducto)        ON DELETE CASCADE
+    PRIMARY KEY (idProducto, rncProveedor),
+    FOREIGN KEY (rncProveedor)  REFERENCES  Proveedor(rncProveedor)    ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (idProducto)    REFERENCES  Producto(idProducto)       ON DELETE CASCADE
 );

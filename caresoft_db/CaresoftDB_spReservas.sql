@@ -1,4 +1,5 @@
 -- STORED PROCEDURES RELACIONADOS A LAS RESERVAS DE UN PACIENTE
+USE CaresoftDB;
 
 -- 1. Creación de una reserva
 DROP PROCEDURE IF EXISTS CrearReservaServicio;
@@ -10,13 +11,13 @@ CREATE PROCEDURE CrearReservaServicio(
     IN p_fechaReserva DATETIME
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
     
     -- Verificar si el paciente y el médico existen
     SELECT COUNT(*) INTO @pacienteExiste FROM PerfilUsuario WHERE documento = p_documentoPaciente;
@@ -67,13 +68,13 @@ CREATE PROCEDURE ActualizarDatosReservaServicio(
     IN p_fechaReserva DATETIME
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     -- Verificar si la reserva existe
     SELECT COUNT(*) INTO @reservaExiste FROM ReservaServicio WHERE idReserva = p_idReserva;
@@ -130,13 +131,13 @@ CREATE PROCEDURE CambiarEstadoReservaServicio(
     IN p_idReserva INT UNSIGNED
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     -- Verificar si la reserva existe
     SELECT COUNT(*) INTO @reservaExiste FROM ReservaServicio WHERE idReserva = p_idReserva;
@@ -217,13 +218,13 @@ CREATE PROCEDURE EliminarReserva(
     IN p_idReserva INT UNSIGNED
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     DELETE FROM ReservaServicio WHERE idReserva = p_idReserva;
 

@@ -1,4 +1,5 @@
 -- STORED PROCEDURES RELACIONADOS A LAS AUTORIZACIONES DE SEGURO
+USE CaresoftDB;
 
 -- 1. Crear una nueva autorización de seguro
 DROP PROCEDURE IF EXISTS spAutorizacionCrear;
@@ -6,15 +7,13 @@ DELIMITER //
 CREATE PROCEDURE spAutorizacionCrear(
     IN p_idAseguradora INT UNSIGNED,
     IN p_montoAsegurado DECIMAL(10,2),
-    IN p_facturaCodigo VARCHAR(30) NULL,
-    IN p_idIngreso INT UNSIGNED NULL,
-    IN p_consultaCodigo VARCHAR(30) NULL,
-    IN p_servicioCodigo VARCHAR(30) NULL,
-    IN p_idProducto INT UNSIGNED NULL
+    IN p_facturaCodigo VARCHAR(30),
+    IN p_idIngreso INT UNSIGNED,
+    IN p_consultaCodigo VARCHAR(30),
+    IN p_servicioCodigo VARCHAR(30),
+    IN p_idProducto INT UNSIGNED
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE autorizacion_id INT UNSIGNED;
     
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
@@ -22,6 +21,8 @@ BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     -- Insertar la autorización
     INSERT INTO Autorizacion (idAseguradora, montoAsegurado) VALUES (p_idAseguradora, p_montoAsegurado);
@@ -62,13 +63,13 @@ CREATE PROCEDURE spAutorizacionActualizar(
     IN p_montoAsegurado DECIMAL(10,2)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     UPDATE Autorizacion SET idAseguradora = p_idAseguradora, montoAsegurado = p_montoAsegurado WHERE idAutorizacion = p_idAutorizacion;
 
@@ -83,16 +84,34 @@ CREATE PROCEDURE spAutorizacionEliminar(
     IN p_idAutorizacion INT UNSIGNED
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
 
+    START TRANSACTION;
+
     DELETE FROM Autorizacion WHERE idAutorizacion = p_idAutorizacion;
 
     COMMIT;
+END //
+DELIMITER ;
+
+-- 4. Listar todas las autorizaciones con la opción de filtrar por ID de aseguradora
+DROP PROCEDURE IF EXISTS spAutorizacionListar;
+DELIMITER //
+CREATE PROCEDURE spAutorizacionListar(
+    IN p_idAseguradora INT UNSIGNED
+)
+BEGIN
+    -- Verificar si se ha proporcionado un filtro de aseguradora
+    IF p_idAseguradora IS NULL THEN
+        -- Si no se proporciona un filtro, seleccionar todas las autorizaciones
+        SELECT * FROM Autorizacion;
+    ELSE
+        -- Si se proporciona un filtro, seleccionar las autorizaciones para la aseguradora específica
+        SELECT * FROM Autorizacion WHERE idAseguradora = p_idAseguradora;
+    END IF;
 END //
 DELIMITER ;

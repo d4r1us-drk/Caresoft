@@ -1,4 +1,5 @@
 -- STORED PROCEDURES RELACIONADOS A LAS CONSULTAS
+USE CaresoftDB;
 
 -- 1. Creación de consulta
 DROP PROCEDURE IF EXISTS spConsultaCrear;
@@ -14,13 +15,13 @@ CREATE PROCEDURE spConsultaCrear(
     IN p_estado ENUM('P', 'R')  -- Estado de la consulta
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     -- Crear la nueva consulta
     INSERT INTO Consulta (consultaCodigo, documentoPaciente, documentoMedico, idConsultorio, motivo, comentarios, costo, estado)
@@ -43,13 +44,13 @@ CREATE PROCEDURE spConsultaActualizar(
     IN p_costo DECIMAL(10,2)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     -- Actualizar los datos de la consulta
     UPDATE Consulta
@@ -72,13 +73,13 @@ CREATE PROCEDURE spConsultaEliminar(
     IN p_consultaCodigo VARCHAR(30)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     DELETE FROM Consulta WHERE consultaCodigo = p_consultaCodigo;
 
@@ -94,13 +95,13 @@ CREATE PROCEDURE spConsultaPrescribirServicio(
     IN p_servicioCodigo VARCHAR(30)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     -- Prescribir el servicio en la consulta
     INSERT INTO PrescripcionServicio (consultaCodigo, servicioCodigo) VALUES (p_consultaCodigo, p_servicioCodigo);
@@ -118,13 +119,13 @@ CREATE PROCEDURE spConsultaPrescribirProducto(
     IN p_cantidad INT
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     -- Prescribir el producto en la consulta
     INSERT INTO PrescripcionProducto (consultaCodigo, idProducto, cantidad) VALUES (p_consultaCodigo, p_idProducto, p_cantidad);
@@ -141,13 +142,13 @@ CREATE PROCEDURE spConsultaInsertarAfeccion(
     IN p_idAfeccion INT UNSIGNED
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     -- Registrar la afección tratada en la consulta
     INSERT INTO ConsultaAfeccion (consultaCodigo, idAfeccion) VALUES (p_consultaCodigo, p_idAfeccion);
@@ -160,10 +161,10 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS spListarConsultas;
 DELIMITER //
 CREATE PROCEDURE spListarConsultas(
-    IN p_documentoPaciente VARCHAR(30) NULL,
-    IN p_documentoMedico VARCHAR(30) NULL,
-    IN p_fechaInicio DATETIME NULL,
-    IN p_fechaFin DATETIME NULL
+    IN p_documentoPaciente VARCHAR(30),
+    IN p_documentoMedico VARCHAR(30),
+    IN p_fechaInicio DATETIME,
+    IN p_fechaFin DATETIME
 )
 BEGIN
     -- Verificar si se han proporcionado filtros

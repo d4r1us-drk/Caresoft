@@ -1,6 +1,19 @@
 -- TRIGGERS RELACIONADOS A LA ACTUALIZACION DE SUBTOTAL Y TOTAL EN FACTURAS
+USE CaresoftDB;
+
+-- Drop triggers
+DROP TRIGGER IF EXISTS trActualizarFacturaAfterInsertProducto;
+DROP TRIGGER IF EXISTS trActualizarFacturaAfterInsertServicio;
+DROP TRIGGER IF EXISTS trActualizarFacturaAfterInsertFacturaIngreso;
+DROP TRIGGER IF EXISTS trActualizarFacturaAfterInsertFacturaConsulta;
+DROP TRIGGER IF EXISTS trActualizarMontoTotalFacturaAfterUpdateServicio;
+DROP TRIGGER IF EXISTS trActualizarMontoTotalFacturaAfterUpdateProducto;
+DROP TRIGGER IF EXISTS trActualizarMontoTotalFacturaAfterUpdateIngreso;
+DROP TRIGGER IF EXISTS trActualizarMontoTotalFacturaAfterUpdateConsulta;
 
 DELIMITER //
+
+-- Create triggers
 CREATE TRIGGER trActualizarFacturaAfterInsertProducto
 AFTER INSERT ON Factura_Producto
 FOR EACH ROW
@@ -8,27 +21,15 @@ BEGIN
     DECLARE subtotal DECIMAL(10,2);
     DECLARE montoTotal DECIMAL(10,2);
     
-    -- Obtener el monto subtotal actual de la factura
     SELECT montoSubtotal INTO subtotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-    
-    -- Calcular el nuevo monto subtotal sumando el costo del producto insertado
     SET subtotal = subtotal + NEW.costo;
-    
-    -- Actualizar el monto subtotal en la factura
     UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
     
-    -- Obtener el monto total actual de la factura
     SELECT montoTotal INTO montoTotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-    
-    -- Actualizar el monto total sumando el costo del producto insertado
     SET montoTotal = montoTotal + NEW.costo;
-    
-    -- Actualizar el monto total en la factura
     UPDATE Factura SET montoTotal = montoTotal WHERE facturaCodigo = NEW.facturaCodigo;
 END //
-DELIMITER;
 
-DELIMITER //
 CREATE TRIGGER trActualizarFacturaAfterInsertServicio
 AFTER INSERT ON Factura_Servicio
 FOR EACH ROW
@@ -36,89 +37,58 @@ BEGIN
     DECLARE subtotal DECIMAL(10,2);
     DECLARE montoTotal DECIMAL(10,2);
     
-    -- Obtener el monto subtotal actual de la factura
     SELECT montoSubtotal INTO subtotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-    
-    -- Calcular el nuevo monto subtotal sumando el costo del servicio insertado
     SET subtotal = subtotal + NEW.costo;
-    
-    -- Actualizar el monto subtotal en la factura
     UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
     
-    -- Obtener el monto total actual de la factura
     SELECT montoTotal INTO montoTotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-    
-    -- Actualizar el monto total sumando el costo del servicio insertado
     SET montoTotal = montoTotal + NEW.costo;
-    
-    -- Actualizar el monto total en la factura
     UPDATE Factura SET montoTotal = montoTotal WHERE facturaCodigo = NEW.facturaCodigo;
 END //
-DELIMITER;
 
-DELIMITER //
 CREATE TRIGGER trActualizarFacturaAfterInsertFacturaIngreso
 AFTER INSERT ON Factura
 FOR EACH ROW
 BEGIN
     DECLARE subtotal DECIMAL(10,2);
     DECLARE montoTotal DECIMAL(10,2);
+    DECLARE costoEstancia DECIMAL(10,2);
     
-    -- Verificar si se proporcionó el idIngreso en la factura
     IF NEW.idIngreso IS NOT NULL THEN
-        -- Obtener el monto subtotal actual de la factura
         SELECT montoSubtotal INTO subtotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-        
-        -- Calcular el nuevo monto subtotal sumando el costo del ingreso
-        SET subtotal = subtotal + NEW.costoEstancia;
-        
-        -- Actualizar el monto subtotal en la factura
+        SELECT costoEstancia INTO costoEstancia FROM Ingreso WHERE idIngreso = NEW.idIngreso;
+    
+        SET subtotal = subtotal + costoEstancia;
+    
         UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
         
-        -- Obtener el monto total actual de la factura
         SELECT montoTotal INTO montoTotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-        
-        -- Actualizar el monto total sumando el costo del ingreso
-        SET montoTotal = montoTotal + NEW.costoEstancia;
-        
-        -- Actualizar el monto total en la factura
+        SET montoTotal = montoTotal + costoEstancia;
         UPDATE Factura SET montoTotal = montoTotal WHERE facturaCodigo = NEW.facturaCodigo;
     END IF;
 END //
-DELIMITER;
 
-DELIMITER //
 CREATE TRIGGER trActualizarFacturaAfterInsertFacturaConsulta
 AFTER INSERT ON Factura
 FOR EACH ROW
 BEGIN
     DECLARE subtotal DECIMAL(10,2);
     DECLARE montoTotal DECIMAL(10,2);
+    DECLARE costo   DECIMAL(10,2);
     
-    -- Verificar si se proporcionó el consultaCodigo en la factura
     IF NEW.consultaCodigo IS NOT NULL THEN
-        -- Obtener el monto subtotal actual de la factura
         SELECT montoSubtotal INTO subtotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-        
-        -- Calcular el nuevo monto subtotal sumando el costo de la consulta
-        SET subtotal = subtotal + NEW.costo;
-        
-        -- Actualizar el monto subtotal en la factura
+        SELECT montoTotal INTO montoTotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
+        SELECT costo INTO costo FROM Consulta WHERE consultaCodigo = NEW.consultaCodigo;
+    
+        SET subtotal = subtotal + costo;
         UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
         
-        -- Obtener el monto total actual de la factura
-        SELECT montoTotal INTO montoTotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-        
-        -- Actualizar el monto total sumando el costo de la consulta
-        SET montoTotal = montoTotal + NEW.costo;
-        
-        -- Actualizar el monto total en la factura
+        SET montoTotal = montoTotal + costo;
         UPDATE Factura SET montoTotal = montoTotal WHERE facturaCodigo = NEW.facturaCodigo;
     END IF;
 END //
-DELIMITER;
 
-DELIMITER //
 CREATE TRIGGER trActualizarMontoTotalFacturaAfterUpdateServicio
 AFTER UPDATE ON Factura_Servicio
 FOR EACH ROW
@@ -130,9 +100,7 @@ BEGIN
         WHERE f.facturaCodigo = NEW.facturaCodigo;
     END IF;
 END //
-DELIMITER ;
 
-DELIMITER //
 CREATE TRIGGER trActualizarMontoTotalFacturaAfterUpdateProducto
 AFTER UPDATE ON Factura_Producto
 FOR EACH ROW
@@ -144,9 +112,7 @@ BEGIN
         WHERE f.facturaCodigo = NEW.facturaCodigo;
     END IF;
 END //
-DELIMITER ;
 
-DELIMITER //
 CREATE TRIGGER trActualizarMontoTotalFacturaAfterUpdateIngreso
 AFTER UPDATE ON Ingreso
 FOR EACH ROW
@@ -158,9 +124,7 @@ BEGIN
         WHERE f.idIngreso = NEW.idIngreso;
     END IF;
 END //
-DELIMITER ;
 
-DELIMITER //
 CREATE TRIGGER trActualizarMontoTotalFacturaAfterUpdateConsulta
 AFTER UPDATE ON Consulta
 FOR EACH ROW
@@ -172,4 +136,5 @@ BEGIN
         WHERE f.consultaCodigo = NEW.consultaCodigo;
     END IF;
 END //
+
 DELIMITER ;

@@ -18,7 +18,8 @@ CREATE PROCEDURE spUsuarioCrearPaciente(
     IN p_usuarioContra NVARCHAR(255)
 )
 BEGIN
-    START TRANSACTION;
+    DECLARE perfil_doc_exist INT;
+    DECLARE cuenta_doc_exist INT;
 
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
@@ -26,8 +27,7 @@ BEGIN
         RESIGNAL;
     END;
 
-    DECLARE perfil_doc_exist INT;
-    DECLARE cuenta_doc_exist INT;
+    START TRANSACTION;
 
     -- Verificar si el documento ya existe en PerfilUsuario
     SELECT COUNT(*) INTO perfil_doc_exist FROM PerfilUsuario WHERE documento = p_documento;
@@ -72,7 +72,8 @@ CREATE PROCEDURE spUsuarioCrearPersonal(
     IN p_usuarioContra NVARCHAR(255)
 )
 BEGIN
-    START TRANSACTION;
+    DECLARE perfil_doc_exist INT;
+    DECLARE cuenta_doc_exist INT;
 
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
@@ -80,8 +81,7 @@ BEGIN
         RESIGNAL;
     END;
 
-    DECLARE perfil_doc_exist INT;
-    DECLARE cuenta_doc_exist INT;
+    START TRANSACTION;
 
     -- Verificar si el documento ya existe en PerfilUsuario
     SELECT COUNT(*) INTO perfil_doc_exist FROM PerfilUsuario WHERE documento = p_documento;
@@ -124,7 +124,8 @@ CREATE PROCEDURE spUsuarioCrearPersonalMedico(
     IN p_usuarioContra NVARCHAR(255)
 )
 BEGIN
-    START TRANSACTION;
+    DECLARE perfil_doc_exist INT;
+    DECLARE cuenta_doc_exist INT;
 
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
@@ -132,8 +133,7 @@ BEGIN
         RESIGNAL;
     END;
 
-    DECLARE perfil_doc_exist INT;
-    DECLARE cuenta_doc_exist INT;
+    START TRANSACTION;
 
     -- Verificar si el documento ya existe en PerfilUsuario
     SELECT COUNT(*) INTO perfil_doc_exist FROM PerfilUsuario WHERE documento = p_documento;
@@ -172,13 +172,13 @@ CREATE PROCEDURE spUsuarioActualizarDatos(
     IN p_direccion NVARCHAR(255)
 )
 BEGIN
-    START TRANSACTION;
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
+
+    START TRANSACTION;
 
     -- Actualizar los datos de PerfilUsuario
     UPDATE PerfilUsuario
@@ -250,7 +250,8 @@ CREATE PROCEDURE spUsuarioEliminar(
     IN p_documentoOUsuarioCodigo VARCHAR(30)
 )
 BEGIN
-    START TRANSACTION;
+    DECLARE esUsuarioCodigo INT;
+    DECLARE documentoUsuario VARCHAR(30);
 
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
@@ -258,8 +259,7 @@ BEGIN
         RESIGNAL;
     END;
 
-    DECLARE esUsuarioCodigo INT;
-    DECLARE documentoUsuario VARCHAR(30);
+    START TRANSACTION;
 
     -- Verificar si el parámetro es un código de usuario o un documento
     SELECT COUNT(*) INTO esUsuarioCodigo FROM Usuario WHERE usuarioCodigo = p_documentoOUsuarioCodigo;
