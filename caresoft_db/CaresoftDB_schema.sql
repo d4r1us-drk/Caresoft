@@ -15,9 +15,7 @@ CREATE TABLE PerfilUsuario(
     telefono            VARCHAR(18)                     NOT NULL,
     correo              NVARCHAR(255)                   NOT NULL,
     direccion           NVARCHAR(255)                   NULL,
-    rol                 ENUM('P', 'A', 'M', 'E', 'C')   NOT NULL,          -- Paciente, Administrador, Médico, Enfermero, Cajero
-    -- Impide la insersion de un medico o enfermero sin número de licencia
-    CONSTRAINT chk_numLicenciaMedica_medico_enfermero CHECK ((rol = 'M' OR rol = 'E') AND (numLicenciaMedica IS NOT NULL)) 
+    rol                 ENUM('P', 'A', 'M', 'E', 'C')   NOT NULL          -- Paciente, Administrador, Médico, Enfermero, Cajero
 );
 
 CREATE TABLE Usuario(
@@ -2193,7 +2191,7 @@ CREATE PROCEDURE spUsuarioEliminar(
 )
 BEGIN
     DECLARE esUsuarioCodigo INT;
-    DECLARE documentoUsuario VARCHAR(30);
+    DECLARE documento VARCHAR(30);
 
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
     BEGIN
@@ -2208,9 +2206,9 @@ BEGIN
 
     IF esUsuarioCodigo > 0 THEN
         -- Obtener el documento del usuario a partir del código de usuario
-        SELECT documentoUsuario INTO documentoUsuario FROM Usuario WHERE usuarioCodigo = p_documentoOUsuarioCodigo;
+        SELECT documentoUsuario INTO documento FROM Usuario WHERE usuarioCodigo = p_documentoOUsuarioCodigo;
         -- Eliminar usuario por código de usuario y su perfil asociado
-        DELETE FROM PerfilUsuario WHERE documento = documentoUsuario;
+        DELETE FROM PerfilUsuario WHERE documento = documento;
     ELSE
         -- Eliminar usuario por documento y su perfil asociado
         DELETE FROM PerfilUsuario WHERE documento = p_documentoOUsuarioCodigo;
@@ -2228,15 +2226,15 @@ AFTER INSERT ON Factura_Producto
 FOR EACH ROW
 BEGIN
     DECLARE subtotal DECIMAL(10,2);
-    DECLARE montoTotal DECIMAL(10,2);
+    DECLARE total DECIMAL(10,2);
     
     SELECT montoSubtotal INTO subtotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
     SET subtotal = subtotal + NEW.costo;
     UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
     
-    SELECT montoTotal INTO montoTotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-    SET montoTotal = montoTotal + NEW.costo;
-    UPDATE Factura SET montoTotal = montoTotal WHERE facturaCodigo = NEW.facturaCodigo;
+    SELECT montoTotal INTO total FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
+    SET total = total + NEW.costo;
+    UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
 END //
 
 CREATE TRIGGER trActualizarFacturaAfterInsertServicio
@@ -2244,15 +2242,15 @@ AFTER INSERT ON Factura_Servicio
 FOR EACH ROW
 BEGIN
     DECLARE subtotal DECIMAL(10,2);
-    DECLARE montoTotal DECIMAL(10,2);
+    DECLARE total DECIMAL(10,2);
     
     SELECT montoSubtotal INTO subtotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
     SET subtotal = subtotal + NEW.costo;
     UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
     
-    SELECT montoTotal INTO montoTotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-    SET montoTotal = montoTotal + NEW.costo;
-    UPDATE Factura SET montoTotal = montoTotal WHERE facturaCodigo = NEW.facturaCodigo;
+    SELECT montoTotal INTO total FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
+    SET total = total + NEW.costo;
+    UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
 END //
 
 CREATE TRIGGER trActualizarFacturaAfterInsertFacturaIngreso
@@ -2260,20 +2258,20 @@ AFTER INSERT ON Factura
 FOR EACH ROW
 BEGIN
     DECLARE subtotal DECIMAL(10,2);
-    DECLARE montoTotal DECIMAL(10,2);
-    DECLARE costoEstancia DECIMAL(10,2);
+    DECLARE total DECIMAL(10,2);
+    DECLARE costo DECIMAL(10,2);
     
     IF NEW.idIngreso IS NOT NULL THEN
         SELECT montoSubtotal INTO subtotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-        SELECT costoEstancia INTO costoEstancia FROM Ingreso WHERE idIngreso = NEW.idIngreso;
+        SELECT costoEstancia INTO costo FROM Ingreso WHERE idIngreso = NEW.idIngreso;
     
-        SET subtotal = subtotal + costoEstancia;
+        SET subtotal = subtotal + costo;
     
         UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
         
-        SELECT montoTotal INTO montoTotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-        SET montoTotal = montoTotal + costoEstancia;
-        UPDATE Factura SET montoTotal = montoTotal WHERE facturaCodigo = NEW.facturaCodigo;
+        SELECT montoTotal INTO total FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
+        SET total = total + costo;
+        UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
     END IF;
 END //
 
@@ -2282,19 +2280,19 @@ AFTER INSERT ON Factura
 FOR EACH ROW
 BEGIN
     DECLARE subtotal DECIMAL(10,2);
-    DECLARE montoTotal DECIMAL(10,2);
-    DECLARE costo   DECIMAL(10,2);
+    DECLARE total DECIMAL(10,2);
+    DECLARE costoConsulta   DECIMAL(10,2);
     
     IF NEW.consultaCodigo IS NOT NULL THEN
         SELECT montoSubtotal INTO subtotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-        SELECT montoTotal INTO montoTotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-        SELECT costo INTO costo FROM Consulta WHERE consultaCodigo = NEW.consultaCodigo;
+        SELECT montoTotal INTO total FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
+        SELECT costo INTO costoConsulta FROM Consulta WHERE consultaCodigo = NEW.consultaCodigo;
     
-        SET subtotal = subtotal + costo;
+        SET subtotal = subtotal + costoConsulta;
         UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
         
-        SET montoTotal = montoTotal + costo;
-        UPDATE Factura SET montoTotal = montoTotal WHERE facturaCodigo = NEW.facturaCodigo;
+        SET total = total + costoConsulta;
+        UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
     END IF;
 END //
 
@@ -2379,4 +2377,14 @@ BEGIN
         SET MESSAGE_TEXT = 'El documento del paciente no puede ser igual al documento del médico';
     END IF;
 END //
+
+CREATE TRIGGER trVerificarNumLicenciaMedica BEFORE INSERT ON PerfilUsuario
+FOR EACH ROW
+BEGIN
+    IF (NEW.rol = 'M' OR NEW.rol = 'E') AND NEW.numLicenciaMedica IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Los médicos y enfermeros deben tener un número de licencia médica.';
+    END IF;
+END;
+//
+
 DELIMITER ;
