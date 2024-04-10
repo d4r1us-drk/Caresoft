@@ -530,7 +530,7 @@ DELIMITER ;
 
 -- 7. Listar consultas con filtros opcionales
 DELIMITER //
-CREATE PROCEDURE spListarConsultas(
+CREATE PROCEDURE spConsultasListar(
     IN p_documentoPaciente VARCHAR(30),
     IN p_documentoMedico VARCHAR(30),
     IN p_fechaInicio DATETIME,
@@ -882,7 +882,7 @@ DELIMITER ;
 
 -- 2. Leer información de una sala específica
 DELIMITER //
-CREATE PROCEDURE spSalaLeer()
+CREATE PROCEDURE spSalaListar()
 BEGIN
     SELECT * FROM Sala;
 END //
@@ -1929,7 +1929,7 @@ DELIMITER ;
 
 -- 5. Eliminar reserva
 DELIMITER //
-CREATE PROCEDURE EliminarReserva(
+CREATE PROCEDURE spReservaEliminar(
     IN p_idReserva INT UNSIGNED
 )
 BEGIN
