@@ -266,7 +266,6 @@ CREATE TABLE Proveedor_Producto(
 -- STORED PROCEDURES RELACIONADOS A LAS AUTORIZACIONES DE SEGURO
 
 -- 1. Crear una nueva autorización de seguro
-DROP PROCEDURE IF EXISTS spAutorizacionCrear;
 DELIMITER //
 CREATE PROCEDURE spAutorizacionCrear(
     IN p_idAseguradora INT UNSIGNED,
@@ -319,7 +318,6 @@ END //
 DELIMITER ;
 
 -- 2. Actualizar una autorización de seguro
-DROP PROCEDURE IF EXISTS spAutorizacionActualizar;
 DELIMITER //
 CREATE PROCEDURE spAutorizacionActualizar(
     IN p_idAutorizacion INT UNSIGNED,
@@ -342,7 +340,6 @@ END //
 DELIMITER ;
 
 -- 3. Eliminar una autorización de seguro
-DROP PROCEDURE IF EXISTS spAutorizacionEliminar;
 DELIMITER //
 CREATE PROCEDURE spAutorizacionEliminar(
     IN p_idAutorizacion INT UNSIGNED
@@ -363,7 +360,6 @@ END //
 DELIMITER ;
 
 -- 4. Listar todas las autorizaciones con la opción de filtrar por ID de aseguradora
-DROP PROCEDURE IF EXISTS spAutorizacionListar;
 DELIMITER //
 CREATE PROCEDURE spAutorizacionListar(
     IN p_idAseguradora INT UNSIGNED
@@ -383,7 +379,6 @@ DELIMITER ;
 -- STORED PROCEDURES RELACIONADOS A LAS CONSULTAS
 
 -- 1. Creación de consulta
-DROP PROCEDURE IF EXISTS spConsultaCrear;
 DELIMITER //
 CREATE PROCEDURE spConsultaCrear(
     IN p_consultaCodigo VARCHAR(30),
@@ -413,7 +408,6 @@ END //
 DELIMITER ;
 
 -- 2. Actualización de los datos de una consulta
-DROP PROCEDURE IF EXISTS spConsultaActualizar;
 DELIMITER //
 CREATE PROCEDURE spConsultaActualizar(
     IN p_consultaCodigo VARCHAR(30),
@@ -448,7 +442,6 @@ END //
 DELIMITER ;
 
 -- 3. Eliminación de una consulta
-DROP PROCEDURE IF EXISTS spConsultaEliminar;
 DELIMITER //
 CREATE PROCEDURE spConsultaEliminar(
     IN p_consultaCodigo VARCHAR(30)
@@ -469,7 +462,6 @@ END //
 DELIMITER ;
 
 -- 4. Prescribir un servicio en una consulta
-DROP PROCEDURE IF EXISTS spConsultaPrescribirServicio;
 DELIMITER //
 CREATE PROCEDURE spConsultaPrescribirServicio(
     IN p_consultaCodigo VARCHAR(30),
@@ -492,7 +484,6 @@ END //
 DELIMITER ;
 
 -- 5. Prescribir un producto en una consulta
-DROP PROCEDURE IF EXISTS spConsultaPrescribirProducto;
 DELIMITER //
 CREATE PROCEDURE spConsultaPrescribirProducto(
     IN p_consultaCodigo VARCHAR(30),
@@ -516,7 +507,6 @@ END //
 DELIMITER ;
 
 -- 6. Registrar una afección tratada en una consulta
-DROP PROCEDURE IF EXISTS spConsultaInsertarAfeccion;
 DELIMITER //
 CREATE PROCEDURE spConsultaInsertarAfeccion(
     IN p_consultaCodigo VARCHAR(30),
@@ -539,7 +529,6 @@ END //
 DELIMITER ;
 
 -- 7. Listar consultas con filtros opcionales
-DROP PROCEDURE IF EXISTS spListarConsultas;
 DELIMITER //
 CREATE PROCEDURE spListarConsultas(
     IN p_documentoPaciente VARCHAR(30),
@@ -584,7 +573,6 @@ DELIMITER ;
 -- STORED PROCEDURES RELACIONADOS CON LA FACTURACION EN EL SISTEMA
 
 -- 1. Creación de factura para consulta
-DROP PROCEDURE IF EXISTS spFacturaCrearConsulta;
 DELIMITER //
 CREATE PROCEDURE spFacturaCrearConsulta(
     IN p_facturaCodigo VARCHAR(30),
@@ -610,7 +598,6 @@ END //
 DELIMITER ;
 
 -- 2. Creación de factura para ingreso
-DROP PROCEDURE IF EXISTS spFacturaCrearIngreso;
 DELIMITER //
 CREATE PROCEDURE spFacturaCrearIngreso(
     IN p_facturaCodigo VARCHAR(30),
@@ -636,7 +623,6 @@ END //
 DELIMITER ;
 
 -- 3. Creación de factura cotidiana
-DROP PROCEDURE IF EXISTS spFacturaCrear;
 DELIMITER //
 CREATE PROCEDURE spFacturaCrear(
     IN p_facturaCodigo VARCHAR(30),
@@ -661,7 +647,6 @@ END //
 DELIMITER ;
 
 -- 4. Actualización de detalles de una factura, independientemente de su tipo
-DROP PROCEDURE IF EXISTS spFacturaActualizar;
 DELIMITER //
 CREATE PROCEDURE spFacturaActualizar(
     IN p_facturaCodigo VARCHAR(30),
@@ -697,7 +682,6 @@ END //
 DELIMITER ;
 
 -- 5. Eliminación de una factura por su código
-DROP PROCEDURE IF EXISTS spFacturaEliminar;
 DELIMITER //
 CREATE PROCEDURE spFacturaEliminar(
     IN p_facturaCodigo VARCHAR(30)
@@ -718,7 +702,6 @@ END //
 DELIMITER ;
 
 -- 6. Listar facturas utilizando filtros
-DROP PROCEDURE IF EXISTS spFacturaListar;
 DELIMITER //
 CREATE PROCEDURE spFacturaListar(
     IN p_documentoCajero VARCHAR(30),
@@ -755,8 +738,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- 5. Relacionar un servicio a una factura
-DROP PROCEDURE IF EXISTS spFacturaRelacionarServicio;
+-- 7. Relacionar un servicio a una factura
 DELIMITER //
 CREATE PROCEDURE spFacturaRelacionarServicio(
     IN p_facturaCodigo VARCHAR(30),
@@ -780,8 +762,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- 7. Relacionar un producto a una factura
-DROP PROCEDURE IF EXISTS spFacturaRelacionarProducto;
+-- 8. Relacionar un producto a una factura
 DELIMITER //
 CREATE PROCEDURE spFacturaRelacionarProducto(
     IN p_facturaCodigo VARCHAR(30),
@@ -805,10 +786,80 @@ BEGIN
 END //
 DELIMITER ;
 
+-- 9. Crear un pago
+DELIMITER //
+CREATE PROCEDURE spPagoCrear(
+    IN p_idCuenta INT UNSIGNED,
+    IN p_montoPagado DECIMAL(10,2)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
+    INSERT INTO Pago (idCuenta, montoPagado) VALUES (p_idCuenta, p_montoPagado);
+
+    COMMIT;
+END //
+DELIMITER ;
+
+-- 10. Actualizar un pago
+DELIMITER //
+CREATE PROCEDURE spPagoActualizar(
+    IN p_idPago INT UNSIGNED,
+    IN p_idCuenta INT UNSIGNED,
+    IN p_montoPagado DECIMAL(10,2)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
+    UPDATE Pago SET idCuenta = p_idCuenta, montoPagado = p_montoPagado WHERE idPago = p_idPago;
+
+    COMMIT;
+END //
+DELIMITER ;
+
+-- 11. Eliminar un pago
+DELIMITER //
+CREATE PROCEDURE spPagoEliminar(
+    IN p_idPago INT UNSIGNED
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
+    DELETE FROM Pago WHERE idPago = p_idPago;
+
+    COMMIT;
+END //
+DELIMITER ;
+
+-- 12. Obtener todos los pagos
+DELIMITER //
+CREATE PROCEDURE spPagoListar()
+BEGIN
+    SELECT * FROM Pago;
+END //
+DELIMITER ;
+
 -- STORED PROCEDURES RELACIONADOS A TABLAS INDEPENDIENTES
 
 -- 1. Crear una nueva sala
-DROP PROCEDURE IF EXISTS spSalaCrear;
 DELIMITER //
 CREATE PROCEDURE spSalaCrear(
     IN p_estado ENUM('D', 'O') -- Disponible por defecto
@@ -830,7 +881,6 @@ END //
 DELIMITER ;
 
 -- 2. Leer información de una sala específica
-DROP PROCEDURE IF EXISTS spSalaLeer;
 DELIMITER //
 CREATE PROCEDURE spSalaLeer()
 BEGIN
@@ -839,7 +889,6 @@ END //
 DELIMITER ;
 
 -- 3.  Actualizar el estado de una sala entre Disponible y Ocupada
-DROP PROCEDURE IF EXISTS spSalaToggleEstado;
 DELIMITER //
 CREATE PROCEDURE spSalaToggleEstado(
     IN p_numSala INT UNSIGNED
@@ -868,7 +917,6 @@ END //
 DELIMITER ;
 
 -- 4. Eliminar una sala
-DROP PROCEDURE IF EXISTS spSalaEliminar;
 DELIMITER //
 CREATE PROCEDURE spSalaEliminar(
     IN p_numSala INT UNSIGNED
@@ -890,7 +938,6 @@ END //
 DELIMITER ;
 
 -- 5. Crear un tipo de servicio
-DROP PROCEDURE IF EXISTS spTipoServicioCrear;
 DELIMITER //
 CREATE PROCEDURE spTipoServicioCrear(
     IN p_nombre NVARCHAR(100)
@@ -911,7 +958,6 @@ END //
 DELIMITER ;
 
 -- 6. Obtener lista de tipos de servicios
-DROP PROCEDURE IF EXISTS spTipoServicioListar;
 DELIMITER //
 CREATE PROCEDURE spTipoServicioListar()
 BEGIN
@@ -920,7 +966,6 @@ END //
 DELIMITER ;
 
 -- 7. Actualizar nombre de tipo de servicio
-DROP PROCEDURE IF EXISTS spTipoServicioActualizar;
 DELIMITER //
 CREATE PROCEDURE spTipoServicioActualizar(
     IN p_idTipoServicio INT UNSIGNED,
@@ -942,7 +987,6 @@ END //
 DELIMITER ;
 
 -- 8. Eliminar tipo de servicio
-DROP PROCEDURE IF EXISTS spTipoServicioEliminar;
 DELIMITER //
 CREATE PROCEDURE spTipoServicioEliminar(
     IN p_idTipoServicio INT UNSIGNED
@@ -963,7 +1007,6 @@ END //
 DELIMITER ;
 
 -- 9. Crear una aseguradora
-DROP PROCEDURE IF EXISTS spAseguradoraCrear;
 DELIMITER //
 CREATE PROCEDURE spAseguradoraCrear(
     IN p_nombre NVARCHAR(100),
@@ -987,7 +1030,6 @@ END //
 DELIMITER ;
 
 -- 10. Listar aseguradoras
-DROP PROCEDURE IF EXISTS spAseguradoraListar;
 DELIMITER //
 CREATE PROCEDURE spAseguradoraListar(
     IN p_idAseguradora INT UNSIGNED,
@@ -1029,7 +1071,6 @@ END //
 DELIMITER ;
 
 -- 11. Actualizar una aseguradora
-DROP PROCEDURE IF EXISTS spAseguradoraActualizar;
 DELIMITER //
 CREATE PROCEDURE spAseguradoraActualizar(
     IN p_idAseguradora INT UNSIGNED,
@@ -1059,7 +1100,6 @@ END //
 DELIMITER ;
 
 -- 12. Eliminar una aseguradora
-DROP PROCEDURE IF EXISTS spAseguradoraEliminar;
 DELIMITER //
 CREATE PROCEDURE spAseguradoraEliminar(
     IN p_idAseguradora INT UNSIGNED
@@ -1080,7 +1120,6 @@ END //
 DELIMITER ;
 
 -- 13. Crear sucursal
-DROP PROCEDURE IF EXISTS spSucursalCrear;
 DELIMITER //
 CREATE PROCEDURE spSucursalCrear(
     IN p_nombre NVARCHAR(100),
@@ -1104,7 +1143,6 @@ END //
 DELIMITER ;
 
 -- 14. Listar sucursales
-DROP PROCEDURE IF EXISTS spSucursalListar;
 DELIMITER //
 CREATE PROCEDURE spSucursalListar()
 BEGIN
@@ -1113,7 +1151,6 @@ END //
 DELIMITER ;
 
 -- 15. Actualizar datos de una sucursal
-DROP PROCEDURE IF EXISTS spSucursalActualizar;
 DELIMITER //
 CREATE PROCEDURE spSucursalActualizar(
     IN p_idSucursal INT UNSIGNED,
@@ -1139,7 +1176,6 @@ END //
 DELIMITER ;
 
 -- 16. Eliminar sucursal
-DROP PROCEDURE IF EXISTS spSucursalEliminar;
 DELIMITER //
 CREATE PROCEDURE spSucursalEliminar(
     IN p_idSucursal INT UNSIGNED
@@ -1160,7 +1196,6 @@ END //
 DELIMITER ;
 
 -- 17. Crear un metodo de pago
-DROP PROCEDURE IF EXISTS spMetodoPagoCrear;
 DELIMITER //
 CREATE PROCEDURE spMetodoPagoCrear(
     IN p_nombre NVARCHAR(100)
@@ -1182,7 +1217,6 @@ END //
 DELIMITER ;
 
 -- 18. Listar metodos de pago
-DROP PROCEDURE IF EXISTS spMetodoPagoListar;
 DELIMITER //
 CREATE PROCEDURE spMetodoPagoListar()
 BEGIN
@@ -1191,7 +1225,6 @@ END //
 DELIMITER ;
 
 -- 19. Actualizar un metodo de pago
-DROP PROCEDURE IF EXISTS spMetodoPagoActualizar;
 DELIMITER //
 CREATE PROCEDURE spMetodoPagoActualizar(
     IN p_idMetodoPago INT UNSIGNED,
@@ -1215,7 +1248,6 @@ END //
 DELIMITER ;
 
 -- 20. Eliminar un metodo de pago
-DROP PROCEDURE IF EXISTS spMetodoPagoEliminar;
 DELIMITER //
 CREATE PROCEDURE spMetodoPagoEliminar(
     IN p_idMetodoPago INT UNSIGNED
@@ -1236,7 +1268,6 @@ END //
 DELIMITER ;
 
 -- 21. Crear un proveedor
-DROP PROCEDURE IF EXISTS spProveedorCrear;
 DELIMITER //
 CREATE PROCEDURE spProveedorCrear(
     IN p_rncProveedor INT UNSIGNED,
@@ -1262,7 +1293,6 @@ END //
 DELIMITER ;
 
 -- 22. Listar proveedores
-DROP PROCEDURE IF EXISTS spProveedorListar;
 DELIMITER //
 CREATE PROCEDURE spProveedorListar(
 )
@@ -1272,7 +1302,6 @@ END //
 DELIMITER ;
 
 -- 23. Actualizar proveedor
-DROP PROCEDURE IF EXISTS spProveedorActualizar;
 DELIMITER //
 CREATE PROCEDURE spProveedorActualizar(
     IN p_rncProveedor INT UNSIGNED,
@@ -1299,7 +1328,6 @@ END //
 DELIMITER ;
 
 -- 24. Eliminar un proveedor
-DROP PROCEDURE IF EXISTS spProveedorEliminar;
 DELIMITER //
 CREATE PROCEDURE spProveedorEliminar(
     IN p_rncProveedor INT UNSIGNED
@@ -1320,7 +1348,6 @@ END //
 DELIMITER ;
 
 -- 25. Crear un servicio
-DROP PROCEDURE IF EXISTS spServicioCrear;
 DELIMITER //
 CREATE PROCEDURE spServicioCrear(
     IN p_servicioCodigo VARCHAR(30),
@@ -1346,7 +1373,6 @@ END //
 DELIMITER ;
 
 -- 26. Listar servicios
-DROP PROCEDURE IF EXISTS spServicioListar;
 DELIMITER //
 CREATE PROCEDURE spServicioListar()
 BEGIN
@@ -1355,7 +1381,6 @@ END //
 DELIMITER ;
 
 -- 27. Actualizar datos de un servicio
-DROP PROCEDURE IF EXISTS spServicioActualizar;
 DELIMITER //
 CREATE PROCEDURE spServicioActualizar(
     IN p_servicioCodigo VARCHAR(30),
@@ -1382,7 +1407,6 @@ END //
 DELIMITER ;
 
 -- 28. Elimina un servicio
-DROP PROCEDURE IF EXISTS spServicioEliminar;
 DELIMITER //
 CREATE PROCEDURE spServicioEliminar(
     IN p_servicioCodigo VARCHAR(30)
@@ -1405,7 +1429,6 @@ DELIMITER ;
 -- STORED PROCEDURES RELACIONADOS A LOS INGRESOS
 
 -- 1. Insertar un ingreso
-DROP PROCEDURE IF EXISTS spIngresoCrear;
 DELIMITER //
 CREATE PROCEDURE spIngresoCrear(
     IN p_documentoPaciente VARCHAR(30),
@@ -1434,7 +1457,6 @@ END //
 DELIMITER ;
 
 -- 2. Relacionar una afeccion a un ingreso
-DROP PROCEDURE IF EXISTS spIngresoRelacionarAfeccion;
 DELIMITER //
 CREATE PROCEDURE spIngresoRelacionarAfeccion(
     IN p_idIngreso INT UNSIGNED,
@@ -1457,7 +1479,6 @@ END //
 DELIMITER ;
 
 -- 3. Actualizar los datos de un ingreso
-DROP PROCEDURE IF EXISTS spIngresoActualizar;
 DELIMITER //
 CREATE PROCEDURE spIngresoActualizar(
     IN p_idIngreso INT UNSIGNED,
@@ -1496,7 +1517,6 @@ END //
 DELIMITER ;
 
 -- 4. Eliminar un ingreso
-DROP PROCEDURE IF EXISTS spIngresoEliminar;
 DELIMITER //
 CREATE PROCEDURE spIngresoEliminar(
     IN p_idIngreso INT UNSIGNED
@@ -1519,7 +1539,6 @@ DELIMITER ;
 
 
 -- 5. Listar ingresos utilizando filtros
-DROP PROCEDURE IF EXISTS spIngresoListar;
 DELIMITER //
 CREATE PROCEDURE spIngresoListar(
     IN p_documentoPaciente VARCHAR(30),
@@ -1589,7 +1608,6 @@ DELIMITER ;
 -- STORED PROCEDURES RELACIONADOS A LOS PRODUCTOS (MEDICAMENTOS, ETC)
 
 -- 1. Crear un nuevo producto
-DROP PROCEDURE IF EXISTS spProductoCrear;
 DELIMITER //
 CREATE PROCEDURE spProductoCrear(
     IN p_nombre NVARCHAR(100),
@@ -1614,7 +1632,6 @@ END //
 DELIMITER ;
 
 -- 2. Actualizar un producto existente
-DROP PROCEDURE IF EXISTS spProductoActualizar;
 DELIMITER //
 CREATE PROCEDURE spProductoActualizar(
     IN p_idProducto INT UNSIGNED,
@@ -1644,7 +1661,6 @@ END //
 DELIMITER ;
 
 -- 3. Eliminar un producto por su ID
-DROP PROCEDURE IF EXISTS spProductoEliminar;
 DELIMITER //
 CREATE PROCEDURE spProductoEliminar(
     IN p_idProducto INT UNSIGNED
@@ -1665,7 +1681,6 @@ END //
 DELIMITER ;
 
 -- 4. Relacionar un producto con su proveedor
-DROP PROCEDURE IF EXISTS spProductoRelacionarProveedor;
 DELIMITER //
 CREATE PROCEDURE spProductoRelacionarProveedor(
     IN p_idProducto INT UNSIGNED,
@@ -1688,7 +1703,6 @@ END //
 DELIMITER ;
 
 -- 5. Listar productos utilizando filtros
-DROP PROCEDURE IF EXISTS spProductoListar;
 DELIMITER //
 CREATE PROCEDURE spProductoListar(
     IN p_costo DECIMAL(10,2)
@@ -1708,9 +1722,8 @@ DELIMITER ;
 -- STORED PROCEDURES RELACIONADOS A LAS RESERVAS DE UN PACIENTE
 
 -- 1. Creación de una reserva
-DROP PROCEDURE IF EXISTS CrearReservaServicio;
 DELIMITER //
-CREATE PROCEDURE CrearReservaServicio(
+CREATE PROCEDURE spReservaCrear(
     IN p_documentoPaciente VARCHAR(30),
     IN p_documentoMedico VARCHAR(30),
     IN p_servicioCodigo VARCHAR(30),
@@ -1764,9 +1777,8 @@ END //
 DELIMITER ;
 
 -- 2. Actualización de los datos de una reserva
-DROP PROCEDURE IF EXISTS ActualizarDatosReservaServicio;
 DELIMITER //
-CREATE PROCEDURE ActualizarDatosReservaServicio(
+CREATE PROCEDURE spReservaActualizar(
     IN p_idReserva INT UNSIGNED,
     IN p_documentoPaciente VARCHAR(30),
     IN p_documentoMedico VARCHAR(30),
@@ -1831,9 +1843,8 @@ END //
 DELIMITER ;
 
 -- 3. Cambio de estado de una reserva
-DROP PROCEDURE IF EXISTS CambiarEstadoReservaServicio;
 DELIMITER //
-CREATE PROCEDURE CambiarEstadoReservaServicio(
+CREATE PROCEDURE spReservaCambiarEstado(
     IN p_idReserva INT UNSIGNED
 )
 BEGIN
@@ -1871,9 +1882,8 @@ END //
 DELIMITER ;
 
 -- 4. Listar reservas con o sin filtro
-DROP PROCEDURE IF EXISTS ListarReservas;
 DELIMITER //
-CREATE PROCEDURE ListarReservas(
+CREATE PROCEDURE spReservaListar(
     IN p_documentoPaciente VARCHAR(30),
     IN p_documentoMedico VARCHAR(30),
     IN p_servicioCodigo VARCHAR(30),
@@ -1918,7 +1928,6 @@ END //
 DELIMITER ;
 
 -- 5. Eliminar reserva
-DROP PROCEDURE IF EXISTS EliminarReserva;
 DELIMITER //
 CREATE PROCEDURE EliminarReserva(
     IN p_idReserva INT UNSIGNED
@@ -1941,7 +1950,6 @@ DELIMITER ;
 -- STORED PROCEDURES RELACIONADOS AL MANEJO DE USUARIOS
 
 -- 1. Creación de un usuario de rol Paciente
-DROP PROCEDURE IF EXISTS spUsuarioCrearPaciente;
 DELIMITER //
 CREATE PROCEDURE spUsuarioCrearPaciente(
     IN p_documento VARCHAR(30),
@@ -1994,7 +2002,6 @@ END //
 DELIMITER ;
 
 -- 2. Creación de un usuario de Rol Administrador o Cajero
-DROP PROCEDURE IF EXISTS spUsuarioCrearPersonal;
 DELIMITER //
 CREATE PROCEDURE spUsuarioCrearPersonal(
     IN p_documento VARCHAR(30),
@@ -2045,7 +2052,6 @@ END //
 DELIMITER ;
 
 -- 3. Creación de un usuario de rol Médico o Enfermero
-DROP PROCEDURE IF EXISTS spUsuarioCrearPersonalMedico;
 DELIMITER //
 CREATE PROCEDURE spUsuarioCrearPersonalMedico(
     IN p_documento VARCHAR(30),
@@ -2097,7 +2103,6 @@ END //
 DELIMITER ;
 
 -- 4. Eliminar el stored procedure si existe y luego crearlo
-DROP PROCEDURE IF EXISTS spUsuarioActualizarDatos;
 DELIMITER //
 CREATE PROCEDURE spUsuarioActualizarDatos(
     IN p_documento VARCHAR(30),
@@ -2140,7 +2145,6 @@ DELIMITER ;
 --    puede buscar usuario filtrando por dicho parametro,
 --    si no se le provee parametro, solo lista todos los
 --    usuarios del sistema.
-DROP PROCEDURE IF EXISTS spUsuarioListar;
 DELIMITER //
 CREATE PROCEDURE spUsuarioListar(
     IN p_documento VARCHAR(30),
@@ -2183,7 +2187,6 @@ END //
 DELIMITER ;
 
 -- 6. Eliminación de un usuario a partir de su documento o de su código de usuario
-DROP PROCEDURE IF EXISTS spUsuarioEliminar;
 DELIMITER //
 CREATE PROCEDURE spUsuarioEliminar(
     IN p_documentoOUsuarioCodigo VARCHAR(30)
@@ -2219,19 +2222,7 @@ DELIMITER ;
 
 -- TRIGGERS RELACIONADOS A LA ACTUALIZACION DE SUBTOTAL Y TOTAL EN FACTURAS
 
--- Drop triggers
-DROP TRIGGER IF EXISTS trActualizarFacturaAfterInsertProducto;
-DROP TRIGGER IF EXISTS trActualizarFacturaAfterInsertServicio;
-DROP TRIGGER IF EXISTS trActualizarFacturaAfterInsertFacturaIngreso;
-DROP TRIGGER IF EXISTS trActualizarFacturaAfterInsertFacturaConsulta;
-DROP TRIGGER IF EXISTS trActualizarMontoTotalFacturaAfterUpdateServicio;
-DROP TRIGGER IF EXISTS trActualizarMontoTotalFacturaAfterUpdateProducto;
-DROP TRIGGER IF EXISTS trActualizarMontoTotalFacturaAfterUpdateIngreso;
-DROP TRIGGER IF EXISTS trActualizarMontoTotalFacturaAfterUpdateConsulta;
-
 DELIMITER //
-
--- Create triggers
 CREATE TRIGGER trActualizarFacturaAfterInsertProducto
 AFTER INSERT ON Factura_Producto
 FOR EACH ROW
@@ -2354,19 +2345,11 @@ BEGIN
         WHERE f.consultaCodigo = NEW.consultaCodigo;
     END IF;
 END //
-
 DELIMITER ;
 
 -- TRIGGERS PARA VALIDACION
 
--- Drop triggers
-DROP TRIGGER IF EXISTS trCheckDocumentoDiferenteConsulta;
-DROP TRIGGER IF EXISTS trCheckDocumentoDiferenteIngreso;
-DROP TRIGGER IF EXISTS trCheckDocumentoDiferenteReserva;
-
 DELIMITER //
-
--- Create triggers
 CREATE TRIGGER trCheckDocumentoDiferenteConsulta
 BEFORE INSERT ON Consulta
 FOR EACH ROW
@@ -2396,5 +2379,4 @@ BEGIN
         SET MESSAGE_TEXT = 'El documento del paciente no puede ser igual al documento del médico';
     END IF;
 END //
-
 DELIMITER ;
