@@ -1,6 +1,6 @@
-﻿namespace caresoft_core.Entities;
+﻿namespace caresoft_core.Models;
 
-public partial class Cuentum
+public partial class Cuenta
 {
     public uint IdCuenta { get; set; }
 

@@ -1,4 +1,4 @@
-﻿namespace caresoft_core.Entities;
+﻿namespace caresoft_core.Models;
 
 public partial class Autorizacion
 {
@@ -10,7 +10,7 @@ public partial class Autorizacion
 
     public decimal MontoAsegurado { get; set; }
 
-    public virtual ICollection<Consultum> Consulta { get; set; } = new List<Consultum>();
+    public virtual ICollection<Consulta> Consulta { get; set; } = new List<Consulta>();
 
     public virtual FacturaProducto? FacturaProducto { get; set; }
 

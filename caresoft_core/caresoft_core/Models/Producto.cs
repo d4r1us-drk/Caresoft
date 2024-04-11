@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace caresoft_core.Entities;
+﻿namespace caresoft_core.Models;
 
 public partial class Producto
 {

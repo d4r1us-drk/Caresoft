@@ -1,7 +1,6 @@
-using caresoft_core.Entities;
-using caresoft_core.Dto;
+using caresoft_core.Models;
 
-namespace caresoft_core.Repositories;
+namespace caresoft_core.Services;
 
 public interface IUsuarioService
 {

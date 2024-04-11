@@ -1,4 +1,4 @@
-namespace caresoft_core.Dto;
+namespace caresoft_core.Models;
 
 public class UsuarioDto
 {

@@ -1,4 +1,4 @@
-﻿namespace caresoft_core.Entities;
+﻿namespace caresoft_core.Models;
 
 public partial class Usuario
 {

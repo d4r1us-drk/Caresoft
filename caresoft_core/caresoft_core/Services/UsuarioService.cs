@@ -1,8 +1,7 @@
-using caresoft_core.Entities;
-using caresoft_core.Dto;
+using caresoft_core.Models;
 using MySql.Data.MySqlClient;
 
-namespace caresoft_core.Repositories
+namespace caresoft_core.Services
 {
     public class UsuarioService : IUsuarioService
     {

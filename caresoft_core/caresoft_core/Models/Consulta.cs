@@ -1,6 +1,6 @@
-﻿namespace caresoft_core.Entities;
+﻿namespace caresoft_core.Models;
 
-public partial class Consultum
+public partial class Consulta
 {
     public string ConsultaCodigo { get; set; } = null!;
 

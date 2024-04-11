@@ -1,5 +1,5 @@
-using caresoft_core.Repositories;
-using caresoft_core.Entities;
+using caresoft_core.Services;
+using caresoft_core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace caresoft_core
@@ -30,19 +30,20 @@ namespace caresoft_core
 
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            // Get the connection string
+            var connectionString = configuration.GetConnectionString("CaresoftDB");
+
             services.AddControllers();
 
             // Configure DbContext
             services.AddDbContext<CaresoftDbContext>(options =>
             {
-                options.UseMySQL(configuration.GetConnectionString("CaresoftDB"));
+                options.UseMySQL(connectionString);
             });
-
-            // Get the connection string
-            var connectionString = configuration.GetConnectionString("CaresoftDB");
         
             // Pass the connection string to UsuarioService
-            services.AddScoped<IUsuarioService>(provider => new UsuarioService(provider.GetRequiredService<CaresoftDbContext>(), connectionString));
+            services.AddScoped<IUsuarioService>(provider => new UsuarioService(
+                        provider.GetRequiredService<CaresoftDbContext>(), connectionString));
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
         }

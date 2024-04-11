@@ -1,6 +1,5 @@
-using caresoft_core.Entities;
-using caresoft_core.Repositories;
-using caresoft_core.Dto;
+using caresoft_core.Models;
+using caresoft_core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace caresoft_core.Controllers

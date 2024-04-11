@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace caresoft_core.Entities;
+﻿namespace caresoft_core.Models;
 
 public partial class Servicio
 {
@@ -21,5 +18,5 @@ public partial class Servicio
 
     public virtual ICollection<ReservaServicio> ReservaServicios { get; set; } = new List<ReservaServicio>();
 
-    public virtual ICollection<Consultum> ConsultaCodigos { get; set; } = new List<Consultum>();
+    public virtual ICollection<Consulta> ConsultaCodigos { get; set; } = new List<Consulta>();
 }

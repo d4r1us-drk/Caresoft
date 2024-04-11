@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace caresoft_core.Entities;
+namespace caresoft_core.Models;
 
 public partial class CaresoftDbContext : DbContext
 {
@@ -21,9 +21,9 @@ public partial class CaresoftDbContext : DbContext
 
     public virtual DbSet<Consultorio> Consultorios { get; set; }
 
-    public virtual DbSet<Consultum> Consulta { get; set; }
+    public virtual DbSet<Consulta> Consulta { get; set; }
 
-    public virtual DbSet<Cuentum> Cuenta { get; set; }
+    public virtual DbSet<Cuenta> Cuenta { get; set; }
 
     public virtual DbSet<Factura> Facturas { get; set; }
 
@@ -58,7 +58,6 @@ public partial class CaresoftDbContext : DbContext
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseMySQL("server=localhost;port=3306;database=CaresoftDB;user=root;password=1234");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -140,7 +139,7 @@ public partial class CaresoftDbContext : DbContext
                 .HasColumnName("telefono");
         });
 
-        modelBuilder.Entity<Consultum>(entity =>
+        modelBuilder.Entity<Consulta>(entity =>
         {
             entity.HasKey(e => e.ConsultaCodigo).HasName("PRIMARY");
 
@@ -181,11 +180,11 @@ public partial class CaresoftDbContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("motivo");
 
-            entity.HasOne(d => d.DocumentoMedicoNavigation).WithMany(p => p.ConsultumDocumentoMedicoNavigations)
+            entity.HasOne(d => d.DocumentoMedicoNavigation).WithMany(p => p.ConsultaDocumentoMedicoNavigations)
                 .HasForeignKey(d => d.DocumentoMedico)
                 .HasConstraintName("Consulta_ibfk_2");
 
-            entity.HasOne(d => d.DocumentoPacienteNavigation).WithMany(p => p.ConsultumDocumentoPacienteNavigations)
+            entity.HasOne(d => d.DocumentoPacienteNavigation).WithMany(p => p.ConsultaDocumentoPacienteNavigations)
                 .HasForeignKey(d => d.DocumentoPaciente)
                 .HasConstraintName("Consulta_ibfk_1");
 
@@ -200,17 +199,17 @@ public partial class CaresoftDbContext : DbContext
 
             entity.HasMany(d => d.IdAfeccions).WithMany(p => p.ConsultaCodigos)
                 .UsingEntity<Dictionary<string, object>>(
-                    "ConsultaAfeccion",
+                    "Consulta_Afeccion",
                     r => r.HasOne<Afeccion>().WithMany()
                         .HasForeignKey("IdAfeccion")
-                        .HasConstraintName("ConsultaAfeccion_ibfk_2"),
-                    l => l.HasOne<Consultum>().WithMany()
+                        .HasConstraintName("Consulta_Afeccion_ibfk_2"),
+                    l => l.HasOne<Consulta>().WithMany()
                         .HasForeignKey("ConsultaCodigo")
-                        .HasConstraintName("ConsultaAfeccion_ibfk_1"),
+                        .HasConstraintName("Consulta_Afeccion_ibfk_1"),
                     j =>
                     {
                         j.HasKey("ConsultaCodigo", "IdAfeccion").HasName("PRIMARY");
-                        j.ToTable("ConsultaAfeccion");
+                        j.ToTable("Consulta_Afeccion");
                         j.HasIndex(new[] { "IdAfeccion" }, "idAfeccion");
                         j.IndexerProperty<string>("ConsultaCodigo")
                             .HasMaxLength(30)
@@ -220,17 +219,17 @@ public partial class CaresoftDbContext : DbContext
 
             entity.HasMany(d => d.ServicioCodigos).WithMany(p => p.ConsultaCodigos)
                 .UsingEntity<Dictionary<string, object>>(
-                    "PrescripcionServicio",
+                    "Prescripcion_Servicio",
                     r => r.HasOne<Servicio>().WithMany()
                         .HasForeignKey("ServicioCodigo")
-                        .HasConstraintName("PrescripcionServicio_ibfk_2"),
-                    l => l.HasOne<Consultum>().WithMany()
+                        .HasConstraintName("Prescripcion_Servicio_ibfk_2"),
+                    l => l.HasOne<Consulta>().WithMany()
                         .HasForeignKey("ConsultaCodigo")
-                        .HasConstraintName("PrescripcionServicio_ibfk_1"),
+                        .HasConstraintName("Prescripcion_Servicio_ibfk_1"),
                     j =>
                     {
                         j.HasKey("ConsultaCodigo", "ServicioCodigo").HasName("PRIMARY");
-                        j.ToTable("PrescripcionServicio");
+                        j.ToTable("Prescripcion_Servicio");
                         j.HasIndex(new[] { "ServicioCodigo" }, "servicioCodigo");
                         j.IndexerProperty<string>("ConsultaCodigo")
                             .HasMaxLength(30)
@@ -241,7 +240,7 @@ public partial class CaresoftDbContext : DbContext
                     });
         });
 
-        modelBuilder.Entity<Cuentum>(entity =>
+        modelBuilder.Entity<Cuenta>(entity =>
         {
             entity.HasKey(e => e.IdCuenta).HasName("PRIMARY");
 
@@ -259,8 +258,8 @@ public partial class CaresoftDbContext : DbContext
                 .HasColumnType("enum('A','D')")
                 .HasColumnName("estado");
 
-            entity.HasOne(d => d.DocumentoUsuarioNavigation).WithOne(p => p.Cuentum)
-                .HasForeignKey<Cuentum>(d => d.DocumentoUsuario)
+            entity.HasOne(d => d.DocumentoUsuarioNavigation).WithOne(p => p.Cuenta)
+                .HasForeignKey<Cuenta>(d => d.DocumentoUsuario)
                 .HasConstraintName("Cuenta_ibfk_1");
         });
 
@@ -489,17 +488,17 @@ public partial class CaresoftDbContext : DbContext
 
             entity.HasMany(d => d.IdAfeccions).WithMany(p => p.IdIngresos)
                 .UsingEntity<Dictionary<string, object>>(
-                    "IngresoAfeccion",
+                    "Ingreso_Afeccion",
                     r => r.HasOne<Afeccion>().WithMany()
                         .HasForeignKey("IdAfeccion")
-                        .HasConstraintName("IngresoAfeccion_ibfk_2"),
+                        .HasConstraintName("Ingreso_Afeccion_ibfk_2"),
                     l => l.HasOne<Ingreso>().WithMany()
                         .HasForeignKey("IdIngreso")
-                        .HasConstraintName("IngresoAfeccion_ibfk_1"),
+                        .HasConstraintName("Ingreso_Afeccion_ibfk_1"),
                     j =>
                     {
                         j.HasKey("IdIngreso", "IdAfeccion").HasName("PRIMARY");
-                        j.ToTable("IngresoAfeccion");
+                        j.ToTable("Ingreso_Afeccion");
                         j.HasIndex(new[] { "IdAfeccion" }, "idAfeccion");
                         j.IndexerProperty<uint>("IdIngreso").HasColumnName("idIngreso");
                         j.IndexerProperty<uint>("IdAfeccion").HasColumnName("idAfeccion");
@@ -588,7 +587,7 @@ public partial class CaresoftDbContext : DbContext
         {
             entity.HasKey(e => new { e.ConsultaCodigo, e.IdProducto }).HasName("PRIMARY");
 
-            entity.ToTable("PrescripcionProducto");
+            entity.ToTable("Prescripcion_Producto");
 
             entity.HasIndex(e => e.IdProducto, "idProducto");
 
@@ -602,11 +601,11 @@ public partial class CaresoftDbContext : DbContext
 
             entity.HasOne(d => d.ConsultaCodigoNavigation).WithMany(p => p.PrescripcionProductos)
                 .HasForeignKey(d => d.ConsultaCodigo)
-                .HasConstraintName("PrescripcionProducto_ibfk_1");
+                .HasConstraintName("Prescripcion_Producto_ibfk_1");
 
             entity.HasOne(d => d.IdProductoNavigation).WithMany(p => p.PrescripcionProductos)
                 .HasForeignKey(d => d.IdProducto)
-                .HasConstraintName("PrescripcionProducto_ibfk_2");
+                .HasConstraintName("Prescripcion_Producto_ibfk_2");
         });
 
         modelBuilder.Entity<Producto>(entity =>
@@ -629,7 +628,7 @@ public partial class CaresoftDbContext : DbContext
 
             entity.HasMany(d => d.RncProveedors).WithMany(p => p.IdProductos)
                 .UsingEntity<Dictionary<string, object>>(
-                    "ProveedorProducto",
+                    "Proveedor_Producto",
                     r => r.HasOne<Proveedor>().WithMany()
                         .HasForeignKey("RncProveedor")
                         .HasConstraintName("Proveedor_Producto_ibfk_1"),
