@@ -240,7 +240,7 @@ namespace caresoft_core.Services
             try
             {
                 Consulta consulta = _dbContext.Consultas.Where(e => e.ConsultaCodigo == consultaCodigo).First();
-                PrescripcionProducto prescripcionProducto = consulta.PrescripcionProductos.FirstOrDefault(e => e.IdProducto == idProducto);
+                PrescripcionProducto? prescripcionProducto = consulta.PrescripcionProductos.FirstOrDefault(e => e.IdProducto == idProducto);
                 if (prescripcionProducto == null)
                 {
                     consulta.PrescripcionProductos.Add(new PrescripcionProducto

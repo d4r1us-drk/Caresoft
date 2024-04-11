@@ -47,13 +47,10 @@ namespace caresoft_core
                         provider.GetRequiredService<CaresoftDbContext>()));
             services.AddScoped<IReservaServicioService>(provider => new ReservaServicioService(
                         provider.GetRequiredService<CaresoftDbContext>()));
-<<<<<<< HEAD
             services.AddScoped<IConsultaService>(provider => new ConsultaService(
             provider.GetRequiredService<CaresoftDbContext>()));
-=======
             services.AddScoped<IProductoService>(provider => new ProductoService(
-                        provider.GetRequiredService<CaresoftDbContext>()));
->>>>>>> ecda21b34cca3117e2eb932ba77de7bdcb0590ae
+            provider.GetRequiredService<CaresoftDbContext>()));
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
         }
