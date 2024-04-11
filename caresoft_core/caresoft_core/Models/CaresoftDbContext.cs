@@ -21,9 +21,9 @@ public partial class CaresoftDbContext : DbContext
 
     public virtual DbSet<Consultorio> Consultorios { get; set; }
 
-    public virtual DbSet<Consulta> Consulta { get; set; }
+    public virtual DbSet<Consulta> Consultas { get; set; }
 
-    public virtual DbSet<Cuenta> Cuenta { get; set; }
+    public virtual DbSet<Cuenta> Cuentas { get; set; }
 
     public virtual DbSet<Factura> Facturas { get; set; }
 

@@ -2,17 +2,17 @@ namespace caresoft_core.Models;
 
 public class UsuarioDto
 {
-    public string? UsuarioCodigo { get; set; }
-    public string? UsuarioContra { get; set; }
-    public string? Documento { get; set; }
-    public string? TipoDocumento { get; set; }
+    public string? UsuarioCodigo { get; set; } = null!;
+    public string? Documento { get; set; } = null!;
+    public string? UsuarioContra { get; set; } = null!;
+    public string? TipoDocumento { get; set; } = null!;
     public uint? NumLicenciaMedica { get; set; }
-    public string? Nombre { get; set; }
-    public string? Apellido { get; set; }
-    public string? Genero { get; set; }
+    public string? Nombre { get; set; } = null!;
+    public string? Apellido { get; set; } = null!;
+    public string? Genero { get; set; } = null!;
     public DateTime? FechaNacimiento { get; set; }
-    public string? Telefono { get; set; }
-    public string? Correo { get; set; }
-    public string? Direccion { get; set; }
-    public string? Rol { get; set; }
+    public string? Telefono { get; set; } = null!;
+    public string? Correo { get; set; } = null!;
+    public string? Direccion { get; set; } = null!;
+    public string? Rol { get; set; } = null!;
 }

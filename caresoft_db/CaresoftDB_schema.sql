@@ -2173,20 +2173,25 @@ DELIMITER ;
 -- 4. Listar reservas con o sin filtro
 DELIMITER //
 CREATE PROCEDURE spReservaListar(
+    IN p_idReserva INT UNSIGNED,
     IN p_documentoPaciente VARCHAR(30),
     IN p_documentoMedico VARCHAR(30),
     IN p_servicioCodigo VARCHAR(30),
     IN p_fechaReserva DATETIME,
-    IN p_estado ENUM('P', 'R')  -- Nuevo atributo de estado
+    IN p_estado ENUM('P', 'R')
 )
 BEGIN
     -- Verificar si se han proporcionado filtros
-    IF p_documentoPaciente IS NULL AND p_documentoMedico IS NULL AND p_servicioCodigo IS NULL AND p_fechaReserva IS NULL AND p_estado IS NULL THEN
+    IF p_idReserva IS NULL p_documentoPaciente IS NULL AND p_documentoMedico IS NULL AND p_servicioCodigo IS NULL AND p_fechaReserva IS NULL AND p_estado IS NULL THEN
         -- Si no se han proporcionado filtros, devolver todas las reservas
         SELECT * FROM ReservaServicio;
     ELSE
         -- Si se han proporcionado filtros, construir la consulta dinámicamente
         SET @sql = 'SELECT * FROM ReservaServicio WHERE 1 = 1';
+
+        IF p_idReserva IS NOT NULL THEN
+            SET @sql = CONCAT(@sql, ' AND idReserva = "', p_idReserva, '"');
+        END IF;
         
         IF p_documentoPaciente IS NOT NULL THEN
             SET @sql = CONCAT(@sql, ' AND documentoPaciente = "', p_documentoPaciente, '"');
