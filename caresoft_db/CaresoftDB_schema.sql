@@ -761,15 +761,33 @@ BEGIN
 
     START TRANSACTION;
 
-    UPDATE Factura
-    SET idCuenta = p_idCuenta,
-        consultaCodigo = p_consultaCodigo,
-        idIngreso = p_idIngreso,
-        idSucursal = p_idSucursal,
-        documentoCajero = p_documentoCajero,
-        montoSubtotal = p_montoSubtotal,
-        montoTotal = p_montoTotal
-    WHERE facturaCodigo = p_facturaCodigo;
+    IF p_consultaCodigo IS NOT NULL THEN
+        UPDATE Factura
+        SET idCuenta = p_idCuenta,
+            consultaCodigo = p_consultaCodigo,
+            idSucursal = p_idSucursal,
+            documentoCajero = p_documentoCajero,
+            montoSubtotal = p_montoSubtotal,
+            montoTotal = p_montoTotal
+        WHERE facturaCodigo = p_facturaCodigo;
+    ELSEIF p_ingreso IS NOT NULL THEN
+        UPDATE Factura
+        SET idCuenta = p_idCuenta,
+            idSucursal = p_idSucursal,
+            idIngreso = p_idIngreso,
+            documentoCajero = p_documentoCajero,
+            montoSubtotal = p_montoSubtotal,
+            montoTotal = p_montoTotal
+        WHERE facturaCodigo = p_facturaCodigo;
+    ELSE
+        UPDATE Factura
+        SET idCuenta = p_idCuenta,
+            idSucursal = p_idSucursal,
+            documentoCajero = p_documentoCajero,
+            montoSubtotal = p_montoSubtotal,
+            montoTotal = p_montoTotal
+        WHERE facturaCodigo = p_facturaCodigo;
+    END IF;
 
     COMMIT;
 END //
