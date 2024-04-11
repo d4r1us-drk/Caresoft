@@ -1,4 +1,5 @@
 using caresoft_core.Entities;
+using caresoft_core.Dto;
 using MySql.Data.MySqlClient;
 
 namespace caresoft_core.Repositories
@@ -15,9 +16,9 @@ namespace caresoft_core.Repositories
             _connectionString = connectionString;
         }
 
-        public async Task<List<PerfilUsuario>> GetUsuariosListAsync(string documento = null, string genero = null, DateTime? fechaNacimiento = null, string rol = null)
+        public async Task<List<UsuarioDto>> GetUsuariosListAsync(string? documento, string? genero, DateTime? fechaNacimiento, string? rol)
         {
-            List<PerfilUsuario> usuarios = new List<PerfilUsuario>();
+            var usuarios = new List<UsuarioDto>();
 
             try 
             {
@@ -37,8 +38,10 @@ namespace caresoft_core.Repositories
                 {
                     while (await reader.ReadAsync())
                     {
-                        PerfilUsuario usuario = new PerfilUsuario
+                        var usuario = new UsuarioDto
                         {
+                            UsuarioCodigo = reader["usuarioCodigo"].ToString(),
+                            UsuarioContra = reader["usuarioContra"].ToString(),
                             Documento = reader["documento"].ToString(),
                             TipoDocumento = reader["tipoDocumento"].ToString(),
                             NumLicenciaMedica = reader["numLicenciaMedica"] != DBNull.Value ? Convert.ToUInt32(reader["numLicenciaMedica"]) : 0,
@@ -177,7 +180,7 @@ namespace caresoft_core.Repositories
             }
         }
         
-        public async Task<int> UpdateUsuarioAsync(PerfilUsuario perfilUsuario)
+        public async Task<int> UpdateUsuarioAsync(Usuario usuario, PerfilUsuario perfilUsuario)
         {
             try
             {
@@ -188,6 +191,9 @@ namespace caresoft_core.Repositories
                 command.CommandType = System.Data.CommandType.StoredProcedure;
     
                 // Add parameters
+                command.Parameters.AddWithValue("@p_usuarioCodigo", usuario.UsuarioCodigo);
+                command.Parameters.AddWithValue("@p_usuarioContra", usuario.UsuarioContra);
+                command.Parameters.AddWithValue("@p_tipoDocumento", perfilUsuario.TipoDocumento);
                 command.Parameters.AddWithValue("@p_documento", perfilUsuario.Documento);
                 command.Parameters.AddWithValue("@p_tipoDocumento", perfilUsuario.TipoDocumento);
                 command.Parameters.AddWithValue("@p_nombre", perfilUsuario.Nombre);

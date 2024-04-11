@@ -17,14 +17,16 @@ namespace caresoft_core.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<PerfilUsuario>>> GetUsuariosListAsync(string documento = null, string genero = null, DateTime? fechaNacimiento = null, string rol = null)
+        public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosListAsync(string? documento, string? genero, DateTime? fechaNacimiento, string? rol)
         {
             try
             {
                 var usuarios = await _usuarioService.GetUsuariosListAsync(documento, genero, fechaNacimiento, rol);
 
-                var usuariosDto = usuarios.Select(usuario => new PerfilUsuarioDto
+                var usuariosDto = usuarios.Select(usuario => new UsuarioDto
                 {
+                    UsuarioCodigo = usuario.UsuarioCodigo,
+                    UsuarioContra = usuario.UsuarioContra,
                     Documento = usuario.Documento,
                     TipoDocumento = usuario.TipoDocumento,
                     NumLicenciaMedica = usuario.NumLicenciaMedica.GetValueOrDefault(),
@@ -155,10 +157,16 @@ namespace caresoft_core.Controllers
         }
 
         [HttpPut("updateUsuario")]
-        public async Task<ActionResult<int>> UpdateUsuarioAsync(string documento, string tipoDocumento, string nombre, string apellido, string genero, DateTime fechaNacimiento, string telefono, string correo, string direccion)
+        public async Task<ActionResult<int>> UpdateUsuarioAsync(string usuarioCodigo, string usuarioContra, string documento, string tipoDocumento, string nombre, string apellido, string genero, DateTime fechaNacimiento, string telefono, string correo, string direccion)
         {
             try
             {
+                var usuario = new Usuario
+                {
+                    UsuarioCodigo = usuarioCodigo,
+                    UsuarioContra = usuarioContra
+                };
+
                 var perfilUsuario = new PerfilUsuario
                 {
                     Documento = documento,
@@ -172,7 +180,7 @@ namespace caresoft_core.Controllers
                     Direccion = direccion
                 };
 
-                var result = await _usuarioService.UpdateUsuarioAsync(perfilUsuario);
+                var result = await _usuarioService.UpdateUsuarioAsync(usuario, perfilUsuario);
                 return Ok(result);
             }
             catch (Exception ex)

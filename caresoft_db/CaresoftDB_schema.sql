@@ -2100,9 +2100,11 @@ BEGIN
 END //
 DELIMITER ;
 
--- 4. Eliminar el stored procedure si existe y luego crearlo
+-- 4. Actualizar datos de un usuario
 DELIMITER //
 CREATE PROCEDURE spUsuarioActualizarDatos(
+    IN p_usuarioCodigo VARCHAR(30),
+    IN p_usuarioContra NVARCHAR(255),
     IN p_documento VARCHAR(30),
     IN p_tipoDocumento ENUM('I', 'P'),
     IN p_nombre NVARCHAR(100),
@@ -2135,6 +2137,12 @@ BEGIN
         direccion = p_direccion
     WHERE documento = p_documento;
 
+    UPDATE Usuario
+    SET
+        usuarioCodigo = p_usuarioCodigo,
+        usuarioContra = p_usuarioContra
+    WHERE documentoUsuario = p_documento;
+
     COMMIT;
 END //
 DELIMITER ;
@@ -2153,27 +2161,28 @@ CREATE PROCEDURE spUsuarioListar(
 BEGIN
     -- Verificar si se han proporcionado filtros
     IF p_documento IS NULL AND p_genero IS NULL AND p_fechaNacimiento IS NULL AND p_rol IS NULL THEN
-        -- Si no se han proporcionado filtros, devolver todos los usuarios
-        SELECT *
-        FROM PerfilUsuario;
+        -- Si no se han proporcionado filtros, devolver todos los usuarios con sus datos asociados
+        SELECT U.usuarioCodigo, U.usuarioContra, P.*
+        FROM Usuario U
+        JOIN PerfilUsuario P ON U.documentoUsuario = P.documento;
     ELSE
         -- Si se han proporcionado filtros, construir la consulta dinámicamente
-        SET @sql = 'SELECT * FROM PerfilUsuario WHERE 1 = 1';
+        SET @sql = 'SELECT U.usuarioCodigo, U.usuarioContra, P.* FROM Usuario U JOIN PerfilUsuario P ON U.documentoUsuario = P.documento WHERE 1 = 1';
         
         IF p_documento IS NOT NULL THEN
-            SET @sql = CONCAT(@sql, ' AND documento = "', p_documento, '"');
+            SET @sql = CONCAT(@sql, ' AND P.documento = "', p_documento, '"');
         END IF;
         
         IF p_genero IS NOT NULL THEN
-            SET @sql = CONCAT(@sql, ' AND genero = "', p_genero, '"');
+            SET @sql = CONCAT(@sql, ' AND P.genero = "', p_genero, '"');
         END IF;
         
         IF p_fechaNacimiento IS NOT NULL THEN
-            SET @sql = CONCAT(@sql, ' AND fechaNacimiento = "', p_fechaNacimiento, '"');
+            SET @sql = CONCAT(@sql, ' AND P.fechaNacimiento = "', p_fechaNacimiento, '"');
         END IF;
         
         IF p_rol IS NOT NULL THEN
-            SET @sql = CONCAT(@sql, ' AND rol = "', p_rol, '"');
+            SET @sql = CONCAT(@sql, ' AND P.rol = "', p_rol, '"');
         END IF;
         
         -- Ejecutar la consulta dinámica
