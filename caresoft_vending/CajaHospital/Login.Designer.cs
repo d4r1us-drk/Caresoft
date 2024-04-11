@@ -68,6 +68,7 @@
             this.txtDoc.Name = "txtDoc";
             this.txtDoc.Size = new System.Drawing.Size(189, 26);
             this.txtDoc.TabIndex = 0;
+            this.txtDoc.TextChanged += new System.EventHandler(this.txtDoc_TextChanged);
             // 
             // label2
             // 
@@ -108,6 +109,7 @@
             this.cboTipoDoc.Name = "cboTipoDoc";
             this.cboTipoDoc.Size = new System.Drawing.Size(189, 28);
             this.cboTipoDoc.TabIndex = 1;
+            this.cboTipoDoc.SelectedIndexChanged += new System.EventHandler(this.cboTipoDoc_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -125,9 +127,11 @@
             this.txtClave.PasswordChar = '*';
             this.txtClave.Size = new System.Drawing.Size(189, 26);
             this.txtClave.TabIndex = 3;
+            this.txtClave.TextChanged += new System.EventHandler(this.txtClave_TextChanged);
             // 
             // btnLogin
             // 
+            this.btnLogin.Enabled = false;
             this.btnLogin.Location = new System.Drawing.Point(599, 582);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(127, 54);
@@ -136,7 +140,7 @@
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
-            // Form1
+            // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -151,8 +155,9 @@
             this.Controls.Add(this.txtDoc);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
-            this.Name = "Form1";
+            this.Name = "Login";
             this.Text = "Caresoft Aplicacion de Caja";
+            this.Load += new System.EventHandler(this.Login_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
