@@ -17,7 +17,7 @@ namespace caresoft_core.Services
             _connectionString = connectionString;
         }
 
-        public async Task<List<UsuarioDto>> GetUsuariosListAsync(string? documento, string? genero, DateTime? fechaNacimiento, string? rol)
+        public async Task<List<UsuarioDto>> GetUsuariosListAsync(string? usuarioCodigo, string? documento, string? genero, DateTime? fechaNacimiento, string? rol)
         {
             var usuarios = new List<UsuarioDto>();
 
@@ -30,6 +30,7 @@ namespace caresoft_core.Services
                 command.CommandType = System.Data.CommandType.StoredProcedure;
 
                 // Add parameters
+                command.Parameters.AddWithValue("@p_usuarioCodigo", usuarioCodigo);
                 command.Parameters.AddWithValue("@p_documento", documento);
                 command.Parameters.AddWithValue("@p_genero", genero);
                 command.Parameters.AddWithValue("@p_fechaNacimiento", fechaNacimiento);

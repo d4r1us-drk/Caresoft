@@ -16,11 +16,11 @@ namespace caresoft_core.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosListAsync(string? documento, string? genero, DateTime? fechaNacimiento, string? rol)
+        public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosListAsync(string? usuarioCodigo, string? documento, string? genero, DateTime? fechaNacimiento, string? rol)
         {
             try
             {
-                var usuarios = await _usuarioService.GetUsuariosListAsync(documento, genero, fechaNacimiento, rol);
+                var usuarios = await _usuarioService.GetUsuariosListAsync(usuarioCodigo, documento, genero, fechaNacimiento, rol);
 
                 var usuariosDto = usuarios.Select(usuario => new UsuarioDto
                 {
