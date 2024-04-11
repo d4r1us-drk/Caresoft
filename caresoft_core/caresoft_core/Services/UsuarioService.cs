@@ -113,61 +113,99 @@ namespace caresoft_core.Services
         {
             try
             {
-                // Check if at least one property is not null
-                if (usuarioDto.UsuarioCodigo == null &&
-                    usuarioDto.Documento == null &&
-                    usuarioDto.UsuarioContra == null &&
-                    usuarioDto.TipoDocumento == null &&
-                    usuarioDto.NumLicenciaMedica == null &&
-                    usuarioDto.Nombre == null &&
-                    usuarioDto.Apellido == null &&
-                    usuarioDto.Genero == null &&
-                    usuarioDto.FechaNacimiento == null &&
-                    usuarioDto.Telefono == null &&
-                    usuarioDto.Correo == null &&
-                    usuarioDto.Direccion == null &&
-                    usuarioDto.Rol == null)
-                {
-                    throw new ArgumentException("At least one property must be non-null to update the user.");
-                }
-        
+                var usuario = await _dbContext.Usuarios.FindAsync(usuarioDto.UsuarioCodigo);
                 var perfilUsuario = await _dbContext.PerfilUsuarios.FindAsync(usuarioDto.Documento);
-                if (perfilUsuario != null)
+
+                bool usuarioUpdated = false;
+                bool perfilUsuarioUpdated = false;
+
+                if (perfilUsuario != null && usuario != null)
                 {
                     // Update only non-null properties
+                    if (usuarioDto.UsuarioCodigo != null)
+                    {
+                        usuario.UsuarioCodigo = usuarioDto.UsuarioCodigo;
+                        usuarioUpdated = true;
+                    }
+
+                    if (usuarioDto.UsuarioContra != null)
+                    {
+                        usuario.UsuarioContra = usuarioDto.UsuarioContra;
+                        usuarioUpdated = true;
+                    }
+
+                    if (usuarioDto.Documento != null)
+                    {
+                        perfilUsuario.Documento = usuarioDto.Documento;
+                        perfilUsuarioUpdated = true;
+                    }
+
                     if (usuarioDto.TipoDocumento != null)
+                    {
                         perfilUsuario.TipoDocumento = usuarioDto.TipoDocumento;
+                        perfilUsuarioUpdated = true;
+                    }
         
                     if (usuarioDto.Rol == "M" || usuarioDto.Rol == "E")
+                    {
                         perfilUsuario.NumLicenciaMedica = usuarioDto.NumLicenciaMedica;
-                    else
-                        perfilUsuario.NumLicenciaMedica = null;
+                        perfilUsuarioUpdated = true;
+                    }
         
                     if (usuarioDto.Nombre != null)
+                    {
                         perfilUsuario.Nombre = usuarioDto.Nombre;
+                        perfilUsuarioUpdated = true;
+                    }
         
                     if (usuarioDto.Apellido != null)
+                    {
                         perfilUsuario.Apellido = usuarioDto.Apellido;
-        
+                        perfilUsuarioUpdated = true;
+                    }
+
                     if (usuarioDto.Genero != null)
+                    {
                         perfilUsuario.Genero = usuarioDto.Genero;
+                        perfilUsuarioUpdated = true;
+                    }
         
                     if (usuarioDto.FechaNacimiento != null)
+                    {
                         perfilUsuario.FechaNacimiento = usuarioDto.FechaNacimiento ?? DateTime.MinValue;
+                        perfilUsuarioUpdated = true;
+                    }
         
                     if (usuarioDto.Telefono != null)
+                    {
                         perfilUsuario.Telefono = usuarioDto.Telefono;
+                        perfilUsuarioUpdated = true;
+                    }
         
                     if (usuarioDto.Correo != null)
+                    {
                         perfilUsuario.Correo = usuarioDto.Correo;
+                        perfilUsuarioUpdated = true;
+                    }
         
                     if (usuarioDto.Direccion != null)
+                    {
                         perfilUsuario.Direccion = usuarioDto.Direccion;
+                        perfilUsuarioUpdated = true;
+                    }
         
                     if (usuarioDto.Rol != null)
+                    {
                         perfilUsuario.Rol = usuarioDto.Rol;
+                        perfilUsuarioUpdated = true;
+                    }
+
+                    if (perfilUsuarioUpdated)
+                        _dbContext.PerfilUsuarios.Update(perfilUsuario);
+
+                    if (usuarioUpdated)
+                        _dbContext.Usuarios.Update(usuario);
         
-                    _dbContext.PerfilUsuarios.Update(perfilUsuario);
                     return await _dbContext.SaveChangesAsync();
                 }
                 else
@@ -193,7 +231,7 @@ namespace caresoft_core.Services
                 if (isUsuarioCodigo)
                 {
                     // If it's a usuarioCodigo, get the corresponding documento
-                    string documento = await _dbContext.Usuarios
+                    string? documento = await _dbContext.Usuarios
                                                     .Where(u => u.UsuarioCodigo == codigoOdocumento)
                                                     .Select(u => u.DocumentoUsuario)
                                                     .FirstOrDefaultAsync();

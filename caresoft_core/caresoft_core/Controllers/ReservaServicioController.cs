@@ -19,12 +19,12 @@ namespace caresoft_core.Controllers
 
         [HttpGet("list")]
         public async Task<ActionResult<List<ReservaServicio>>> GetReservaServiciosListAsync(
-            [FromQuery] uint idReserva,
-            [FromQuery] string documentoPaciente,
-            [FromQuery] string documentoMedico,
-            [FromQuery] string servicioCodigo,
-            [FromQuery] DateTime? fechaReserva,
-            [FromQuery] string estado)
+            [FromQuery] uint? idReserva = null,
+            [FromQuery] string? documentoPaciente = null,
+            [FromQuery] string? documentoMedico = null,
+            [FromQuery] string? servicioCodigo = null,
+            [FromQuery] DateTime? fechaReserva = null,
+            [FromQuery] string? estado = null)
         {
             try
             {
@@ -47,7 +47,6 @@ namespace caresoft_core.Controllers
 
         [HttpPost("add")]
         public async Task<ActionResult> AddReservaServicioAsync(
-            [FromQuery] uint idReserva,
             [FromQuery] string documentoPaciente,
             [FromQuery] string documentoMedico,
             [FromQuery] string servicioCodigo,
@@ -58,7 +57,6 @@ namespace caresoft_core.Controllers
             {
                 var reserva = new ReservaServicio
                 {
-                    IdReserva = idReserva,
                     DocumentoPaciente = documentoPaciente,
                     DocumentoMedico = documentoMedico,
                     ServicioCodigo = servicioCodigo,
@@ -87,15 +85,15 @@ namespace caresoft_core.Controllers
         [HttpPut("update")]
         public async Task<ActionResult> UpdateReservaServicioAsync(
             [FromQuery] uint idReserva,
-            [FromQuery] string documentoPaciente,
-            [FromQuery] string documentoMedico,
-            [FromQuery] string servicioCodigo,
-            [FromQuery] DateTime fechaReservada,
-            [FromQuery] string estado)
+            [FromQuery] string? documentoPaciente = null,
+            [FromQuery] string? documentoMedico = null,
+            [FromQuery] string? servicioCodigo = null,
+            [FromQuery] DateTime? fechaReservada = null,
+            [FromQuery] string? estado = null)
         {
             try
             {
-                var reserva = new ReservaServicio
+                var reserva = new ReservaServicioDto
                 {
                     IdReserva = idReserva,
                     DocumentoPaciente = documentoPaciente,
@@ -113,13 +111,13 @@ namespace caresoft_core.Controllers
                 }
                 else
                 {
-                    return StatusCode(500, "An error occurred while updating reserva servicio.");
+                    return StatusCode(500, "An error occurred while updating a reserva de servicio.");
                 }
             }
             catch (Exception ex)
             {
-                // Log the error
-                return StatusCode(500, "An error occurred while updating reserva servicio.");
+                _logHandler.LogFatal("An error occurred while updating a reserva de servicio.", ex);
+                return StatusCode(500, "An error occurred while updating a reserva de servicio.");
             }
         }
 
@@ -141,7 +139,7 @@ namespace caresoft_core.Controllers
             }
             catch (Exception ex)
             {
-                // Log the error
+                _logHandler.LogFatal("An error occurred while toggling reserva de servicio state.", ex);
                 return StatusCode(500, "An error occurred while toggling reserva servicio state.");
             }
         }
@@ -165,6 +163,7 @@ namespace caresoft_core.Controllers
             catch (Exception ex)
             {
                 // Log the error
+                _logHandler.LogFatal("An error occurred while deleting reserva servicio.", ex);
                 return StatusCode(500, "An error occurred while deleting reserva servicio.");
             }
         }

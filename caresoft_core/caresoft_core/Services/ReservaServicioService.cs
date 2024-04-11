@@ -15,7 +15,6 @@ namespace caresoft_core.Services
             _dbContext = dbContext;
         }
 
-
         public async Task<List<ReservaServicio>> GetReservaServiciosListAsync(uint? idReserva, string? documentoPaciente, string? documentoMedico, string? servicioCodigo, DateTime? fechaReserva, string? estado)
         {
             try
@@ -69,11 +68,43 @@ namespace caresoft_core.Services
             }
         }
 
-        public async Task<int> UpdateReservaServicioAsync(ReservaServicio reserva)
+        public async Task<int> UpdateReservaServicioAsync(ReservaServicioDto reserva)
         {
             try
             {
-                _dbContext.ReservaServicios.Update(reserva);
+                var existingReserva = await _dbContext.ReservaServicios.FindAsync(reserva.IdReserva);
+                if (existingReserva == null)
+                {
+                    _logHandler.LogInfo($"ReservaServicio with ID {reserva.IdReserva} not found.");
+                    return 0;
+                }
+        
+                // Update only the properties that are not null
+                if (reserva.DocumentoPaciente != null)
+                {
+                    existingReserva.DocumentoPaciente = reserva.DocumentoPaciente;
+                }
+        
+                if (reserva.DocumentoMedico != null)
+                {
+                    existingReserva.DocumentoMedico = reserva.DocumentoMedico;
+                }
+        
+                if (reserva.ServicioCodigo != null)
+                {
+                    existingReserva.ServicioCodigo = reserva.ServicioCodigo;
+                }
+        
+                if (reserva.FechaReservada != null)
+                {
+                    existingReserva.FechaReservada = reserva.FechaReservada ?? DateTime.MinValue;
+                }
+        
+                if (reserva.Estado != null)
+                {
+                    existingReserva.Estado = reserva.Estado;
+                }
+        
                 return await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
