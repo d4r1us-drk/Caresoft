@@ -9,87 +9,74 @@ namespace caresoft_core.Services;
 public class ConsultaService : IConsultaService
 {
   private CaresoftDbContext _dbContext;
-  private string _connectionString;
-  private readonly LogHandler<ConsultaService> _logHandler = new LogHandler<ConsultaService>();
-
-  public ConsultaService(CaresoftDbContext dbContext, string connectionString)
+  private readonly LogHandler<ConsultaService> _logHandler = new ();
+  public ConsultaService(CaresoftDbContext dbContext)
   {
     _dbContext = dbContext;
     _connectionString = connectionString;
   }
   public async Task<int> CrearConsulta(string consultaCodigo, string documentoPaciente, string documentoMedico, int idConsultorio, string motivo, string comentarios, decimal costo, string estado)
   {
-    using MySqlConnection connection = new MySqlConnection(this._connectionString);
-    MySqlCommand command = new("spConsultaCrear", connection)
+    var consulta = new Consulta
     {
-      CommandType = CommandType.StoredProcedure
+      ConsultaCodigo = consultaCodigo,
+      DocumentoPaciente = documentoPaciente,
+      DocumentoMedico = documentoMedico,
+      IdConsultorio = idConsultorio,
+      Motivo = motivo,
+      Comentarios = comentarios,
+      Costo = costo,
+      Estado = estado
     };
-
-    // Agregar parámetros
-    command.Parameters.AddWithValue("@p_consultaCodigo", consultaCodigo);
-    command.Parameters.AddWithValue("@p_documentoPaciente", documentoPaciente);
-    command.Parameters.AddWithValue("@p_documentoMedico", documentoMedico);
-    command.Parameters.AddWithValue("@p_idConsultorio", idConsultorio);
-    command.Parameters.AddWithValue("@p_motivo", motivo);
-    command.Parameters.AddWithValue("@p_comentarios", comentarios);
-    command.Parameters.AddWithValue("@p_costo", costo);
-    command.Parameters.AddWithValue("@p_estado", estado);
-
+    _dbContext.Consultas.Add(consulta);
     try
     {
-      connection.Open();
-      return await command.ExecuteNonQueryAsync();
+      return await _dbContext.SaveChangesAsync();
     }
-    catch (MySqlException ex)
+    catch (DbUpdateException ex)
     {
-      // Manejo de excepciones
-      _logHandler.LogFatal("No se pudo crear consulta", ex);
+      _logHandler.LogFatal("No se pudo crear la consulta", ex);
       throw;
     }
   }
   public async Task<int> ActualizarConsulta(string consultaCodigo, string documentoPaciente, string documentoMedico, int idConsultorio, string motivo, string comentarios, decimal costo)
   {
-    using MySqlConnection connection = new MySqlConnection(_connectionString);
-    MySqlCommand command = new("spConsultaActualizar", connection)
+    var consulta = await _dbContext.Consultas.FindAsync(consultaCodigo);
+
+    if (consulta == null)
     {
-      CommandType = CommandType.StoredProcedure
-    };
-
-    command.Parameters.AddWithValue("@p_consultaCodigo", consultaCodigo);
-    command.Parameters.AddWithValue("@p_documentoPaciente", documentoPaciente);
-    command.Parameters.AddWithValue("@p_documentoMedico", documentoMedico);
-    command.Parameters.AddWithValue("@p_idConsultorio", idConsultorio);
-    command.Parameters.AddWithValue("@p_motivo", motivo);
-    command.Parameters.AddWithValue("@p_comentarios", comentarios);
-    command.Parameters.AddWithValue("@p_costo", costo);
-
+      return 0;
+    }
+    consulta.DocumentoPaciente = documentoPaciente;
+    consulta.DocumentoMedico = documentoMedico;
+    consulta.IdConsultorio = idConsultorio;
+    consulta.Motivo = motivo;
+    consulta.Comentarios = comentarios;
+    consulta.Costo = costo;
     try
     {
-      connection.Open();
-      return await command.ExecuteNonQueryAsync();
+      return await _dbContext.SaveChangesAsync();
     }
-    catch (MySqlException ex)
+    catch (DbUpdateException ex)
     {
       _logHandler.LogFatal("No se pudo actualizar la consulta", ex);
       throw;
     }
+
   }
   public async Task<int> EliminarConsulta(string consultaCodigo)
   {
-    using MySqlConnection connection = new MySqlConnection(_connectionString);
-    MySqlCommand command = new("spConsultaEliminar", connection)
+    var consulta = await _dbContext.Consultas.FindAsync(consultaCodigo);
+    if (consulta == null)
     {
-      CommandType = CommandType.StoredProcedure
-    };
-
-    command.Parameters.AddWithValue("@p_consultaCodigo", consultaCodigo);
-
+      return 0;
+    }
+    _dbContext.Consultas.Remove(consulta);
     try
     {
-      connection.Open();
-      return await command.ExecuteNonQueryAsync();
+      return await _dbContext.SaveChangesAsync();
     }
-    catch (MySqlException ex)
+    catch (DbUpdateException ex)
     {
       _logHandler.LogFatal("No se pudo eliminar la consulta", ex);
       throw;
@@ -153,8 +140,9 @@ public class ConsultaService : IConsultaService
     try
     {
       connection.Open();
-      using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync()){
-        
+      using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+      {
+
       }
       return dataTable;
     }
@@ -164,6 +152,37 @@ public class ConsultaService : IConsultaService
       _logHandler.LogFatal("No se pudo listar servicio de consulta", ex);
       throw;
     }
+  }
+  int RelacionarProducto(string consultaCodigo, int idProducto, int cantidad)
+  {
+    throw new NotImplementedException();
+  }
+  int DesrelacionarProducto(string consultaCodigo, int idProducto, int cantidad)
+  {
+    throw new NotImplementedException();
+  }
+  List<Producto> ListarProductos(string consultaCodigo)
+  {
+
+    throw new NotImplementedException();
+  }
+  int RelacionarAfeccion(string consultaCodigo, int idAfeccion)
+  {
+
+    throw new NotImplementedException();
+  }
+  int DesrelacionarAfeccion(string consultaCodigo, int idAfeccion)
+  {
+    throw new NotImplementedException();
+  }
+  List<Afeccion> ListarAfecciones(string consultaCodigo)
+  {
+    throw new NotImplementedException();
+  }
+  List<Consulta> ListarConsultas(string documentoPaciente, string documentoMedico, DateTime fechaInicio, DateTime fechaFin)
+  {
+    throw new NotImplementedException();
+
   }
 
 }
