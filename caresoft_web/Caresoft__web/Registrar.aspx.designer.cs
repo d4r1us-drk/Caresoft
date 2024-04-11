@@ -11,7 +11,7 @@ namespace Caresoft__web
 {
 
 
-    public partial class Cuenta1
+    public partial class Registrar
     {
 
         /// <summary>
