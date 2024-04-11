@@ -2375,18 +2375,20 @@ DELIMITER ;
 
 -- 4. Actualizar datos de un usuario
 DELIMITER //
-CREATE PROCEDURE spUsuarioActualizarDatos(
+CREATE PROCEDURE spUsuarioActualizar(
     IN p_usuarioCodigo VARCHAR(30),
     IN p_usuarioContra NVARCHAR(255),
     IN p_documento VARCHAR(30),
     IN p_tipoDocumento ENUM('I', 'P'),
+    IN p_numLicenciaMedica INT,
     IN p_nombre NVARCHAR(100),
     IN p_apellido NVARCHAR(100),
     IN p_genero ENUM('M', 'F'),
     IN p_fechaNacimiento DATE,
     IN p_telefono VARCHAR(18),
     IN p_correo NVARCHAR(255),
-    IN p_direccion NVARCHAR(255)
+    IN p_direccion NVARCHAR(255),
+    IN p_rol ENUM('P', 'A', 'M', 'E', 'C')
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
@@ -2401,13 +2403,15 @@ BEGIN
     UPDATE PerfilUsuario
     SET 
         tipoDocumento = p_tipoDocumento,
+        numLicenciaMedica = p_numLicenciaMedica,
         nombre = p_nombre,
         apellido = p_apellido,
         genero = p_genero,
         fechaNacimiento = p_fechaNacimiento,
         telefono = p_telefono,
         correo = p_correo,
-        direccion = p_direccion
+        direccion = p_direccion,
+        rol = p_rol
     WHERE documento = p_documento;
 
     UPDATE Usuario

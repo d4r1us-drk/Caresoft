@@ -1,5 +1,7 @@
 using caresoft_core.Models;
+using caresoft_core.Utils;
 using MySql.Data.MySqlClient;
+using caresoft_core.Services.Interfaces;
 
 namespace caresoft_core.Services
 {
@@ -69,7 +71,7 @@ namespace caresoft_core.Services
             return usuarios;
         }
 
-        public async Task<int> AddUsuarioPacienteAsync(Usuario usuario, PerfilUsuario perfilUsuario)
+        public async Task<int> AddUsuarioPacienteAsync(UsuarioDto usuario)
         {
             try 
             {
@@ -80,15 +82,15 @@ namespace caresoft_core.Services
                 command.CommandType = System.Data.CommandType.StoredProcedure;
 
                 // Add parameters
-                command.Parameters.AddWithValue("@p_documento", perfilUsuario.Documento);
-                command.Parameters.AddWithValue("@p_tipoDocumento", perfilUsuario.TipoDocumento);
-                command.Parameters.AddWithValue("@p_nombre", perfilUsuario.Nombre);
-                command.Parameters.AddWithValue("@p_apellido", perfilUsuario.Apellido);
-                command.Parameters.AddWithValue("@p_genero", perfilUsuario.Genero);
-                command.Parameters.AddWithValue("@p_fechaNacimiento", perfilUsuario.FechaNacimiento);
-                command.Parameters.AddWithValue("@p_telefono", perfilUsuario.Telefono);
-                command.Parameters.AddWithValue("@p_correo", perfilUsuario.Correo);
-                command.Parameters.AddWithValue("@p_direccion", perfilUsuario.Direccion);
+                command.Parameters.AddWithValue("@p_documento", usuario.Documento);
+                command.Parameters.AddWithValue("@p_tipoDocumento", usuario.TipoDocumento);
+                command.Parameters.AddWithValue("@p_nombre", usuario.Nombre);
+                command.Parameters.AddWithValue("@p_apellido", usuario.Apellido);
+                command.Parameters.AddWithValue("@p_genero", usuario.Genero);
+                command.Parameters.AddWithValue("@p_fechaNacimiento", usuario.FechaNacimiento);
+                command.Parameters.AddWithValue("@p_telefono", usuario.Telefono);
+                command.Parameters.AddWithValue("@p_correo", usuario.Correo);
+                command.Parameters.AddWithValue("@p_direccion", usuario.Direccion);
                 command.Parameters.AddWithValue("@p_usuarioCodigo", usuario.UsuarioCodigo);
                 command.Parameters.AddWithValue("@p_usuarioContra", usuario.UsuarioContra);
 
@@ -107,7 +109,7 @@ namespace caresoft_core.Services
             }
         }
 
-        public async Task<int> AddUsuarioPersonalAsync(Usuario usuario, PerfilUsuario perfilUsuario)
+        public async Task<int> AddUsuarioPersonalAsync(UsuarioDto usuario)
         {
             try 
             {
@@ -118,16 +120,16 @@ namespace caresoft_core.Services
                 command.CommandType = System.Data.CommandType.StoredProcedure;
 
                 // Add parameters
-                command.Parameters.AddWithValue("@p_documento", perfilUsuario.Documento);
-                command.Parameters.AddWithValue("@p_tipoDocumento", perfilUsuario.TipoDocumento);
-                command.Parameters.AddWithValue("@p_nombre", perfilUsuario.Nombre);
-                command.Parameters.AddWithValue("@p_apellido", perfilUsuario.Apellido);
-                command.Parameters.AddWithValue("@p_genero", perfilUsuario.Genero);
-                command.Parameters.AddWithValue("@p_fechaNacimiento", perfilUsuario.FechaNacimiento);
-                command.Parameters.AddWithValue("@p_telefono", perfilUsuario.Telefono);
-                command.Parameters.AddWithValue("@p_correo", perfilUsuario.Correo);
-                command.Parameters.AddWithValue("@p_direccion", perfilUsuario.Direccion);
-                command.Parameters.AddWithValue("@p_rol", perfilUsuario.Rol);
+                command.Parameters.AddWithValue("@p_documento", usuario.Documento);
+                command.Parameters.AddWithValue("@p_tipoDocumento", usuario.TipoDocumento);
+                command.Parameters.AddWithValue("@p_nombre", usuario.Nombre);
+                command.Parameters.AddWithValue("@p_apellido", usuario.Apellido);
+                command.Parameters.AddWithValue("@p_genero", usuario.Genero);
+                command.Parameters.AddWithValue("@p_fechaNacimiento", usuario.FechaNacimiento);
+                command.Parameters.AddWithValue("@p_telefono", usuario.Telefono);
+                command.Parameters.AddWithValue("@p_correo", usuario.Correo);
+                command.Parameters.AddWithValue("@p_direccion", usuario.Direccion);
+                command.Parameters.AddWithValue("@p_rol", usuario.Rol);
                 command.Parameters.AddWithValue("@p_usuarioCodigo", usuario.UsuarioCodigo);
                 command.Parameters.AddWithValue("@p_usuarioContra", usuario.UsuarioContra);
 
@@ -146,7 +148,7 @@ namespace caresoft_core.Services
             }
         }
 
-        public async Task<int> AddUsuarioMedicoAsync(Usuario usuario, PerfilUsuario perfilUsuario)
+        public async Task<int> AddUsuarioMedicoAsync(UsuarioDto usuario)
         {
             try
             {
@@ -157,17 +159,17 @@ namespace caresoft_core.Services
                 command.CommandType = System.Data.CommandType.StoredProcedure;
     
                 // Add parameters
-                command.Parameters.AddWithValue("@p_documento", perfilUsuario.Documento);
-                command.Parameters.AddWithValue("@p_tipoDocumento", perfilUsuario.TipoDocumento);
-                command.Parameters.AddWithValue("@p_numLicenciaMedica", perfilUsuario.NumLicenciaMedica);
-                command.Parameters.AddWithValue("@p_nombre", perfilUsuario.Nombre);
-                command.Parameters.AddWithValue("@p_apellido", perfilUsuario.Apellido);
-                command.Parameters.AddWithValue("@p_genero", perfilUsuario.Genero);
-                command.Parameters.AddWithValue("@p_fechaNacimiento", perfilUsuario.FechaNacimiento);
-                command.Parameters.AddWithValue("@p_telefono", perfilUsuario.Telefono);
-                command.Parameters.AddWithValue("@p_correo", perfilUsuario.Correo);
-                command.Parameters.AddWithValue("@p_direccion", perfilUsuario.Direccion);
-                command.Parameters.AddWithValue("@p_rol", perfilUsuario.Rol);
+                command.Parameters.AddWithValue("@p_documento", usuario.Documento);
+                command.Parameters.AddWithValue("@p_tipoDocumento", usuario.TipoDocumento);
+                command.Parameters.AddWithValue("@p_numLicenciaMedica", usuario.NumLicenciaMedica);
+                command.Parameters.AddWithValue("@p_nombre", usuario.Nombre);
+                command.Parameters.AddWithValue("@p_apellido", usuario.Apellido);
+                command.Parameters.AddWithValue("@p_genero", usuario.Genero);
+                command.Parameters.AddWithValue("@p_fechaNacimiento", usuario.FechaNacimiento);
+                command.Parameters.AddWithValue("@p_telefono", usuario.Telefono);
+                command.Parameters.AddWithValue("@p_correo", usuario.Correo);
+                command.Parameters.AddWithValue("@p_direccion", usuario.Direccion);
+                command.Parameters.AddWithValue("@p_rol", usuario.Rol);
                 command.Parameters.AddWithValue("@p_usuarioCodigo", usuario.UsuarioCodigo);
                 command.Parameters.AddWithValue("@p_usuarioContra", usuario.UsuarioContra);
 
@@ -186,7 +188,7 @@ namespace caresoft_core.Services
             }
         }
         
-        public async Task<int> UpdateUsuarioAsync(Usuario usuario, PerfilUsuario perfilUsuario)
+        public async Task<int> UpdateUsuarioAsync(UsuarioDto usuario)
         {
             try
             {
@@ -199,16 +201,18 @@ namespace caresoft_core.Services
                 // Add parameters
                 command.Parameters.AddWithValue("@p_usuarioCodigo", usuario.UsuarioCodigo);
                 command.Parameters.AddWithValue("@p_usuarioContra", usuario.UsuarioContra);
-                command.Parameters.AddWithValue("@p_tipoDocumento", perfilUsuario.TipoDocumento);
-                command.Parameters.AddWithValue("@p_documento", perfilUsuario.Documento);
-                command.Parameters.AddWithValue("@p_tipoDocumento", perfilUsuario.TipoDocumento);
-                command.Parameters.AddWithValue("@p_nombre", perfilUsuario.Nombre);
-                command.Parameters.AddWithValue("@p_apellido", perfilUsuario.Apellido);
-                command.Parameters.AddWithValue("@p_genero", perfilUsuario.Genero);
-                command.Parameters.AddWithValue("@p_fechaNacimiento", perfilUsuario.FechaNacimiento);
-                command.Parameters.AddWithValue("@p_telefono", perfilUsuario.Telefono);
-                command.Parameters.AddWithValue("@p_correo", perfilUsuario.Correo);
-                command.Parameters.AddWithValue("@p_direccion", perfilUsuario.Direccion);
+                command.Parameters.AddWithValue("@p_tipoDocumento", usuario.TipoDocumento);
+                command.Parameters.AddWithValue("@p_numLicenciaMedica", usuario.NumLicenciaMedica);
+                command.Parameters.AddWithValue("@p_documento", usuario.Documento);
+                command.Parameters.AddWithValue("@p_tipoDocumento", usuario.TipoDocumento);
+                command.Parameters.AddWithValue("@p_nombre", usuario.Nombre);
+                command.Parameters.AddWithValue("@p_apellido", usuario.Apellido);
+                command.Parameters.AddWithValue("@p_genero", usuario.Genero);
+                command.Parameters.AddWithValue("@p_fechaNacimiento", usuario.FechaNacimiento);
+                command.Parameters.AddWithValue("@p_telefono", usuario.Telefono);
+                command.Parameters.AddWithValue("@p_correo", usuario.Correo);
+                command.Parameters.AddWithValue("@p_direccion", usuario.Direccion);
+                command.Parameters.AddWithValue("@p_rol", usuario.Rol);
 
                 int result = await command.ExecuteNonQueryAsync();
                 

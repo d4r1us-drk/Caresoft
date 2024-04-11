@@ -1,5 +1,5 @@
 using caresoft_core.Models;
-using caresoft_core.Services;
+using caresoft_core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace caresoft_core.Controllers
@@ -52,18 +52,12 @@ namespace caresoft_core.Controllers
         {
             try
             {
-                var usuario = new Usuario
+                var usuario = new UsuarioDto
                 {
                     UsuarioCodigo = usuarioCodigo,
-                    DocumentoUsuario = documento,
-                    UsuarioContra = usuarioContra
-                };
-
-                var perfilUsuario = new PerfilUsuario
-                {
+                    UsuarioContra = usuarioContra,
                     Documento = documento,
                     TipoDocumento = tipoDocumento,
-                    NumLicenciaMedica = null,
                     Nombre = nombre,
                     Apellido = apellido,
                     Genero = genero,
@@ -71,10 +65,9 @@ namespace caresoft_core.Controllers
                     Telefono = telefono,
                     Correo = correo,
                     Direccion = direccion,
-                    Rol = "P"
                 };
 
-                var result = await _usuarioService.AddUsuarioPacienteAsync(usuario, perfilUsuario);
+                var result = await _usuarioService.AddUsuarioPacienteAsync(usuario);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -84,22 +77,16 @@ namespace caresoft_core.Controllers
         }
         
         [HttpPost("addUsuarioPersonal")]
-        public async Task<ActionResult<int>> AddUsuarioPersonalAsync(string usuarioCodigo, string documentoUsuario, string usuarioContra, string documento, string tipoDocumento, uint? numLicenciaMedica, string nombre, string apellido, string genero, DateTime fechaNacimiento, string telefono, string correo, string direccion, string rol)
+        public async Task<ActionResult<int>> AddUsuarioPersonalAsync(string usuarioCodigo, string documentoUsuario, string usuarioContra, string documento, string tipoDocumento, string nombre, string apellido, string genero, DateTime fechaNacimiento, string telefono, string correo, string direccion, string rol)
         {
             try
             {
-                var usuario = new Usuario
+                var usuario = new UsuarioDto
                 {
                     UsuarioCodigo = usuarioCodigo,
-                    DocumentoUsuario = documentoUsuario,
-                    UsuarioContra = usuarioContra
-                };
-
-                var perfilUsuario = new PerfilUsuario
-                {
+                    UsuarioContra = usuarioContra,
                     Documento = documento,
                     TipoDocumento = tipoDocumento,
-                    NumLicenciaMedica = numLicenciaMedica,
                     Nombre = nombre,
                     Apellido = apellido,
                     Genero = genero,
@@ -110,7 +97,7 @@ namespace caresoft_core.Controllers
                     Rol = rol
                 };
 
-                var result = await _usuarioService.AddUsuarioPersonalAsync(usuario, perfilUsuario);
+                var result = await _usuarioService.AddUsuarioPersonalAsync(usuario);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -124,15 +111,10 @@ namespace caresoft_core.Controllers
         {
             try
             {
-                var usuario = new Usuario
+                var usuario = new UsuarioDto
                 {
                     UsuarioCodigo = usuarioCodigo,
-                    DocumentoUsuario = documentoUsuario,
-                    UsuarioContra = usuarioContra
-                };
-
-                var perfilUsuario = new PerfilUsuario
-                {
+                    UsuarioContra = usuarioContra,
                     Documento = documento,
                     TipoDocumento = tipoDocumento,
                     NumLicenciaMedica = numLicenciaMedica,
@@ -146,7 +128,7 @@ namespace caresoft_core.Controllers
                     Rol = rol
                 };
 
-                var result = await _usuarioService.AddUsuarioMedicoAsync(usuario, perfilUsuario);
+                var result = await _usuarioService.AddUsuarioMedicoAsync(usuario);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -156,30 +138,28 @@ namespace caresoft_core.Controllers
         }
 
         [HttpPut("updateUsuario")]
-        public async Task<ActionResult<int>> UpdateUsuarioAsync(string usuarioCodigo, string usuarioContra, string documento, string tipoDocumento, string nombre, string apellido, string genero, DateTime fechaNacimiento, string telefono, string correo, string direccion)
+        public async Task<ActionResult<int>> UpdateUsuarioAsync(string usuarioCodigo, string usuarioContra, string documento, string tipoDocumento, uint numLicenciaMedica, string nombre, string apellido, string genero, DateTime fechaNacimiento, string telefono, string correo, string direccion, string rol)
         {
             try
             {
-                var usuario = new Usuario
+                var usuario = new UsuarioDto
                 {
                     UsuarioCodigo = usuarioCodigo,
-                    UsuarioContra = usuarioContra
-                };
-
-                var perfilUsuario = new PerfilUsuario
-                {
+                    UsuarioContra = usuarioContra,
                     Documento = documento,
                     TipoDocumento = tipoDocumento,
+                    NumLicenciaMedica = numLicenciaMedica,
                     Nombre = nombre,
                     Apellido = apellido,
                     Genero = genero,
                     FechaNacimiento = fechaNacimiento,
                     Telefono = telefono,
                     Correo = correo,
-                    Direccion = direccion
+                    Direccion = direccion,
+                    Rol = rol
                 };
 
-                var result = await _usuarioService.UpdateUsuarioAsync(usuario, perfilUsuario);
+                var result = await _usuarioService.UpdateUsuarioAsync(usuario);
                 return Ok(result);
             }
             catch (Exception ex)
