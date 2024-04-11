@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace caresoft_core.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioService _usuarioService;
@@ -15,31 +15,18 @@ namespace caresoft_core.Controllers
             _usuarioService = usuarioService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosListAsync(string? usuarioCodigo, string? documento, string? genero, DateTime? fechaNacimiento, string? rol)
+        [HttpGet("list")]
+        public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosListAsync(
+            [FromQuery] string? usuarioCodigo,
+            [FromQuery] string? documento,
+            [FromQuery] string? genero,
+            [FromQuery] DateTime? fechaNacimiento,
+            [FromQuery] string? rol)
         {
             try
             {
                 var usuarios = await _usuarioService.GetUsuariosListAsync(usuarioCodigo, documento, genero, fechaNacimiento, rol);
-
-                var usuariosDto = usuarios.Select(usuario => new UsuarioDto
-                {
-                    UsuarioCodigo = usuario.UsuarioCodigo,
-                    UsuarioContra = usuario.UsuarioContra,
-                    Documento = usuario.Documento,
-                    TipoDocumento = usuario.TipoDocumento,
-                    NumLicenciaMedica = usuario.NumLicenciaMedica.GetValueOrDefault(),
-                    Nombre = usuario.Nombre,
-                    Apellido = usuario.Apellido,
-                    Genero = usuario.Genero,
-                    FechaNacimiento = usuario.FechaNacimiento,
-                    Telefono = usuario.Telefono,
-                    Correo = usuario.Correo,
-                    Direccion = usuario.Direccion,
-                    Rol = usuario.Rol
-                }).ToList();
-
-                return Ok(usuariosDto);
+                return Ok(usuarios);
             }
             catch (Exception ex)
             {
@@ -47,8 +34,21 @@ namespace caresoft_core.Controllers
             }
         }
 
-        [HttpPost("addUsuarioPaciente")]
-        public async Task<IActionResult> AddUsuarioPacienteAsync(string usuarioCodigo, string usuarioContra, string documento, string tipoDocumento, string nombre, string apellido, string genero, DateTime fechaNacimiento, string telefono, string correo, string direccion)
+        [HttpPost("add")]
+        public async Task<IActionResult> AddUsuarioAsync(
+            [FromQuery] string usuarioCodigo,
+            [FromQuery] string usuarioContra,
+            [FromQuery] string documento,
+            [FromQuery] string tipoDocumento,
+            [FromQuery] uint? numLicenciaMedica,
+            [FromQuery] string nombre,
+            [FromQuery] string apellido,
+            [FromQuery] string genero,
+            [FromQuery] DateTime fechaNacimiento,
+            [FromQuery] string telefono,
+            [FromQuery] string correo,
+            [FromQuery] string direccion,
+            [FromQuery] string rol = "P")
         {
             try
             {
@@ -58,6 +58,7 @@ namespace caresoft_core.Controllers
                     UsuarioContra = usuarioContra,
                     Documento = documento,
                     TipoDocumento = tipoDocumento,
+                    NumLicenciaMedica = rol == "M" || rol == "E" ? numLicenciaMedica : null,
                     Nombre = nombre,
                     Apellido = apellido,
                     Genero = genero,
@@ -65,70 +66,10 @@ namespace caresoft_core.Controllers
                     Telefono = telefono,
                     Correo = correo,
                     Direccion = direccion,
+                    Rol = rol,
                 };
 
-                var result = await _usuarioService.AddUsuarioPacienteAsync(usuario);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
-        
-        [HttpPost("addUsuarioPersonal")]
-        public async Task<ActionResult<int>> AddUsuarioPersonalAsync(string usuarioCodigo, string documentoUsuario, string usuarioContra, string documento, string tipoDocumento, string nombre, string apellido, string genero, DateTime fechaNacimiento, string telefono, string correo, string direccion, string rol)
-        {
-            try
-            {
-                var usuario = new UsuarioDto
-                {
-                    UsuarioCodigo = usuarioCodigo,
-                    UsuarioContra = usuarioContra,
-                    Documento = documento,
-                    TipoDocumento = tipoDocumento,
-                    Nombre = nombre,
-                    Apellido = apellido,
-                    Genero = genero,
-                    FechaNacimiento = fechaNacimiento,
-                    Telefono = telefono,
-                    Correo = correo,
-                    Direccion = direccion,
-                    Rol = rol
-                };
-
-                var result = await _usuarioService.AddUsuarioPersonalAsync(usuario);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
-        
-        [HttpPost("addUsuarioMedico")]
-        public async Task<ActionResult<int>> AddUsuarioMedicoAsync(string usuarioCodigo, string documentoUsuario, string usuarioContra, string documento, string tipoDocumento, uint? numLicenciaMedica, string nombre, string apellido, string genero, DateTime fechaNacimiento, string telefono, string correo, string direccion, string rol)
-        {
-            try
-            {
-                var usuario = new UsuarioDto
-                {
-                    UsuarioCodigo = usuarioCodigo,
-                    UsuarioContra = usuarioContra,
-                    Documento = documento,
-                    TipoDocumento = tipoDocumento,
-                    NumLicenciaMedica = numLicenciaMedica,
-                    Nombre = nombre,
-                    Apellido = apellido,
-                    Genero = genero,
-                    FechaNacimiento = fechaNacimiento,
-                    Telefono = telefono,
-                    Correo = correo,
-                    Direccion = direccion,
-                    Rol = rol
-                };
-
-                var result = await _usuarioService.AddUsuarioMedicoAsync(usuario);
+                var result = await _usuarioService.AddUsuarioAsync(usuario);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -137,8 +78,21 @@ namespace caresoft_core.Controllers
             }
         }
 
-        [HttpPut("updateUsuario")]
-        public async Task<ActionResult<int>> UpdateUsuarioAsync(string usuarioCodigo, string usuarioContra, string documento, string tipoDocumento, uint numLicenciaMedica, string nombre, string apellido, string genero, DateTime fechaNacimiento, string telefono, string correo, string direccion, string rol)
+        [HttpPut("update")]
+        public async Task<ActionResult<int>> UpdateUsuarioAsync(
+            [FromQuery] string? usuarioCodigo = null,
+            [FromQuery] string? usuarioContra = null,
+            [FromQuery] string? documento = null,
+            [FromQuery] string? tipoDocumento = null,
+            [FromQuery] uint? numLicenciaMedica = null,
+            [FromQuery] string? nombre = null,
+            [FromQuery] string? apellido = null,
+            [FromQuery] string? genero = null,
+            [FromQuery] DateTime? fechaNacimiento = null,
+            [FromQuery] string? telefono = null,
+            [FromQuery] string? correo = null,
+            [FromQuery] string? direccion = null,
+            [FromQuery] string? rol = null)
         {
             try
             {
@@ -168,8 +122,8 @@ namespace caresoft_core.Controllers
             }
         }
 
-        [HttpDelete("deleteUsuario")]
-        public async Task<ActionResult<int>> DeleteUsuarioAsync(string codigoOdocumento)
+        [HttpDelete("delete")]
+        public async Task<ActionResult<int>> DeleteUsuarioAsync([FromQuery] string codigoOdocumento)
         {
             try
             {
