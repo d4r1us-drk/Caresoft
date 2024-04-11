@@ -2693,7 +2693,23 @@ BEGIN
     IF (NEW.rol = 'M' OR NEW.rol = 'E') AND NEW.numLicenciaMedica IS NULL THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Los médicos y enfermeros deben tener un número de licencia médica.';
     END IF;
-END;
-//
+END //
+
+CREATE TRIGGER trVerificarFacturaRelaciones
+BEFORE INSERT ON Factura
+FOR EACH ROW
+BEGIN
+    DECLARE consultaCount INT;
+    DECLARE ingresoCount INT;
+    
+    -- Check if both consultaCodigo and idIngreso are provided
+    SELECT COUNT(*) INTO consultaCount FROM Factura WHERE NEW.consultaCodigo IS NOT NULL AND NEW.facturaCodigo = facturaCodigo;
+    SELECT COUNT(*) INTO ingresoCount FROM Factura WHERE NEW.idIngreso IS NOT NULL AND NEW.facturaCodigo = facturaCodigo;
+    
+    -- If both consultaCodigo and idIngreso are provided, raise an error
+    IF consultaCount > 0 AND ingresoCount > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Una factura no puede incluir una consulta y un ingreso al mismo tiempo.';
+    END IF;
+END //
 
 DELIMITER ;
