@@ -60,10 +60,11 @@ namespace caresoft_core.Repositories
                 }
 
                 connection.Close();
+                _logHandler.LogInfo("Data retrieved successfully.");
             }
             catch (Exception ex)
             {
-                _logHandler.LogFatal("Ocurrio un error", ex);
+                _logHandler.LogFatal("Something went wrong.", ex);
             }
 
             return usuarios;
@@ -95,12 +96,14 @@ namespace caresoft_core.Repositories
                 int result = await command.ExecuteNonQueryAsync();
                 
                 connection.Close();
+
+                _logHandler.LogInfo("User of type 'Paciente' was created successfully.");
                 
                 return result;
             }
             catch (Exception ex)
             {
-                _logHandler.LogFatal("Ocurrio un error", ex);
+                _logHandler.LogFatal("Something went wrong.", ex);
                 throw ex;
             }
         }
@@ -132,12 +135,14 @@ namespace caresoft_core.Repositories
                 int result = await command.ExecuteNonQueryAsync();
                 
                 connection.Close();
+
+                _logHandler.LogInfo("User of type 'Personal' was created successfully.");
                 
                 return result;
             }
             catch (Exception ex)
             {
-                _logHandler.LogFatal("Ocurrio un error", ex);
+                _logHandler.LogFatal("Something went wrong.", ex);
                 throw ex;
             }
         }
@@ -170,6 +175,8 @@ namespace caresoft_core.Repositories
                 int result = await command.ExecuteNonQueryAsync();
                 
                 connection.Close();
+
+                _logHandler.LogInfo("User of type 'Medico' was created successfully.");
                 
                 return result;
             }
@@ -207,12 +214,14 @@ namespace caresoft_core.Repositories
                 int result = await command.ExecuteNonQueryAsync();
                 
                 connection.Close();
+
+                _logHandler.LogInfo("User data was successfully updated.");
                 
                 return result;
             }
             catch (Exception ex)
             {
-                _logHandler.LogFatal("Ocurrio un error", ex);
+                _logHandler.LogFatal("Something went wrong.", ex);
                 throw ex;
             }
         }
@@ -233,12 +242,14 @@ namespace caresoft_core.Repositories
                 int result = await command.ExecuteNonQueryAsync();
                 
                 connection.Close();
+
+                _logHandler.LogInfo("User data was successfully deleted.");
                 
                 return result;
             }
             catch (Exception ex)
             {
-                _logHandler.LogFatal("Ocurrio un error", ex);
+                _logHandler.LogFatal("Something went wrong.", ex);
                 throw ex;
             }
         }

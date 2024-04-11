@@ -67,7 +67,7 @@ CREATE TABLE Proveedor(
     nombre          NVARCHAR(100)   NOT NULL,
     direccion       NVARCHAR(255)   NOT NULL,
     telefono        VARCHAR(18)     NOT NULL,
-    correo          NVARCHAR(255)   NOT NULL
+    correo          NVARCHAR(255)   UNIQUE NOT NULL
 );
 
 CREATE TABLE Aseguradora(
@@ -220,7 +220,7 @@ CREATE TABLE ReservaServicio(
     FOREIGN KEY (servicioCodigo)    REFERENCES  Servicio(servicioCodigo)    ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE PrescripcionServicio(
+CREATE TABLE Prescripcion_Servicio(
     consultaCodigo  VARCHAR(30),
     servicioCodigo  VARCHAR(30),
     PRIMARY KEY (consultaCodigo, servicioCodigo),
@@ -228,7 +228,7 @@ CREATE TABLE PrescripcionServicio(
     FOREIGN KEY (servicioCodigo)   REFERENCES  Servicio(servicioCodigo) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE PrescripcionProducto(
+CREATE TABLE Prescripcion_Producto(
     consultaCodigo  VARCHAR(30),
     idProducto      INT UNSIGNED,
     cantidad        INT NOT NULL DEFAULT 1,
@@ -237,7 +237,7 @@ CREATE TABLE PrescripcionProducto(
     FOREIGN KEY (idProducto)        REFERENCES  Producto(idProducto)     ON DELETE CASCADE
 );
 
-CREATE TABLE ConsultaAfeccion(
+CREATE TABLE Consulta_Afeccion(
     consultaCodigo  VARCHAR(30),
     idAfeccion      INT UNSIGNED,
     PRIMARY KEY (consultaCodigo, idAfeccion),
@@ -245,7 +245,7 @@ CREATE TABLE ConsultaAfeccion(
     FOREIGN KEY (idAfeccion)        REFERENCES  Afeccion(idAfeccion)     ON DELETE CASCADE
 );
 
-CREATE TABLE IngresoAfeccion(
+CREATE TABLE Ingreso_Afeccion(
     idIngreso   INT UNSIGNED,
     idAfeccion  INT UNSIGNED,
     PRIMARY KEY (idIngreso, idAfeccion),
@@ -461,7 +461,7 @@ DELIMITER ;
 
 -- 4. Prescribir un servicio en una consulta
 DELIMITER //
-CREATE PROCEDURE spConsultaPrescribirServicio(
+CREATE PROCEDURE spConsultaRelacionarServicio(
     IN p_consultaCodigo VARCHAR(30),
     IN p_servicioCodigo VARCHAR(30)
 )
@@ -475,15 +475,47 @@ BEGIN
     START TRANSACTION;
 
     -- Prescribir el servicio en la consulta
-    INSERT INTO PrescripcionServicio (consultaCodigo, servicioCodigo) VALUES (p_consultaCodigo, p_servicioCodigo);
+    INSERT INTO Prescripcion_Servicio (consultaCodigo, servicioCodigo) VALUES (p_consultaCodigo, p_servicioCodigo);
 
     COMMIT;
 END //
 DELIMITER ;
 
--- 5. Prescribir un producto en una consulta
+-- 5. Eliminar una prescripción de un servicio en una consulta
 DELIMITER //
-CREATE PROCEDURE spConsultaPrescribirProducto(
+CREATE PROCEDURE spConsultaDesrelacionarServicio(
+    IN p_consultaCodigo VARCHAR(30),
+    IN p_servicioCodigo VARCHAR(30)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
+    -- Prescribir el servicio en la consulta
+    DELETE FROM Prescripcion_Servicio WHERE consultaCodigo = p_consultaCodigo AND servicioCodigo = p_servicioCodigo;
+
+    COMMIT;
+END //
+DELIMITER ;
+
+-- 6. Obtener los servicios prescritos en una consulta
+DELIMITER //
+CREATE PROCEDURE spConsultaListarServicios(
+    IN p_consultaCodigo VARCHAR(30)
+)
+BEGIN
+    SELECT * FROM Prescripcion_Servicio WHERE consultaCodigo = p_consultaCodigo;
+END //
+DELIMITER ;
+
+-- 7. Prescribir un producto en una consulta
+DELIMITER //
+CREATE PROCEDURE spConsultaRelacionarProducto(
     IN p_consultaCodigo VARCHAR(30),
     IN p_idProducto INT UNSIGNED,
     IN p_cantidad INT
@@ -498,15 +530,47 @@ BEGIN
     START TRANSACTION;
 
     -- Prescribir el producto en la consulta
-    INSERT INTO PrescripcionProducto (consultaCodigo, idProducto, cantidad) VALUES (p_consultaCodigo, p_idProducto, p_cantidad);
+    INSERT INTO Prescripcion_Producto (consultaCodigo, idProducto, cantidad) VALUES (p_consultaCodigo, p_idProducto, p_cantidad);
 
     COMMIT;
 END //
 DELIMITER ;
 
--- 6. Registrar una afección tratada en una consulta
+-- 8. Eliminar una prescripción de un producto en una consulta
 DELIMITER //
-CREATE PROCEDURE spConsultaInsertarAfeccion(
+CREATE PROCEDURE spConsultaDesrelacionarProducto(
+    IN p_consultaCodigo VARCHAR(30),
+    IN p_idProducto INT UNSIGNED,
+    IN p_cantidad INT
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
+    DELETE FROM Prescripcion_Producto WHERE consultaCodigo = p_consultaCodigo AND idProducto = p_idProducto;
+
+    COMMIT;
+END //
+DELIMITER ;
+
+-- 8. Obtener los productos prescritos en una consulta
+DELIMITER //
+CREATE PROCEDURE spConsultaListarProductos(
+    IN p_consultaCodigo VARCHAR(30)
+)
+BEGIN
+    SELECT * FROM Prescripcion_Producto WHERE consultaCodigo = p_consultaCodigo;
+END //
+DELIMITER ;
+
+-- 10. Registrar una afección tratada en una consulta
+DELIMITER //
+CREATE PROCEDURE spConsultaRelacionarAfeccion(
     IN p_consultaCodigo VARCHAR(30),
     IN p_idAfeccion INT UNSIGNED
 )
@@ -520,13 +584,45 @@ BEGIN
     START TRANSACTION;
 
     -- Registrar la afección tratada en la consulta
-    INSERT INTO ConsultaAfeccion (consultaCodigo, idAfeccion) VALUES (p_consultaCodigo, p_idAfeccion);
+    INSERT INTO Consulta_Afeccion (consultaCodigo, idAfeccion) VALUES (p_consultaCodigo, p_idAfeccion);
 
     COMMIT;
 END //
 DELIMITER ;
 
--- 7. Listar consultas con filtros opcionales
+-- 11. Eliminar una afección tratada en una consulta
+DELIMITER //
+CREATE PROCEDURE spConsultaDesrelacionarAfeccion(
+    IN p_consultaCodigo VARCHAR(30),
+    IN p_idAfeccion INT UNSIGNED
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
+    -- Registrar la afección tratada en la consulta
+    DELETE FROM Consulta_Afeccion WHERE consultaCodigo = p_consultaCodigo AND idAfeccion = p_idAfeccion;
+
+    COMMIT;
+END //
+DELIMITER ;
+
+-- 11. Obtener afecciones tratadas en una consulta
+DELIMITER //
+CREATE PROCEDURE spConsultaListarAfecciones(
+    IN p_consultaCodigo VARCHAR(30)
+)
+BEGIN
+    SELECT * FROM Consulta_Afeccion WHERE consultaCodigo = p_consultaCodigo;
+END //
+DELIMITER ;
+
+-- 12. Listar consultas con filtros opcionales
 DELIMITER //
 CREATE PROCEDURE spConsultasListar(
     IN p_documentoPaciente VARCHAR(30),
@@ -760,7 +856,38 @@ BEGIN
 END //
 DELIMITER ;
 
--- 8. Relacionar un producto a una factura
+-- 8. Desrelacionar un servicio a una factura
+DELIMITER //
+CREATE PROCEDURE spFacturaDesrelacionarServicio(
+    IN p_facturaCodigo VARCHAR(30),
+    IN p_servicioCodigo VARCHAR(30)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
+    DELETE FROM Factura_Servicio WHERE facturaCodigo = p_facturaCodigo AND servicioCodigo = p_servicioCodigo;
+
+    COMMIT;
+END //
+DELIMITER ;
+
+-- 9. Obtener servicios relacionados a una factura
+DELIMITER //
+CREATE PROCEDURE spFacturaListarServicios(
+    IN p_facturaCodigo VARCHAR(30)
+)
+BEGIN
+    SELECT * FROM Factura_Servicio WHERE facturaCodigo = p_facturaCodigo;
+END //
+DELIMITER ;
+
+-- 10. Relacionar un producto a una factura
 DELIMITER //
 CREATE PROCEDURE spFacturaRelacionarProducto(
     IN p_facturaCodigo VARCHAR(30),
@@ -784,7 +911,91 @@ BEGIN
 END //
 DELIMITER ;
 
--- 9. Crear un pago
+-- 11. Desrelacionar un producto a una factura
+DELIMITER //
+CREATE PROCEDURE spFacturaDesrelacionarProducto(
+    IN p_facturaCodigo VARCHAR(30),
+    IN p_idProducto INT UNSIGNED
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
+    DELETE FROM Factura_Producto WHERE facturaCodigo = p_facturaCodigo AND idProducto = p_idProducto;
+
+    COMMIT;
+END //
+DELIMITER ;
+
+-- 12. Obtener productos relacionados a una factura
+DELIMITER //
+CREATE PROCEDURE spFacturaListarProductos(
+    IN p_facturaCodigo VARCHAR(30)
+)
+BEGIN
+    SELECT * FROM Factura_Producto WHERE facturaCodigo = p_facturaCodigo;
+END //
+DELIMITER ;
+
+-- 13. Relacionar un metodo de pago a una factura
+DELIMITER //
+CREATE PROCEDURE spFacturaRelacionarMetodoPago(
+    IN p_facturaCodigo VARCHAR(30),
+    IN p_idMetodoPago INT UNSIGNED
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
+    INSERT INTO Factura_MetodoPago (facturaCodigo, idMetodoPago)
+    VALUES (p_facturaCodigo, p_idMetodoPago);
+
+    COMMIT;
+END //
+DELIMITER ;
+
+-- 14. Relacionar un metodo de pago a una factura
+DELIMITER //
+CREATE PROCEDURE spFacturaDesrelacionarMetodoPago(
+    IN p_facturaCodigo VARCHAR(30),
+    IN p_idMetodoPago INT UNSIGNED
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
+    DELETE FROM Factura_MetodoPago WHERE facturaCodigo = p_facturaCodigo AND idMetodoPago = p_idMetodoPago;
+
+    COMMIT;
+END //
+DELIMITER ;
+
+-- 15. Obtener metodos de pago relacionados a una factura
+DELIMITER //
+CREATE PROCEDURE spFacturaListarMetodoPagos(
+    IN p_facturaCodigo VARCHAR(30)
+)
+BEGIN
+    SELECT * FROM Factura_MetodoPago WHERE facturaCodigo = p_facturaCodigo;
+END //
+DELIMITER ;
+
+-- 16. Crear un pago
 DELIMITER //
 CREATE PROCEDURE spPagoCrear(
     IN p_idCuenta INT UNSIGNED,
@@ -805,7 +1016,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- 10. Actualizar un pago
+-- 17. Actualizar un pago
 DELIMITER //
 CREATE PROCEDURE spPagoActualizar(
     IN p_idPago INT UNSIGNED,
@@ -827,7 +1038,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- 11. Eliminar un pago
+-- 18. Eliminar un pago
 DELIMITER //
 CREATE PROCEDURE spPagoEliminar(
     IN p_idPago INT UNSIGNED
@@ -847,7 +1058,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- 12. Obtener todos los pagos
+-- 19. Obtener todos los pagos
 DELIMITER //
 CREATE PROCEDURE spPagoListar()
 BEGIN
@@ -1470,9 +1681,41 @@ BEGIN
     START TRANSACTION;
 
     -- Relacionar la afección al ingreso
-    INSERT INTO IngresoAfeccion (idIngreso, idAfeccion) VALUES (p_idIngreso, p_idAfeccion);
+    INSERT INTO Ingreso_Afeccion (idIngreso, idAfeccion) VALUES (p_idIngreso, p_idAfeccion);
 
     COMMIT;
+END //
+DELIMITER ;
+
+-- 3. Desrelacionar una afección de un ingreso
+DELIMITER //
+CREATE PROCEDURE spIngresoDeselacionarAfeccion(
+    IN p_idIngreso INT UNSIGNED,
+    IN p_idAfeccion INT UNSIGNED
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
+    -- Desrelacionar la afección al ingreso
+    DELETE FROM Ingreso_Afeccion WHERE idIngreso = p_idIngreso AND idAfeccion = p_idAfeccion;
+
+    COMMIT;
+END //
+DELIMITER ;
+
+-- 4. Obtener afecciones relacionadas a un ingreso
+DELIMITER //
+CREATE PROCEDURE spIngresoObtenerAfecciones(
+    IN p_idIngreso INT UNSIGNED
+)
+BEGIN
+    SELECT * FROM Ingreso_Afeccion WHERE idIngreso = p_idIngreso;
 END //
 DELIMITER ;
 
@@ -1514,7 +1757,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- 4. Eliminar un ingreso
+-- 5. Eliminar un ingreso
 DELIMITER //
 CREATE PROCEDURE spIngresoEliminar(
     IN p_idIngreso INT UNSIGNED
@@ -1535,8 +1778,7 @@ BEGIN
 END //
 DELIMITER ;
 
-
--- 5. Listar ingresos utilizando filtros
+-- 6. Listar ingresos utilizando filtros
 DELIMITER //
 CREATE PROCEDURE spIngresoListar(
     IN p_documentoPaciente VARCHAR(30),
@@ -1700,7 +1942,38 @@ BEGIN
 END //
 DELIMITER ;
 
--- 5. Listar productos utilizando filtros
+-- 5. Desrelacionar un producto de su proveedor
+DELIMITER //
+CREATE PROCEDURE spProductoDesrelacionarProveedor(
+    IN p_idProducto INT UNSIGNED,
+    IN p_rncProveedor INT UNSIGNED
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
+    DELETE FROM Proveedor_Producto WHERE idProducto = p_idProducto AND rncProveedor = p_rncProveedor;
+
+    COMMIT;
+END //
+DELIMITER ;
+
+-- 6. Obtener proveedores de un producto
+DELIMITER //
+CREATE PROCEDURE spProductoListarProveedor(
+    IN p_idProducto INT UNSIGNED
+)
+BEGIN
+    SELECT * FROM Proveedor_Producto WHERE idProducto = p_idProducto;
+END //
+DELIMITER ;
+
+-- 7. Listar productos utilizando filtros
 DELIMITER //
 CREATE PROCEDURE spProductoListar(
     IN p_costo DECIMAL(10,2)
@@ -1842,7 +2115,7 @@ DELIMITER ;
 
 -- 3. Cambio de estado de una reserva
 DELIMITER //
-CREATE PROCEDURE spReservaCambiarEstado(
+CREATE PROCEDURE spReservaToggleEstado(
     IN p_idReserva INT UNSIGNED
 )
 BEGIN
@@ -1925,7 +2198,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- 5. Eliminar reserva
+-- 5. Eliminar reserva por su id
 DELIMITER //
 CREATE PROCEDURE spReservaEliminar(
     IN p_idReserva INT UNSIGNED
