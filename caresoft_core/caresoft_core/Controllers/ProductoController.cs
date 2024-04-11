@@ -76,7 +76,7 @@ namespace caresoft_core.Controllers
         {
             try
             {
-                var producto = new Producto
+                var producto = new ProductoDto
                 {
                     IdProducto = idProducto,
                     Nombre = nombre,

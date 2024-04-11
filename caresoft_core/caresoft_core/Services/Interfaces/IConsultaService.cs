@@ -5,7 +5,7 @@ namespace caresoft_core.Services.Interfaces;
 public interface IConsultaService
 {
     Task<int> CrearConsulta(Consulta consulta);
-    Task<int> ActualizarConsulta(Consulta consulta);
+    Task<int> ActualizarConsulta(ConsultaDto consulta);
     Task<int> EliminarConsulta(string consultaCodigo);
     Task<int> RelacionarServicio(string consultaCodigo, string servicioCodigo);
     Task<int> DesrelacionarServicio(string consultaCodigo, string servicioCodigo);

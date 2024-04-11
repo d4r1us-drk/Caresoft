@@ -15,18 +15,40 @@ namespace caresoft_core.Services
             _dbContext = _context;
         }
 
-        public async Task<int> ActualizarConsulta(Consulta consulta)
+        public async Task<int> ActualizarConsulta(ConsultaDto consulta)
         {
             try
             {
                 Consulta result = await _dbContext.Consultas.Where(e => e.ConsultaCodigo == consulta.ConsultaCodigo).FirstAsync();
-                result.DocumentoPaciente = consulta.DocumentoPaciente;
-                result.DocumentoMedico = consulta.DocumentoMedico;
-                result.IdConsultorio = consulta.IdConsultorio;
-                result.Motivo = consulta.Motivo;
-                result.Comentarios = consulta.Comentarios;
-                result.Costo = consulta.Costo;
-                result.Estado = consulta.Estado;
+                if(consulta.DocumentoPaciente != null)
+                {
+                    result.DocumentoPaciente = consulta.DocumentoPaciente;
+                }
+                if(consulta.DocumentoMedico != null)
+                {
+                    result.DocumentoMedico = consulta.DocumentoMedico;
+                }
+                if(consulta.IdConsultorio != null )
+                {
+                    result.IdConsultorio = (uint)consulta.IdConsultorio;
+                }
+                if(consulta.Motivo != null)
+                {
+                    result.Motivo = consulta.Motivo;
+                }
+                if(consulta.Comentarios != null)
+                {
+                    result.Comentarios = consulta.Comentarios;
+                }
+                if(consulta.Costo != null)
+                {
+                    result.Costo = (uint)consulta.Costo;
+                }
+                if(consulta.Estado != null)
+                {
+                    result.Estado = consulta.Estado;
+                }
+                
                 return await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)

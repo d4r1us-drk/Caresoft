@@ -2182,7 +2182,7 @@ CREATE PROCEDURE spReservaListar(
 )
 BEGIN
     -- Verificar si se han proporcionado filtros
-    IF p_idReserva IS NULL p_documentoPaciente IS NULL AND p_documentoMedico IS NULL AND p_servicioCodigo IS NULL AND p_fechaReserva IS NULL AND p_estado IS NULL THEN
+    IF p_idReserva IS NULL AND p_documentoPaciente IS NULL AND p_documentoMedico IS NULL AND p_servicioCodigo IS NULL AND p_fechaReserva IS NULL AND p_estado IS NULL THEN
         -- Si no se han proporcionado filtros, devolver todas las reservas
         SELECT * FROM ReservaServicio;
     ELSE
