@@ -2430,6 +2430,7 @@ DELIMITER ;
 --    usuarios del sistema.
 DELIMITER //
 CREATE PROCEDURE spUsuarioListar(
+    IN p_usuarioCodigo VARCHAR(30),
     IN p_documento VARCHAR(30),
     IN p_genero ENUM('M', 'F'),
     IN p_fechaNacimiento DATE,
@@ -2437,7 +2438,7 @@ CREATE PROCEDURE spUsuarioListar(
 )
 BEGIN
     -- Verificar si se han proporcionado filtros
-    IF p_documento IS NULL AND p_genero IS NULL AND p_fechaNacimiento IS NULL AND p_rol IS NULL THEN
+    IF p_usuarioCodigo IS NULL AND p_documento IS NULL AND p_genero IS NULL AND p_fechaNacimiento IS NULL AND p_rol IS NULL THEN
         -- Si no se han proporcionado filtros, devolver todos los usuarios con sus datos asociados
         SELECT U.usuarioCodigo, U.usuarioContra, P.*
         FROM Usuario U
@@ -2445,6 +2446,10 @@ BEGIN
     ELSE
         -- Si se han proporcionado filtros, construir la consulta dinámicamente
         SET @sql = 'SELECT U.usuarioCodigo, U.usuarioContra, P.* FROM Usuario U JOIN PerfilUsuario P ON U.documentoUsuario = P.documento WHERE 1 = 1';
+
+        IF p_usuarioCodigo IS NOT NULL THEN
+            SET @sql = CONCAT(@sql, ' AND U.usuarioCodigo = "', p_usuarioCodigo, '"');
+        END IF;
         
         IF p_documento IS NOT NULL THEN
             SET @sql = CONCAT(@sql, ' AND P.documento = "', p_documento, '"');
