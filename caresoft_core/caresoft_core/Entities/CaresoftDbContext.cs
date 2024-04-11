@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace caresoft_core.Data;
+namespace caresoft_core.Entities;
 
 public partial class CaresoftDbContext : DbContext
 {

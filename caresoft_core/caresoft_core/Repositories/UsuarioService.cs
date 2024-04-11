@@ -1,16 +1,15 @@
 using caresoft_core.Entities;
 using MySql.Data.MySqlClient;
-using Microsoft.EntityFrameworkCore;
 
 namespace caresoft_core.Repositories
 {
     public class UsuarioService : IUsuarioService
     {
-        private readonly DbContext _dbContext;
+        private readonly CaresoftDbContext _dbContext;
         private readonly string _connectionString;
         private readonly LogHandler<UsuarioService> _logHandler = new LogHandler<UsuarioService>();
 
-        public UsuarioService(DbContext dbContext, string connectionString)
+        public UsuarioService(CaresoftDbContext dbContext, string connectionString)
         {
             _dbContext = dbContext;
             _connectionString = connectionString;
@@ -22,40 +21,42 @@ namespace caresoft_core.Repositories
 
             try 
             {
-                using (MySqlConnection connection = new MySqlConnection(_connectionString))
-                using (MySqlCommand command = new MySqlCommand("spUsuarioListar", connection))
+                MySqlConnection connection = new MySqlConnection(_connectionString);
+                await connection.OpenAsync();
+
+                MySqlCommand command = new MySqlCommand("spUsuarioListar", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                // Add parameters
+                command.Parameters.AddWithValue("@p_documento", documento);
+                command.Parameters.AddWithValue("@p_genero", genero);
+                command.Parameters.AddWithValue("@p_fechaNacimiento", fechaNacimiento);
+                command.Parameters.AddWithValue("@p_rol", rol);
+
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
                 {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                    // Add parameters
-                    command.Parameters.AddWithValue("@p_documento", documento);
-                    command.Parameters.AddWithValue("@p_genero", genero);
-                    command.Parameters.AddWithValue("@p_fechaNacimiento", fechaNacimiento);
-                    command.Parameters.AddWithValue("@p_rol", rol);
-
-                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+                    while (await reader.ReadAsync())
                     {
-                        while (await reader.ReadAsync())
+                        PerfilUsuario usuario = new PerfilUsuario
                         {
-                            PerfilUsuario usuario = new PerfilUsuario
-                            {
-                                Documento = reader["documento"].ToString(),
-                                TipoDocumento = reader["tipoDocumento"].ToString(),
-                                NumLicenciaMedica = Convert.ToUInt32(reader["numLicenciaMedica"]),
-                                Nombre = reader["nombre"].ToString(),
-                                Apellido = reader["apellido"].ToString(),
-                                Genero = reader["genero"].ToString(),
-                                FechaNacimiento = Convert.ToDateTime(reader["fechaNacimiento"]),
-                                Telefono = reader["telefono"].ToString(),
-                                Correo = reader["correo"].ToString(),
-                                Direccion = reader["direccion"] != DBNull.Value ? reader["direccion"].ToString() : null,
-                                Rol = reader["rol"].ToString()
-                            };
-
-                            usuarios.Add(usuario);
-                        }
+                            Documento = reader["documento"].ToString(),
+                            TipoDocumento = reader["tipoDocumento"].ToString(),
+                            NumLicenciaMedica = reader["numLicenciaMedica"] != DBNull.Value ? Convert.ToUInt32(reader["numLicenciaMedica"]) : 0,
+                            Nombre = reader["nombre"].ToString(),
+                            Apellido = reader["apellido"].ToString(),
+                            Genero = reader["genero"].ToString(),
+                            FechaNacimiento = Convert.ToDateTime(reader["fechaNacimiento"]),
+                            Telefono = reader["telefono"].ToString(),
+                            Correo = reader["correo"].ToString(),
+                            Direccion = reader["direccion"] != DBNull.Value ? reader["direccion"].ToString() : null,
+                            Rol = reader["rol"].ToString()
+                        };
+                    
+                        usuarios.Add(usuario);
                     }
                 }
+
+                connection.Close();
             }
             catch (Exception ex)
             {
@@ -69,26 +70,30 @@ namespace caresoft_core.Repositories
         {
             try 
             {
-                using (MySqlConnection connection = new MySqlConnection(_connectionString))
-                using (MySqlCommand command = new MySqlCommand("spUsuarioCrearPaciente", connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                MySqlConnection connection = new MySqlConnection(_connectionString);
+                await connection.OpenAsync();
 
-                    // Add parameters
-                    command.Parameters.AddWithValue("@p_documento", perfilUsuario.Documento);
-                    command.Parameters.AddWithValue("@p_tipoDocumento", perfilUsuario.TipoDocumento);
-                    command.Parameters.AddWithValue("@p_nombre", perfilUsuario.Nombre);
-                    command.Parameters.AddWithValue("@p_apellido", perfilUsuario.Apellido);
-                    command.Parameters.AddWithValue("@p_genero", perfilUsuario.Genero);
-                    command.Parameters.AddWithValue("@p_fechaNacimiento", perfilUsuario.FechaNacimiento);
-                    command.Parameters.AddWithValue("@p_telefono", perfilUsuario.Telefono);
-                    command.Parameters.AddWithValue("@p_correo", perfilUsuario.Correo);
-                    command.Parameters.AddWithValue("@p_direccion", perfilUsuario.Direccion);
-                    command.Parameters.AddWithValue("@p_usuarioCodigo", usuario.UsuarioCodigo);
-                    command.Parameters.AddWithValue("@p_usuarioContra", usuario.UsuarioContra);
+                MySqlCommand command = new MySqlCommand("spUsuarioCrearPaciente", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                    return await command.ExecuteNonQueryAsync();
-                }
+                // Add parameters
+                command.Parameters.AddWithValue("@p_documento", perfilUsuario.Documento);
+                command.Parameters.AddWithValue("@p_tipoDocumento", perfilUsuario.TipoDocumento);
+                command.Parameters.AddWithValue("@p_nombre", perfilUsuario.Nombre);
+                command.Parameters.AddWithValue("@p_apellido", perfilUsuario.Apellido);
+                command.Parameters.AddWithValue("@p_genero", perfilUsuario.Genero);
+                command.Parameters.AddWithValue("@p_fechaNacimiento", perfilUsuario.FechaNacimiento);
+                command.Parameters.AddWithValue("@p_telefono", perfilUsuario.Telefono);
+                command.Parameters.AddWithValue("@p_correo", perfilUsuario.Correo);
+                command.Parameters.AddWithValue("@p_direccion", perfilUsuario.Direccion);
+                command.Parameters.AddWithValue("@p_usuarioCodigo", usuario.UsuarioCodigo);
+                command.Parameters.AddWithValue("@p_usuarioContra", usuario.UsuarioContra);
+
+                int result = await command.ExecuteNonQueryAsync();
+                
+                connection.Close();
+                
+                return result;
             }
             catch (Exception ex)
             {
@@ -101,27 +106,31 @@ namespace caresoft_core.Repositories
         {
             try 
             {
-                using (MySqlConnection connection = new MySqlConnection(_connectionString))
-                using (MySqlCommand command = new MySqlCommand("spUsuarioCrearPersonal", connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                MySqlConnection connection = new MySqlConnection(_connectionString);
+                await connection.OpenAsync();
 
-                    // Add parameters
-                    command.Parameters.AddWithValue("@p_documento", perfilUsuario.Documento);
-                    command.Parameters.AddWithValue("@p_tipoDocumento", perfilUsuario.TipoDocumento);
-                    command.Parameters.AddWithValue("@p_nombre", perfilUsuario.Nombre);
-                    command.Parameters.AddWithValue("@p_apellido", perfilUsuario.Apellido);
-                    command.Parameters.AddWithValue("@p_genero", perfilUsuario.Genero);
-                    command.Parameters.AddWithValue("@p_fechaNacimiento", perfilUsuario.FechaNacimiento);
-                    command.Parameters.AddWithValue("@p_telefono", perfilUsuario.Telefono);
-                    command.Parameters.AddWithValue("@p_correo", perfilUsuario.Correo);
-                    command.Parameters.AddWithValue("@p_direccion", perfilUsuario.Direccion);
-                    command.Parameters.AddWithValue("@p_rol", perfilUsuario.Rol);
-                    command.Parameters.AddWithValue("@p_usuarioCodigo", usuario.UsuarioCodigo);
-                    command.Parameters.AddWithValue("@p_usuarioContra", usuario.UsuarioContra);
+                MySqlCommand command = new MySqlCommand("spUsuarioCrearPersonal", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                    return await command.ExecuteNonQueryAsync();
-                }
+                // Add parameters
+                command.Parameters.AddWithValue("@p_documento", perfilUsuario.Documento);
+                command.Parameters.AddWithValue("@p_tipoDocumento", perfilUsuario.TipoDocumento);
+                command.Parameters.AddWithValue("@p_nombre", perfilUsuario.Nombre);
+                command.Parameters.AddWithValue("@p_apellido", perfilUsuario.Apellido);
+                command.Parameters.AddWithValue("@p_genero", perfilUsuario.Genero);
+                command.Parameters.AddWithValue("@p_fechaNacimiento", perfilUsuario.FechaNacimiento);
+                command.Parameters.AddWithValue("@p_telefono", perfilUsuario.Telefono);
+                command.Parameters.AddWithValue("@p_correo", perfilUsuario.Correo);
+                command.Parameters.AddWithValue("@p_direccion", perfilUsuario.Direccion);
+                command.Parameters.AddWithValue("@p_rol", perfilUsuario.Rol);
+                command.Parameters.AddWithValue("@p_usuarioCodigo", usuario.UsuarioCodigo);
+                command.Parameters.AddWithValue("@p_usuarioContra", usuario.UsuarioContra);
+
+                int result = await command.ExecuteNonQueryAsync();
+                
+                connection.Close();
+                
+                return result;
             }
             catch (Exception ex)
             {
@@ -134,28 +143,32 @@ namespace caresoft_core.Repositories
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(_connectionString))
-                using (MySqlCommand command = new MySqlCommand("spUsuarioCrearPersonalMedico", connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-        
-                    // Add parameters
-                    command.Parameters.AddWithValue("@p_documento", perfilUsuario.Documento);
-                    command.Parameters.AddWithValue("@p_tipoDocumento", perfilUsuario.TipoDocumento);
-                    command.Parameters.AddWithValue("@p_numLicenciaMedica", perfilUsuario.NumLicenciaMedica);
-                    command.Parameters.AddWithValue("@p_nombre", perfilUsuario.Nombre);
-                    command.Parameters.AddWithValue("@p_apellido", perfilUsuario.Apellido);
-                    command.Parameters.AddWithValue("@p_genero", perfilUsuario.Genero);
-                    command.Parameters.AddWithValue("@p_fechaNacimiento", perfilUsuario.FechaNacimiento);
-                    command.Parameters.AddWithValue("@p_telefono", perfilUsuario.Telefono);
-                    command.Parameters.AddWithValue("@p_correo", perfilUsuario.Correo);
-                    command.Parameters.AddWithValue("@p_direccion", perfilUsuario.Direccion);
-                    command.Parameters.AddWithValue("@p_rol", perfilUsuario.Rol);
-                    command.Parameters.AddWithValue("@p_usuarioCodigo", usuario.UsuarioCodigo);
-                    command.Parameters.AddWithValue("@p_usuarioContra", usuario.UsuarioContra);
-        
-                    return await command.ExecuteNonQueryAsync();
-                }
+                MySqlConnection connection = new MySqlConnection(_connectionString);
+                await connection.OpenAsync();
+
+                MySqlCommand command = new MySqlCommand("spUsuarioCrearPersonalMedico", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+    
+                // Add parameters
+                command.Parameters.AddWithValue("@p_documento", perfilUsuario.Documento);
+                command.Parameters.AddWithValue("@p_tipoDocumento", perfilUsuario.TipoDocumento);
+                command.Parameters.AddWithValue("@p_numLicenciaMedica", perfilUsuario.NumLicenciaMedica);
+                command.Parameters.AddWithValue("@p_nombre", perfilUsuario.Nombre);
+                command.Parameters.AddWithValue("@p_apellido", perfilUsuario.Apellido);
+                command.Parameters.AddWithValue("@p_genero", perfilUsuario.Genero);
+                command.Parameters.AddWithValue("@p_fechaNacimiento", perfilUsuario.FechaNacimiento);
+                command.Parameters.AddWithValue("@p_telefono", perfilUsuario.Telefono);
+                command.Parameters.AddWithValue("@p_correo", perfilUsuario.Correo);
+                command.Parameters.AddWithValue("@p_direccion", perfilUsuario.Direccion);
+                command.Parameters.AddWithValue("@p_rol", perfilUsuario.Rol);
+                command.Parameters.AddWithValue("@p_usuarioCodigo", usuario.UsuarioCodigo);
+                command.Parameters.AddWithValue("@p_usuarioContra", usuario.UsuarioContra);
+
+                int result = await command.ExecuteNonQueryAsync();
+                
+                connection.Close();
+                
+                return result;
             }
             catch (Exception ex)
             {
@@ -168,24 +181,28 @@ namespace caresoft_core.Repositories
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(_connectionString))
-                using (MySqlCommand command = new MySqlCommand("spUsuarioActualizarDatos", connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-        
-                    // Add parameters
-                    command.Parameters.AddWithValue("@p_documento", perfilUsuario.Documento);
-                    command.Parameters.AddWithValue("@p_tipoDocumento", perfilUsuario.TipoDocumento);
-                    command.Parameters.AddWithValue("@p_nombre", perfilUsuario.Nombre);
-                    command.Parameters.AddWithValue("@p_apellido", perfilUsuario.Apellido);
-                    command.Parameters.AddWithValue("@p_genero", perfilUsuario.Genero);
-                    command.Parameters.AddWithValue("@p_fechaNacimiento", perfilUsuario.FechaNacimiento);
-                    command.Parameters.AddWithValue("@p_telefono", perfilUsuario.Telefono);
-                    command.Parameters.AddWithValue("@p_correo", perfilUsuario.Correo);
-                    command.Parameters.AddWithValue("@p_direccion", perfilUsuario.Direccion);
-        
-                    return await command.ExecuteNonQueryAsync();
-                }
+                MySqlConnection connection = new MySqlConnection(_connectionString);
+                await connection.OpenAsync();
+
+                MySqlCommand command = new MySqlCommand("spUsuarioActualizarDatos", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+    
+                // Add parameters
+                command.Parameters.AddWithValue("@p_documento", perfilUsuario.Documento);
+                command.Parameters.AddWithValue("@p_tipoDocumento", perfilUsuario.TipoDocumento);
+                command.Parameters.AddWithValue("@p_nombre", perfilUsuario.Nombre);
+                command.Parameters.AddWithValue("@p_apellido", perfilUsuario.Apellido);
+                command.Parameters.AddWithValue("@p_genero", perfilUsuario.Genero);
+                command.Parameters.AddWithValue("@p_fechaNacimiento", perfilUsuario.FechaNacimiento);
+                command.Parameters.AddWithValue("@p_telefono", perfilUsuario.Telefono);
+                command.Parameters.AddWithValue("@p_correo", perfilUsuario.Correo);
+                command.Parameters.AddWithValue("@p_direccion", perfilUsuario.Direccion);
+
+                int result = await command.ExecuteNonQueryAsync();
+                
+                connection.Close();
+                
+                return result;
             }
             catch (Exception ex)
             {
@@ -198,16 +215,20 @@ namespace caresoft_core.Repositories
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(_connectionString))
-                using (MySqlCommand command = new MySqlCommand("spUsuarioEliminar", connection))
-                {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-        
-                    // Add parameters
-                    command.Parameters.AddWithValue("@p_documentoOUsuarioCodigo", codigoOdocumento);
-        
-                    return await command.ExecuteNonQueryAsync();
-                }
+                MySqlConnection connection = new MySqlConnection(_connectionString);
+                await connection.OpenAsync();
+
+                MySqlCommand command = new MySqlCommand("spUsuarioEliminar", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+    
+                // Add parameters
+                command.Parameters.AddWithValue("@p_documentoOUsuarioCodigo", codigoOdocumento);
+
+                int result = await command.ExecuteNonQueryAsync();
+                
+                connection.Close();
+                
+                return result;
             }
             catch (Exception ex)
             {

@@ -27,11 +27,11 @@ public class LogHandler<T>
     {
         var config = new LoggingConfiguration();
     
-        var logfile = new FileTarget("logfile") { FileName = "profugosService.log" };
+        var logfile = new FileTarget("logfile") { FileName = "caresoft_core.log" };
         var logconsole = new ConsoleTarget("logconsole");
     
-        config.AddRule(LogLevel.Info, LogLevel.Fatal, logconsole);
-        config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
+        config.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Fatal, logconsole);
+        config.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, logfile);
     
         return config;
     }
