@@ -1,6 +1,6 @@
 using caresoft_core.Models;
 using caresoft_core.Utils;
-using MySql.Data.MySqlClient;
+using Microsoft.EntityFrameworkCore;
 using caresoft_core.Services.Interfaces;
 
 namespace caresoft_core.Services
@@ -8,225 +8,178 @@ namespace caresoft_core.Services
     public class UsuarioService : IUsuarioService
     {
         private readonly CaresoftDbContext _dbContext;
-        private readonly string _connectionString;
-        private readonly LogHandler<UsuarioService> _logHandler = new LogHandler<UsuarioService>();
+        private readonly LogHandler<UsuarioService> _logHandler = new();
 
-        public UsuarioService(CaresoftDbContext dbContext, string connectionString)
+        public UsuarioService(CaresoftDbContext dbContext)
         {
             _dbContext = dbContext;
-            _connectionString = connectionString;
         }
 
         public async Task<List<UsuarioDto>> GetUsuariosListAsync(string? usuarioCodigo, string? documento, string? genero, DateTime? fechaNacimiento, string? rol)
         {
-            var usuarios = new List<UsuarioDto>();
-
-            try 
-            {
-                MySqlConnection connection = new MySqlConnection(_connectionString);
-                await connection.OpenAsync();
-
-                MySqlCommand command = new MySqlCommand("spUsuarioListar", connection);
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                // Add parameters
-                command.Parameters.AddWithValue("@p_usuarioCodigo", usuarioCodigo);
-                command.Parameters.AddWithValue("@p_documento", documento);
-                command.Parameters.AddWithValue("@p_genero", genero);
-                command.Parameters.AddWithValue("@p_fechaNacimiento", fechaNacimiento);
-                command.Parameters.AddWithValue("@p_rol", rol);
-
-                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
-                {
-                    while (await reader.ReadAsync())
-                    {
-                        var usuario = new UsuarioDto
-                        {
-                            UsuarioCodigo = reader["usuarioCodigo"].ToString(),
-                            UsuarioContra = reader["usuarioContra"].ToString(),
-                            Documento = reader["documento"].ToString(),
-                            TipoDocumento = reader["tipoDocumento"].ToString(),
-                            NumLicenciaMedica = reader["numLicenciaMedica"] != DBNull.Value ? Convert.ToUInt32(reader["numLicenciaMedica"]) : 0,
-                            Nombre = reader["nombre"].ToString(),
-                            Apellido = reader["apellido"].ToString(),
-                            Genero = reader["genero"].ToString(),
-                            FechaNacimiento = Convert.ToDateTime(reader["fechaNacimiento"]),
-                            Telefono = reader["telefono"].ToString(),
-                            Correo = reader["correo"].ToString(),
-                            Direccion = reader["direccion"] != DBNull.Value ? reader["direccion"].ToString() : null,
-                            Rol = reader["rol"].ToString()
-                        };
-                    
-                        usuarios.Add(usuario);
-                    }
-                }
-
-                connection.Close();
-                _logHandler.LogInfo("Data retrieved successfully.");
-            }
-            catch (Exception ex)
-            {
-                _logHandler.LogFatal("Something went wrong.", ex);
-            }
-
-            return usuarios;
-        }
-
-        public async Task<int> AddUsuarioPacienteAsync(UsuarioDto usuario)
-        {
-            try 
-            {
-                MySqlConnection connection = new MySqlConnection(_connectionString);
-                await connection.OpenAsync();
-
-                MySqlCommand command = new MySqlCommand("spUsuarioCrearPaciente", connection);
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                // Add parameters
-                command.Parameters.AddWithValue("@p_documento", usuario.Documento);
-                command.Parameters.AddWithValue("@p_tipoDocumento", usuario.TipoDocumento);
-                command.Parameters.AddWithValue("@p_nombre", usuario.Nombre);
-                command.Parameters.AddWithValue("@p_apellido", usuario.Apellido);
-                command.Parameters.AddWithValue("@p_genero", usuario.Genero);
-                command.Parameters.AddWithValue("@p_fechaNacimiento", usuario.FechaNacimiento);
-                command.Parameters.AddWithValue("@p_telefono", usuario.Telefono);
-                command.Parameters.AddWithValue("@p_correo", usuario.Correo);
-                command.Parameters.AddWithValue("@p_direccion", usuario.Direccion);
-                command.Parameters.AddWithValue("@p_usuarioCodigo", usuario.UsuarioCodigo);
-                command.Parameters.AddWithValue("@p_usuarioContra", usuario.UsuarioContra);
-
-                int result = await command.ExecuteNonQueryAsync();
-                
-                connection.Close();
-
-                _logHandler.LogInfo("User of type 'Paciente' was created successfully.");
-                
-                return result;
-            }
-            catch (Exception ex)
-            {
-                _logHandler.LogFatal("Something went wrong.", ex);
-                throw ex;
-            }
-        }
-
-        public async Task<int> AddUsuarioPersonalAsync(UsuarioDto usuario)
-        {
-            try 
-            {
-                MySqlConnection connection = new MySqlConnection(_connectionString);
-                await connection.OpenAsync();
-
-                MySqlCommand command = new MySqlCommand("spUsuarioCrearPersonal", connection);
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                // Add parameters
-                command.Parameters.AddWithValue("@p_documento", usuario.Documento);
-                command.Parameters.AddWithValue("@p_tipoDocumento", usuario.TipoDocumento);
-                command.Parameters.AddWithValue("@p_nombre", usuario.Nombre);
-                command.Parameters.AddWithValue("@p_apellido", usuario.Apellido);
-                command.Parameters.AddWithValue("@p_genero", usuario.Genero);
-                command.Parameters.AddWithValue("@p_fechaNacimiento", usuario.FechaNacimiento);
-                command.Parameters.AddWithValue("@p_telefono", usuario.Telefono);
-                command.Parameters.AddWithValue("@p_correo", usuario.Correo);
-                command.Parameters.AddWithValue("@p_direccion", usuario.Direccion);
-                command.Parameters.AddWithValue("@p_rol", usuario.Rol);
-                command.Parameters.AddWithValue("@p_usuarioCodigo", usuario.UsuarioCodigo);
-                command.Parameters.AddWithValue("@p_usuarioContra", usuario.UsuarioContra);
-
-                int result = await command.ExecuteNonQueryAsync();
-                
-                connection.Close();
-
-                _logHandler.LogInfo("User of type 'Personal' was created successfully.");
-                
-                return result;
-            }
-            catch (Exception ex)
-            {
-                _logHandler.LogFatal("Something went wrong.", ex);
-                throw ex;
-            }
-        }
-
-        public async Task<int> AddUsuarioMedicoAsync(UsuarioDto usuario)
-        {
             try
             {
-                MySqlConnection connection = new MySqlConnection(_connectionString);
-                await connection.OpenAsync();
-
-                MySqlCommand command = new MySqlCommand("spUsuarioCrearPersonalMedico", connection);
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-    
-                // Add parameters
-                command.Parameters.AddWithValue("@p_documento", usuario.Documento);
-                command.Parameters.AddWithValue("@p_tipoDocumento", usuario.TipoDocumento);
-                command.Parameters.AddWithValue("@p_numLicenciaMedica", usuario.NumLicenciaMedica);
-                command.Parameters.AddWithValue("@p_nombre", usuario.Nombre);
-                command.Parameters.AddWithValue("@p_apellido", usuario.Apellido);
-                command.Parameters.AddWithValue("@p_genero", usuario.Genero);
-                command.Parameters.AddWithValue("@p_fechaNacimiento", usuario.FechaNacimiento);
-                command.Parameters.AddWithValue("@p_telefono", usuario.Telefono);
-                command.Parameters.AddWithValue("@p_correo", usuario.Correo);
-                command.Parameters.AddWithValue("@p_direccion", usuario.Direccion);
-                command.Parameters.AddWithValue("@p_rol", usuario.Rol);
-                command.Parameters.AddWithValue("@p_usuarioCodigo", usuario.UsuarioCodigo);
-                command.Parameters.AddWithValue("@p_usuarioContra", usuario.UsuarioContra);
-
-                int result = await command.ExecuteNonQueryAsync();
-                
-                connection.Close();
-
-                _logHandler.LogInfo("User of type 'Medico' was created successfully.");
-                
-                return result;
-            }
-            catch (Exception ex)
-            {
-                _logHandler.LogFatal("No se pudo establecer la conexión con la base de datos.", ex);
-                return 0; // or throw ex;
-            }
-        }
+                var usuariosQuery = from usuario in _dbContext.Usuarios
+                                    join perfilUsuario in _dbContext.PerfilUsuarios on usuario.DocumentoUsuario equals perfilUsuario.Documento
+                                    select new UsuarioDto
+                                    {
+                                        UsuarioCodigo = usuario.UsuarioCodigo,
+                                        UsuarioContra = usuario.UsuarioContra,
+                                        Documento = perfilUsuario.Documento,
+                                        TipoDocumento = perfilUsuario.TipoDocumento,
+                                        NumLicenciaMedica = perfilUsuario.NumLicenciaMedica,
+                                        Nombre = perfilUsuario.Nombre,
+                                        Apellido = perfilUsuario.Apellido,
+                                        Genero = perfilUsuario.Genero,
+                                        FechaNacimiento = perfilUsuario.FechaNacimiento,
+                                        Telefono = perfilUsuario.Telefono,
+                                        Correo = perfilUsuario.Correo,
+                                        Direccion = perfilUsuario.Direccion,
+                                        Rol = perfilUsuario.Rol
+                                    };
         
-        public async Task<int> UpdateUsuarioAsync(UsuarioDto usuario)
-        {
-            try
-            {
-                MySqlConnection connection = new MySqlConnection(_connectionString);
-                await connection.OpenAsync();
-
-                MySqlCommand command = new MySqlCommand("spUsuarioActualizarDatos", connection);
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-    
-                // Add parameters
-                command.Parameters.AddWithValue("@p_usuarioCodigo", usuario.UsuarioCodigo);
-                command.Parameters.AddWithValue("@p_usuarioContra", usuario.UsuarioContra);
-                command.Parameters.AddWithValue("@p_tipoDocumento", usuario.TipoDocumento);
-                command.Parameters.AddWithValue("@p_numLicenciaMedica", usuario.NumLicenciaMedica);
-                command.Parameters.AddWithValue("@p_documento", usuario.Documento);
-                command.Parameters.AddWithValue("@p_tipoDocumento", usuario.TipoDocumento);
-                command.Parameters.AddWithValue("@p_nombre", usuario.Nombre);
-                command.Parameters.AddWithValue("@p_apellido", usuario.Apellido);
-                command.Parameters.AddWithValue("@p_genero", usuario.Genero);
-                command.Parameters.AddWithValue("@p_fechaNacimiento", usuario.FechaNacimiento);
-                command.Parameters.AddWithValue("@p_telefono", usuario.Telefono);
-                command.Parameters.AddWithValue("@p_correo", usuario.Correo);
-                command.Parameters.AddWithValue("@p_direccion", usuario.Direccion);
-                command.Parameters.AddWithValue("@p_rol", usuario.Rol);
-
-                int result = await command.ExecuteNonQueryAsync();
-                
-                connection.Close();
-
-                _logHandler.LogInfo("User data was successfully updated.");
-                
-                return result;
+                // Apply filters
+                if (!string.IsNullOrEmpty(usuarioCodigo))
+                    usuariosQuery = usuariosQuery.Where(u => u.UsuarioCodigo == usuarioCodigo);
+        
+                if (!string.IsNullOrEmpty(documento))
+                    usuariosQuery = usuariosQuery.Where(u => u.Documento == documento);
+        
+                if (!string.IsNullOrEmpty(genero))
+                    usuariosQuery = usuariosQuery.Where(u => u.Genero == genero);
+        
+                if (fechaNacimiento != null)
+                    usuariosQuery = usuariosQuery.Where(u => u.FechaNacimiento == fechaNacimiento);
+        
+                if (!string.IsNullOrEmpty(rol))
+                    usuariosQuery = usuariosQuery.Where(u => u.Rol == rol);
+        
+                var usuarios = await usuariosQuery.ToListAsync();
+        
+                _logHandler.LogInfo("Data retrieved successfully.");
+                return usuarios;
             }
             catch (Exception ex)
             {
                 _logHandler.LogFatal("Something went wrong.", ex);
-                throw ex;
+                return new List<UsuarioDto>();
+            }
+        }
+
+        public async Task<int> AddUsuarioAsync(UsuarioDto usuario)
+        {
+            try
+            {
+                var perfilUsuario = new PerfilUsuario
+                {
+                    Documento = usuario.Documento,
+                    TipoDocumento = usuario.TipoDocumento,
+                    NumLicenciaMedica = usuario.NumLicenciaMedica,
+                    Nombre = usuario.Nombre,
+                    Apellido = usuario.Apellido,
+                    Genero = usuario.Genero,
+                    FechaNacimiento = usuario.FechaNacimiento ?? DateTime.MinValue,
+                    Telefono = usuario.Telefono,
+                    Correo = usuario.Correo,
+                    Direccion = usuario.Direccion,
+                    Rol = usuario.Rol
+                };
+
+                var usuarioEntity = new Usuario
+                {
+                    UsuarioCodigo = usuario.UsuarioCodigo,
+                    DocumentoUsuario = usuario.Documento,
+                    UsuarioContra = usuario.UsuarioContra,
+                    DocumentoUsuarioNavigation = perfilUsuario
+                };
+
+                _dbContext.PerfilUsuarios.Add(perfilUsuario);
+                _dbContext.Usuarios.Add(usuarioEntity);
+
+                await _dbContext.SaveChangesAsync();
+
+                _logHandler.LogInfo($"User with code '{usuario.UsuarioCodigo}' and document '{usuario.Documento}' was created successfully.");
+
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                _logHandler.LogFatal("Something went wrong.", ex);
+                throw;
+            }
+        }
+
+        public async Task<int> UpdateUsuarioAsync(UsuarioDto usuarioDto)
+        {
+            try
+            {
+                // Check if at least one property is not null
+                if (usuarioDto.UsuarioCodigo == null &&
+                    usuarioDto.Documento == null &&
+                    usuarioDto.UsuarioContra == null &&
+                    usuarioDto.TipoDocumento == null &&
+                    usuarioDto.NumLicenciaMedica == null &&
+                    usuarioDto.Nombre == null &&
+                    usuarioDto.Apellido == null &&
+                    usuarioDto.Genero == null &&
+                    usuarioDto.FechaNacimiento == null &&
+                    usuarioDto.Telefono == null &&
+                    usuarioDto.Correo == null &&
+                    usuarioDto.Direccion == null &&
+                    usuarioDto.Rol == null)
+                {
+                    throw new ArgumentException("At least one property must be non-null to update the user.");
+                }
+        
+                var perfilUsuario = await _dbContext.PerfilUsuarios.FindAsync(usuarioDto.Documento);
+                if (perfilUsuario != null)
+                {
+                    // Update only non-null properties
+                    if (usuarioDto.TipoDocumento != null)
+                        perfilUsuario.TipoDocumento = usuarioDto.TipoDocumento;
+        
+                    if (usuarioDto.Rol == "M" || usuarioDto.Rol == "E")
+                        perfilUsuario.NumLicenciaMedica = usuarioDto.NumLicenciaMedica;
+                    else
+                        perfilUsuario.NumLicenciaMedica = null;
+        
+                    if (usuarioDto.Nombre != null)
+                        perfilUsuario.Nombre = usuarioDto.Nombre;
+        
+                    if (usuarioDto.Apellido != null)
+                        perfilUsuario.Apellido = usuarioDto.Apellido;
+        
+                    if (usuarioDto.Genero != null)
+                        perfilUsuario.Genero = usuarioDto.Genero;
+        
+                    if (usuarioDto.FechaNacimiento != null)
+                        perfilUsuario.FechaNacimiento = usuarioDto.FechaNacimiento ?? DateTime.MinValue;
+        
+                    if (usuarioDto.Telefono != null)
+                        perfilUsuario.Telefono = usuarioDto.Telefono;
+        
+                    if (usuarioDto.Correo != null)
+                        perfilUsuario.Correo = usuarioDto.Correo;
+        
+                    if (usuarioDto.Direccion != null)
+                        perfilUsuario.Direccion = usuarioDto.Direccion;
+        
+                    if (usuarioDto.Rol != null)
+                        perfilUsuario.Rol = usuarioDto.Rol;
+        
+                    _dbContext.PerfilUsuarios.Update(perfilUsuario);
+                    return await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    _logHandler.LogInfo($"User with document '{usuarioDto.Documento}' not found.");
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logHandler.LogFatal("Something went wrong.", ex);
+                throw;
             }
         }
         
@@ -234,27 +187,54 @@ namespace caresoft_core.Services
         {
             try
             {
-                MySqlConnection connection = new MySqlConnection(_connectionString);
-                await connection.OpenAsync();
-
-                MySqlCommand command = new MySqlCommand("spUsuarioEliminar", connection);
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-    
-                // Add parameters
-                command.Parameters.AddWithValue("@p_documentoOUsuarioCodigo", codigoOdocumento);
-
-                int result = await command.ExecuteNonQueryAsync();
-                
-                connection.Close();
-
-                _logHandler.LogInfo("User data was successfully deleted.");
-                
-                return result;
+                // Check if the argument is a usuarioCodigo or documento
+                bool isUsuarioCodigo = await _dbContext.Usuarios.AnyAsync(u => u.UsuarioCodigo == codigoOdocumento);
+        
+                if (isUsuarioCodigo)
+                {
+                    // If it's a usuarioCodigo, get the corresponding documento
+                    string documento = await _dbContext.Usuarios
+                                                    .Where(u => u.UsuarioCodigo == codigoOdocumento)
+                                                    .Select(u => u.DocumentoUsuario)
+                                                    .FirstOrDefaultAsync();
+        
+                    // Remove the perfilUsuario associated with the documento
+                    var perfilUsuario = await _dbContext.PerfilUsuarios.FindAsync(documento);
+                    if (perfilUsuario != null)
+                    {
+                        _dbContext.PerfilUsuarios.Remove(perfilUsuario);
+                        await _dbContext.SaveChangesAsync();
+                        _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' was deleted.");
+                        return 1;
+                    }
+                    else
+                    {
+                        _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' not found.");
+                        return 0;
+                    }
+                }
+                else
+                {
+                    // If it's a documento, directly remove the perfilUsuario
+                    var perfilUsuario = await _dbContext.PerfilUsuarios.FindAsync(codigoOdocumento);
+                    if (perfilUsuario != null)
+                    {
+                        _dbContext.PerfilUsuarios.Remove(perfilUsuario);
+                        await _dbContext.SaveChangesAsync();
+                        _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' was deleted.");
+                        return 1;
+                    }
+                    else
+                    {
+                        _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' not found.");
+                        return 0;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 _logHandler.LogFatal("Something went wrong.", ex);
-                throw ex;
+                throw;
             }
         }
     }

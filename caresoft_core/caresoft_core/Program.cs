@@ -44,7 +44,9 @@ namespace caresoft_core
         
             // Pass the connection string to UsuarioService
             services.AddScoped<IUsuarioService>(provider => new UsuarioService(
-                        provider.GetRequiredService<CaresoftDbContext>(), connectionString));
+                        provider.GetRequiredService<CaresoftDbContext>()));
+            services.AddScoped<IReservaServicioService>(provider => new ReservaServicioService(
+                        provider.GetRequiredService<CaresoftDbContext>()));
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
         }
