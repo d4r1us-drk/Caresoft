@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using caresoft_core.Dto;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace caresoft_core.Models;
 
@@ -40,4 +41,22 @@ public partial class Consulta
     public virtual ICollection<Afeccion> IdAfeccions { get; set; } = new List<Afeccion>();
 
     public virtual ICollection<Servicio> ServicioCodigos { get; set; } = new List<Servicio>();
+
+    // Map to Dto
+    public static Consulta FromDto(ConsultaDto consultaDto)
+    {
+        return new Consulta
+        {
+            ConsultaCodigo = consultaDto.ConsultaCodigo,
+            DocumentoPaciente = consultaDto.DocumentoPaciente,
+            DocumentoMedico = consultaDto.DocumentoMedico,
+            IdConsultorio = consultaDto.IdConsultorio,
+            IdAutorizacion = consultaDto.IdAutorizacion,
+            Fecha = consultaDto.Fecha,
+            Motivo = consultaDto.Motivo,
+            Comentarios = consultaDto.Comentarios,
+            Estado = consultaDto.Estado,
+            Costo = consultaDto.Costo
+        };
+    }
 }

@@ -40,19 +40,7 @@ namespace caresoft_core.Services
         {
             try
             {
-                Consulta consulta = new Consulta
-                {
-                    ConsultaCodigo = newConsulta.ConsultaCodigo,
-                    DocumentoPaciente = newConsulta.DocumentoPaciente,
-                    DocumentoMedico = newConsulta.DocumentoMedico,
-                    IdConsultorio = newConsulta.IdConsultorio,
-                    IdAutorizacion = newConsulta.IdAutorizacion,
-                    Fecha = newConsulta.Fecha,
-                    Motivo = newConsulta.Motivo,
-                    Comentarios = newConsulta.Comentarios,
-                    Estado = newConsulta.Estado,
-                    Costo = newConsulta.Costo
-                };
+                Consulta consulta = Consulta.FromDto(newConsulta);
                 await _dbContext.Consultas.AddAsync(consulta);
                 return await _dbContext.SaveChangesAsync();
             }
@@ -143,7 +131,7 @@ namespace caresoft_core.Services
             }
         }
 
-        public async Task<List<Consulta>> ListarConsultas(string? documentoPaciente, string? documentoMedico, DateTime? fechaInicio, DateTime? fechaFin)
+        public async Task<List<ConsultaDto>> ListarConsultas(string? documentoPaciente, string? documentoMedico, DateTime? fechaInicio, DateTime? fechaFin)
         {
             try
             {
@@ -164,12 +152,12 @@ namespace caresoft_core.Services
                 {
                     query = query.Where(e => e.Fecha <= fechaFin);
                 }
-                return await query.ToListAsync();
+                return (await query.ToListAsync()).Select(e => ConsultaDto.FromModel(e)).ToList();
             }
             catch (Exception ex)
             {
                 _logHandler.LogError("Error al listar consultas", ex);
-                return new List<Consulta>();
+                return new List<ConsultaDto>();
             }
 
         }

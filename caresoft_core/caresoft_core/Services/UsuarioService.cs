@@ -71,28 +71,9 @@ namespace caresoft_core.Services
         {
             try
             {
-                var perfilUsuario = new PerfilUsuario
-                {
-                    Documento = usuario.Documento,
-                    TipoDocumento = usuario.TipoDocumento,
-                    NumLicenciaMedica = usuario.NumLicenciaMedica,
-                    Nombre = usuario.Nombre,
-                    Apellido = usuario.Apellido,
-                    Genero = usuario.Genero,
-                    FechaNacimiento = usuario.FechaNacimiento ?? DateTime.MinValue,
-                    Telefono = usuario.Telefono,
-                    Correo = usuario.Correo,
-                    Direccion = usuario.Direccion,
-                    Rol = usuario.Rol
-                };
-
-                var usuarioEntity = new Usuario
-                {
-                    UsuarioCodigo = usuario.UsuarioCodigo,
-                    DocumentoUsuario = usuario.Documento,
-                    UsuarioContra = usuario.UsuarioContra,
-                    DocumentoUsuarioNavigation = perfilUsuario
-                };
+                var perfilUsuario = PerfilUsuario.FromDto(usuario);
+                var usuarioEntity = Usuario.FromDto(usuario);
+                usuarioEntity.DocumentoUsuarioNavigation = perfilUsuario;
 
                 _dbContext.PerfilUsuarios.Add(perfilUsuario);
                 _dbContext.Usuarios.Add(usuarioEntity);
@@ -173,7 +154,7 @@ namespace caresoft_core.Services
         
                     if (usuarioDto.FechaNacimiento != null)
                     {
-                        perfilUsuario.FechaNacimiento = usuarioDto.FechaNacimiento ?? DateTime.MinValue;
+                        perfilUsuario.FechaNacimiento = usuarioDto.FechaNacimiento;
                         perfilUsuarioUpdated = true;
                     }
         

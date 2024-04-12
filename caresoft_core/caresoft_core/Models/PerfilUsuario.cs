@@ -1,4 +1,6 @@
-﻿namespace caresoft_core.Models;
+﻿using caresoft_core.Dto;
+
+namespace caresoft_core.Models;
 
 public partial class PerfilUsuario
 {
@@ -43,4 +45,24 @@ public partial class PerfilUsuario
     public virtual ICollection<ReservaServicio> ReservaServicioDocumentoPacienteNavigations { get; set; } = new List<ReservaServicio>();
 
     public virtual Usuario? Usuario { get; set; }
+
+    public static PerfilUsuario FromDto(UsuarioDto usuarioDto)
+    {
+        return new PerfilUsuario
+        {
+            Documento = usuarioDto.Documento,
+            TipoDocumento = usuarioDto.TipoDocumento,
+            NumLicenciaMedica = usuarioDto.NumLicenciaMedica,
+            Nombre = usuarioDto.Nombre,
+            Apellido = usuarioDto.Apellido,
+            Genero = usuarioDto.Genero,
+            FechaNacimiento = usuarioDto.FechaNacimiento,
+            Telefono = usuarioDto.Telefono,
+            Correo = usuarioDto.Correo,
+            Direccion = usuarioDto.Direccion,
+            Rol = usuarioDto.Rol
+        };
+    }
+
+
 }

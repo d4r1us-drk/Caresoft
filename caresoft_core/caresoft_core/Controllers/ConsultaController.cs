@@ -66,6 +66,20 @@ namespace caresoft_core.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error al eliminar consulta");
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> ListarConsultas([FromQuery]string? documentoPaciente, [FromQuery] string? documentoMedico, [FromQuery] DateTime? fechaInicio, [FromQuery] DateTime? fechaFin)
+        {
+            try
+            {
+                List<ConsultaDto> result = await _consultaService.ListarConsultas(documentoPaciente,documentoMedico,fechaInicio,fechaFin);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logHandler.LogFatal("Error al listar consultas", ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al listar consultas");
+            }
+        }
 
         [HttpPost("{consultaCodigo}/servicio/{servicioCodigo}")]
         public async Task<IActionResult> RelacionarServicio(string consultaCodigo, string servicioCodigo)

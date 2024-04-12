@@ -36,41 +36,12 @@ namespace caresoft_core.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddUsuarioAsync(
-            [FromQuery] string usuarioCodigo,
-            [FromQuery] string usuarioContra,
-            [FromQuery] string documento,
-            [FromQuery] string tipoDocumento,
-            [FromQuery] uint? numLicenciaMedica,
-            [FromQuery] string nombre,
-            [FromQuery] string apellido,
-            [FromQuery] string genero,
-            [FromQuery] DateTime fechaNacimiento,
-            [FromQuery] string telefono,
-            [FromQuery] string correo,
-            [FromQuery] string direccion,
-            [FromQuery] string rol = "P")
+        public async Task<IActionResult> AddUsuarioAsync(UsuarioDto usuarioDto)
         {
             try
             {
-                var usuario = new UsuarioDto
-                {
-                    UsuarioCodigo = usuarioCodigo,
-                    UsuarioContra = usuarioContra,
-                    Documento = documento,
-                    TipoDocumento = tipoDocumento,
-                    NumLicenciaMedica = rol == "M" || rol == "E" ? numLicenciaMedica : null,
-                    Nombre = nombre,
-                    Apellido = apellido,
-                    Genero = genero,
-                    FechaNacimiento = fechaNacimiento,
-                    Telefono = telefono,
-                    Correo = correo,
-                    Direccion = direccion,
-                    Rol = rol,
-                };
-
-                var result = await _usuarioService.AddUsuarioAsync(usuario);
+                usuarioDto.NumLicenciaMedica = usuarioDto.Rol == "M" || usuarioDto.Rol == "E" ? usuarioDto.NumLicenciaMedica : null;
+                var result = await _usuarioService.AddUsuarioAsync(usuarioDto);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -80,40 +51,11 @@ namespace caresoft_core.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<ActionResult<int>> UpdateUsuarioAsync(
-            [FromQuery] string? usuarioCodigo = null,
-            [FromQuery] string? usuarioContra = null,
-            [FromQuery] string? documento = null,
-            [FromQuery] string? tipoDocumento = null,
-            [FromQuery] uint? numLicenciaMedica = null,
-            [FromQuery] string? nombre = null,
-            [FromQuery] string? apellido = null,
-            [FromQuery] string? genero = null,
-            [FromQuery] DateTime? fechaNacimiento = null,
-            [FromQuery] string? telefono = null,
-            [FromQuery] string? correo = null,
-            [FromQuery] string? direccion = null,
-            [FromQuery] string? rol = null)
+        public async Task<ActionResult<int>> UpdateUsuarioAsync(UsuarioDto usuario)
+
         {
             try
             {
-                var usuario = new UsuarioDto
-                {
-                    UsuarioCodigo = usuarioCodigo,
-                    UsuarioContra = usuarioContra,
-                    Documento = documento,
-                    TipoDocumento = tipoDocumento,
-                    NumLicenciaMedica = numLicenciaMedica,
-                    Nombre = nombre,
-                    Apellido = apellido,
-                    Genero = genero,
-                    FechaNacimiento = fechaNacimiento,
-                    Telefono = telefono,
-                    Correo = correo,
-                    Direccion = direccion,
-                    Rol = rol
-                };
-
                 var result = await _usuarioService.UpdateUsuarioAsync(usuario);
                 return Ok(result);
             }
