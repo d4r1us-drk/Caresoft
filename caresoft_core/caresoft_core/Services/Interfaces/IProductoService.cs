@@ -4,7 +4,7 @@ namespace caresoft_core.Services.Interfaces;
 
 public interface IProductoService
 {
-    Task<List<Producto>> GetProductosAsync(decimal? costo = null);
+    Task<List<Producto>> GetProductosAsync();
     Task<int> AddProductoAsync(Producto producto);
     Task<int> UpdateProductoAsync(Producto producto);
     Task<int> DeleteProductoAsync(uint idProducto);

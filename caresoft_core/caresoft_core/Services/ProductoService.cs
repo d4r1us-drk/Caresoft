@@ -15,18 +15,11 @@ namespace caresoft_core.Services
             _dbContext = dbContext;
         }
 
-        public async Task<List<Producto>> GetProductosAsync(decimal? costo = null)
+        public async Task<List<Producto>> GetProductosAsync()
         {
             try
             {
-                if (costo.HasValue)
-                {
-                    return await _dbContext.Productos.Where(p => p.Costo == costo).ToListAsync();
-                }
-                else
-                {
-                    return await _dbContext.Productos.ToListAsync();
-                }
+                return await _dbContext.Productos.ToListAsync();
             }
             catch (Exception ex)
             {
