@@ -85,10 +85,14 @@ public class UsuarioService : IUsuarioService
     {
         try
         {
+            
+            usuario.DocumentoUsuarioNavigation = perfilUsuario;
             _dbContext.Usuarios.Update(usuario);
             _dbContext.PerfilUsuarios.Update(perfilUsuario);
 
-            return await _dbContext.SaveChangesAsync();
+             await _dbContext.SaveChangesAsync();
+
+            return 1;
         }
         catch (Exception ex)
         {
