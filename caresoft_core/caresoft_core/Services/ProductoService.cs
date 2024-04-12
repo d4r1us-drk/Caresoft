@@ -5,21 +5,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace caresoft_core.Services
 {
-    public class ProductoService : IProductoService
+    public class ProductoService(CaresoftDbContext dbContext) : IProductoService
     {
-        private readonly CaresoftDbContext _dbContext;
         private readonly LogHandler<ProductoService> _logHandler = new();
-
-        public ProductoService(CaresoftDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
 
         public async Task<List<Producto>> GetProductosAsync()
         {
             try
             {
-                return await _dbContext.Productos.ToListAsync();
+                return await dbContext.Productos.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -32,8 +26,8 @@ namespace caresoft_core.Services
         {
             try
             {
-                _dbContext.Productos.Add(producto);
-                return await _dbContext.SaveChangesAsync();
+                dbContext.Productos.Add(producto);
+                return await dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -46,8 +40,8 @@ namespace caresoft_core.Services
         {
             try
             {
-                _dbContext.Productos.Update(producto);
-                return await _dbContext.SaveChangesAsync();
+                dbContext.Productos.Update(producto);
+                return await dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -60,11 +54,11 @@ namespace caresoft_core.Services
         {
             try
             {
-                var producto = await _dbContext.Productos.FindAsync(idProducto);
+                var producto = await dbContext.Productos.FindAsync(idProducto);
                 if (producto != null)
                 {
-                    _dbContext.Productos.Remove(producto);
-                    return await _dbContext.SaveChangesAsync();
+                    dbContext.Productos.Remove(producto);
+                    return await dbContext.SaveChangesAsync();
                 }
                 return 0; // Return 0 if the product doesn't exist
             }
@@ -79,12 +73,12 @@ namespace caresoft_core.Services
         {
             try
             {
-                var producto = await _dbContext.Productos.FindAsync(idProducto);
-                var proveedor = await _dbContext.Proveedors.FindAsync(rncProveedor);
+                var producto = await dbContext.Productos.FindAsync(idProducto);
+                var proveedor = await dbContext.Proveedors.FindAsync(rncProveedor);
                 if (producto != null && proveedor != null)
                 {
                     producto.RncProveedors.Add(proveedor);
-                    return await _dbContext.SaveChangesAsync();
+                    return await dbContext.SaveChangesAsync();
                 }
                 return 0; // Return 0 if either the product or the provider doesn't exist
             }
@@ -99,12 +93,12 @@ namespace caresoft_core.Services
         {
             try
             {
-                var producto = await _dbContext.Productos.FindAsync(idProducto);
-                var proveedor = await _dbContext.Proveedors.FindAsync(rncProveedor);
+                var producto = await dbContext.Productos.FindAsync(idProducto);
+                var proveedor = await dbContext.Proveedors.FindAsync(rncProveedor);
                 if (producto != null && proveedor != null)
                 {
                     producto.RncProveedors.Remove(proveedor);
-                    return await _dbContext.SaveChangesAsync();
+                    return await dbContext.SaveChangesAsync();
                 }
                 return 0; // Return 0 if either the product or the provider doesn't exist
             }
@@ -119,7 +113,7 @@ namespace caresoft_core.Services
         {
             try
             {
-                var producto = await _dbContext.Productos.Include(p => p.RncProveedors).FirstOrDefaultAsync(p => p.IdProducto == idProducto);
+                var producto = await dbContext.Productos.Include(p => p.RncProveedors).FirstOrDefaultAsync(p => p.IdProducto == idProducto);
                 if (producto != null)
                 {
                     return producto.RncProveedors.Select(p => p.RncProveedor).ToList();

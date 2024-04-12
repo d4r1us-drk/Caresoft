@@ -2,7 +2,6 @@
 using caresoft_core.Dto;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace caresoft_core.Controllers
@@ -18,13 +17,13 @@ namespace caresoft_core.Controllers
             _consultaService = consultaService;
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> CrearConsulta([FromQuery] ConsultaDto consulta)
         {
             try
             {
 
-                int result = await _consultaService.CrearConsulta(consulta);
+                int result = await _consultaService.AddConsultaAsync(consulta);
                 return Ok(result);
 
             }
@@ -35,12 +34,12 @@ namespace caresoft_core.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<IActionResult> ActualizarConsulta([FromQuery]ConsultaDto consultaDto)
         {
             try
             {
-                int result = await _consultaService.ActualizarConsulta(consultaDto);
+                int result = await _consultaService.UpdateConsultaAsync(consultaDto);
                 return Ok(result);
 
             }
@@ -51,12 +50,12 @@ namespace caresoft_core.Controllers
             }
         }
 
-        [HttpDelete("{consultaCodigo}")]
+        [HttpDelete("delete/{consultaCodigo}")]
         public async Task<IActionResult> EliminarConsulta(string consultaCodigo)
         {
             try
             {
-                int result = await _consultaService.EliminarConsulta(consultaCodigo);
+                int result = await _consultaService.RemoveConsultaAsync(consultaCodigo);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -66,12 +65,13 @@ namespace caresoft_core.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error al eliminar consulta");
             }
         }
-        [HttpGet]
+
+        [HttpGet("get")]
         public async Task<IActionResult> ListarConsultas()
         {
             try
             {
-                List<ConsultaDto> result = await _consultaService.ListarConsultas();
+                List<ConsultaDto> result = await _consultaService.GetConsultasAsync();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -81,12 +81,12 @@ namespace caresoft_core.Controllers
             }
         }
 
-        [HttpPost("{consultaCodigo}/servicio/{servicioCodigo}")]
+        [HttpPost("addServicio/{consultaCodigo}/{servicioCodigo}")]
         public async Task<IActionResult> RelacionarServicio(string consultaCodigo, string servicioCodigo)
         {
             try
             {
-                int result = await _consultaService.RelacionarServicio(consultaCodigo, servicioCodigo);
+                int result = await _consultaService.AddConsultaServicioAsync(consultaCodigo, servicioCodigo);
                 return Ok(result);
 
             }
@@ -97,12 +97,12 @@ namespace caresoft_core.Controllers
             }
         }
 
-        [HttpDelete("{consultaCodigo}/servicio/{servicioCodigo}")]
+        [HttpDelete("deleteServicio/{consultaCodigo}/{servicioCodigo}")]
         public async Task<IActionResult> DesrelacionarServicio(string consultaCodigo, string servicioCodigo)
         {
             try
             {
-                int result = await _consultaService.DesrelacionarServicio(consultaCodigo, servicioCodigo);
+                int result = await _consultaService.RemoveConsultaServicioAsync(consultaCodigo, servicioCodigo);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -112,12 +112,12 @@ namespace caresoft_core.Controllers
             }
         }
 
-        [HttpGet("{consultaCodigo}/servicios")]
+        [HttpGet("getServicios/{consultaCodigo}/")]
         public async Task<IActionResult> ListarServicios(string consultaCodigo)
         {
             try
             {
-                List<Servicio> result = await _consultaService.ListarServicios(consultaCodigo);
+                List<Servicio> result = await _consultaService.GetConsultaServiciosAsync(consultaCodigo);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -127,12 +127,12 @@ namespace caresoft_core.Controllers
             }
         }
 
-        [HttpPost("{consultaCodigo}/producto/{idProducto}/{cantidad}")]
+        [HttpPost("addProducto/{consultaCodigo}/{idProducto}/{cantidad}")]
         public async Task<IActionResult> RelacionarProducto(string consultaCodigo, uint idProducto, int cantidad)
         {
             try
             {
-                int result = await _consultaService.RelacionarProducto(consultaCodigo, idProducto, cantidad);
+                int result = await _consultaService.AddConsultaProductoAsync(consultaCodigo, idProducto, cantidad);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -142,12 +142,12 @@ namespace caresoft_core.Controllers
             }
         }
 
-        [HttpDelete("{consultaCodigo}/producto/{idProducto}/{cantidad}")]
+        [HttpDelete("deleteProducto/{consultaCodigo}/{idProducto}/{cantidad}")]
         public async Task<IActionResult> DesrelacionarProducto(string consultaCodigo, uint idProducto, int cantidad)
         {
             try
             {
-                int result = await _consultaService.DesrelacionarProducto(consultaCodigo, idProducto, cantidad);
+                int result = await _consultaService.RemoveConsultaProductoAsync(consultaCodigo, idProducto, cantidad);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -157,12 +157,12 @@ namespace caresoft_core.Controllers
             }
         }
 
-        [HttpGet("{consultaCodigo}/productos")]
+        [HttpGet("getProductos/{consultaCodigo}")]
         public async Task<IActionResult> ListarProductos(string consultaCodigo)
         {
             try
             {
-                List<Producto> result = await _consultaService.ListarProductos(consultaCodigo);
+                List<Producto> result = await _consultaService.GetConsultaProductosAsync(consultaCodigo);
                 return Ok(result);
             }
             catch (Exception ex)

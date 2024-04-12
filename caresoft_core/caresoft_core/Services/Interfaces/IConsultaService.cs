@@ -5,17 +5,17 @@ namespace caresoft_core.Services.Interfaces;
 
 public interface IConsultaService
 {
-    Task<int> CrearConsulta(ConsultaDto consulta);
-    Task<int> ActualizarConsulta(ConsultaDto consulta);
-    Task<int> EliminarConsulta(string consultaCodigo);
-    Task<int> RelacionarServicio(string consultaCodigo, string servicioCodigo);
-    Task<int> DesrelacionarServicio(string consultaCodigo, string servicioCodigo);
-    Task<List<Servicio>> ListarServicios(string consultaCodigo);
-    Task<int> RelacionarProducto(string consultaCodigo, uint idProducto, int cantidad);
-    Task<int> DesrelacionarProducto(string consultaCodigo, uint idProducto, int cantidad);
-    Task<List<Producto>> ListarProductos(string consultaCodigo);
-    Task<int> RelacionarAfeccion(string consultaCodigo, uint idAfeccion);
-    Task<int> DesrelacionarAfeccion(string consultaCodigo, uint idAfeccion);
-    Task<List<Afeccion>> ListarAfecciones(string consultaCodigo);
-    Task<List<ConsultaDto>> ListarConsultas();
+    Task<int> AddConsultaAsync(ConsultaDto consulta);
+    Task<int> UpdateConsultaAsync(ConsultaDto consulta);
+    Task<int> RemoveConsultaAsync(string consultaCodigo);
+    Task<int> AddConsultaServicioAsync(string consultaCodigo, string servicioCodigo);
+    Task<int> RemoveConsultaServicioAsync(string consultaCodigo, string servicioCodigo);
+    Task<List<Servicio>> GetConsultaServiciosAsync(string consultaCodigo);
+    Task<int> AddConsultaProductoAsync(string consultaCodigo, uint idProducto, int cantidad);
+    Task<int> RemoveConsultaProductoAsync(string consultaCodigo, uint idProducto, int cantidad);
+    Task<List<Producto>> GetConsultaProductosAsync(string consultaCodigo);
+    Task<int> AddConsultaAfeccionAsync(string consultaCodigo, uint idAfeccion);
+    Task<int> RemoveConsultaAfeccionAsync(string consultaCodigo, uint idAfeccion);
+    Task<List<Afeccion>> GetConsultaAfeccionesAsync(string consultaCodigo);
+    Task<List<ConsultaDto>> GetConsultasAsync();
 }

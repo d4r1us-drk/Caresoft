@@ -3,22 +3,18 @@ using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
 using Microsoft.EntityFrameworkCore;
 
-public class FacturaService : IFacturaService
-{
-    private readonly CaresoftDbContext _dbContext;
-    private readonly LogHandler<FacturaService> _logHandler = new();
+namespace caresoft_core.Services;
 
-    public FacturaService(CaresoftDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+public class FacturaService(CaresoftDbContext dbContext) : IFacturaService
+{
+    private readonly LogHandler<FacturaService> _logHandler = new();
 
     public async Task<int> AddFacturaAsync(Factura factura)
     {
         try
         {
-            _dbContext.Facturas.Add(factura);
-            return await _dbContext.SaveChangesAsync();
+            dbContext.Facturas.Add(factura);
+            return await dbContext.SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -31,8 +27,8 @@ public class FacturaService : IFacturaService
     {
         try
         {
-            _dbContext.Facturas.Update(factura);
-            return await _dbContext.SaveChangesAsync();
+            dbContext.Facturas.Update(factura);
+            return await dbContext.SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -45,11 +41,11 @@ public class FacturaService : IFacturaService
     {
         try
         {
-            var factura = await _dbContext.Facturas.FirstOrDefaultAsync(f => f.FacturaCodigo == facturaCodigo);
+            var factura = await dbContext.Facturas.FirstOrDefaultAsync(f => f.FacturaCodigo == facturaCodigo);
             if (factura != null)
             {
-                _dbContext.Facturas.Remove(factura);
-                return await _dbContext.SaveChangesAsync();
+                dbContext.Facturas.Remove(factura);
+                return await dbContext.SaveChangesAsync();
             }
             return 0; // Return 0 if no record is deleted
         }
@@ -64,7 +60,7 @@ public class FacturaService : IFacturaService
     {
         try
         {
-            return await _dbContext.Facturas.ToListAsync();
+            return await dbContext.Facturas.ToListAsync();
         }
         catch (Exception ex)
         {
@@ -77,8 +73,8 @@ public class FacturaService : IFacturaService
     {
         try
         {
-            _dbContext.FacturaServicios.Add(facturaServicio);
-            return await _dbContext.SaveChangesAsync();
+            dbContext.FacturaServicios.Add(facturaServicio);
+            return await dbContext.SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -91,11 +87,11 @@ public class FacturaService : IFacturaService
     {
         try
         {
-            var facturaServicio = await _dbContext.FacturaServicios.FirstOrDefaultAsync(fs => fs.FacturaCodigo == facturaCodigo && fs.ServicioCodigo == servicioCodigo);
+            var facturaServicio = await dbContext.FacturaServicios.FirstOrDefaultAsync(fs => fs.FacturaCodigo == facturaCodigo && fs.ServicioCodigo == servicioCodigo);
             if (facturaServicio != null)
             {
-                _dbContext.FacturaServicios.Remove(facturaServicio);
-                return await _dbContext.SaveChangesAsync();
+                dbContext.FacturaServicios.Remove(facturaServicio);
+                return await dbContext.SaveChangesAsync();
             }
             return 0; // Return 0 if no record is deleted
         }
@@ -110,7 +106,7 @@ public class FacturaService : IFacturaService
     {
         try
         {
-            return await _dbContext.FacturaServicios.Where(fs => fs.FacturaCodigo == facturaCodigo).ToListAsync();
+            return await dbContext.FacturaServicios.Where(fs => fs.FacturaCodigo == facturaCodigo).ToListAsync();
         }
         catch (Exception ex)
         {
@@ -123,8 +119,8 @@ public class FacturaService : IFacturaService
     {
         try
         {
-            _dbContext.FacturaProductos.Add(facturaProducto);
-            return await _dbContext.SaveChangesAsync();
+            dbContext.FacturaProductos.Add(facturaProducto);
+            return await dbContext.SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -137,11 +133,11 @@ public class FacturaService : IFacturaService
     {
         try
         {
-            var facturaProducto = await _dbContext.FacturaProductos.FirstOrDefaultAsync(fp => fp.FacturaCodigo == facturaCodigo && fp.IdProducto == idProducto);
+            var facturaProducto = await dbContext.FacturaProductos.FirstOrDefaultAsync(fp => fp.FacturaCodigo == facturaCodigo && fp.IdProducto == idProducto);
             if (facturaProducto != null)
             {
-                _dbContext.FacturaProductos.Remove(facturaProducto);
-                return await _dbContext.SaveChangesAsync();
+                dbContext.FacturaProductos.Remove(facturaProducto);
+                return await dbContext.SaveChangesAsync();
             }
             return 0; // Return 0 if no record is deleted
         }
@@ -156,7 +152,7 @@ public class FacturaService : IFacturaService
     {
         try
         {
-            return await _dbContext.FacturaProductos.Where(fp => fp.FacturaCodigo == facturaCodigo).ToListAsync();
+            return await dbContext.FacturaProductos.Where(fp => fp.FacturaCodigo == facturaCodigo).ToListAsync();
         }
         catch (Exception ex)
         {
@@ -169,14 +165,14 @@ public class FacturaService : IFacturaService
     {
         try
         {
-            var factura = await _dbContext.Facturas.FirstOrDefaultAsync(f => f.FacturaCodigo == facturaCodigo);
+            var factura = await dbContext.Facturas.FirstOrDefaultAsync(f => f.FacturaCodigo == facturaCodigo);
             if (factura != null)
             {
-                var metodoPago = await _dbContext.MetodoPagos.FirstOrDefaultAsync(mp => mp.IdMetodoPago == idMetodoPago);
+                var metodoPago = await dbContext.MetodoPagos.FirstOrDefaultAsync(mp => mp.IdMetodoPago == idMetodoPago);
                 if (metodoPago != null)
                 {
                     factura.IdMetodoPagos.Add(metodoPago);
-                    return await _dbContext.SaveChangesAsync();
+                    return await dbContext.SaveChangesAsync();
                 }
             }
             return 0; // Return 0 if no record is added
@@ -192,14 +188,14 @@ public class FacturaService : IFacturaService
     {
         try
         {
-            var factura = await _dbContext.Facturas.FirstOrDefaultAsync(f => f.FacturaCodigo == facturaCodigo);
+            var factura = await dbContext.Facturas.FirstOrDefaultAsync(f => f.FacturaCodigo == facturaCodigo);
             if (factura != null)
             {
                 var metodoPago = factura.IdMetodoPagos.FirstOrDefault(mp => mp.IdMetodoPago == idMetodoPago);
                 if (metodoPago != null)
                 {
                     factura.IdMetodoPagos.Remove(metodoPago);
-                    return await _dbContext.SaveChangesAsync();
+                    return await dbContext.SaveChangesAsync();
                 }
             }
             return 0; // Return 0 if no record is deleted
@@ -215,7 +211,7 @@ public class FacturaService : IFacturaService
     {
         try
         {
-            var factura = await _dbContext.Facturas.FirstOrDefaultAsync(f => f.FacturaCodigo == facturaCodigo);
+            var factura = await dbContext.Facturas.FirstOrDefaultAsync(f => f.FacturaCodigo == facturaCodigo);
             return factura?.IdMetodoPagos.ToList() ?? new List<MetodoPago>();
         }
         catch (Exception ex)

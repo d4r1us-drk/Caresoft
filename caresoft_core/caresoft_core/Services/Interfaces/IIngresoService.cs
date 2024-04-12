@@ -8,6 +8,6 @@ namespace caresoft_core.Services.Interfaces
         Task<int> UpdateIngresoAsync(IngresoDto ingresoDto);
         Task<int> DeleteIngresoAsync(uint idIngreso);
         Task<List<IngresoDto>> GetIngresosAsync();
-        Task<IngresoDto> GetIngresoByIdAsync(uint idIngreso);
+        Task<IngresoDto?> GetIngresoByIdAsync(uint idIngreso);
     }
 }

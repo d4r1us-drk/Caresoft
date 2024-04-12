@@ -6,15 +6,9 @@ using caresoft_core.Utils;
 
 namespace caresoft_core.Services;
 
-public class IngresoService : IIngresoService
+public class IngresoService(CaresoftDbContext dbContext) : IIngresoService
 {
-    private readonly CaresoftDbContext _dbContext;
     private readonly LogHandler<IngresoService> _logHandler = new();
-
-    public IngresoService(CaresoftDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
 
     public async Task<int> AddIngresoAsync(IngresoDto ingresoDto)
     {
@@ -33,14 +27,14 @@ public class IngresoService : IIngresoService
                 FechaAlta = ingresoDto.FechaAlta
             };
 
-            _dbContext.Ingresos.Add(ingreso);
-            await _dbContext.SaveChangesAsync();
+            dbContext.Ingresos.Add(ingreso);
+            await dbContext.SaveChangesAsync();
             _logHandler.LogInfo("Ingreso added successfully.");
             return 1;
         }
         catch (Exception ex)
         {
-            _logHandler.LogFatal("Failed to add ingreso.", ex);
+            _logHandler.LogError("Failed to add ingreso.", ex);
             throw;
         }
     }
@@ -49,7 +43,7 @@ public class IngresoService : IIngresoService
     {
         try
         {
-            var ingreso = await _dbContext.Ingresos.FindAsync(ingresoDto.IdIngreso);
+            var ingreso = await dbContext.Ingresos.FindAsync(ingresoDto.IdIngreso);
             if (ingreso == null)
             {
                 _logHandler.LogInfo("Ingreso not found.");
@@ -66,14 +60,14 @@ public class IngresoService : IIngresoService
             ingreso.FechaIngreso = ingresoDto.FechaIngreso;
             ingreso.FechaAlta = ingresoDto.FechaAlta;
 
-            _dbContext.Ingresos.Update(ingreso);
-            await _dbContext.SaveChangesAsync();
+            dbContext.Ingresos.Update(ingreso);
+            await dbContext.SaveChangesAsync();
             _logHandler.LogInfo("Ingreso updated successfully.");
             return 1;
         }
         catch (Exception ex)
         {
-            _logHandler.LogFatal("Failed to update ingreso.", ex);
+            _logHandler.LogError("Failed to update ingreso.", ex);
             throw;
         }
     }
@@ -82,21 +76,21 @@ public class IngresoService : IIngresoService
     {
         try
         {
-            var ingreso = await _dbContext.Ingresos.FindAsync(idIngreso);
+            var ingreso = await dbContext.Ingresos.FindAsync(idIngreso);
             if (ingreso == null)
             {
                 _logHandler.LogInfo("Ingreso not found.");
                 return 0;
             }
 
-            _dbContext.Ingresos.Remove(ingreso);
-            await _dbContext.SaveChangesAsync();
+            dbContext.Ingresos.Remove(ingreso);
+            await dbContext.SaveChangesAsync();
             _logHandler.LogInfo("Ingreso deleted successfully.");
             return 1;
         }
         catch (Exception ex)
         {
-            _logHandler.LogFatal("Failed to delete ingreso.", ex);
+            _logHandler.LogError("Failed to delete ingreso.", ex);
             throw;
         }
     }
@@ -105,7 +99,7 @@ public class IngresoService : IIngresoService
     {
         try
         {
-            return await _dbContext.Ingresos
+            return await dbContext.Ingresos
                 .Select(ingreso => new IngresoDto
                 {
                     IdIngreso = ingreso.IdIngreso,
@@ -123,16 +117,16 @@ public class IngresoService : IIngresoService
         }
         catch (Exception ex)
         {
-            _logHandler.LogFatal("Failed to retrieve ingresos.", ex);
+            _logHandler.LogError("Failed to retrieve ingresos.", ex);
             throw;
         }
     }
 
-    public async Task<IngresoDto> GetIngresoByIdAsync(uint idIngreso)
+    public async Task<IngresoDto?> GetIngresoByIdAsync(uint idIngreso)
     {
         try
         {
-            return await _dbContext.Ingresos
+            return await dbContext.Ingresos
                 .Where(ingreso => ingreso.IdIngreso == idIngreso)
                 .Select(ingreso => new IngresoDto
                 {
@@ -151,7 +145,7 @@ public class IngresoService : IIngresoService
         }
         catch (Exception ex)
         {
-            _logHandler.LogFatal("Failed to retrieve ingreso by ID.", ex);
+            _logHandler.LogError("Failed to retrieve ingreso by ID.", ex);
             throw;
         }
     }

@@ -47,7 +47,7 @@ namespace caresoft_core.Services
             catch (Exception ex)
             {
                 _logHandler.LogFatal("Something went wrong.", ex);
-                return [];
+                return new List<UsuarioDto>();
             }
         }
 

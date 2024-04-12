@@ -1,5 +1,4 @@
-﻿using caresoft_core.Dto;
-using caresoft_core.Models;
+﻿using caresoft_core.Models;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
 using Microsoft.EntityFrameworkCore;
