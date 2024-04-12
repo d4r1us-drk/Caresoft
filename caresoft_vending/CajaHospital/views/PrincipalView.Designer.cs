@@ -151,6 +151,7 @@
             this.n2000.Name = "n2000";
             this.n2000.Size = new System.Drawing.Size(99, 26);
             this.n2000.TabIndex = 13;
+            this.n2000.ValueChanged += new System.EventHandler(this.nud_ValueChanged);
             // 
             // n1000
             // 
@@ -158,6 +159,7 @@
             this.n1000.Name = "n1000";
             this.n1000.Size = new System.Drawing.Size(99, 26);
             this.n1000.TabIndex = 15;
+            this.n1000.ValueChanged += new System.EventHandler(this.nud_ValueChanged);
             // 
             // label4
             // 
@@ -174,6 +176,7 @@
             this.n200.Name = "n200";
             this.n200.Size = new System.Drawing.Size(99, 26);
             this.n200.TabIndex = 19;
+            this.n200.ValueChanged += new System.EventHandler(this.nud_ValueChanged);
             // 
             // label5
             // 
@@ -190,6 +193,7 @@
             this.n500.Name = "n500";
             this.n500.Size = new System.Drawing.Size(99, 26);
             this.n500.TabIndex = 17;
+            this.n500.ValueChanged += new System.EventHandler(this.nud_ValueChanged);
             // 
             // label6
             // 
@@ -206,6 +210,7 @@
             this.n50.Name = "n50";
             this.n50.Size = new System.Drawing.Size(99, 26);
             this.n50.TabIndex = 23;
+            this.n50.ValueChanged += new System.EventHandler(this.nud_ValueChanged);
             // 
             // label7
             // 
@@ -222,6 +227,7 @@
             this.n100.Name = "n100";
             this.n100.Size = new System.Drawing.Size(99, 26);
             this.n100.TabIndex = 21;
+            this.n100.ValueChanged += new System.EventHandler(this.nud_ValueChanged);
             // 
             // label8
             // 
@@ -238,6 +244,7 @@
             this.n10.Name = "n10";
             this.n10.Size = new System.Drawing.Size(99, 26);
             this.n10.TabIndex = 27;
+            this.n10.ValueChanged += new System.EventHandler(this.nud_ValueChanged);
             // 
             // label9
             // 
@@ -254,6 +261,7 @@
             this.n25.Name = "n25";
             this.n25.Size = new System.Drawing.Size(99, 26);
             this.n25.TabIndex = 25;
+            this.n25.ValueChanged += new System.EventHandler(this.nud_ValueChanged);
             // 
             // label10
             // 
@@ -270,6 +278,7 @@
             this.n1.Name = "n1";
             this.n1.Size = new System.Drawing.Size(99, 26);
             this.n1.TabIndex = 31;
+            this.n1.ValueChanged += new System.EventHandler(this.nud_ValueChanged);
             // 
             // label11
             // 
@@ -286,6 +295,7 @@
             this.n5.Name = "n5";
             this.n5.Size = new System.Drawing.Size(99, 26);
             this.n5.TabIndex = 29;
+            this.n5.ValueChanged += new System.EventHandler(this.nud_ValueChanged);
             // 
             // label12
             // 
@@ -316,6 +326,7 @@
             // 
             // btnCambiosMonedas
             // 
+            this.btnCambiosMonedas.Enabled = false;
             this.btnCambiosMonedas.Location = new System.Drawing.Point(834, 696);
             this.btnCambiosMonedas.Name = "btnCambiosMonedas";
             this.btnCambiosMonedas.Size = new System.Drawing.Size(121, 49);
