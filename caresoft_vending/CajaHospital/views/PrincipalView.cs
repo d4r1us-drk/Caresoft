@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -17,11 +18,12 @@ namespace CajaHospital.views
             InitializeComponent();
             txtNombreCajero.Text = nombre;
             txtDocumentoCajero.Text = documento;
+            lblCaja.Text += $" {ConfigurationManager.AppSettings["noCaja"]}";
         }
 
         private void PrincipalView_Load(object sender, EventArgs e)
         {
-
+            //TODO: Implementar logica de los billetes, recarga y descarga de caja
         }
     }
 }
