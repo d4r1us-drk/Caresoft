@@ -49,6 +49,8 @@ namespace caresoft_core
                         provider.GetRequiredService<CaresoftDbContext>()));
             services.AddScoped<IConsultaService>(provider => new ConsultaService(
             provider.GetRequiredService<CaresoftDbContext>()));
+            services.AddScoped<IIngresoService, IngresoService>();
+
             services.AddScoped<IProductoService>(provider => new ProductoService(
             provider.GetRequiredService<CaresoftDbContext>()));
             services.AddEndpointsApiExplorer();

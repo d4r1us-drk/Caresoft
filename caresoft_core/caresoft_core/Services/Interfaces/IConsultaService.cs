@@ -1,10 +1,11 @@
 using caresoft_core.Models;
+using caresoft_core.Dto;
 
 namespace caresoft_core.Services.Interfaces;
 
 public interface IConsultaService
 {
-    Task<int> CrearConsulta(Consulta consulta);
+    Task<int> CrearConsulta(ConsultaDto consulta);
     Task<int> ActualizarConsulta(ConsultaDto consulta);
     Task<int> EliminarConsulta(string consultaCodigo);
     Task<int> RelacionarServicio(string consultaCodigo, string servicioCodigo);

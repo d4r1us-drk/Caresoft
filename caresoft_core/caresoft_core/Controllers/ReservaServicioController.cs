@@ -1,4 +1,5 @@
 using caresoft_core.Models;
+using caresoft_core.Dto;
 using caresoft_core.Utils;
 using caresoft_core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -18,23 +19,11 @@ namespace caresoft_core.Controllers
         }
 
         [HttpGet("list")]
-        public async Task<ActionResult<List<ReservaServicio>>> GetReservaServiciosListAsync(
-            [FromQuery] uint? idReserva = null,
-            [FromQuery] string? documentoPaciente = null,
-            [FromQuery] string? documentoMedico = null,
-            [FromQuery] string? servicioCodigo = null,
-            [FromQuery] DateTime? fechaReserva = null,
-            [FromQuery] string? estado = null)
+        public async Task<ActionResult<List<ReservaServicioDto>>> GetReservaServiciosListAsync()
         {
             try
             {
-                var reservas = await _reservaServicioService.GetReservaServiciosListAsync(
-                    idReserva,
-                    documentoPaciente,
-                    documentoMedico,
-                    servicioCodigo,
-                    fechaReserva,
-                    estado);
+                var reservas = await _reservaServicioService.GetReservaServiciosListAsync();
 
                 return Ok(reservas);
             }
@@ -85,15 +74,15 @@ namespace caresoft_core.Controllers
         [HttpPut("update")]
         public async Task<ActionResult> UpdateReservaServicioAsync(
             [FromQuery] uint idReserva,
-            [FromQuery] string? documentoPaciente = null,
-            [FromQuery] string? documentoMedico = null,
-            [FromQuery] string? servicioCodigo = null,
-            [FromQuery] DateTime? fechaReservada = null,
-            [FromQuery] string? estado = null)
+            [FromQuery] string documentoPaciente,
+            [FromQuery] string documentoMedico,
+            [FromQuery] string servicioCodigo,
+            [FromQuery] DateTime fechaReservada,
+            [FromQuery] string estado)
         {
             try
             {
-                var reserva = new ReservaServicioDto
+                var reserva = new ReservaServicio
                 {
                     IdReserva = idReserva,
                     DocumentoPaciente = documentoPaciente,

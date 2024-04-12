@@ -1,4 +1,5 @@
 using caresoft_core.Models;
+using caresoft_core.Dto;
 using caresoft_core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,16 +17,11 @@ namespace caresoft_core.Controllers
         }
 
         [HttpGet("list")]
-        public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosListAsync(
-            [FromQuery] string? usuarioCodigo,
-            [FromQuery] string? documento,
-            [FromQuery] string? genero,
-            [FromQuery] DateTime? fechaNacimiento,
-            [FromQuery] string? rol)
+        public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosListAsync()
         {
             try
             {
-                var usuarios = await _usuarioService.GetUsuariosListAsync(usuarioCodigo, documento, genero, fechaNacimiento, rol);
+                var usuarios = await _usuarioService.GetUsuariosListAsync();
                 return Ok(usuarios);
             }
             catch (Exception ex)
@@ -35,41 +31,14 @@ namespace caresoft_core.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddUsuarioAsync(
-            [FromQuery] string usuarioCodigo,
-            [FromQuery] string usuarioContra,
-            [FromQuery] string documento,
-            [FromQuery] string tipoDocumento,
-            [FromQuery] uint? numLicenciaMedica,
-            [FromQuery] string nombre,
-            [FromQuery] string apellido,
-            [FromQuery] string genero,
-            [FromQuery] DateTime fechaNacimiento,
-            [FromQuery] string telefono,
-            [FromQuery] string correo,
-            [FromQuery] string direccion,
-            [FromQuery] string rol = "P")
+        public async Task<IActionResult> AddUsuarioAsync([FromBody] UsuarioDto usuarioDto)
         {
             try
             {
-                var usuario = new UsuarioDto
-                {
-                    UsuarioCodigo = usuarioCodigo,
-                    UsuarioContra = usuarioContra,
-                    Documento = documento,
-                    TipoDocumento = tipoDocumento,
-                    NumLicenciaMedica = rol == "M" || rol == "E" ? numLicenciaMedica : null,
-                    Nombre = nombre,
-                    Apellido = apellido,
-                    Genero = genero,
-                    FechaNacimiento = fechaNacimiento,
-                    Telefono = telefono,
-                    Correo = correo,
-                    Direccion = direccion,
-                    Rol = rol,
-                };
-
-                var result = await _usuarioService.AddUsuarioAsync(usuario);
+                var usuario = MapToUsuario(usuarioDto);
+                var perfilUsuario = MapToPerfilUsuario(usuarioDto);
+                
+                var result = await _usuarioService.AddUsuarioAsync(usuario, perfilUsuario);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -79,41 +48,14 @@ namespace caresoft_core.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<ActionResult<int>> UpdateUsuarioAsync(
-            [FromQuery] string? usuarioCodigo = null,
-            [FromQuery] string? usuarioContra = null,
-            [FromQuery] string? documento = null,
-            [FromQuery] string? tipoDocumento = null,
-            [FromQuery] uint? numLicenciaMedica = null,
-            [FromQuery] string? nombre = null,
-            [FromQuery] string? apellido = null,
-            [FromQuery] string? genero = null,
-            [FromQuery] DateTime? fechaNacimiento = null,
-            [FromQuery] string? telefono = null,
-            [FromQuery] string? correo = null,
-            [FromQuery] string? direccion = null,
-            [FromQuery] string? rol = null)
+        public async Task<ActionResult<int>> UpdateUsuarioAsync([FromBody] UsuarioDto usuarioDto)
         {
             try
             {
-                var usuario = new UsuarioDto
-                {
-                    UsuarioCodigo = usuarioCodigo,
-                    UsuarioContra = usuarioContra,
-                    Documento = documento,
-                    TipoDocumento = tipoDocumento,
-                    NumLicenciaMedica = numLicenciaMedica,
-                    Nombre = nombre,
-                    Apellido = apellido,
-                    Genero = genero,
-                    FechaNacimiento = fechaNacimiento,
-                    Telefono = telefono,
-                    Correo = correo,
-                    Direccion = direccion,
-                    Rol = rol
-                };
-
-                var result = await _usuarioService.UpdateUsuarioAsync(usuario);
+                var usuario = MapToUsuario(usuarioDto);
+                var perfilUsuario = MapToPerfilUsuario(usuarioDto);
+                
+                var result = await _usuarioService.UpdateUsuarioAsync(usuario, perfilUsuario);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -134,6 +76,35 @@ namespace caresoft_core.Controllers
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
+        }
+
+        private Usuario MapToUsuario(UsuarioDto usuarioDto)
+        {
+            return new Usuario
+            {
+                UsuarioCodigo = usuarioDto.UsuarioCodigo,
+                UsuarioContra = usuarioDto.UsuarioContra,
+                DocumentoUsuario = usuarioDto.Documento,
+                // You might need to map more properties depending on your model
+            };
+        }
+
+        private PerfilUsuario MapToPerfilUsuario(UsuarioDto usuarioDto)
+        {
+            return new PerfilUsuario
+            {
+                Documento = usuarioDto.Documento,
+                TipoDocumento = usuarioDto.TipoDocumento,
+                NumLicenciaMedica = usuarioDto.NumLicenciaMedica,
+                Nombre = usuarioDto.Nombre,
+                Apellido = usuarioDto.Apellido,
+                Genero = usuarioDto.Genero,
+                FechaNacimiento = usuarioDto.FechaNacimiento ?? DateTime.MinValue,
+                Telefono = usuarioDto.Telefono,
+                Correo = usuarioDto.Correo,
+                Direccion = usuarioDto.Direccion,
+                Rol = usuarioDto.Rol
+            };
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using caresoft_core.Models;
+using caresoft_core.Dto;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace caresoft_core.Services
@@ -20,36 +20,14 @@ namespace caresoft_core.Services
             try
             {
                 Consulta result = await _dbContext.Consultas.Where(e => e.ConsultaCodigo == consulta.ConsultaCodigo).FirstAsync();
-                if(consulta.DocumentoPaciente != null)
-                {
                     result.DocumentoPaciente = consulta.DocumentoPaciente;
-                }
-                if(consulta.DocumentoMedico != null)
-                {
                     result.DocumentoMedico = consulta.DocumentoMedico;
-                }
-                if(consulta.IdConsultorio != null )
-                {
                     result.IdConsultorio = (uint)consulta.IdConsultorio;
-                }
-                if(consulta.Motivo != null)
-                {
                     result.Motivo = consulta.Motivo;
-                }
-                if(consulta.Comentarios != null)
-                {
                     result.Comentarios = consulta.Comentarios;
-                }
-                if(consulta.Costo != null)
-                {
                     result.Costo = (uint)consulta.Costo;
-                }
-                if(consulta.Estado != null)
-                {
                     result.Estado = consulta.Estado;
-                }
-                
-                return await _dbContext.SaveChangesAsync();
+                    return await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -58,11 +36,24 @@ namespace caresoft_core.Services
             }
         }
 
-        public async Task<int> CrearConsulta(Consulta newConsulta)
+        public async Task<int> CrearConsulta(ConsultaDto newConsulta)
         {
             try
             {
-                await _dbContext.Consultas.AddAsync(newConsulta);
+                Consulta consulta = new Consulta
+                {
+                    ConsultaCodigo = newConsulta.ConsultaCodigo,
+                    DocumentoPaciente = newConsulta.DocumentoPaciente,
+                    DocumentoMedico = newConsulta.DocumentoMedico,
+                    IdConsultorio = newConsulta.IdConsultorio,
+                    IdAutorizacion = newConsulta.IdAutorizacion,
+                    Fecha = newConsulta.Fecha,
+                    Motivo = newConsulta.Motivo,
+                    Comentarios = newConsulta.Comentarios,
+                    Estado = newConsulta.Estado,
+                    Costo = newConsulta.Costo
+                };
+                await _dbContext.Consultas.AddAsync(consulta);
                 return await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
