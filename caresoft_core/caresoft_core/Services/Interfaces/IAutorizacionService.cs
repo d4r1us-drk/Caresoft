@@ -1,5 +1,4 @@
-﻿using caresoft_core.Dto;
-using caresoft_core.Models;
+﻿using caresoft_core.Models;
 
 namespace caresoft_core.Services.Interfaces
 {

@@ -9,5 +9,6 @@ public interface IUsuarioService
     public Task<int> AddUsuarioAsync(Usuario usuario, PerfilUsuario perfilUsuario);
     public Task<int> UpdateUsuarioAsync(Usuario usuario, PerfilUsuario perfilUsuario);
     public Task<int> DeleteUsuarioAsync(string codigoOdocumento);
+    public Task<int> ToggleUsuarioCuentaAsync(string codigoOdocumento);
     public Task<UsuarioDto?> GetUsuarioByIdAsync(string id);
 }
