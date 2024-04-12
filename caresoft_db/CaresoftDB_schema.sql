@@ -770,7 +770,7 @@ BEGIN
             montoSubtotal = p_montoSubtotal,
             montoTotal = p_montoTotal
         WHERE facturaCodigo = p_facturaCodigo;
-    ELSEIF p_ingreso IS NOT NULL THEN
+    ELSEIF p_IdIngreso IS NOT NULL THEN
         UPDATE Factura
         SET idCuenta = p_idCuenta,
             idSucursal = p_idSucursal,
