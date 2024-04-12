@@ -53,7 +53,8 @@ public class ConsultaService(CaresoftDbContext context) : IConsultaService
     {
         try
         {
-            Consultum result = await context.Consulta.Where(e => e.ConsultaCodigo == consultaCodigo).FirstAsync();
+            Consultum result = await context.Consulta.Where(e => e.ConsultaCodigo == consultaCodigo)
+                .Include(consultum => consultum.IdAfeccions).FirstAsync();
             result.IdAfeccions.Remove(result.IdAfeccions.First(e => e.IdAfeccion == idAfeccion));
             await context.SaveChangesAsync();
             return 1;
@@ -69,7 +70,8 @@ public class ConsultaService(CaresoftDbContext context) : IConsultaService
     {
         try
         {
-            Consultum result = await context.Consulta.Where(e => e.ConsultaCodigo == consultaCodigo).FirstAsync();
+            Consultum result = await context.Consulta.Where(e => e.ConsultaCodigo == consultaCodigo)
+                .Include(consultum => consultum.PrescripcionProductos).FirstAsync();
             bool removed = result.PrescripcionProductos.Remove(result.PrescripcionProductos.First(e => e.IdProducto == idProducto && e.Cantidad == cantidad));
             // Si no se removió nada, entonces no se encontró el producto
             // o la cantidad de productos prescritos de la consulta a eliminar
@@ -92,7 +94,8 @@ public class ConsultaService(CaresoftDbContext context) : IConsultaService
     {
         try
         {
-            Consultum result = await context.Consulta.Where(e => e.ConsultaCodigo == consultaCodigo).FirstAsync();
+            Consultum result = await context.Consulta.Where(e => e.ConsultaCodigo == consultaCodigo)
+                .Include(consultum => consultum.ServicioCodigos).FirstAsync();
             result.ServicioCodigos.Remove(result.ServicioCodigos.First(e => e.ServicioCodigo == servicioCodigo));
             await context.SaveChangesAsync();
             return 1;
@@ -189,7 +192,7 @@ public class ConsultaService(CaresoftDbContext context) : IConsultaService
     {
         try
         {
-            context.Consulta.Where(e => e.ConsultaCodigo == consultaCodigo).First().IdAfeccions.Add(context.Afeccions.First(e => e.IdAfeccion == idAfeccion));
+            context.Consulta.First(e => e.ConsultaCodigo == consultaCodigo).IdAfeccions.Add(context.Afeccions.First(e => e.IdAfeccion == idAfeccion));
             return await context.SaveChangesAsync();
         }
         catch (Exception ex)
@@ -203,7 +206,7 @@ public class ConsultaService(CaresoftDbContext context) : IConsultaService
     {
         try
         {
-            Consultum consultum = context.Consulta.Where(e => e.ConsultaCodigo == consultaCodigo).First();
+            Consultum consultum = context.Consulta.Include(consultum => consultum.PrescripcionProductos).First(e => e.ConsultaCodigo == consultaCodigo);
             PrescripcionProducto? prescripcionProducto = consultum.PrescripcionProductos.FirstOrDefault(e => e.IdProducto == idProducto);
             if (prescripcionProducto == null)
             {
@@ -233,8 +236,7 @@ public class ConsultaService(CaresoftDbContext context) : IConsultaService
         try
         {
             context.Consulta
-                .Where(e => e.ConsultaCodigo == consultaCodigo)
-                .First()
+                .First(e => e.ConsultaCodigo == consultaCodigo)
                 .ServicioCodigos
                 .Add(context.Servicios.First(e => e.ServicioCodigo == servicioCodigo));
             return await context.SaveChangesAsync();

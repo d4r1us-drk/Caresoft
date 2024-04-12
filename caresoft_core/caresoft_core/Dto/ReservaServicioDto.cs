@@ -1,6 +1,6 @@
 namespace caresoft_core.Dto;
 
-public partial class ReservaServicioDto
+public class ReservaServicioDto
 {
     public uint? IdReserva { get; set; } = null!;
 

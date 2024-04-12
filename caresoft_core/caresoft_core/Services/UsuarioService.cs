@@ -84,7 +84,6 @@ public class UsuarioService : IUsuarioService
     {
         try
         {
-            
             usuario.DocumentoUsuarioNavigation = perfilUsuario;
             _dbContext.Usuarios.Update(usuario);
             _dbContext.PerfilUsuarios.Update(perfilUsuario);
@@ -190,6 +189,51 @@ public class UsuarioService : IUsuarioService
                 _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' not found.");
                 return 0;
             }
+        }
+        catch (Exception ex)
+        {
+            _logHandler.LogFatal("Something went wrong.", ex);
+            throw;
+        }
+    }
+
+    public async Task<CuentumDto?> GetCuentaByUsuarioCodigoOrDocumentoAsync(string codigoOdocumento)
+    {
+        try
+        {
+            // Check if the argument is a usuarioCodigo or documento
+            bool isUsuarioCodigo = await _dbContext.Usuarios.AnyAsync(u => u.UsuarioCodigo == codigoOdocumento);
+
+            Cuentum? cuenta;
+
+            if (isUsuarioCodigo) // Assuming usuarioCodigo is shorter than a documento
+            {
+                // If it's a usuarioCodigo, get the corresponding documento
+                var documento = await _dbContext.Usuarios
+                    .Where(u => u.UsuarioCodigo == codigoOdocumento)
+                    .Select(u => u.DocumentoUsuario)
+                    .FirstOrDefaultAsync();
+
+                // Find the corresponding cuenta using documento
+                cuenta = await _dbContext.Cuenta
+                    .Include(c => c.DocumentoUsuarioNavigation)
+                    .FirstOrDefaultAsync(c => c.DocumentoUsuarioNavigation.Documento == documento);
+            }
+            else
+            {
+                // If it's a documento, directly find the cuenta
+                cuenta = await _dbContext.Cuenta
+                    .Include(c => c.DocumentoUsuarioNavigation)
+                    .FirstOrDefaultAsync(c => c.DocumentoUsuario == codigoOdocumento);
+            }
+
+            if (cuenta != null)
+            {
+                return CuentumDto.FromModel(cuenta);
+            }
+
+            _logHandler.LogInfo($"Cuenta for user with code or document '{codigoOdocumento}' not found.");
+            return null;
         }
         catch (Exception ex)
         {

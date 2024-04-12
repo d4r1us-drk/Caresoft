@@ -1,6 +1,6 @@
 namespace caresoft_core.Dto;
 
-public partial class ProductoDto
+public class ProductoDto
 {
     public uint IdProducto { get; set; }
 

@@ -2,6 +2,8 @@ using caresoft_core.Models;
 using caresoft_core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
+namespace caresoft_core.Controllers;
+
 [ApiController]
 [Route("api/[controller]")]
 public class FacturaController : ControllerBase

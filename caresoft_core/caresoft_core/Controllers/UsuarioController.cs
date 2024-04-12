@@ -15,6 +15,7 @@ public class UsuarioController : ControllerBase
     {
         _usuarioService = usuarioService;
     }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosByIdAsync(string id)
     {
@@ -80,6 +81,27 @@ public class UsuarioController : ControllerBase
         {
             var result = await _usuarioService.DeleteUsuarioAsync(codigoOdocumento);
             return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
+
+    [HttpGet("cuenta")]
+    public async Task<ActionResult<CuentumDto>> GetCuentaByUsuarioCodigoOrDocumentoAsync([FromQuery] string codigoOdocumento)
+    {
+        try
+        {
+            var cuenta = await _usuarioService.GetCuentaByUsuarioCodigoOrDocumentoAsync(codigoOdocumento);
+            if (cuenta != null)
+            {
+                return Ok(cuenta);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
         catch (Exception ex)
         {

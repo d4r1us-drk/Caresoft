@@ -11,4 +11,5 @@ public interface IUsuarioService
     public Task<int> DeleteUsuarioAsync(string codigoOdocumento);
     public Task<int> ToggleUsuarioCuentaAsync(string codigoOdocumento);
     public Task<UsuarioDto?> GetUsuarioByIdAsync(string id);
+    public Task<CuentumDto?> GetCuentaByUsuarioCodigoOrDocumentoAsync(string codigoOdocumento);
 }

@@ -64,10 +64,8 @@ public class AutorizacionService : IAutorizacionService
             {
                 return 0;
             }
-            else
-            {
-                throw;
-            }
+
+            throw;
         }
 
     }
