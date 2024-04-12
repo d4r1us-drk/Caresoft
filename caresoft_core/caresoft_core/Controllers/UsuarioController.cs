@@ -15,18 +15,26 @@ namespace caresoft_core.Controllers
         {
             _usuarioService = usuarioService;
         }
-
-        [HttpGet("list")]
-        public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosListAsync(
-            [FromQuery] string? usuarioCodigo,
-            [FromQuery] string? documento,
-            [FromQuery] string? genero,
-            [FromQuery] DateTime? fechaNacimiento,
-            [FromQuery] string? rol)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosByIdAsync(string id)
         {
             try
             {
-                var usuarios = await _usuarioService.GetUsuariosListAsync(usuarioCodigo, documento, genero, fechaNacimiento, rol);
+                var usuario = await _usuarioService.GetUsuarioByIdAsync(id);
+                return Ok(usuario);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("list")]
+        public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosListAsync()
+        {
+            try
+            {
+                var usuarios = await _usuarioService.GetUsuariosListAsync();
                 return Ok(usuarios);
             }
             catch (Exception ex)
@@ -36,30 +44,30 @@ namespace caresoft_core.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddUsuarioAsync(UsuarioDto usuarioDto)
-        {
-            try
-            {
-                usuarioDto.NumLicenciaMedica = usuarioDto.Rol == "M" || usuarioDto.Rol == "E" ? usuarioDto.NumLicenciaMedica : null;
-                var result = await _usuarioService.AddUsuarioAsync(usuarioDto);
+        public async Task<IActionResult> AddUsuarioAsync([FromBody] UsuarioDto usuarioDto) {
+            try { 
+            var usuario = Usuario.FromDto(usuarioDto);
+            var perfilUsuario = PerfilUsuario.FromDto(usuarioDto);
+
+            var result = await _usuarioService.AddUsuarioAsync(usuario, perfilUsuario);
                 return Ok(result);
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
         [HttpPut("update")]
-        public async Task<ActionResult<int>> UpdateUsuarioAsync(UsuarioDto usuario)
-
+      
+        public async Task<ActionResult<int>> UpdateUsuarioAsync([FromBody] UsuarioDto usuarioDto)
         {
             try
             {
-                var result = await _usuarioService.UpdateUsuarioAsync(usuario);
+
+                Usuario usuario = Usuario.FromDto(usuarioDto);
+                PerfilUsuario perfilUsuario = PerfilUsuario.FromDto(usuarioDto);
+                var result = await _usuarioService.UpdateUsuarioAsync(usuario, perfilUsuario);
                 return Ok(result);
-            }
-            catch (Exception ex)
+            }catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
@@ -78,5 +86,7 @@ namespace caresoft_core.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+
     }
 }

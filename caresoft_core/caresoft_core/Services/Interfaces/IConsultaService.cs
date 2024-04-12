@@ -17,5 +17,5 @@ public interface IConsultaService
     Task<int> RelacionarAfeccion(string consultaCodigo, uint idAfeccion);
     Task<int> DesrelacionarAfeccion(string consultaCodigo, uint idAfeccion);
     Task<List<Afeccion>> ListarAfecciones(string consultaCodigo);
-    Task<List<ConsultaDto>> ListarConsultas(string? documentoPaciente, string? documentoMedico, DateTime? fechaInicio, DateTime? fechaFin);
+    Task<List<ConsultaDto>> ListarConsultas();
 }

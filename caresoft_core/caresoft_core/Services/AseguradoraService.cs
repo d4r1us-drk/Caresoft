@@ -1,13 +1,14 @@
 ﻿namespace caresoft_core.Services;
 
 using caresoft_core.Models;
+using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-public class AseguradoraService
+public class AseguradoraService : IAseguradoraService
 {
     private readonly CaresoftDbContext _context;
     private readonly LogHandler<AseguradoraService> _logHandler = new();
@@ -39,14 +40,11 @@ public class AseguradoraService
         }
     }
 
-    public async Task<bool> UpdateAseguradora(uint id, Aseguradora aseguradora)
+    public async Task<int> UpdateAseguradora(Aseguradora aseguradora)
     {
         try
         {
-            if (id != aseguradora.IdAseguradora)
-            {
-                return false;
-            }
+
 
             _context.Entry(aseguradora).State = EntityState.Modified;
 
@@ -56,9 +54,9 @@ public class AseguradoraService
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AseguradoraExists(id))
+                if (!AseguradoraExists(aseguradora.IdAseguradora))
                 {
-                    return false;
+                    return 0;
                 }
                 else
                 {
@@ -66,7 +64,7 @@ public class AseguradoraService
                 }
             }
 
-            return true;
+            return 1;
         }
         catch (Exception ex)
         {
@@ -75,14 +73,17 @@ public class AseguradoraService
         }
     }
 
-    public async Task<Aseguradora> CreateAseguradora(Aseguradora aseguradora)
+    public async Task<int> CreateAseguradora(Aseguradora aseguradora)
     {
         try
         {
+            if (this.AseguradoraExists(aseguradora.IdAseguradora))
+            {
+                return 0;
+            }
             _context.Aseguradoras.Add(aseguradora);
             await _context.SaveChangesAsync();
-
-            return aseguradora;
+            return 1;
         }
         catch (Exception ex)
         {
@@ -91,20 +92,20 @@ public class AseguradoraService
         }
     }
 
-    public async Task<bool> DeleteAseguradora(uint id)
+    public async Task<int> DeleteAseguradora(uint id)
     {
         try
         {
             var aseguradora = await _context.Aseguradoras.FindAsync(id);
             if (aseguradora == null)
             {
-                return false;
+                return 0;
             }
 
             _context.Aseguradoras.Remove(aseguradora);
             await _context.SaveChangesAsync();
 
-            return true;
+            return 1;
         }
         catch (Exception ex)
         {

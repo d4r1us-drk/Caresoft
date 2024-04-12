@@ -41,16 +41,15 @@ namespace caresoft_core
             {
                 options.UseMySQL(connectionString);
             });
-        
+
             // Pass the connection string to UsuarioService
-            services.AddScoped<IUsuarioService>(provider => new UsuarioService(
-                        provider.GetRequiredService<CaresoftDbContext>()));
-            services.AddScoped<IReservaServicioService>(provider => new ReservaServicioService(
-                        provider.GetRequiredService<CaresoftDbContext>()));
-            services.AddScoped<IConsultaService>(provider => new ConsultaService(
-            provider.GetRequiredService<CaresoftDbContext>()));
-            services.AddScoped<IProductoService>(provider => new ProductoService(
-            provider.GetRequiredService<CaresoftDbContext>()));
+            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IReservaServicioService, ReservaServicioService>();
+            services.AddScoped<IConsultaService, ConsultaService>();
+            services.AddScoped<IAseguradoraService, AseguradoraService>();
+            services.AddScoped<IIngresoService, IngresoService>();
+            services.AddScoped<IProductoService, ProductoService>();
+            services.AddScoped<IAutorizacionService, AutorizacionService>();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
         }
@@ -63,11 +62,11 @@ namespace caresoft_core
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            
+
             app.UseHttpsRedirection();
-            
+
             app.UseAuthorization();
-            
+
             app.MapControllers();
         }
     }

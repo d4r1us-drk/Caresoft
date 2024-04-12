@@ -8,16 +8,22 @@ using Microsoft.EntityFrameworkCore;
 using caresoft_core.Models;
 using caresoft_core.Services;
 using caresoft_core.Utils;
+using caresoft_core.Services.Interfaces;
 
 namespace caresoft_core.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AseguradoraController(AseguradoraService aseguradoraService) : ControllerBase
+    public class AseguradoraController : ControllerBase
     {
-        private readonly AseguradoraService _aseguradoraService = aseguradoraService;
+
+        private readonly IAseguradoraService _aseguradoraService;
         private readonly LogHandler<AseguradoraController> _logHandler = new();
 
+        public AseguradoraController(IAseguradoraService aseguradoraService)
+        {
+            _aseguradoraService = aseguradoraService;
+        }
         // GET: api/Aseguradora
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Aseguradora>>> GetAseguradoras()
@@ -66,9 +72,9 @@ namespace caresoft_core.Controllers
                     return BadRequest();
                 }
 
-                bool updated = await _aseguradoraService.UpdateAseguradora(id, aseguradora);
+                int updated = await _aseguradoraService.UpdateAseguradora(aseguradora);
 
-                if (!updated)
+                if (updated == 0)
                 {
                     return NotFound();
                 }
@@ -88,9 +94,12 @@ namespace caresoft_core.Controllers
         {
             try
             {
-                Aseguradora newAseguradora = await _aseguradoraService.CreateAseguradora(aseguradora);
-
-                return CreatedAtAction("GetAseguradora", new { id = newAseguradora.IdAseguradora }, newAseguradora);
+                int newAseguradora = await _aseguradoraService.CreateAseguradora(aseguradora);
+                if(newAseguradora == 0)
+                {
+                    return Conflict();
+                }
+                return CreatedAtAction("GetAseguradora", new { id = aseguradora.IdAseguradora }, aseguradora);
             } catch (Exception ex)
             {
                 _logHandler.LogFatal("Error al crear la aseguradora", ex);
@@ -112,9 +121,9 @@ namespace caresoft_core.Controllers
                     return NotFound();
                 }
 
-                bool deleted = await _aseguradoraService.DeleteAseguradora(id);
+                int deleted = await _aseguradoraService.DeleteAseguradora(id);
 
-                if (deleted)
+                if (deleted == 1)
                 {
                     return Ok();
                 }

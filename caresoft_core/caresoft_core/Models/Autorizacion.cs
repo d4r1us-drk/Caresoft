@@ -1,4 +1,6 @@
-﻿namespace caresoft_core.Models;
+﻿using caresoft_core.Dto;
+
+namespace caresoft_core.Models;
 
 public partial class Autorizacion
 {
@@ -19,4 +21,15 @@ public partial class Autorizacion
     public virtual Aseguradora IdAseguradoraNavigation { get; set; } = null!;
 
     public virtual ICollection<Ingreso> Ingresos { get; set; } = new List<Ingreso>();
+
+    public static Autorizacion FromDto(AutorizacionDto autorizacionDto)
+    {
+        return new Autorizacion
+        {
+            IdAutorizacion = autorizacionDto.IdAutorizacion,
+            IdAseguradora = autorizacionDto.IdAseguradora,
+            Fecha = autorizacionDto.Fecha,
+            MontoAsegurado = autorizacionDto.MontoAsegurado
+        };
+    }
 }

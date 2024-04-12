@@ -67,11 +67,11 @@ namespace caresoft_core.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> ListarConsultas([FromQuery]string? documentoPaciente, [FromQuery] string? documentoMedico, [FromQuery] DateTime? fechaInicio, [FromQuery] DateTime? fechaFin)
+        public async Task<IActionResult> ListarConsultas()
         {
             try
             {
-                List<ConsultaDto> result = await _consultaService.ListarConsultas(documentoPaciente,documentoMedico,fechaInicio,fechaFin);
+                List<ConsultaDto> result = await _consultaService.ListarConsultas();
                 return Ok(result);
             }
             catch (Exception ex)

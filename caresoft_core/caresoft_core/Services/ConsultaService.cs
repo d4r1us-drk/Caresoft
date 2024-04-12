@@ -27,12 +27,13 @@ namespace caresoft_core.Services
                     result.Comentarios = consulta.Comentarios;
                     result.Costo = (uint)consulta.Costo;
                     result.Estado = consulta.Estado;
-                    return await _dbContext.SaveChangesAsync();
+                    await _dbContext.SaveChangesAsync();
+                    return 1;
             }
             catch (Exception ex)
             {
-                _logHandler.LogError("Error al actualizar consulta", ex);
-                return 0;
+                    _logHandler.LogError("Error al actualizar consulta", ex);
+                    return 0;
             }
         }
 
@@ -42,12 +43,13 @@ namespace caresoft_core.Services
             {
                 Consulta consulta = Consulta.FromDto(newConsulta);
                 await _dbContext.Consultas.AddAsync(consulta);
-                return await _dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
+                return 1;
             }
             catch (Exception ex)
             {
                 _logHandler.LogError("Error al crear consulta", ex);
-                return 0;
+                return 0 ;
             }
         }
 
@@ -57,7 +59,8 @@ namespace caresoft_core.Services
             {
                 Consulta result = await _dbContext.Consultas.Where(e => e.ConsultaCodigo == consultaCodigo).FirstAsync();
                 result.IdAfeccions.Remove(result.IdAfeccions.First(e => e.IdAfeccion == idAfeccion));
-                return await _dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
+                return 1;
             }
             catch (Exception ex)
             {
@@ -79,7 +82,8 @@ namespace caresoft_core.Services
                 {
                     result.PrescripcionProductos.First(e => e.IdProducto == idProducto).Cantidad -= cantidad;
                 }
-                return await _dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
+                return 1;
             }
             catch (Exception ex)
             {
@@ -94,7 +98,8 @@ namespace caresoft_core.Services
             {
                 Consulta result = await _dbContext.Consultas.Where(e => e.ConsultaCodigo == consultaCodigo).FirstAsync();
                 result.ServicioCodigos.Remove(result.ServicioCodigos.First(e => e.ServicioCodigo == servicioCodigo));
-                return await _dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
+                return 1;
             }
             catch (Exception ex)
             {
@@ -108,7 +113,8 @@ namespace caresoft_core.Services
             try
             {
                 _dbContext.Consultas.Remove(_dbContext.Consultas.First(e => e.ConsultaCodigo == consultaCodigo));
-                return await _dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
+                return 1;
             }
             catch (Exception ex)
             {
@@ -131,28 +137,11 @@ namespace caresoft_core.Services
             }
         }
 
-        public async Task<List<ConsultaDto>> ListarConsultas(string? documentoPaciente, string? documentoMedico, DateTime? fechaInicio, DateTime? fechaFin)
+        public async Task<List<ConsultaDto>> ListarConsultas()
         {
             try
             {
-                IQueryable<Consulta> query = _dbContext.Consultas;
-                if (documentoPaciente != null)
-                {
-                    query = query.Where(e => e.DocumentoPaciente == documentoPaciente);
-                }
-                if (documentoMedico != null)
-                {
-                    query = query.Where(e => e.DocumentoMedico == documentoMedico);
-                }
-                if (fechaInicio != null)
-                {
-                    query = query.Where(e => e.Fecha >= fechaInicio);
-                }
-                if (fechaFin != null)
-                {
-                    query = query.Where(e => e.Fecha <= fechaFin);
-                }
-                return (await query.ToListAsync()).Select(e => ConsultaDto.FromModel(e)).ToList();
+                return (await _dbContext.Consultas.ToListAsync()).Select(e => ConsultaDto.FromModel(e)).ToList();
             }
             catch (Exception ex)
             {
