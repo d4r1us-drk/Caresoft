@@ -131,7 +131,7 @@ CREATE TABLE Consulta(
     motivo              NVARCHAR(255)   NOT NULL,
     comentarios         TEXT            NULL,
     estado              ENUM('P', 'R')  NOT NULL DEFAULT 'P',
-    costo               DECIMAL(8,2)    NOT NULL,
+    costo               DECIMAL(10,2)    NOT NULL,
     FOREIGN KEY (documentoPaciente) REFERENCES PerfilUsuario(documento)     ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (documentoMedico)   REFERENCES PerfilUsuario(documento)     ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (idConsultorio)     REFERENCES Consultorio(idConsultorio)   ON DELETE CASCADE,
