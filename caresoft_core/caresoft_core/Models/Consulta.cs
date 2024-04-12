@@ -1,5 +1,8 @@
-﻿namespace caresoft_core.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace caresoft_core.Models;
+
+[Table("Consulta")]
 public partial class Consulta
 {
     public string ConsultaCodigo { get; set; } = null!;

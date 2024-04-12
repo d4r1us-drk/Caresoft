@@ -18,34 +18,11 @@ namespace caresoft_core.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearConsulta(
-                [FromQuery] string ConsultaCodigo,
-                [FromQuery] string DocumentoPaciente,
-                [FromQuery] string DocumentoMedico,
-                [FromQuery] uint IdConsultorio,
-                [FromQuery] uint IdAutorizacion,
-                [FromQuery] DateTime Fecha,
-                [FromQuery] string Motivo,
-                [FromQuery] string? Comentarios,
-                [FromQuery] string Estado,
-                [FromQuery] decimal Costo
-            )
+        public async Task<IActionResult> CrearConsulta([FromQuery] ConsultaDto consulta)
         {
             try
             {
-                Consulta consulta = new Consulta
-                {
-                    ConsultaCodigo = ConsultaCodigo,
-                    DocumentoPaciente = DocumentoPaciente,
-                    DocumentoMedico = DocumentoMedico,
-                    IdConsultorio = IdConsultorio,
-                    IdAutorizacion = IdAutorizacion,
-                    Fecha = Fecha,
-                    Motivo = Motivo,
-                    Comentarios = Comentarios,
-                    Estado = Estado,
-                    Costo = Costo
-                };
+
                 int result = await _consultaService.CrearConsulta(consulta);
                 return Ok(result);
 
