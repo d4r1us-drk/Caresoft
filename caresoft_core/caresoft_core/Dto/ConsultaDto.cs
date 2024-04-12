@@ -24,20 +24,20 @@ public class ConsultaDto
 
     public decimal Costo { get; set; }
 
-    static public ConsultaDto FromModel(Consulta consulta)
+    static public ConsultaDto FromModel(Consultum consultum)
     {
         return new ConsultaDto
         {
-            ConsultaCodigo = consulta.ConsultaCodigo,
-            DocumentoPaciente = consulta.DocumentoPaciente,
-            DocumentoMedico = consulta.DocumentoMedico,
-            IdConsultorio = consulta.IdConsultorio,
-            IdAutorizacion = consulta.IdAutorizacion,
-            Fecha = consulta.Fecha,
-            Motivo = consulta.Motivo,
-            Comentarios = consulta.Comentarios,
-            Estado = consulta.Estado,
-            Costo = consulta.Costo
+            ConsultaCodigo = consultum.ConsultaCodigo,
+            DocumentoPaciente = consultum.DocumentoPaciente,
+            DocumentoMedico = consultum.DocumentoMedico,
+            IdConsultorio = consultum.IdConsultorio,
+            IdAutorizacion = consultum.IdAutorizacion,
+            Fecha = consultum.Fecha,
+            Motivo = consultum.Motivo,
+            Comentarios = consultum.Comentarios,
+            Estado = consultum.Estado,
+            Costo = consultum.Costo
         };
     }
 

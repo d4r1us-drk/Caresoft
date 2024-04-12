@@ -26,11 +26,11 @@ public partial class PerfilUsuario
 
     public string Rol { get; set; } = null!;
 
-    public virtual ICollection<Consulta> ConsultaDocumentoMedicoNavigations { get; set; } = new List<Consulta>();
+    public virtual ICollection<Consultum> ConsultumDocumentoMedicoNavigations { get; set; } = new List<Consultum>();
 
-    public virtual ICollection<Consulta> ConsultaDocumentoPacienteNavigations { get; set; } = new List<Consulta>();
+    public virtual ICollection<Consultum> ConsultumDocumentoPacienteNavigations { get; set; } = new List<Consultum>();
 
-    public virtual Cuenta? Cuenta { get; set; }
+    public virtual Cuentum? Cuentum { get; set; }
 
     public virtual ICollection<Factura> Facturas { get; set; } = new List<Factura>();
 
@@ -63,6 +63,4 @@ public partial class PerfilUsuario
             Rol = usuarioDto.Rol
         };
     }
-
-
 }

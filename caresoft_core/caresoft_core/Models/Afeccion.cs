@@ -1,4 +1,7 @@
-﻿namespace caresoft_core.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace caresoft_core.Models;
 
 public partial class Afeccion
 {
@@ -8,7 +11,7 @@ public partial class Afeccion
 
     public string Descripcion { get; set; } = null!;
 
-    public virtual ICollection<Consulta> ConsultaCodigos { get; set; } = new List<Consulta>();
+    public virtual ICollection<Consultum> ConsultaCodigos { get; set; } = new List<Consultum>();
 
     public virtual ICollection<Ingreso> IdIngresos { get; set; } = new List<Ingreso>();
 }

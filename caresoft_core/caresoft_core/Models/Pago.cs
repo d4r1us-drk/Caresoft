@@ -1,4 +1,7 @@
-﻿namespace caresoft_core.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace caresoft_core.Models;
 
 public partial class Pago
 {
@@ -10,5 +13,5 @@ public partial class Pago
 
     public DateTime Fecha { get; set; }
 
-    public virtual Cuenta IdCuentaNavigation { get; set; } = null!;
+    public virtual Cuentum IdCuentaNavigation { get; set; } = null!;
 }

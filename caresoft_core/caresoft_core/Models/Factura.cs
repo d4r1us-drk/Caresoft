@@ -1,4 +1,7 @@
-﻿namespace caresoft_core.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace caresoft_core.Models;
 
 public partial class Factura
 {
@@ -20,7 +23,7 @@ public partial class Factura
 
     public DateTime Fecha { get; set; }
 
-    public virtual Consulta? ConsultaCodigoNavigation { get; set; }
+    public virtual Consultum? ConsultaCodigoNavigation { get; set; }
 
     public virtual PerfilUsuario DocumentoCajeroNavigation { get; set; } = null!;
 
@@ -28,7 +31,7 @@ public partial class Factura
 
     public virtual ICollection<FacturaServicio> FacturaServicios { get; set; } = new List<FacturaServicio>();
 
-    public virtual Cuenta IdCuentaNavigation { get; set; } = null!;
+    public virtual Cuentum IdCuentaNavigation { get; set; } = null!;
 
     public virtual Ingreso? IdIngresoNavigation { get; set; }
 

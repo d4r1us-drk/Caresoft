@@ -1,17 +1,17 @@
 using caresoft_core.Services;
 using caresoft_core.Services.Interfaces;
-using caresoft_core.Models;
+using caresoft_core.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace caresoft_core
 {
     public class Program
     {
-        public IConfiguration Configuration { get; }
+        private readonly IConfiguration _configuration;
 
         public Program(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
         public static void Main(string[] args)
@@ -31,18 +31,16 @@ namespace caresoft_core
 
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            // Get the connection string
             var connectionString = configuration.GetConnectionString("CaresoftDB");
 
             services.AddControllers();
 
-            // Configure DbContext
             services.AddDbContext<CaresoftDbContext>(options =>
             {
-                options.UseMySQL(connectionString);
+                if (connectionString != null) options.UseMySQL(connectionString);
+                else throw new ArgumentException("The connection string is null.");
             });
 
-            // Pass the connection string to UsuarioService
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IReservaServicioService, ReservaServicioService>();
             services.AddScoped<IConsultaService, ConsultaService>();

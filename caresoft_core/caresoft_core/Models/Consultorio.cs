@@ -1,4 +1,7 @@
-﻿namespace caresoft_core.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace caresoft_core.Models;
 
 public partial class Consultorio
 {
@@ -10,5 +13,5 @@ public partial class Consultorio
 
     public string Telefono { get; set; } = null!;
 
-    public virtual ICollection<Consulta> Consulta { get; set; } = new List<Consulta>();
+    public virtual ICollection<Consultum> Consulta { get; set; } = new List<Consultum>();
 }

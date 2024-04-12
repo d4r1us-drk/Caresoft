@@ -1,4 +1,7 @@
-﻿namespace caresoft_core.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace caresoft_core.Models;
 
 public partial class Aseguradora
 {

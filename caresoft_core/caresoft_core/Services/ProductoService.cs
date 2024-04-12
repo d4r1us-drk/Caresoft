@@ -1,130 +1,130 @@
 using caresoft_core.Models;
 using caresoft_core.Utils;
 using caresoft_core.Services.Interfaces;
+using caresoft_core.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace caresoft_core.Services
+namespace caresoft_core.Services;
+
+public class ProductoService(CaresoftDbContext dbContext) : IProductoService
 {
-    public class ProductoService(CaresoftDbContext dbContext) : IProductoService
+    private readonly LogHandler<ProductoService> _logHandler = new();
+
+    public async Task<List<Producto>> GetProductosAsync()
     {
-        private readonly LogHandler<ProductoService> _logHandler = new();
-
-        public async Task<List<Producto>> GetProductosAsync()
+        try
         {
-            try
-            {
-                return await dbContext.Productos.ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                _logHandler.LogError("Something went wrong", ex);
-                throw;
-            }
+            return await dbContext.Productos.ToListAsync();
         }
-
-        public async Task<int> AddProductoAsync(Producto producto)
+        catch (Exception ex)
         {
-            try
+            _logHandler.LogError("Something went wrong", ex);
+            throw;
+        }
+    }
+
+    public async Task<int> AddProductoAsync(Producto producto)
+    {
+        try
+        {
+            dbContext.Productos.Add(producto);
+            return await dbContext.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            _logHandler.LogError("Something went wrong", ex);
+            throw;
+        }
+    }
+
+    public async Task<int> UpdateProductoAsync(Producto producto)
+    {
+        try
+        {
+            dbContext.Productos.Update(producto);
+            return await dbContext.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            _logHandler.LogError("Something went wrong", ex);
+            throw;
+        }
+    }
+
+    public async Task<int> DeleteProductoAsync(uint idProducto)
+    {
+        try
+        {
+            var producto = await dbContext.Productos.FindAsync(idProducto);
+            if (producto != null)
             {
-                dbContext.Productos.Add(producto);
+                dbContext.Productos.Remove(producto);
                 return await dbContext.SaveChangesAsync();
             }
-            catch (Exception ex)
-            {
-                _logHandler.LogError("Something went wrong", ex);
-                throw;
-            }
+            return 0; // Return 0 if the product doesn't exist
         }
-
-        public async Task<int> UpdateProductoAsync(Producto producto)
+        catch (Exception ex)
         {
-            try
+            _logHandler.LogError("Something went wrong", ex);
+            throw;
+        }
+    }
+
+    public async Task<int> AddProductoProveedorAsync(uint idProducto, uint rncProveedor)
+    {
+        try
+        {
+            var producto = await dbContext.Productos.FindAsync(idProducto);
+            var proveedor = await dbContext.Proveedors.FindAsync(rncProveedor);
+            if (producto != null && proveedor != null)
             {
-                dbContext.Productos.Update(producto);
+                producto.RncProveedors.Add(proveedor);
                 return await dbContext.SaveChangesAsync();
             }
-            catch (Exception ex)
-            {
-                _logHandler.LogError("Something went wrong", ex);
-                throw;
-            }
+            return 0; // Return 0 if either the product or the provider doesn't exist
         }
-
-        public async Task<int> DeleteProductoAsync(uint idProducto)
+        catch (Exception ex)
         {
-            try
-            {
-                var producto = await dbContext.Productos.FindAsync(idProducto);
-                if (producto != null)
-                {
-                    dbContext.Productos.Remove(producto);
-                    return await dbContext.SaveChangesAsync();
-                }
-                return 0; // Return 0 if the product doesn't exist
-            }
-            catch (Exception ex)
-            {
-                _logHandler.LogError("Something went wrong", ex);
-                throw;
-            }
+            _logHandler.LogError("Something went wrong", ex);
+            throw;
         }
+    }
 
-        public async Task<int> AddProductoProveedorAsync(uint idProducto, uint rncProveedor)
+    public async Task<int> DeleteProductoProveedorAsync(uint idProducto, uint rncProveedor)
+    {
+        try
         {
-            try
+            var producto = await dbContext.Productos.FindAsync(idProducto);
+            var proveedor = await dbContext.Proveedors.FindAsync(rncProveedor);
+            if (producto != null && proveedor != null)
             {
-                var producto = await dbContext.Productos.FindAsync(idProducto);
-                var proveedor = await dbContext.Proveedors.FindAsync(rncProveedor);
-                if (producto != null && proveedor != null)
-                {
-                    producto.RncProveedors.Add(proveedor);
-                    return await dbContext.SaveChangesAsync();
-                }
-                return 0; // Return 0 if either the product or the provider doesn't exist
+                producto.RncProveedors.Remove(proveedor);
+                return await dbContext.SaveChangesAsync();
             }
-            catch (Exception ex)
-            {
-                _logHandler.LogError("Something went wrong", ex);
-                throw;
-            }
+            return 0; // Return 0 if either the product or the provider doesn't exist
         }
-
-        public async Task<int> DeleteProductoProveedorAsync(uint idProducto, uint rncProveedor)
+        catch (Exception ex)
         {
-            try
-            {
-                var producto = await dbContext.Productos.FindAsync(idProducto);
-                var proveedor = await dbContext.Proveedors.FindAsync(rncProveedor);
-                if (producto != null && proveedor != null)
-                {
-                    producto.RncProveedors.Remove(proveedor);
-                    return await dbContext.SaveChangesAsync();
-                }
-                return 0; // Return 0 if either the product or the provider doesn't exist
-            }
-            catch (Exception ex)
-            {
-                _logHandler.LogError("Something went wrong", ex);
-                throw;
-            }
+            _logHandler.LogError("Something went wrong", ex);
+            throw;
         }
+    }
 
-        public async Task<List<uint>> GetProductoProveedoresAsync(uint idProducto)
+    public async Task<List<uint>> GetProductoProveedoresAsync(uint idProducto)
+    {
+        try
         {
-            try
+            var producto = await dbContext.Productos.Include(p => p.RncProveedors).FirstOrDefaultAsync(p => p.IdProducto == idProducto);
+            if (producto != null)
             {
-                var producto = await dbContext.Productos.Include(p => p.RncProveedors).FirstOrDefaultAsync(p => p.IdProducto == idProducto);
-                if (producto != null)
-                {
-                    return producto.RncProveedors.Select(p => p.RncProveedor).ToList();
-                }
-                return new List<uint>();
+                return producto.RncProveedors.Select(p => p.RncProveedor).ToList();
             }
-            catch (Exception ex)
-            {
-                _logHandler.LogError("Something went wrong", ex);
-                throw;
-            }
+            return new List<uint>();
+        }
+        catch (Exception ex)
+        {
+            _logHandler.LogError("Something went wrong", ex);
+            throw;
         }
     }
 }
