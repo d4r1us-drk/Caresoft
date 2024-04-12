@@ -1,4 +1,5 @@
 using caresoft_core.Models;
+using caresoft_core.Dto;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -18,11 +19,11 @@ namespace caresoft_core.Controllers
         }
 
         [HttpGet("list")]
-        public async Task<ActionResult<List<Producto>>> GetProductosAsync([FromQuery] decimal? costo = null)
+        public async Task<ActionResult<List<Producto>>> GetProductosAsync()
         {
             try
             {
-                var productos = await _productoService.GetProductosAsync(costo);
+                var productos = await _productoService.GetProductosAsync();
                 return Ok(productos);
             }
             catch (Exception ex)
@@ -67,22 +68,17 @@ namespace caresoft_core.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<ActionResult> UpdateProductoAsync(
-            [FromQuery] uint idProducto,
-            [FromQuery] string nombre,
-            [FromQuery] string descripcion,
-            [FromQuery] decimal costo,
-            [FromQuery] uint loteDisponible)
+        public async Task<ActionResult> UpdateProductoAsync(ProductoDto productoDto)
         {
             try
             {
-                var producto = new ProductoDto
+                var producto = new Producto
                 {
-                    IdProducto = idProducto,
-                    Nombre = nombre,
-                    Descripcion = descripcion,
-                    Costo = costo,
-                    LoteDisponible = loteDisponible
+                    IdProducto = productoDto.IdProducto,
+                    Nombre = productoDto.Nombre,
+                    Descripcion = productoDto.Descripcion,
+                    Costo = productoDto.Costo,
+                    LoteDisponible = productoDto.LoteDisponible
                 };
 
                 var result = await _productoService.UpdateProductoAsync(producto);
