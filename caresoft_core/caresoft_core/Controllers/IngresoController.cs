@@ -1,4 +1,5 @@
 ﻿using caresoft_core.Dto;
+using caresoft_core.Models;
 using caresoft_core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -101,5 +102,27 @@ public class IngresoController : ControllerBase
         {
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
+    }
+
+    // Metodos con afecciones (relacion M:M)
+    [HttpPost("{idIngreso}/afecciones/{idAfeccion}")]
+    public async Task<IActionResult> AddIngresoAfeccion(uint idIngreso, uint idAfeccion)
+    {
+        var result = await _ingresoService.AddIngresoAfeccionAsync(idIngreso, idAfeccion);
+        return result == 1 ? Ok("Afección added successfully.") : NotFound("Ingreso or Afección not found.");
+    }
+
+    [HttpDelete("{idIngreso}/afecciones/{idAfeccion}")]
+    public async Task<IActionResult> RemoveIngresoAfeccion(uint idIngreso, uint idAfeccion)
+    {
+        var result = await _ingresoService.RemoveIngresoAfeccionAsync(idIngreso, idAfeccion);
+        return result == 1 ? Ok("Afección removed successfully.") : NotFound("Ingreso or Afección not found.");
+    }
+
+    [HttpGet("{idIngreso}/afecciones")]
+    public async Task<ActionResult<List<Afeccion>>> GetIngresoAfecciones(uint idIngreso)
+    {
+        var afecciones = await _ingresoService.GetIngresoAfeccionesAsync(idIngreso);
+        return Ok(afecciones);
     }
 }

@@ -7,10 +7,15 @@ using caresoft_core.Utils;
 
 namespace caresoft_core.Services;
 
-public class IngresoService(CaresoftDbContext dbContext) : IIngresoService
+public class IngresoService : IIngresoService
 {
-    private readonly LogHandler<IngresoService> _logHandler = new();
+    private readonly CaresoftDbContext _dbContext;
+    private readonly LogHandler<IngresoService> _logHandler = new LogHandler<IngresoService>();
 
+    public IngresoService(CaresoftDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
     public async Task<int> AddIngresoAsync(IngresoDto ingresoDto)
     {
         try
@@ -28,8 +33,8 @@ public class IngresoService(CaresoftDbContext dbContext) : IIngresoService
                 FechaAlta = ingresoDto.FechaAlta
             };
 
-            dbContext.Ingresos.Add(ingreso);
-            await dbContext.SaveChangesAsync();
+            _dbContext.Ingresos.Add(ingreso);
+            await _dbContext.SaveChangesAsync();
             _logHandler.LogInfo("Ingreso added successfully.");
             return 1;
         }
@@ -44,7 +49,7 @@ public class IngresoService(CaresoftDbContext dbContext) : IIngresoService
     {
         try
         {
-            var ingreso = await dbContext.Ingresos.FindAsync(ingresoDto.IdIngreso);
+            var ingreso = await _dbContext.Ingresos.FindAsync(ingresoDto.IdIngreso);
             if (ingreso == null)
             {
                 _logHandler.LogInfo("Ingreso not found.");
@@ -61,8 +66,8 @@ public class IngresoService(CaresoftDbContext dbContext) : IIngresoService
             ingreso.FechaIngreso = ingresoDto.FechaIngreso;
             ingreso.FechaAlta = ingresoDto.FechaAlta;
 
-            dbContext.Ingresos.Update(ingreso);
-            await dbContext.SaveChangesAsync();
+            _dbContext.Ingresos.Update(ingreso);
+            await _dbContext.SaveChangesAsync();
             _logHandler.LogInfo("Ingreso updated successfully.");
             return 1;
         }
@@ -77,15 +82,15 @@ public class IngresoService(CaresoftDbContext dbContext) : IIngresoService
     {
         try
         {
-            var ingreso = await dbContext.Ingresos.FindAsync(idIngreso);
+            var ingreso = await _dbContext.Ingresos.FindAsync(idIngreso);
             if (ingreso == null)
             {
                 _logHandler.LogInfo("Ingreso not found.");
                 return 0;
             }
 
-            dbContext.Ingresos.Remove(ingreso);
-            await dbContext.SaveChangesAsync();
+            _dbContext.Ingresos.Remove(ingreso);
+            await _dbContext.SaveChangesAsync();
             _logHandler.LogInfo("Ingreso deleted successfully.");
             return 1;
         }
@@ -100,7 +105,7 @@ public class IngresoService(CaresoftDbContext dbContext) : IIngresoService
     {
         try
         {
-            return await dbContext.Ingresos
+            return await _dbContext.Ingresos
                 .Select(ingreso => new IngresoDto
                 {
                     IdIngreso = ingreso.IdIngreso,
@@ -127,7 +132,7 @@ public class IngresoService(CaresoftDbContext dbContext) : IIngresoService
     {
         try
         {
-            return await dbContext.Ingresos
+            return await _dbContext.Ingresos
                 .Where(ingreso => ingreso.IdIngreso == idIngreso)
                 .Select(ingreso => new IngresoDto
                 {
@@ -149,5 +154,46 @@ public class IngresoService(CaresoftDbContext dbContext) : IIngresoService
             _logHandler.LogError("Failed to retrieve ingreso by ID.", ex);
             throw;
         }
+    }
+
+    public async Task<int> AddIngresoAfeccionAsync(uint idIngreso, uint idAfeccion)
+    {
+        var ingreso = await _dbContext.Ingresos
+            .Include(i => i.IdAfeccions)
+            .FirstOrDefaultAsync(i => i.IdIngreso == idIngreso);
+
+        if (ingreso == null) return 0;
+
+        var afeccion = await _dbContext.Afeccions.FindAsync(idAfeccion);
+        if (afeccion == null) return 0;
+
+        ingreso.IdAfeccions.Add(afeccion);
+        await _dbContext.SaveChangesAsync();
+        return 1;
+    }
+
+    public async Task<int> RemoveIngresoAfeccionAsync(uint idIngreso, uint idAfeccion)
+    {
+        var ingreso = await _dbContext.Ingresos
+            .Include(i => i.IdAfeccions)
+            .FirstOrDefaultAsync(i => i.IdIngreso == idIngreso);
+
+        if (ingreso == null) return 0;
+
+        var afeccion = ingreso.IdAfeccions.FirstOrDefault(a => a.IdAfeccion == idAfeccion);
+        if (afeccion == null) return 0;
+
+        ingreso.IdAfeccions.Remove(afeccion);
+        await _dbContext.SaveChangesAsync();
+        return 1;
+    }
+
+    public async Task<List<Afeccion>> GetIngresoAfeccionesAsync(uint idIngreso)
+    {
+        var ingreso = await _dbContext.Ingresos
+            .Include(i => i.IdAfeccions)
+            .FirstOrDefaultAsync(i => i.IdIngreso == idIngreso);
+
+        return ingreso?.IdAfeccions.ToList() ?? new List<Afeccion>();
     }
 }
