@@ -16,15 +16,15 @@ public class UsuarioService : IUsuarioService
     {
         _dbContext = dbContext;
     }
+
     public async Task<UsuarioDto?> GetUsuarioByIdAsync(string id)
     {
         try
         {
             var usuario = await _dbContext.Usuarios.Where(e => e.UsuarioCodigo == id).Include(e => e.DocumentoUsuarioNavigation).FirstOrDefaultAsync();
-            if (usuario == null)
-            {
-                return null;
-            }
+
+            if (usuario == null) return null;
+
             return UsuarioDto.FromModel(usuario);
         }
         catch (Exception ex)
@@ -38,7 +38,6 @@ public class UsuarioService : IUsuarioService
     {
         try
         {
-
             var usuarios = (await _dbContext.Usuarios.Include(e => e.DocumentoUsuarioNavigation).ToListAsync())
                 .Select(e => UsuarioDto.FromModel(e))
                 .ToList();
@@ -97,6 +96,55 @@ public class UsuarioService : IUsuarioService
         }
     }
 
+    public async Task<int> ToggleUsuarioCuentaAsync(string codigoOdocumento)
+    {
+        try
+        {
+            // Check if the argument is a usuarioCodigo or documento
+            bool isUsuarioCodigo = await _dbContext.Usuarios.AnyAsync(u => u.UsuarioCodigo == codigoOdocumento);
+
+            Cuentum? cuentaToUpdate;
+
+            if (isUsuarioCodigo) // Assuming usuarioCodigo is shorter than a documento
+            {
+                // If it's a usuarioCodigo, get the corresponding documento
+                var documento = await _dbContext.Usuarios
+                    .Where(u => u.UsuarioCodigo == codigoOdocumento)
+                    .Select(u => u.DocumentoUsuario)
+                    .FirstOrDefaultAsync();
+
+                // Find the corresponding cuenta using documento
+                cuentaToUpdate = await _dbContext.Cuenta
+                    .Include(c => c.DocumentoUsuarioNavigation)
+                    .FirstOrDefaultAsync(c => c.DocumentoUsuarioNavigation.Documento == documento);
+            }
+            else
+            {
+                // If it's a documento, directly find the cuenta
+                cuentaToUpdate = await _dbContext.Cuenta
+                    .Include(c => c.DocumentoUsuarioNavigation)
+                    .FirstOrDefaultAsync(c => c.DocumentoUsuario == codigoOdocumento);
+            }
+
+            if (cuentaToUpdate != null)
+            {
+                // Update the Estado attribute to "D"
+                cuentaToUpdate.Estado = "D";
+                _dbContext.Cuenta.Update(cuentaToUpdate);
+                await _dbContext.SaveChangesAsync();
+                _logHandler.LogInfo($"Estado attribute in Cuenta toggled successfully for {codigoOdocumento}.");
+                return 1;
+            }
+            _logHandler.LogInfo($"Cuenta for user with code or document '{codigoOdocumento}' not found.");
+            return 0;
+        }
+        catch (Exception ex)
+        {
+            _logHandler.LogFatal("Something went wrong.", ex);
+            throw;
+        }
+    }
+
     public async Task<int> DeleteUsuarioAsync(string codigoOdocumento)
     {
         try
@@ -121,11 +169,8 @@ public class UsuarioService : IUsuarioService
                     _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' was deleted.");
                     return 1;
                 }
-                else
-                {
-                    _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' not found.");
-                    return 0;
-                }
+                _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' not found.");
+                return 0;
             }
             else
             {
@@ -138,11 +183,8 @@ public class UsuarioService : IUsuarioService
                     _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' was deleted.");
                     return 1;
                 }
-                else
-                {
-                    _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' not found.");
-                    return 0;
-                }
+                _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' not found.");
+                return 0;
             }
         }
         catch (Exception ex)

@@ -22,7 +22,7 @@ public partial class CaresoftDbContext : DbContext
 
     public virtual DbSet<Consultum> Consulta { get; set; }
 
-    public virtual DbSet<Cuentum> Cuenta { get; set; }
+    public virtual DbSet<Cuentum?> Cuenta { get; set; }
 
     public virtual DbSet<Factura> Facturas { get; set; }
 
