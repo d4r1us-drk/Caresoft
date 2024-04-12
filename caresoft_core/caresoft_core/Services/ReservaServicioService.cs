@@ -1,4 +1,5 @@
 using caresoft_core.Models;
+using caresoft_core.Dto;
 using caresoft_core.Utils;
 using caresoft_core.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -15,43 +16,33 @@ namespace caresoft_core.Services
             _dbContext = dbContext;
         }
 
-        public async Task<List<ReservaServicio>> GetReservaServiciosListAsync(uint? idReserva, string? documentoPaciente, string? documentoMedico, string? servicioCodigo, DateTime? fechaReserva, string? estado)
+        public async Task<List<ReservaServicioDto>> GetReservaServiciosListAsync()
         {
             try
             {
-                var reservasQuery = _dbContext.ReservaServicios.AsQueryable();
-        
-                // Apply filters
-                if (idReserva.HasValue && idReserva.Value != 0)
-                    reservasQuery = reservasQuery.Where(r => r.IdReserva == idReserva.Value);
-        
-                if (!string.IsNullOrEmpty(documentoPaciente))
-                    reservasQuery = reservasQuery.Where(r => r.DocumentoPaciente == documentoPaciente);
-        
-                if (!string.IsNullOrEmpty(documentoMedico))
-                    reservasQuery = reservasQuery.Where(r => r.DocumentoMedico == documentoMedico);
-        
-                if (!string.IsNullOrEmpty(servicioCodigo))
-                    reservasQuery = reservasQuery.Where(r => r.ServicioCodigo == servicioCodigo);
-        
-                if (fechaReserva != null)
-                    reservasQuery = reservasQuery.Where(r => r.FechaReservada == fechaReserva);
-        
-                if (!string.IsNullOrEmpty(estado))
-                    reservasQuery = reservasQuery.Where(r => r.Estado == estado);
-        
-                var reservas = await reservasQuery.ToListAsync();
-                
+                var reservas = await _dbContext.ReservaServicios.ToListAsync();
+    
+                // Manually map ReservaServicio entities to ReservaServicioDto objects
+                var reservaDtoList = reservas.Select(r => new ReservaServicioDto
+                {
+                    IdReserva = r.IdReserva,
+                    DocumentoPaciente = r.DocumentoPaciente,
+                    DocumentoMedico = r.DocumentoMedico,
+                    ServicioCodigo = r.ServicioCodigo,
+                    FechaReservada = r.FechaReservada,
+                    Estado = r.Estado
+                }).ToList();
+    
                 _logHandler.LogInfo("Data retrieved successfully.");
-                return reservas;
+                return reservaDtoList;
             }
             catch (Exception ex)
             {
                 _logHandler.LogFatal("Something went wrong.", ex);
-                return new List<ReservaServicio>();
+                return new List<ReservaServicioDto>();
             }
         }
-
+    
         public async Task<int> AddReservaServicioAsync(ReservaServicio reserva)
         {
             try
@@ -68,43 +59,11 @@ namespace caresoft_core.Services
             }
         }
 
-        public async Task<int> UpdateReservaServicioAsync(ReservaServicioDto reserva)
+        public async Task<int> UpdateReservaServicioAsync(ReservaServicio reserva)
         {
             try
             {
-                var existingReserva = await _dbContext.ReservaServicios.FindAsync(reserva.IdReserva);
-                if (existingReserva == null)
-                {
-                    _logHandler.LogInfo($"ReservaServicio with ID {reserva.IdReserva} not found.");
-                    return 0;
-                }
-        
-                // Update only the properties that are not null
-                if (reserva.DocumentoPaciente != null)
-                {
-                    existingReserva.DocumentoPaciente = reserva.DocumentoPaciente;
-                }
-        
-                if (reserva.DocumentoMedico != null)
-                {
-                    existingReserva.DocumentoMedico = reserva.DocumentoMedico;
-                }
-        
-                if (reserva.ServicioCodigo != null)
-                {
-                    existingReserva.ServicioCodigo = reserva.ServicioCodigo;
-                }
-        
-                if (reserva.FechaReservada != null)
-                {
-                    existingReserva.FechaReservada = reserva.FechaReservada ?? DateTime.MinValue;
-                }
-        
-                if (reserva.Estado != null)
-                {
-                    existingReserva.Estado = reserva.Estado;
-                }
-        
+                _dbContext.ReservaServicios.Update(reserva);
                 return await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)

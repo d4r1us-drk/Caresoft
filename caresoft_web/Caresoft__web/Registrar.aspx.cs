@@ -7,11 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace Caresoft__web
 {
-    public partial class Cuenta1 : System.Web.UI.Page
+    public partial class Registrar : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Response.Redirect("~/Login.aspx");
+
         }
     }
 }

@@ -1,4 +1,5 @@
 using caresoft_core.Models;
+using caresoft_core.Dto;
 using caresoft_core.Utils;
 using caresoft_core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace caresoft_core.Controllers
         }
 
         [HttpGet("list")]
-        public async Task<ActionResult<List<ReservaServicio>>> GetReservaServiciosListAsync(
+        public async Task<ActionResult<List<ReservaServicioDto>>> GetReservaServiciosListAsync(
             [FromQuery] uint? idReserva = null,
             [FromQuery] string? documentoPaciente = null,
             [FromQuery] string? documentoMedico = null,

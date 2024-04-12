@@ -49,33 +49,11 @@ namespace caresoft_core.Services
             }
         }
 
-        public async Task<int> UpdateProductoAsync(ProductoDto producto)
+        public async Task<int> UpdateProductoAsync(Producto producto)
         {
             try
             {
-                var existingProduct = await _dbContext.Productos.FindAsync(producto.IdProducto);
-                if (existingProduct == null)
-                {
-                    _logHandler.LogInfo($"Producto with ID {producto.IdProducto} not found.");
-                    return 0;
-                }
-
-                if (producto.Nombre != null) {
-                    existingProduct.Nombre = producto.Nombre;
-                }
-
-                if (producto.Descripcion != null) {
-                    existingProduct.Descripcion = producto.Descripcion;
-                }
-
-                if (producto.Costo != null) {
-                    existingProduct.Costo = producto.Costo ?? decimal.One;
-                }
-
-                if (producto.LoteDisponible != null) {
-                    existingProduct.LoteDisponible = producto.LoteDisponible ?? uint.MinValue;
-                }
-
+                _dbContext.Productos.Update(producto);
                 return await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
