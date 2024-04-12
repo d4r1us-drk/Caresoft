@@ -70,10 +70,12 @@ namespace CajaHospital
                 return; 
             }
 
-            Main frmMain = new Main(nombre, documento);
-            frmMain.Show();
-            this.Hide();
-
+            using (Main frmMain = new Main(nombre, documento))
+            {
+                this.Hide(); // Se oculta la ventana actual
+                frmMain.ShowDialog(); // Se usa 'Show dialog' para que no se ejecute lo siguiente hasta que se cierre la ventana
+            }
+            this.Show(); // Se muestra de nuevo la ventana
         }
 
         private void Login_Load(object sender, EventArgs e)
