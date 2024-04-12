@@ -22,6 +22,10 @@ namespace Caresoft__web
             {
                 Response.Redirect(Request.RawUrl);
             }
+            else
+            {
+                Response.Redirect("/Cuenta");
+            }
         }
 
         protected void registrarse_Click(object sender, EventArgs e)

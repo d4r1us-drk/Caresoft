@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="Caresoft__web.Cuenta" %>
 
 <!DOCTYPE html>
-<link rel="stylesheet" href="css/Cuenta.css" type="text/css"
+<link rel="stylesheet" href="css/Login.css" type="text/css" />
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -21,8 +21,10 @@
              </div>
             <div class="button">
         <asp:Button ID="login" runat="server" Text="Iniciar Sesión" Width="200px" OnClick="login_Click"/>             
-        <asp:Button ID="registrarse" runat="server" Text="Registrarse" Width="200px" PostBackUrl="Registrar.aspx" />
              </div>
+            <div class="register">
+        <asp:Button ID="registrarse" runat="server" Text="Registrarse" Width="200px" PostBackUrl="Registrar.aspx" />
+            </div>
         </div>
     </form>
         </body>

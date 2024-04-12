@@ -1,7 +1,63 @@
 ﻿
-body {
+@font-face {
+    font-family: "BebasNeue";
+    src: url(../fonts/BebasNeue-Regular.ttf)
+}
+
+@font-face {
+    font-family: "Kanit";
+    src: url(../fonts/Kanit-Regular.ttf);
+}
+
+@font-face {
+    font-family: "PTSansNarrow";
+    src: url("../fonts/PTSansNarrow-Regular.ttf");
+}
+
+body{
+    background-color:rgb(148, 223, 230, .3);
 }
 
 h1{
+    font-family:Kanit;
     font-size:4rem;
+    text-align:center;
 }
+
+.cita{
+    display:block;
+    margin-top:50px;
+    font-family:BebasNeue;
+    
+}
+.descripcion {
+    display: flex;
+    align-items: center; 
+    font-family: PTSansNarrow;
+    font-size: 2.5rem;
+}
+
+   .descripcion img {
+        max-width: 300px;
+        margin-right: 20px; 
+    }
+
+    .descripcion .texto {
+        flex: 1; 
+    }
+
+    .descripcion .boton {
+        max-width: 500px;
+        margin-top: 10px;
+        cursor: pointer;
+        font-family: Kanit;
+        text-align:center;
+        font-size:25px;
+    }
+
+        .descripcion .boton input {
+            width: 100%;
+            background-color: rgb(120, 186, 230);
+            border: 3px solid rgb(0, 0, 0);
+            border-radius: 10px;
+        }
