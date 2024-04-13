@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using caresoft_core.Dto;
 
 namespace caresoft_core.Models;
 
-public partial class FacturaProducto
+public class FacturaProducto
 {
     public string FacturaCodigo { get; set; } = null!;
 
@@ -15,9 +14,21 @@ public partial class FacturaProducto
 
     public decimal Costo { get; set; }
 
-    public virtual Factura FacturaCodigoNavigation { get; set; } = null!;
+    public Factura FacturaCodigoNavigation { get; set; } = null!;
 
-    public virtual Autorizacion? IdAutorizacionNavigation { get; set; }
+    public Autorizacion? IdAutorizacionNavigation { get; set; }
 
-    public virtual Producto IdProductoNavigation { get; set; } = null!;
+    public Producto IdProductoNavigation { get; set; } = null!;
+
+    public static FacturaProducto FromDto(FacturaProductoDto facturaProductoDto)
+    {
+        return new FacturaProducto
+        {
+            FacturaCodigo = facturaProductoDto.FacturaCodigo,
+            IdProducto = facturaProductoDto.IdProducto,
+            IdAutorizacion = facturaProductoDto.IdAutorizacion,
+            Resultados = facturaProductoDto.Resultados,
+            Costo = facturaProductoDto.Costo
+        };
+    }
 }

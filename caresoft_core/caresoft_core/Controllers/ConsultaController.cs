@@ -28,7 +28,7 @@ public class ConsultaController(IConsultaService consultaService) : ControllerBa
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> ActualizarConsulta([FromQuery]ConsultaDto consultaDto)
+    public async Task<IActionResult> ActualizarConsulta([FromQuery] ConsultaDto consultaDto)
     {
         try
         {

@@ -1,18 +1,19 @@
 using caresoft_core.Models;
+using caresoft_core.Dto;
 
 namespace caresoft_core.Services.Interfaces;
 public interface IFacturaService
 {
-    Task<int> AddFacturaAsync(Factura factura);
-    Task<int> UpdateFacturaAsync(Factura factura);
+    Task<int> AddFacturaAsync(FacturaDto factura);
+    Task<int> UpdateFacturaAsync(FacturaDto factura);
     Task<int> DeleteFacturaAsync(string facturaCodigo);
-    Task<IEnumerable<Factura>> GetFacturasAsync();
-    Task<int> AddFacturaServicioAsync(FacturaServicio facturaServicio);
+    Task<IEnumerable<FacturaDto>> GetFacturasAsync();
+    Task<int> AddFacturaServicioAsync(FacturaServicioDto facturaServicio);
     Task<int> DeleteFacturaServicioAsync(string facturaCodigo, string servicioCodigo);
-    Task<IEnumerable<FacturaServicio>> GetFacturaServiciosAsync(string facturaCodigo);
-    Task<int> AddFacturaProductoAsync(FacturaProducto facturaProducto);
+    Task<IEnumerable<FacturaServicioDto>> GetFacturaServiciosAsync(string facturaCodigo);
+    Task<int> AddFacturaProductoAsync(FacturaProductoDto facturaProducto);
     Task<int> DeleteFacturaProductoAsync(string facturaCodigo, uint idProducto);
-    Task<IEnumerable<FacturaProducto>> GetFacturaProductosAsync(string facturaCodigo);
+    Task<IEnumerable<FacturaProductoDto>> GetFacturaProductosAsync(string facturaCodigo);
     Task<int> AddFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago);
     Task<int> DeleteFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago);
     Task<IEnumerable<MetodoPago>> GetMetodoPagosAsync(string facturaCodigo);

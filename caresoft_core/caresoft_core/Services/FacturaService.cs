@@ -1,4 +1,5 @@
 using caresoft_core.Models;
+using caresoft_core.Dto;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +11,11 @@ public class FacturaService(CaresoftDbContext dbContext) : IFacturaService
 {
     private readonly LogHandler<FacturaService> _logHandler = new();
 
-    public async Task<int> AddFacturaAsync(Factura factura)
+    public async Task<int> AddFacturaAsync(FacturaDto facturaDto)
     {
         try
         {
+            var factura = Factura.FromDto(facturaDto);
             dbContext.Facturas.Add(factura);
             return await dbContext.SaveChangesAsync();
         }
@@ -24,10 +26,11 @@ public class FacturaService(CaresoftDbContext dbContext) : IFacturaService
         }
     }
 
-    public async Task<int> UpdateFacturaAsync(Factura factura)
+    public async Task<int> UpdateFacturaAsync(FacturaDto facturaDto)
     {
         try
         {
+            var factura = Factura.FromDto(facturaDto);
             dbContext.Facturas.Update(factura);
             return await dbContext.SaveChangesAsync();
         }
@@ -57,11 +60,12 @@ public class FacturaService(CaresoftDbContext dbContext) : IFacturaService
         }
     }
 
-    public async Task<IEnumerable<Factura>> GetFacturasAsync()
+    public async Task<IEnumerable<FacturaDto>> GetFacturasAsync()
     {
         try
         {
-            return await dbContext.Facturas.ToListAsync();
+            var facturas = await dbContext.Facturas.ToListAsync();
+            return facturas.Select(FacturaDto.FromModel);
         }
         catch (Exception ex)
         {
@@ -70,10 +74,11 @@ public class FacturaService(CaresoftDbContext dbContext) : IFacturaService
         }
     }
 
-    public async Task<int> AddFacturaServicioAsync(FacturaServicio facturaServicio)
+    public async Task<int> AddFacturaServicioAsync(FacturaServicioDto facturaServicioDto)
     {
         try
         {
+            var facturaServicio = FacturaServicio.FromDto(facturaServicioDto);
             dbContext.FacturaServicios.Add(facturaServicio);
             return await dbContext.SaveChangesAsync();
         }
@@ -103,11 +108,15 @@ public class FacturaService(CaresoftDbContext dbContext) : IFacturaService
         }
     }
 
-    public async Task<IEnumerable<FacturaServicio>> GetFacturaServiciosAsync(string facturaCodigo)
+    public async Task<IEnumerable<FacturaServicioDto>> GetFacturaServiciosAsync(string facturaCodigo)
     {
         try
         {
-            return await dbContext.FacturaServicios.Where(fs => fs.FacturaCodigo == facturaCodigo).ToListAsync();
+            var facturaServicios = await dbContext.FacturaServicios
+                .Where(fs => fs.FacturaCodigo == facturaCodigo)
+                .ToListAsync();
+
+            return facturaServicios.Select(FacturaServicioDto.FromModel);
         }
         catch (Exception ex)
         {
@@ -116,10 +125,11 @@ public class FacturaService(CaresoftDbContext dbContext) : IFacturaService
         }
     }
 
-    public async Task<int> AddFacturaProductoAsync(FacturaProducto facturaProducto)
+    public async Task<int> AddFacturaProductoAsync(FacturaProductoDto facturaProductoDto)
     {
         try
         {
+            var facturaProducto = FacturaProducto.FromDto(facturaProductoDto);
             dbContext.FacturaProductos.Add(facturaProducto);
             return await dbContext.SaveChangesAsync();
         }
@@ -149,11 +159,15 @@ public class FacturaService(CaresoftDbContext dbContext) : IFacturaService
         }
     }
 
-    public async Task<IEnumerable<FacturaProducto>> GetFacturaProductosAsync(string facturaCodigo)
+    public async Task<IEnumerable<FacturaProductoDto>> GetFacturaProductosAsync(string facturaCodigo)
     {
         try
         {
-            return await dbContext.FacturaProductos.Where(fp => fp.FacturaCodigo == facturaCodigo).ToListAsync();
+            var facturaProductos = await dbContext.FacturaProductos
+                .Where(fp => fp.FacturaCodigo == facturaCodigo)
+                .ToListAsync();
+
+            return facturaProductos.Select(FacturaProductoDto.FromModel);
         }
         catch (Exception ex)
         {

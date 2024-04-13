@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using caresoft_core.Dto;
 
 namespace caresoft_core.Models;
 
-public partial class Factura
+public class Factura
 {
     public string FacturaCodigo { get; set; } = null!;
 
@@ -38,4 +37,20 @@ public partial class Factura
     public virtual Sucursal IdSucursalNavigation { get; set; } = null!;
 
     public virtual ICollection<MetodoPago> IdMetodoPagos { get; set; } = new List<MetodoPago>();
+
+    public static Factura FromDto(FacturaDto facturaDto)
+    {
+        return new Factura
+        {
+            FacturaCodigo = facturaDto.FacturaCodigo,
+            IdCuenta = facturaDto.IdCuenta,
+            ConsultaCodigo = facturaDto.ConsultaCodigo,
+            IdIngreso = facturaDto.IdIngreso,
+            IdSucursal = facturaDto.IdSucursal,
+            DocumentoCajero = facturaDto.DocumentoCajero,
+            MontoSubtotal = facturaDto.MontoSubtotal,
+            MontoTotal = facturaDto.MontoTotal,
+            Fecha = facturaDto.Fecha
+        };
+    }
 }

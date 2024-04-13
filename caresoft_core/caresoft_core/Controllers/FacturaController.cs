@@ -1,6 +1,7 @@
 using caresoft_core.Models;
 using caresoft_core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using caresoft_core.Dto;
 
 namespace caresoft_core.Controllers;
 
@@ -9,11 +10,11 @@ namespace caresoft_core.Controllers;
 public class FacturaController(IFacturaService facturaService) : ControllerBase
 {
     [HttpPost("add")]
-    public async Task<IActionResult> AddFacturaAsync([FromQuery] Factura factura)
+    public async Task<IActionResult> AddFacturaAsync([FromQuery] FacturaDto facturaDto)
     {
         try
         {
-            var affectedRows = await facturaService.AddFacturaAsync(factura);
+            var affectedRows = await facturaService.AddFacturaAsync(facturaDto);
             return Ok(affectedRows);
         }
         catch (Exception ex)
@@ -23,11 +24,11 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateFacturaAsync([FromQuery] Factura factura)
+    public async Task<IActionResult> UpdateFacturaAsync([FromQuery] FacturaDto facturaDto)
     {
         try
         {
-            var affectedRows = await facturaService.UpdateFacturaAsync(factura);
+            var affectedRows = await facturaService.UpdateFacturaAsync(facturaDto);
             return Ok(affectedRows);
         }
         catch (Exception ex)
@@ -65,11 +66,11 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
     }
 
     [HttpPost("addFacturaServicio")]
-    public async Task<IActionResult> AddFacturaServicioAsync([FromQuery] FacturaServicio facturaServicio)
+    public async Task<IActionResult> AddFacturaServicioAsync([FromQuery] FacturaServicioDto facturaServicioDto)
     {
         try
         {
-            var affectedRows = await facturaService.AddFacturaServicioAsync(facturaServicio);
+            var affectedRows = await facturaService.AddFacturaServicioAsync(facturaServicioDto);
             return Ok(affectedRows);
         }
         catch (Exception ex)
@@ -107,11 +108,11 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
     }
 
     [HttpPost("addFacturaProducto")]
-    public async Task<IActionResult> AddFacturaProductoAsync([FromQuery] FacturaProducto facturaProducto)
+    public async Task<IActionResult> AddFacturaProductoAsync([FromQuery] FacturaProductoDto facturaProductoDto)
     {
         try
         {
-            var affectedRows = await facturaService.AddFacturaProductoAsync(facturaProducto);
+            var affectedRows = await facturaService.AddFacturaProductoAsync(facturaProductoDto);
             return Ok(affectedRows);
         }
         catch (Exception ex)
@@ -120,8 +121,8 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
         }
     }
 
-    [HttpDelete("deleteFacturaProducto")]
-    public async Task<IActionResult> DeleteFacturaProductoAsync([FromQuery] string facturaCodigo, [FromQuery] uint idProducto)
+    [HttpDelete("deleteFacturaProducto/{facturaCodigo}/{idProducto}")]
+    public async Task<IActionResult> DeleteFacturaProductoAsync(string facturaCodigo, uint idProducto)
     {
         try
         {
@@ -134,8 +135,8 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
         }
     }
 
-    [HttpGet("getFacturaProductos")]
-    public async Task<IActionResult> GetFacturaProductosAsync([FromQuery] string facturaCodigo)
+    [HttpGet("getFacturaProductos/{facturaCodigo}")]
+    public async Task<IActionResult> GetFacturaProductosAsync(string facturaCodigo)
     {
         try
         {
@@ -148,8 +149,8 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
         }
     }
 
-    [HttpPost("addFacturaMetodoPago")]
-    public async Task<IActionResult> AddFacturaMetodoPagoAsync([FromQuery] string facturaCodigo, [FromQuery] uint idMetodoPago)
+    [HttpPost("addFacturaMetodoPago/{facturaCodigo}/{idMetodoPago}")]
+    public async Task<IActionResult> AddFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
     {
         try
         {
@@ -162,8 +163,8 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
         }
     }
 
-    [HttpDelete("deleteFacturaMetodoPago")]
-    public async Task<IActionResult> DeleteFacturaMetodoPagoAsync([FromQuery] string facturaCodigo, [FromQuery] uint idMetodoPago)
+    [HttpDelete("deleteFacturaMetodoPago/{facturaCodigo}/{idMetodoPago}")]
+    public async Task<IActionResult> DeleteFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
     {
         try
         {
@@ -176,8 +177,8 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
         }
     }
 
-    [HttpGet("getMetodoPagos")]
-    public async Task<IActionResult> GetMetodoPagosAsync([FromQuery] string facturaCodigo)
+    [HttpGet("getMetodoPagos/{facturaCodigo}")]
+    public async Task<IActionResult> GetMetodoPagosAsync(string facturaCodigo)
     {
         try
         {
