@@ -10,7 +10,7 @@ namespace caresoft_core.Services;
 public class IngresoService : IIngresoService
 {
     private readonly CaresoftDbContext _dbContext;
-    private readonly LogHandler<IngresoService> _logHandler = new LogHandler<IngresoService>();
+    private readonly LogHandler<IngresoService> _logHandler = new();
 
     public IngresoService(CaresoftDbContext dbContext)
     {
