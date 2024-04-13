@@ -44,6 +44,7 @@ namespace caresoft_core
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IReservaServicioService, ReservaServicioService>();
             services.AddScoped<IConsultaService, ConsultaService>();
+            services.AddScoped<IMetodoPagoService, MetodoPagoService>();
             services.AddScoped<IAseguradoraService, AseguradoraService>();
             services.AddScoped<IIngresoService, IngresoService>();
             services.AddScoped<IProductoService, ProductoService>();
