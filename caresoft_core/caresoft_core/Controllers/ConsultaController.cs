@@ -1,5 +1,4 @@
-﻿using caresoft_core.Models;
-using caresoft_core.Dto;
+﻿using caresoft_core.Dto;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -8,21 +7,16 @@ namespace caresoft_core.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ConsultaController : ControllerBase
+public class ConsultaController(IConsultaService consultaService) : ControllerBase
 {
-    private readonly IConsultaService _consultaService;
     private readonly LogHandler<ConsultaController> _logHandler = new();
-    public ConsultaController(IConsultaService consultaService)
-    {
-        _consultaService = consultaService;
-    }
 
     [HttpPost("add")]
     public async Task<IActionResult> CrearConsulta([FromQuery] ConsultaDto consulta)
     {
         try
         {
-            int result = await _consultaService.AddConsultaAsync(consulta);
+            var result = await consultaService.AddConsultaAsync(consulta);
             return Ok(result);
 
         }
@@ -38,7 +32,7 @@ public class ConsultaController : ControllerBase
     {
         try
         {
-            int result = await _consultaService.UpdateConsultaAsync(consultaDto);
+            var result = await consultaService.UpdateConsultaAsync(consultaDto);
             return Ok(result);
 
         }
@@ -54,7 +48,7 @@ public class ConsultaController : ControllerBase
     {
         try
         {
-            int result = await _consultaService.RemoveConsultaAsync(consultaCodigo);
+            var result = await consultaService.RemoveConsultaAsync(consultaCodigo);
             return Ok(result);
         }
         catch (Exception ex)
@@ -70,7 +64,7 @@ public class ConsultaController : ControllerBase
     {
         try
         {
-            List<ConsultaDto> result = await _consultaService.GetConsultasAsync();
+            var result = await consultaService.GetConsultasAsync();
             return Ok(result);
         }
         catch (Exception ex)
@@ -85,7 +79,7 @@ public class ConsultaController : ControllerBase
     {
         try
         {
-            int result = await _consultaService.AddConsultaServicioAsync(consultaCodigo, servicioCodigo);
+            var result = await consultaService.AddConsultaServicioAsync(consultaCodigo, servicioCodigo);
             return Ok(result);
 
         }
@@ -101,7 +95,7 @@ public class ConsultaController : ControllerBase
     {
         try
         {
-            int result = await _consultaService.RemoveConsultaServicioAsync(consultaCodigo, servicioCodigo);
+            var result = await consultaService.RemoveConsultaServicioAsync(consultaCodigo, servicioCodigo);
             return Ok(result);
         }
         catch (Exception ex)
@@ -116,7 +110,7 @@ public class ConsultaController : ControllerBase
     {
         try
         {
-            List<Servicio> result = await _consultaService.GetConsultaServiciosAsync(consultaCodigo);
+            var result = await consultaService.GetConsultaServiciosAsync(consultaCodigo);
             return Ok(result);
         }
         catch (Exception ex)
@@ -131,7 +125,7 @@ public class ConsultaController : ControllerBase
     {
         try
         {
-            int result = await _consultaService.AddConsultaProductoAsync(consultaCodigo, idProducto, cantidad);
+            var result = await consultaService.AddConsultaProductoAsync(consultaCodigo, idProducto, cantidad);
             return Ok(result);
         }
         catch (Exception ex)
@@ -146,7 +140,7 @@ public class ConsultaController : ControllerBase
     {
         try
         {
-            int result = await _consultaService.RemoveConsultaProductoAsync(consultaCodigo, idProducto, cantidad);
+            var result = await consultaService.RemoveConsultaProductoAsync(consultaCodigo, idProducto, cantidad);
             return Ok(result);
         }
         catch (Exception ex)
@@ -161,7 +155,7 @@ public class ConsultaController : ControllerBase
     {
         try
         {
-            List<ProductoDto> result = await _consultaService.GetConsultaProductosAsync(consultaCodigo);
+            var result = await consultaService.GetConsultaProductosAsync(consultaCodigo);
             return Ok(result);
         }
         catch (Exception ex)
@@ -169,6 +163,5 @@ public class ConsultaController : ControllerBase
             _logHandler.LogFatal("Error al listar productos", ex);
             return StatusCode(StatusCodes.Status500InternalServerError, "Error al listar productos");
         }
-
     }
 }

@@ -7,15 +7,8 @@ namespace caresoft_core.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class IngresoController : ControllerBase
+public class IngresoController(IIngresoService ingresoService) : ControllerBase
 {
-    private readonly IIngresoService _ingresoService;
-
-    public IngresoController(IIngresoService ingresoService)
-    {
-        _ingresoService = ingresoService;
-    }
-
     [HttpPost("add")]
     public async Task<IActionResult> AddIngreso([FromBody] IngresoDto ingresoDto)
     {
@@ -26,7 +19,7 @@ public class IngresoController : ControllerBase
 
         try
         {
-            var result = await _ingresoService.AddIngresoAsync(ingresoDto);
+            var result = await ingresoService.AddIngresoAsync(ingresoDto);
             if (result == 1)
                 return Ok("Ingreso added successfully.");
             return BadRequest("Failed to add ingreso.");
@@ -38,16 +31,11 @@ public class IngresoController : ControllerBase
     }
 
     [HttpPut("update/{id}")]
-    public async Task<IActionResult> UpdateIngreso(uint id, [FromBody] IngresoDto ingresoDto)
+    public async Task<IActionResult> UpdateIngreso([FromBody] IngresoDto ingresoDto)
     {
-        if (ingresoDto == null || id != ingresoDto.IdIngreso)
-        {
-            return BadRequest("Invalid data.");
-        }
-
         try
         {
-            var result = await _ingresoService.UpdateIngresoAsync(ingresoDto);
+            var result = await ingresoService.UpdateIngresoAsync(ingresoDto);
             if (result == 1)
                 return Ok("Ingreso updated successfully.");
             return NotFound("Ingreso not found.");
@@ -63,7 +51,7 @@ public class IngresoController : ControllerBase
     {
         try
         {
-            var result = await _ingresoService.DeleteIngresoAsync(id);
+            var result = await ingresoService.DeleteIngresoAsync(id);
             if (result == 1)
                 return Ok("Ingreso deleted successfully.");
             return NotFound("Ingreso not found.");
@@ -79,7 +67,7 @@ public class IngresoController : ControllerBase
     {
         try
         {
-            var ingresos = await _ingresoService.GetIngresosAsync();
+            var ingresos = await ingresoService.GetIngresosAsync();
             return Ok(ingresos);
         }
         catch (Exception ex)
@@ -93,7 +81,7 @@ public class IngresoController : ControllerBase
     {
         try
         {
-            var ingreso = await _ingresoService.GetIngresoByIdAsync(id);
+            var ingreso = await ingresoService.GetIngresoByIdAsync(id);
             if (ingreso != null)
                 return Ok(ingreso);
             return NotFound("Ingreso not found.");
@@ -108,21 +96,21 @@ public class IngresoController : ControllerBase
     [HttpPost("{idIngreso}/afecciones/{idAfeccion}")]
     public async Task<IActionResult> AddIngresoAfeccion(uint idIngreso, uint idAfeccion)
     {
-        var result = await _ingresoService.AddIngresoAfeccionAsync(idIngreso, idAfeccion);
+        var result = await ingresoService.AddIngresoAfeccionAsync(idIngreso, idAfeccion);
         return result == 1 ? Ok("Afección added successfully.") : NotFound("Ingreso or Afección not found.");
     }
 
     [HttpDelete("{idIngreso}/afecciones/{idAfeccion}")]
     public async Task<IActionResult> RemoveIngresoAfeccion(uint idIngreso, uint idAfeccion)
     {
-        var result = await _ingresoService.RemoveIngresoAfeccionAsync(idIngreso, idAfeccion);
+        var result = await ingresoService.RemoveIngresoAfeccionAsync(idIngreso, idAfeccion);
         return result == 1 ? Ok("Afección removed successfully.") : NotFound("Ingreso or Afección not found.");
     }
 
     [HttpGet("{idIngreso}/afecciones")]
     public async Task<ActionResult<List<Afeccion>>> GetIngresoAfecciones(uint idIngreso)
     {
-        var afecciones = await _ingresoService.GetIngresoAfeccionesAsync(idIngreso);
+        var afecciones = await ingresoService.GetIngresoAfeccionesAsync(idIngreso);
         return Ok(afecciones);
     }
 }

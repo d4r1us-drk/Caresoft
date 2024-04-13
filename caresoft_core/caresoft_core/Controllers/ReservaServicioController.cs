@@ -8,22 +8,16 @@ namespace caresoft_core.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ReservaServicioController : ControllerBase
+public class ReservaServicioController(IReservaServicioService reservaServicioService) : ControllerBase
 {
-    private readonly IReservaServicioService _reservaServicioService;
     private readonly LogHandler<ReservaServicioController> _logHandler = new();
-
-    public ReservaServicioController(IReservaServicioService reservaServicioService)
-    {
-        _reservaServicioService = reservaServicioService;
-    }
 
     [HttpGet("list")]
     public async Task<ActionResult<List<ReservaServicioDto>>> GetReservaServiciosListAsync()
     {
         try
         {
-            var reservas = await _reservaServicioService.GetReservaServiciosListAsync();
+            var reservas = await reservaServicioService.GetReservaServiciosListAsync();
 
             return Ok(reservas);
         }
@@ -39,12 +33,10 @@ public class ReservaServicioController : ControllerBase
     {
         try
         {
-            var result = await _reservaServicioService.AddReservaServicioAsync(reserva);
+            var result = await reservaServicioService.AddReservaServicioAsync(reserva);
 
             if (result == 1)
-            {
                 return Ok("Reserva servicio added successfully.");
-            }
 
             return StatusCode(500, "An error occurred while adding reserva servicio.");
         }
@@ -60,12 +52,10 @@ public class ReservaServicioController : ControllerBase
     {
         try
         {
-            var result = await _reservaServicioService.UpdateReservaServicioAsync(reserva);
+            var result = await reservaServicioService.UpdateReservaServicioAsync(reserva);
 
             if (result > 0)
-            {
                 return Ok("Reserva servicio updated successfully.");
-            }
 
             return StatusCode(500, "An error occurred while updating a reserva de servicio.");
         }
@@ -81,12 +71,10 @@ public class ReservaServicioController : ControllerBase
     {
         try
         {
-            var result = await _reservaServicioService.ToggleEstadoReservaServicioAsync(id);
+            var result = await reservaServicioService.ToggleEstadoReservaServicioAsync(id);
 
             if (result > 0)
-            {
                 return Ok("Reserva servicio state toggled successfully.");
-            }
 
             return StatusCode(500, $"An error occurred while toggling reserva servicio state. Reserva servicio with ID {id} not found.");
         }
@@ -102,12 +90,10 @@ public class ReservaServicioController : ControllerBase
     {
         try
         {
-            var result = await _reservaServicioService.DeleteReservaServicioAsync(id);
+            var result = await reservaServicioService.DeleteReservaServicioAsync(id);
 
             if (result > 0)
-            {
                 return Ok("Reserva servicio deleted successfully.");
-            }
 
             return StatusCode(500, $"An error occurred while deleting reserva servicio. Reserva servicio with ID {id} not found.");
         }

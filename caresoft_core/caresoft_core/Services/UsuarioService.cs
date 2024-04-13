@@ -7,21 +7,15 @@ using caresoft_core.Services.Interfaces;
 
 namespace caresoft_core.Services;
 
-public class UsuarioService : IUsuarioService
+public class UsuarioService(CaresoftDbContext dbContext) : IUsuarioService
 {
-    private readonly CaresoftDbContext _dbContext;
     private readonly LogHandler<UsuarioService> _logHandler = new();
-
-    public UsuarioService(CaresoftDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
 
     public async Task<UsuarioDto?> GetUsuarioByIdAsync(string id)
     {
         try
         {
-            var usuario = await _dbContext.Usuarios.Where(e => e.UsuarioCodigo == id).Include(e => e.DocumentoUsuarioNavigation).FirstOrDefaultAsync();
+            var usuario = await dbContext.Usuarios.Where(e => e.UsuarioCodigo == id).Include(e => e.DocumentoUsuarioNavigation).FirstOrDefaultAsync();
 
             if (usuario == null) return null;
 
@@ -38,7 +32,7 @@ public class UsuarioService : IUsuarioService
     {
         try
         {
-            var usuarios = (await _dbContext.Usuarios.Include(e => e.DocumentoUsuarioNavigation).ToListAsync())
+            var usuarios = (await dbContext.Usuarios.Include(e => e.DocumentoUsuarioNavigation).ToListAsync())
                 .Select(e => UsuarioDto.FromModel(e))
                 .ToList();
 
@@ -66,11 +60,11 @@ public class UsuarioService : IUsuarioService
                 Estado = "A"
             };
 
-            _dbContext.PerfilUsuarios.Add(perfilUsuario);
-            _dbContext.Usuarios.Add(usuario);
-            _dbContext.Cuenta.Add(cuenta);
+            dbContext.PerfilUsuarios.Add(perfilUsuario);
+            dbContext.Usuarios.Add(usuario);
+            dbContext.Cuenta.Add(cuenta);
 
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
 
             _logHandler.LogInfo($"User with code '{usuario.UsuarioCodigo}' and document '{perfilUsuario.Documento}' was created successfully.");
 
@@ -92,16 +86,16 @@ public class UsuarioService : IUsuarioService
             var perfilUsuario = PerfilUsuario.FromDto(usuarioDto);
 
             // Update the PerfilUsuario entity in the database
-            _dbContext.PerfilUsuarios.Update(perfilUsuario);
+            dbContext.PerfilUsuarios.Update(perfilUsuario);
 
             // Associate the updated perfilUsuario with the usuario
             usuario.DocumentoUsuarioNavigation = perfilUsuario;
 
             // Update the usuario entity in the database
-            _dbContext.Usuarios.Update(usuario);
+            dbContext.Usuarios.Update(usuario);
 
             // Save changes to the database
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
 
             // Return 1 to indicate successful update
             return 1;
@@ -120,27 +114,27 @@ public class UsuarioService : IUsuarioService
         try
         {
             // Check if the argument is a usuarioCodigo or documento
-            bool isUsuarioCodigo = await _dbContext.Usuarios.AnyAsync(u => u.UsuarioCodigo == codigoOdocumento);
+            bool isUsuarioCodigo = await dbContext.Usuarios.AnyAsync(u => u.UsuarioCodigo == codigoOdocumento);
 
             Cuentum? cuentaToUpdate;
 
             if (isUsuarioCodigo) // Assuming usuarioCodigo is shorter than a documento
             {
                 // If it's a usuarioCodigo, get the corresponding documento
-                var documento = await _dbContext.Usuarios
+                var documento = await dbContext.Usuarios
                     .Where(u => u.UsuarioCodigo == codigoOdocumento)
                     .Select(u => u.DocumentoUsuario)
                     .FirstOrDefaultAsync();
 
                 // Find the corresponding cuenta using documento
-                cuentaToUpdate = await _dbContext.Cuenta
+                cuentaToUpdate = await dbContext.Cuenta
                     .Include(c => c.DocumentoUsuarioNavigation)
                     .FirstOrDefaultAsync(c => c.DocumentoUsuarioNavigation.Documento == documento);
             }
             else
             {
                 // If it's a documento, directly find the cuenta
-                cuentaToUpdate = await _dbContext.Cuenta
+                cuentaToUpdate = await dbContext.Cuenta
                     .Include(c => c.DocumentoUsuarioNavigation)
                     .FirstOrDefaultAsync(c => c.DocumentoUsuario == codigoOdocumento);
             }
@@ -149,8 +143,8 @@ public class UsuarioService : IUsuarioService
             {
                 // Update the Estado attribute to "D"
                 cuentaToUpdate.Estado = "D";
-                _dbContext.Cuenta.Update(cuentaToUpdate);
-                await _dbContext.SaveChangesAsync();
+                dbContext.Cuenta.Update(cuentaToUpdate);
+                await dbContext.SaveChangesAsync();
                 _logHandler.LogInfo($"Estado attribute in Cuenta toggled successfully for {codigoOdocumento}.");
                 return 1;
             }
@@ -169,22 +163,22 @@ public class UsuarioService : IUsuarioService
         try
         {
             // Check if the argument is a usuarioCodigo or documento
-            bool isUsuarioCodigo = await _dbContext.Usuarios.AnyAsync(u => u.UsuarioCodigo == codigoOdocumento);
+            bool isUsuarioCodigo = await dbContext.Usuarios.AnyAsync(u => u.UsuarioCodigo == codigoOdocumento);
 
             if (isUsuarioCodigo)
             {
                 // If it's a usuarioCodigo, get the corresponding documento
-                string? documento = await _dbContext.Usuarios
+                string? documento = await dbContext.Usuarios
                     .Where(u => u.UsuarioCodigo == codigoOdocumento)
                     .Select(u => u.DocumentoUsuario)
                     .FirstOrDefaultAsync();
 
                 // Remove the perfilUsuario associated with the documento
-                var perfilUsuario = await _dbContext.PerfilUsuarios.FindAsync(documento);
+                var perfilUsuario = await dbContext.PerfilUsuarios.FindAsync(documento);
                 if (perfilUsuario != null)
                 {
-                    _dbContext.PerfilUsuarios.Remove(perfilUsuario);
-                    await _dbContext.SaveChangesAsync();
+                    dbContext.PerfilUsuarios.Remove(perfilUsuario);
+                    await dbContext.SaveChangesAsync();
                     _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' was deleted.");
                     return 1;
                 }
@@ -194,11 +188,11 @@ public class UsuarioService : IUsuarioService
             else
             {
                 // If it's a documento, directly remove the perfilUsuario
-                var perfilUsuario = await _dbContext.PerfilUsuarios.FindAsync(codigoOdocumento);
+                var perfilUsuario = await dbContext.PerfilUsuarios.FindAsync(codigoOdocumento);
                 if (perfilUsuario != null)
                 {
-                    _dbContext.PerfilUsuarios.Remove(perfilUsuario);
-                    await _dbContext.SaveChangesAsync();
+                    dbContext.PerfilUsuarios.Remove(perfilUsuario);
+                    await dbContext.SaveChangesAsync();
                     _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' was deleted.");
                     return 1;
                 }
@@ -218,27 +212,27 @@ public class UsuarioService : IUsuarioService
         try
         {
             // Check if the argument is a usuarioCodigo or documento
-            bool isUsuarioCodigo = await _dbContext.Usuarios.AnyAsync(u => u.UsuarioCodigo == codigoOdocumento);
+            bool isUsuarioCodigo = await dbContext.Usuarios.AnyAsync(u => u.UsuarioCodigo == codigoOdocumento);
 
             Cuentum? cuenta;
 
             if (isUsuarioCodigo) // Assuming usuarioCodigo is shorter than a documento
             {
                 // If it's a usuarioCodigo, get the corresponding documento
-                var documento = await _dbContext.Usuarios
+                var documento = await dbContext.Usuarios
                     .Where(u => u.UsuarioCodigo == codigoOdocumento)
                     .Select(u => u.DocumentoUsuario)
                     .FirstOrDefaultAsync();
 
                 // Find the corresponding cuenta using documento
-                cuenta = await _dbContext.Cuenta
+                cuenta = await dbContext.Cuenta
                     .Include(c => c.DocumentoUsuarioNavigation)
                     .FirstOrDefaultAsync(c => c.DocumentoUsuarioNavigation.Documento == documento);
             }
             else
             {
                 // If it's a documento, directly find the cuenta
-                cuenta = await _dbContext.Cuenta
+                cuenta = await dbContext.Cuenta
                     .Include(c => c.DocumentoUsuarioNavigation)
                     .FirstOrDefaultAsync(c => c.DocumentoUsuario == codigoOdocumento);
             }

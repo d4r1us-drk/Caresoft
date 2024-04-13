@@ -7,21 +7,14 @@ namespace caresoft_core.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UsuarioController : ControllerBase
+public class UsuarioController(IUsuarioService usuarioService) : ControllerBase
 {
-    private readonly IUsuarioService _usuarioService;
-
-    public UsuarioController(IUsuarioService usuarioService)
-    {
-        _usuarioService = usuarioService;
-    }
-
     [HttpGet("get/{codigoODocumento}")]
     public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosByIdAsync([FromQuery] string codigoODocumento)
     {
         try
         {
-            var usuario = await _usuarioService.GetUsuarioByIdAsync(codigoODocumento);
+            var usuario = await usuarioService.GetUsuarioByIdAsync(codigoODocumento);
             return Ok(usuario);
         }
         catch (Exception ex)
@@ -35,7 +28,7 @@ public class UsuarioController : ControllerBase
     {
         try
         {
-            var usuarios = await _usuarioService.GetUsuariosListAsync();
+            var usuarios = await usuarioService.GetUsuariosListAsync();
             return Ok(usuarios);
         }
         catch (Exception ex)
@@ -48,7 +41,7 @@ public class UsuarioController : ControllerBase
     public async Task<IActionResult> AddUsuarioAsync([FromQuery] UsuarioDto usuario) {
         try
         {
-            var result = await _usuarioService.AddUsuarioAsync(usuario);
+            var result = await usuarioService.AddUsuarioAsync(usuario);
             return Ok(result);
         } 
         catch (Exception ex)
@@ -58,11 +51,11 @@ public class UsuarioController : ControllerBase
     }
     [HttpPut("update")]
 
-    public async Task<ActionResult<int>> UpdateUsuarioAsync([FromQuery] UsuarioDto usuario)
+    public async Task<ActionResult<int>> UpdateUsuarioAsync([FromQuery] UsuarioDto? usuario)
     {
         try
         {
-            var result = await _usuarioService.UpdateUsuarioAsync(usuario);
+            var result = await usuarioService.UpdateUsuarioAsync(usuario);
             return Ok(result);
         }
         catch (Exception ex)
@@ -76,7 +69,7 @@ public class UsuarioController : ControllerBase
     {
         try
         {
-            var result = await _usuarioService.DeleteUsuarioAsync(codigoOdocumento);
+            var result = await usuarioService.DeleteUsuarioAsync(codigoOdocumento);
             return Ok(result);
         }
         catch (Exception ex)
@@ -90,7 +83,7 @@ public class UsuarioController : ControllerBase
     {
         try
         {
-            var cuenta = await _usuarioService.GetCuentaByUsuarioCodigoOrDocumentoAsync(codigoOdocumento);
+            var cuenta = await usuarioService.GetCuentaByUsuarioCodigoOrDocumentoAsync(codigoOdocumento);
             if (cuenta != null)
             {
                 return Ok(cuenta);
@@ -111,7 +104,7 @@ public class UsuarioController : ControllerBase
     {
         try
         {
-            var result = await _usuarioService.ToggleUsuarioCuentaAsync(codigoOdocumento);
+            var result = await usuarioService.ToggleUsuarioCuentaAsync(codigoOdocumento);
             return Ok(result);
         }
         catch (Exception ex)

@@ -6,23 +6,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace caresoft_core.Services;
 
-public class AutorizacionService : IAutorizacionService
+public class AutorizacionService(CaresoftDbContext dbContext) : IAutorizacionService
 {
-    private readonly CaresoftDbContext _dbContext;
     private readonly LogHandler<AutorizacionService> _logHandler = new();
-
-    public AutorizacionService(CaresoftDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
 
     public async Task<Autorizacion?> GetAutorizacionById(uint idAutorizacion)
     {
         try
         {
-            return await _dbContext.Autorizacions.FindAsync(idAutorizacion);
-
-        } catch(Exception ex)
+            return await dbContext.Autorizacions.FindAsync(idAutorizacion);
+        }
+        catch(Exception ex)
         {
             _logHandler.LogError("Error al obtener autorizacion", ex);
             throw;
@@ -30,31 +24,81 @@ public class AutorizacionService : IAutorizacionService
 
     }
 
-    public async Task<int> CrearAutorizacion(Autorizacion autorizacion)
+    public async Task<int> AddAutorizacion(Autorizacion autorizacion,
+        int? idIngreso,
+        string? consultaCodigo,
+        string? facturaCodigo,
+        string? servicioCodigo,
+        int? idProducto)
     {
         try
         {
-            if(AutorizacionExists(autorizacion.IdAutorizacion))
+            if (AutorizacionExists(autorizacion.IdAutorizacion))
+                throw new ArgumentException("La autorizacion existe");
+
+            dbContext.Autorizacions.Add(autorizacion);
+            await dbContext.SaveChangesAsync();
+
+            if (idIngreso != null)
             {
-                return 0;
+                var ingreso = await dbContext.Ingresos.FindAsync(idIngreso);
+
+                if (ingreso == null)
+                    throw new ArgumentException("El ingreso provisto no existe");
+
+                ingreso.IdAutorizacion = autorizacion.IdAutorizacion;
+                dbContext.Entry(ingreso).State = EntityState.Modified;
             }
-            _dbContext.Autorizacions.Add(autorizacion);
-            await _dbContext.SaveChangesAsync();
-            return 1;
-        } catch(Exception ex)
+
+            if (!string.IsNullOrEmpty(consultaCodigo))
+            {
+                var consulta = await dbContext.Consulta.SingleOrDefaultAsync(c => c.ConsultaCodigo == consultaCodigo);
+
+                if (consulta == null)
+                    throw new ArgumentException("La consulta provist no existe");
+
+                consulta.IdAutorizacion = autorizacion.IdAutorizacion;
+                dbContext.Entry(consulta).State = EntityState.Modified;
+            }
+
+            if (!string.IsNullOrEmpty(servicioCodigo) && !string.IsNullOrEmpty(facturaCodigo))
+            {
+                var facturaServicio = await dbContext.FacturaServicios.SingleOrDefaultAsync(fs => fs.ServicioCodigo == servicioCodigo && fs.FacturaCodigo == facturaCodigo);
+
+                if (facturaServicio == null)
+                    throw new ArgumentException("El servicio facturado provisto no existe");
+
+                facturaServicio.IdAutorizacion = autorizacion.IdAutorizacion;
+                dbContext.Entry(facturaServicio).State = EntityState.Modified;
+            }
+
+            if (idProducto != null && !string.IsNullOrEmpty(facturaCodigo))
+            {
+                var facturaProducto = await dbContext.FacturaProductos.SingleOrDefaultAsync(fp => fp.IdProducto == idProducto && fp.FacturaCodigo == facturaCodigo);
+
+                if (facturaProducto == null)
+                    throw new ArgumentException("El producto facturado provisto no existe");
+
+                facturaProducto.IdAutorizacion = autorizacion.IdAutorizacion;
+                dbContext.Entry(facturaProducto).State = EntityState.Modified;
+            }
+
+            return await dbContext.SaveChangesAsync();
+        }
+        catch (Exception ex)
         {
             _logHandler.LogError("Error al crear autorizacion", ex);
             throw;
         }
     }
 
-    public async Task<int> ActualizarAutorizacion(Autorizacion autorizacion)
+    public async Task<int> UpdateAutorizacionAsync(Autorizacion autorizacion)
     {
-        _dbContext.Entry(autorizacion).State = EntityState.Modified;
+        dbContext.Entry(autorizacion).State = EntityState.Modified;
 
         try
         {
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
             return 1;
         }
         catch (DbUpdateConcurrencyException)
@@ -63,26 +107,27 @@ public class AutorizacionService : IAutorizacionService
             {
                 return 0;
             }
-
             throw;
         }
 
     }
 
-    public async Task<int> EliminarAutorizacion(uint idAutorizacion)
+    public async Task<int> DeleteAutorizacionAsync(uint idAutorizacion)
     {
-        try {
-            var autorizacion = await _dbContext.Autorizacions.FindAsync(idAutorizacion);
+        try
+        {
+            var autorizacion = await dbContext.Autorizacions.FindAsync(idAutorizacion);
             if (autorizacion == null)
             {
                 return 0;
             }
 
-            _dbContext.Autorizacions.Remove(autorizacion);
-            await _dbContext.SaveChangesAsync();
+            dbContext.Autorizacions.Remove(autorizacion);
+            await dbContext.SaveChangesAsync();
 
             return 1;
-        } catch(Exception ex)
+        }
+        catch(Exception ex)
         {
             _logHandler.LogError("Error al eliminar autorizacion", ex);
             throw;
@@ -90,12 +135,13 @@ public class AutorizacionService : IAutorizacionService
 
     }
 
-    public async Task<List<Autorizacion>> ListarAutorizaciones()
+    public async Task<List<Autorizacion>> GetAutorizaciones()
     {
         try
         {
-            return await _dbContext.Autorizacions.ToListAsync();
-        } catch(Exception ex)
+            return await dbContext.Autorizacions.ToListAsync();
+        }
+        catch(Exception ex)
         {
             _logHandler.LogError("Error al listar autorizaciones", ex);
             throw;
@@ -104,6 +150,6 @@ public class AutorizacionService : IAutorizacionService
 
     private bool AutorizacionExists(uint id)
     {
-        return _dbContext.Autorizacions.Any(e => e.IdAutorizacion == id);
+        return dbContext.Autorizacions.Any(e => e.IdAutorizacion == id);
     }
 }

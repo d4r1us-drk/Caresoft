@@ -6,28 +6,14 @@ namespace caresoft_core.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class FacturaController : ControllerBase
+public class FacturaController(IFacturaService facturaService) : ControllerBase
 {
-    private readonly IFacturaService _facturaService;
-
-    public FacturaController(IFacturaService facturaService)
-    {
-        _facturaService = facturaService;
-    }
-
     [HttpPost("add")]
-    public async Task<IActionResult> AddFacturaAsync([FromQuery] string facturaCodigo, [FromQuery] DateTime fecha, [FromQuery] string documentoCajero)
+    public async Task<IActionResult> AddFacturaAsync([FromQuery] Factura factura)
     {
         try
         {
-            Factura factura = new Factura
-            {
-                FacturaCodigo = facturaCodigo,
-                Fecha = fecha,
-                DocumentoCajero = documentoCajero
-            };
-
-            int affectedRows = await _facturaService.AddFacturaAsync(factura);
+            var affectedRows = await facturaService.AddFacturaAsync(factura);
             return Ok(affectedRows);
         }
         catch (Exception ex)
@@ -37,18 +23,11 @@ public class FacturaController : ControllerBase
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateFacturaAsync([FromQuery] string facturaCodigo, [FromQuery] DateTime fecha, [FromQuery] string documentoCajero)
+    public async Task<IActionResult> UpdateFacturaAsync([FromQuery] Factura factura)
     {
         try
         {
-            Factura factura = new Factura
-            {
-                FacturaCodigo = facturaCodigo,
-                Fecha = fecha,
-                DocumentoCajero = documentoCajero
-            };
-
-            int affectedRows = await _facturaService.UpdateFacturaAsync(factura);
+            var affectedRows = await facturaService.UpdateFacturaAsync(factura);
             return Ok(affectedRows);
         }
         catch (Exception ex)
@@ -57,12 +36,12 @@ public class FacturaController : ControllerBase
         }
     }
 
-    [HttpDelete("delete")]
-    public async Task<IActionResult> DeleteFacturaAsync([FromQuery] string facturaCodigo)
+    [HttpDelete("delete/{facturaCodigo}")]
+    public async Task<IActionResult> DeleteFacturaAsync(string facturaCodigo)
     {
         try
         {
-            int affectedRows = await _facturaService.DeleteFacturaAsync(facturaCodigo);
+            var affectedRows = await facturaService.DeleteFacturaAsync(facturaCodigo);
             return Ok(affectedRows);
         }
         catch (Exception ex)
@@ -76,7 +55,7 @@ public class FacturaController : ControllerBase
     {
         try
         {
-            IEnumerable<Factura> facturas = await _facturaService.GetFacturasAsync();
+            var facturas = await facturaService.GetFacturasAsync();
             return Ok(facturas);
         }
         catch (Exception ex)
@@ -86,17 +65,11 @@ public class FacturaController : ControllerBase
     }
 
     [HttpPost("addFacturaServicio")]
-    public async Task<IActionResult> AddFacturaServicioAsync([FromQuery] string facturaCodigo, [FromQuery] string servicioCodigo)
+    public async Task<IActionResult> AddFacturaServicioAsync([FromQuery] FacturaServicio facturaServicio)
     {
         try
         {
-            FacturaServicio facturaServicio = new FacturaServicio
-            {
-                FacturaCodigo = facturaCodigo,
-                ServicioCodigo = servicioCodigo
-            };
-
-            int affectedRows = await _facturaService.AddFacturaServicioAsync(facturaServicio);
+            var affectedRows = await facturaService.AddFacturaServicioAsync(facturaServicio);
             return Ok(affectedRows);
         }
         catch (Exception ex)
@@ -105,12 +78,12 @@ public class FacturaController : ControllerBase
         }
     }
 
-    [HttpDelete("deleteFacturaServicio")]
-    public async Task<IActionResult> DeleteFacturaServicioAsync([FromQuery] string facturaCodigo, [FromQuery] string servicioCodigo)
+    [HttpDelete("deleteFacturaServicio/{facturaCodigo}/{servicioCodigo}")]
+    public async Task<IActionResult> DeleteFacturaServicioAsync(string facturaCodigo, string servicioCodigo)
     {
         try
         {
-            int affectedRows = await _facturaService.DeleteFacturaServicioAsync(facturaCodigo, servicioCodigo);
+            var affectedRows = await facturaService.DeleteFacturaServicioAsync(facturaCodigo, servicioCodigo);
             return Ok(affectedRows);
         }
         catch (Exception ex)
@@ -119,12 +92,12 @@ public class FacturaController : ControllerBase
         }
     }
 
-    [HttpGet("getFacturaServicios")]
-    public async Task<IActionResult> GetFacturaServiciosAsync([FromQuery] string facturaCodigo)
+    [HttpGet("getFacturaServicios/{facturaCodigo}")]
+    public async Task<IActionResult> GetFacturaServiciosAsync(string facturaCodigo)
     {
         try
         {
-            IEnumerable<FacturaServicio> facturaServicios = await _facturaService.GetFacturaServiciosAsync(facturaCodigo);
+            var facturaServicios = await facturaService.GetFacturaServiciosAsync(facturaCodigo);
             return Ok(facturaServicios);
         }
         catch (Exception ex)
@@ -134,17 +107,11 @@ public class FacturaController : ControllerBase
     }
 
     [HttpPost("addFacturaProducto")]
-    public async Task<IActionResult> AddFacturaProductoAsync([FromQuery] string facturaCodigo, [FromQuery] uint idProducto)
+    public async Task<IActionResult> AddFacturaProductoAsync([FromQuery] FacturaProducto facturaProducto)
     {
         try
         {
-            FacturaProducto facturaProducto = new FacturaProducto
-            {
-                FacturaCodigo = facturaCodigo,
-                IdProducto = idProducto
-            };
-
-            int affectedRows = await _facturaService.AddFacturaProductoAsync(facturaProducto);
+            var affectedRows = await facturaService.AddFacturaProductoAsync(facturaProducto);
             return Ok(affectedRows);
         }
         catch (Exception ex)
@@ -158,7 +125,7 @@ public class FacturaController : ControllerBase
     {
         try
         {
-            int affectedRows = await _facturaService.DeleteFacturaProductoAsync(facturaCodigo, idProducto);
+            var affectedRows = await facturaService.DeleteFacturaProductoAsync(facturaCodigo, idProducto);
             return Ok(affectedRows);
         }
         catch (Exception ex)
@@ -172,7 +139,7 @@ public class FacturaController : ControllerBase
     {
         try
         {
-            IEnumerable<FacturaProducto> facturaProductos = await _facturaService.GetFacturaProductosAsync(facturaCodigo);
+            var facturaProductos = await facturaService.GetFacturaProductosAsync(facturaCodigo);
             return Ok(facturaProductos);
         }
         catch (Exception ex)
@@ -186,7 +153,7 @@ public class FacturaController : ControllerBase
     {
         try
         {
-            int affectedRows = await _facturaService.AddFacturaMetodoPagoAsync(facturaCodigo, idMetodoPago);
+            var affectedRows = await facturaService.AddFacturaMetodoPagoAsync(facturaCodigo, idMetodoPago);
             return Ok(affectedRows);
         }
         catch (Exception ex)
@@ -200,7 +167,7 @@ public class FacturaController : ControllerBase
     {
         try
         {
-            int affectedRows = await _facturaService.DeleteFacturaMetodoPagoAsync(facturaCodigo, idMetodoPago);
+            var affectedRows = await facturaService.DeleteFacturaMetodoPagoAsync(facturaCodigo, idMetodoPago);
             return Ok(affectedRows);
         }
         catch (Exception ex)
@@ -214,7 +181,7 @@ public class FacturaController : ControllerBase
     {
         try
         {
-            IEnumerable<MetodoPago> metodoPagos = await _facturaService.GetMetodoPagosAsync(facturaCodigo);
+            var metodoPagos = await facturaService.GetMetodoPagosAsync(facturaCodigo);
             return Ok(metodoPagos);
         }
         catch (Exception ex)

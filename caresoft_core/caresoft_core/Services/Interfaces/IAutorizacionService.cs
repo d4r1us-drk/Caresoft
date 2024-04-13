@@ -5,9 +5,10 @@ namespace caresoft_core.Services.Interfaces
     public interface IAutorizacionService
     {
         Task<Autorizacion?> GetAutorizacionById(uint idAutorizacion);
-        Task<int> CrearAutorizacion(Autorizacion autorizacion);
-        Task<int> ActualizarAutorizacion(Autorizacion autorizacion);
-        Task<int> EliminarAutorizacion(uint idAutorizacion);
-        Task<List<Autorizacion>> ListarAutorizaciones();
+        Task<int> AddAutorizacion(Autorizacion autorizacion, int? idIngreso, string? consultaCodigo,
+            string? facturaCodigo, string? servicioCodigo, int? idProducto);
+        Task<int> UpdateAutorizacionAsync(Autorizacion autorizacion);
+        Task<int> DeleteAutorizacionAsync(uint idAutorizacion);
+        Task<List<Autorizacion>> GetAutorizaciones();
     }
 }

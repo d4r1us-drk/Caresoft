@@ -8,22 +8,16 @@ namespace caresoft_core.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductoController : ControllerBase
+public class ProductoController(IProductoService productoService) : ControllerBase
 {
-    private readonly IProductoService _productoService;
     private readonly LogHandler<ProductoController> _logHandler = new();
-
-    public ProductoController(IProductoService productoService)
-    {
-        _productoService = productoService;
-    }
 
     [HttpGet("list")]
     public async Task<ActionResult<List<ProductoDto>>> GetProductosAsync()
     {
         try
         {
-            var productos = await _productoService.GetProductosAsync();
+            var productos = await productoService.GetProductosAsync();
             return Ok(productos);
         }
         catch (Exception ex)
@@ -38,11 +32,9 @@ public class ProductoController : ControllerBase
     {
         try
         {
-            var result = await _productoService.AddProductoAsync(producto);
+            var result = await productoService.AddProductoAsync(producto);
             if (result > 0)
-            {
                 return Ok("Product added successfully.");
-            }
 
             return StatusCode(500, "An error occurred while adding product.");
         }
@@ -58,11 +50,9 @@ public class ProductoController : ControllerBase
     {
         try
         {
-            var result = await _productoService.UpdateProductoAsync(producto);
+            var result = await productoService.UpdateProductoAsync(producto);
             if (result > 0)
-            {
                 return Ok("Product updated successfully.");
-            }
 
             return StatusCode(500, "An error occurred while updating product.");
         }
@@ -78,11 +68,9 @@ public class ProductoController : ControllerBase
     {
         try
         {
-            var result = await _productoService.DeleteProductoAsync(idProducto);
+            var result = await productoService.DeleteProductoAsync(idProducto);
             if (result > 0)
-            {
                 return Ok("Product deleted successfully.");
-            }
 
             return StatusCode(500, $"An error occurred while deleting product with ID {idProducto}.");
         }
@@ -93,18 +81,14 @@ public class ProductoController : ControllerBase
         }
     }
 
-    [HttpPost("add-provider")]
-    public async Task<ActionResult> AddProductoProveedorAsync(
-        [FromQuery] uint idProducto,
-        [FromQuery] uint rncProveedor)
+    [HttpPost("add-provider/{idProducto}/{rncProveedor}")]
+    public async Task<ActionResult> AddProductoProveedorAsync(uint idProducto, uint rncProveedor)
     {
         try
         {
-            var result = await _productoService.AddProductoProveedorAsync(idProducto, rncProveedor);
+            var result = await productoService.AddProductoProveedorAsync(idProducto, rncProveedor);
             if (result > 0)
-            {
                 return Ok("Product provider added successfully.");
-            }
 
             return StatusCode(500, $"An error occurred while adding product provider with ID {rncProveedor} to product with ID {idProducto}.");
         }
@@ -115,18 +99,14 @@ public class ProductoController : ControllerBase
         }
     }
 
-    [HttpDelete("delete-provider")]
-    public async Task<ActionResult> DeleteProductoProveedorAsync(
-        [FromQuery] uint idProducto,
-        [FromQuery] uint rncProveedor)
+    [HttpDelete("delete-provider/{idProducto}/{rncProveedor}")]
+    public async Task<ActionResult> DeleteProductoProveedorAsync(uint idProducto, uint rncProveedor)
     {
         try
         {
-            var result = await _productoService.DeleteProductoProveedorAsync(idProducto, rncProveedor);
+            var result = await productoService.DeleteProductoProveedorAsync(idProducto, rncProveedor);
             if (result > 0)
-            {
                 return Ok("Product provider deleted successfully.");
-            }
 
             return StatusCode(500, $"An error occurred while deleting product provider with ID {rncProveedor} from product with ID {idProducto}.");
         }
@@ -142,7 +122,7 @@ public class ProductoController : ControllerBase
     {
         try
         {
-            var proveedores = await _productoService.GetProductoProveedoresAsync(idProducto);
+            var proveedores = await productoService.GetProductoProveedoresAsync(idProducto);
             return Ok(proveedores);
         }
         catch (Exception ex)

@@ -7,22 +7,14 @@ namespace caresoft_core.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AutorizacionController : ControllerBase
+public class AutorizacionController(IAutorizacionService autorizacionService) : ControllerBase
 {
-    private readonly IAutorizacionService _autorizacionService;
-
-    public AutorizacionController(IAutorizacionService autorizacionService)
-    {
-        _autorizacionService = autorizacionService;
-    }
-
-    // GET: api/Autorizacions
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AutorizacionDto>>> GetAutorizacions()
     {
         try
         {
-            return (await _autorizacionService.ListarAutorizaciones())
+            return (await autorizacionService.GetAutorizaciones())
                 .Select(s => AutorizacionDto.FromAutorizacion(s))
                 .ToList();
         } catch (Exception)
@@ -31,13 +23,12 @@ public class AutorizacionController : ControllerBase
         }
     }
 
-    // GET: api/Autorizacions/5
     [HttpGet("{id}")]
     public async Task<ActionResult<AutorizacionDto>> GetAutorizacion(uint id)
     {
         try
         {
-            var autorizacion = await _autorizacionService.GetAutorizacionById(id);
+            var autorizacion = await autorizacionService.GetAutorizacionById(id);
 
             if (autorizacion == null)
             {
@@ -52,8 +43,6 @@ public class AutorizacionController : ControllerBase
 
     }
 
-    // PUT: api/Autorizacions/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
     public async Task<IActionResult> PutAutorizacion(uint id, AutorizacionDto autorizacionDto)
     {
@@ -65,7 +54,7 @@ public class AutorizacionController : ControllerBase
         try
         {
             var autorizacion = Autorizacion.FromDto(autorizacionDto);
-            await _autorizacionService.ActualizarAutorizacion(autorizacion);
+            await autorizacionService.UpdateAutorizacionAsync(autorizacion);
             return Ok();
         } catch (Exception)
         {
@@ -74,45 +63,46 @@ public class AutorizacionController : ControllerBase
 
     }
 
-    // POST: api/Autorizacions
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Autorizacion>> PostAutorizacion(AutorizacionDto autorizacionDto)
+    public async Task<ActionResult<Autorizacion>> PostAutorizacion([FromQuery] AutorizacionDto autorizacionDto,
+        int? idIngreso,
+        string? consultaCodigo,
+        string? facturaCodigo,
+        string? servicioCodigo,
+        int? idProducto)
     {
         try
         {
-
             var autorizacion = Autorizacion.FromDto(autorizacionDto);
-            var result = await _autorizacionService.CrearAutorizacion(autorizacion);
+            var result = await autorizacionService.AddAutorizacion(autorizacion, idIngreso, consultaCodigo, facturaCodigo, servicioCodigo, idProducto);
             if(result == 0)
             {
                 return BadRequest();
             }
             return CreatedAtAction("GetAutorizacion", new { id = autorizacion.IdAutorizacion }, autorizacion);
-        } catch(Exception)
+        }
+        catch(Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, "Error al crear la autorizacion");
         }
     }
 
-    // DELETE: api/Autorizacions/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAutorizacion(uint id)
     {
         try
         {
-            var result = await _autorizacionService.EliminarAutorizacion(id);
+            var result = await autorizacionService.DeleteAutorizacionAsync(id);
             if(result == 0)
             {
                 return NotFound();
             }
             return Ok();
-        } catch (Exception)
+        }
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, "Error al eliminar la autorizacion");
         }
 
     }
-
-
 }
