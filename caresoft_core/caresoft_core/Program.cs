@@ -48,6 +48,7 @@ namespace caresoft_core
             services.AddScoped<ISalaService, SalaService>();
             services.AddScoped<ITipoServicioService, TipoServicioService>();
             services.AddScoped<IAseguradoraService, AseguradoraService>();
+            services.AddScoped<IServicioService, ServicioService>();
             services.AddScoped<IIngresoService, IngresoService>();
             services.AddScoped<IProductoService, ProductoService>();
             services.AddScoped<IAutorizacionService, AutorizacionService>();
