@@ -8,19 +8,19 @@ namespace caresoft_core.Services;
 
 public class AutorizacionService : IAutorizacionService
 {
-    private readonly CaresoftDbContext _context;
+    private readonly CaresoftDbContext _dbContext;
     private readonly LogHandler<AutorizacionService> _logHandler = new();
 
-    public AutorizacionService(CaresoftDbContext context)
+    public AutorizacionService(CaresoftDbContext dbContext)
     {
-        _context = context;
+        _dbContext = dbContext;
     }
 
     public async Task<Autorizacion?> GetAutorizacionById(uint idAutorizacion)
     {
         try
         {
-            return await _context.Autorizacions.FindAsync(idAutorizacion);
+            return await _dbContext.Autorizacions.FindAsync(idAutorizacion);
 
         } catch(Exception ex)
         {
@@ -34,12 +34,12 @@ public class AutorizacionService : IAutorizacionService
     {
         try
         {
-            if(this.AutorizacionExists(autorizacion.IdAutorizacion))
+            if(AutorizacionExists(autorizacion.IdAutorizacion))
             {
                 return 0;
             }
-            _context.Autorizacions.Add(autorizacion);
-            await _context.SaveChangesAsync();
+            _dbContext.Autorizacions.Add(autorizacion);
+            await _dbContext.SaveChangesAsync();
             return 1;
         } catch(Exception ex)
         {
@@ -50,12 +50,11 @@ public class AutorizacionService : IAutorizacionService
 
     public async Task<int> ActualizarAutorizacion(Autorizacion autorizacion)
     {
-
-        _context.Entry(autorizacion).State = EntityState.Modified;
+        _dbContext.Entry(autorizacion).State = EntityState.Modified;
 
         try
         {
-            await _context.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
             return 1;
         }
         catch (DbUpdateConcurrencyException)
@@ -73,14 +72,14 @@ public class AutorizacionService : IAutorizacionService
     public async Task<int> EliminarAutorizacion(uint idAutorizacion)
     {
         try {
-            var autorizacion = await _context.Autorizacions.FindAsync(idAutorizacion);
+            var autorizacion = await _dbContext.Autorizacions.FindAsync(idAutorizacion);
             if (autorizacion == null)
             {
                 return 0;
             }
 
-            _context.Autorizacions.Remove(autorizacion);
-            await _context.SaveChangesAsync();
+            _dbContext.Autorizacions.Remove(autorizacion);
+            await _dbContext.SaveChangesAsync();
 
             return 1;
         } catch(Exception ex)
@@ -95,15 +94,16 @@ public class AutorizacionService : IAutorizacionService
     {
         try
         {
-            return await _context.Autorizacions.ToListAsync();
+            return await _dbContext.Autorizacions.ToListAsync();
         } catch(Exception ex)
         {
             _logHandler.LogError("Error al listar autorizaciones", ex);
             throw;
         }
     }
+
     private bool AutorizacionExists(uint id)
     {
-        return _context.Autorizacions.Any(e => e.IdAutorizacion == id);
+        return _dbContext.Autorizacions.Any(e => e.IdAutorizacion == id);
     }
 }

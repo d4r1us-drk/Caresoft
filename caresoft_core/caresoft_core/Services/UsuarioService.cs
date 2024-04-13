@@ -51,16 +51,19 @@ public class UsuarioService : IUsuarioService
         }
     }
 
-    public async Task<int> AddUsuarioAsync(Usuario usuario, PerfilUsuario perfilUsuario)
+    public async Task<int> AddUsuarioAsync(UsuarioDto usuarioDto)
     {
         try
         {
+            var perfilUsuario = PerfilUsuario.FromDto(usuarioDto);
+            var usuario = Usuario.FromDto(usuarioDto);
+
             var cuenta = new Cuentum
             {
                 DocumentoUsuario = perfilUsuario.Documento,
                 Balance = Decimal.Zero,
                 DocumentoUsuarioNavigation = perfilUsuario,
-                Estado = "A",
+                Estado = "A"
             };
 
             _dbContext.PerfilUsuarios.Add(perfilUsuario);
@@ -80,21 +83,34 @@ public class UsuarioService : IUsuarioService
         }
     }
 
-    public async Task<int> UpdateUsuarioAsync(Usuario usuario, PerfilUsuario perfilUsuario)
+    public async Task<int> UpdateUsuarioAsync(UsuarioDto usuarioDto)
     {
         try
         {
-            usuario.DocumentoUsuarioNavigation = perfilUsuario;
-            _dbContext.Usuarios.Update(usuario);
+            // Convert UsuarioDto to Usuario and PerfilUsuario entities
+            var usuario = Usuario.FromDto(usuarioDto);
+            var perfilUsuario = PerfilUsuario.FromDto(usuarioDto);
+
+            // Update the PerfilUsuario entity in the database
             _dbContext.PerfilUsuarios.Update(perfilUsuario);
 
-             await _dbContext.SaveChangesAsync();
+            // Associate the updated perfilUsuario with the usuario
+            usuario.DocumentoUsuarioNavigation = perfilUsuario;
 
+            // Update the usuario entity in the database
+            _dbContext.Usuarios.Update(usuario);
+
+            // Save changes to the database
+            await _dbContext.SaveChangesAsync();
+
+            // Return 1 to indicate successful update
             return 1;
         }
         catch (Exception ex)
         {
-            _logHandler.LogFatal("Something went wrong.", ex);
+            // Log the error
+            _logHandler.LogFatal("Error updating usuario.", ex);
+            // Rethrow the exception to propagate it further
             throw;
         }
     }

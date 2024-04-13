@@ -2,7 +2,7 @@
 
 namespace caresoft_core.Models;
 
-public partial class PerfilUsuario
+public class PerfilUsuario
 {
     public string Documento { get; set; } = null!;
 

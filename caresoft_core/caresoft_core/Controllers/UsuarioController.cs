@@ -45,30 +45,27 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPost("add")]
-    public async Task<IActionResult> AddUsuarioAsync([FromQuery] UsuarioDto usuarioDto) {
-        try {
-            var usuario = Usuario.FromDto(usuarioDto);
-            var perfilUsuario = PerfilUsuario.FromDto(usuarioDto);
-
-            var result = await _usuarioService.AddUsuarioAsync(usuario, perfilUsuario);
+    public async Task<IActionResult> AddUsuarioAsync([FromQuery] UsuarioDto usuario) {
+        try
+        {
+            var result = await _usuarioService.AddUsuarioAsync(usuario);
             return Ok(result);
-        } catch (Exception ex)
+        } 
+        catch (Exception ex)
         {
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
     [HttpPut("update")]
 
-    public async Task<ActionResult<int>> UpdateUsuarioAsync([FromQuery] UsuarioDto usuarioDto)
+    public async Task<ActionResult<int>> UpdateUsuarioAsync([FromQuery] UsuarioDto usuario)
     {
         try
         {
-
-            Usuario usuario = Usuario.FromDto(usuarioDto);
-            PerfilUsuario perfilUsuario = PerfilUsuario.FromDto(usuarioDto);
-            var result = await _usuarioService.UpdateUsuarioAsync(usuario, perfilUsuario);
+            var result = await _usuarioService.UpdateUsuarioAsync(usuario);
             return Ok(result);
-        }catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }

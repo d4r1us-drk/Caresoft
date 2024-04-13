@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using caresoft_core.Dto;
 
 namespace caresoft_core.Models;
 
-public partial class Ingreso
+public class Ingreso
 {
     public uint IdIngreso { get; set; }
 
@@ -38,4 +37,21 @@ public partial class Ingreso
     public virtual Sala NumSalaNavigation { get; set; } = null!;
 
     public virtual ICollection<Afeccion> IdAfeccions { get; set; } = new List<Afeccion>();
+
+    public static Ingreso FromDto(IngresoDto dto)
+    {
+        return new Ingreso
+        {
+            IdIngreso = dto.IdIngreso,
+            DocumentoPaciente = dto.DocumentoPaciente,
+            DocumentoEnfermero = dto.DocumentoEnfermero,
+            DocumentoMedico = dto.DocumentoMedico,
+            ConsultaCodigo = dto.ConsultaCodigo,
+            IdAutorizacion = dto.IdAutorizacion,
+            NumSala = dto.NumSala,
+            CostoEstancia = dto.CostoEstancia,
+            FechaIngreso = dto.FechaIngreso,
+            FechaAlta = dto.FechaAlta
+        };
+    }
 }

@@ -16,22 +16,12 @@ public class IngresoService : IIngresoService
     {
         _dbContext = dbContext;
     }
+
     public async Task<int> AddIngresoAsync(IngresoDto ingresoDto)
     {
         try
         {
-            var ingreso = new Ingreso
-            {
-                DocumentoPaciente = ingresoDto.DocumentoPaciente,
-                DocumentoEnfermero = ingresoDto.DocumentoEnfermero,
-                DocumentoMedico = ingresoDto.DocumentoMedico,
-                ConsultaCodigo = ingresoDto.ConsultaCodigo,
-                IdAutorizacion = ingresoDto.IdAutorizacion,
-                NumSala = ingresoDto.NumSala,
-                CostoEstancia = ingresoDto.CostoEstancia,
-                FechaIngreso = ingresoDto.FechaIngreso,
-                FechaAlta = ingresoDto.FechaAlta
-            };
+            var ingreso = Ingreso.FromDto(ingresoDto);
 
             _dbContext.Ingresos.Add(ingreso);
             await _dbContext.SaveChangesAsync();
@@ -50,6 +40,7 @@ public class IngresoService : IIngresoService
         try
         {
             var ingreso = await _dbContext.Ingresos.FindAsync(ingresoDto.IdIngreso);
+
             if (ingreso == null)
             {
                 _logHandler.LogInfo("Ingreso not found.");
@@ -105,21 +96,7 @@ public class IngresoService : IIngresoService
     {
         try
         {
-            return await _dbContext.Ingresos
-                .Select(ingreso => new IngresoDto
-                {
-                    IdIngreso = ingreso.IdIngreso,
-                    DocumentoPaciente = ingreso.DocumentoPaciente,
-                    DocumentoEnfermero = ingreso.DocumentoEnfermero,
-                    DocumentoMedico = ingreso.DocumentoMedico,
-                    ConsultaCodigo = ingreso.ConsultaCodigo,
-                    IdAutorizacion = ingreso.IdAutorizacion,
-                    NumSala = ingreso.NumSala,
-                    CostoEstancia = ingreso.CostoEstancia,
-                    FechaIngreso = ingreso.FechaIngreso,
-                    FechaAlta = ingreso.FechaAlta
-                })
-                .ToListAsync();
+            return await _dbContext.Ingresos.Select(i => IngresoDto.FromModel(i)).ToListAsync();
         }
         catch (Exception ex)
         {
@@ -133,21 +110,8 @@ public class IngresoService : IIngresoService
         try
         {
             return await _dbContext.Ingresos
-                .Where(ingreso => ingreso.IdIngreso == idIngreso)
-                .Select(ingreso => new IngresoDto
-                {
-                    IdIngreso = ingreso.IdIngreso,
-                    DocumentoPaciente = ingreso.DocumentoPaciente,
-                    DocumentoEnfermero = ingreso.DocumentoEnfermero,
-                    DocumentoMedico = ingreso.DocumentoMedico,
-                    ConsultaCodigo = ingreso.ConsultaCodigo,
-                    IdAutorizacion = ingreso.IdAutorizacion,
-                    NumSala = ingreso.NumSala,
-                    CostoEstancia = ingreso.CostoEstancia,
-                    FechaIngreso = ingreso.FechaIngreso,
-                    FechaAlta = ingreso.FechaAlta
-                })
-                .FirstOrDefaultAsync();
+                .Where(i => i.IdIngreso == idIngreso)
+                .Select(i => IngresoDto.FromModel(i)).FirstOrDefaultAsync();
         }
         catch (Exception ex)
         {

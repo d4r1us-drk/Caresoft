@@ -2,7 +2,7 @@
 
 namespace caresoft_core.Models;
 
-public partial class Usuario
+public class Usuario
 {
     public string UsuarioCodigo { get; set; } = null!;
 

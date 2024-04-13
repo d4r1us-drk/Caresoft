@@ -161,7 +161,7 @@ public class ConsultaController : ControllerBase
     {
         try
         {
-            List<Producto> result = await _consultaService.GetConsultaProductosAsync(consultaCodigo);
+            List<ProductoDto> result = await _consultaService.GetConsultaProductosAsync(consultaCodigo);
             return Ok(result);
         }
         catch (Exception ex)
