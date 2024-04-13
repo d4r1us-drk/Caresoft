@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using caresoft_core.Dto;
 
 namespace caresoft_core.Models;
 
-public partial class ReservaServicio
+public class ReservaServicio
 {
     public uint IdReserva { get; set; }
 
@@ -22,4 +21,17 @@ public partial class ReservaServicio
     public virtual PerfilUsuario DocumentoPacienteNavigation { get; set; } = null!;
 
     public virtual Servicio ServicioCodigoNavigation { get; set; } = null!;
+
+    public static ReservaServicio FromDto(ReservaServicioDto dto)
+    {
+        return new ReservaServicio
+        {
+            IdReserva = dto.IdReserva,
+            DocumentoPaciente = dto.DocumentoPaciente,
+            DocumentoMedico = dto.DocumentoMedico,
+            ServicioCodigo = dto.ServicioCodigo,
+            FechaReservada = dto.FechaReservada,
+            Estado = dto.Estado
+        };
+    }
 }

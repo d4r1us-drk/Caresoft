@@ -1,3 +1,5 @@
+using caresoft_core.Models;
+
 namespace caresoft_core.Dto;
 
 public class ProductoDto
@@ -11,4 +13,16 @@ public class ProductoDto
     public decimal Costo { get; set; }
 
     public uint LoteDisponible { get; set; }
+
+    public static ProductoDto FromModel(Producto model)
+    {
+        return new ProductoDto
+        {
+            IdProducto = model.IdProducto,
+            Nombre = model.Nombre,
+            Descripcion = model.Descripcion,
+            Costo = model.Costo,
+            LoteDisponible = model.LoteDisponible
+        };
+    }
 }

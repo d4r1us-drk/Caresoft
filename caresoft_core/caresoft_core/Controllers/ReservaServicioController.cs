@@ -35,24 +35,10 @@ public class ReservaServicioController : ControllerBase
     }
 
     [HttpPost("add")]
-    public async Task<ActionResult> AddReservaServicioAsync(
-        [FromQuery] string documentoPaciente,
-        [FromQuery] string documentoMedico,
-        [FromQuery] string servicioCodigo,
-        [FromQuery] DateTime fechaReservada,
-        [FromQuery] string estado)
+    public async Task<ActionResult> AddReservaServicioAsync([FromQuery] ReservaServicioDto reserva)
     {
         try
         {
-            var reserva = new ReservaServicio
-            {
-                DocumentoPaciente = documentoPaciente,
-                DocumentoMedico = documentoMedico,
-                ServicioCodigo = servicioCodigo,
-                FechaReservada = fechaReservada,
-                Estado = estado
-            };
-
             var result = await _reservaServicioService.AddReservaServicioAsync(reserva);
 
             if (result == 1)
@@ -70,26 +56,10 @@ public class ReservaServicioController : ControllerBase
     }
 
     [HttpPut("update")]
-    public async Task<ActionResult> UpdateReservaServicioAsync(
-        [FromQuery] uint idReserva,
-        [FromQuery] string documentoPaciente,
-        [FromQuery] string documentoMedico,
-        [FromQuery] string servicioCodigo,
-        [FromQuery] DateTime fechaReservada,
-        [FromQuery] string estado)
+    public async Task<ActionResult> UpdateReservaServicioAsync([FromQuery] ReservaServicioDto reserva)
     {
         try
         {
-            var reserva = new ReservaServicio
-            {
-                IdReserva = idReserva,
-                DocumentoPaciente = documentoPaciente,
-                DocumentoMedico = documentoMedico,
-                ServicioCodigo = servicioCodigo,
-                FechaReservada = fechaReservada,
-                Estado = estado
-            };
-
             var result = await _reservaServicioService.UpdateReservaServicioAsync(reserva);
 
             if (result > 0)

@@ -44,11 +44,12 @@ public class ReservaServicioService : IReservaServicioService
         }
     }
 
-    public async Task<int> AddReservaServicioAsync(ReservaServicio reserva)
+    public async Task<int> AddReservaServicioAsync(ReservaServicioDto reserva)
     {
         try
         {
-            _dbContext.ReservaServicios.Add(reserva);
+            ReservaServicio result = ReservaServicio.FromDto(reserva);
+            _dbContext.ReservaServicios.Add(result);
             await _dbContext.SaveChangesAsync();
             _logHandler.LogInfo("ReservaServicio was successfully added.");
             return 1;
@@ -60,11 +61,12 @@ public class ReservaServicioService : IReservaServicioService
         }
     }
 
-    public async Task<int> UpdateReservaServicioAsync(ReservaServicio reserva)
+    public async Task<int> UpdateReservaServicioAsync(ReservaServicioDto reserva)
     {
         try
         {
-            _dbContext.ReservaServicios.Update(reserva);
+            ReservaServicio result = ReservaServicio.FromDto(reserva);
+            _dbContext.ReservaServicios.Update(result);
             return await _dbContext.SaveChangesAsync();
         }
         catch (Exception ex)

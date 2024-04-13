@@ -16,12 +16,12 @@ public class UsuarioController : ControllerBase
         _usuarioService = usuarioService;
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosByIdAsync(string id)
+    [HttpGet("get/{codigoODocumento}")]
+    public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosByIdAsync([FromQuery] string codigoODocumento)
     {
         try
         {
-            var usuario = await _usuarioService.GetUsuarioByIdAsync(id);
+            var usuario = await _usuarioService.GetUsuarioByIdAsync(codigoODocumento);
             return Ok(usuario);
         }
         catch (Exception ex)
@@ -45,7 +45,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPost("add")]
-    public async Task<IActionResult> AddUsuarioAsync([FromBody] UsuarioDto usuarioDto) {
+    public async Task<IActionResult> AddUsuarioAsync([FromQuery] UsuarioDto usuarioDto) {
         try {
             var usuario = Usuario.FromDto(usuarioDto);
             var perfilUsuario = PerfilUsuario.FromDto(usuarioDto);
@@ -59,7 +59,7 @@ public class UsuarioController : ControllerBase
     }
     [HttpPut("update")]
 
-    public async Task<ActionResult<int>> UpdateUsuarioAsync([FromBody] UsuarioDto usuarioDto)
+    public async Task<ActionResult<int>> UpdateUsuarioAsync([FromQuery] UsuarioDto usuarioDto)
     {
         try
         {
@@ -109,7 +109,7 @@ public class UsuarioController : ControllerBase
         }
     }
 
-    [HttpPut("toggle-estado-cuenta")]
+    [HttpPut("toggle-state-cuenta")]
     public async Task<ActionResult<int>> ToggleUsuarioCuentaAsync([FromQuery] string codigoOdocumento)
     {
         try

@@ -19,7 +19,7 @@ public class ProductoController : ControllerBase
     }
 
     [HttpGet("list")]
-    public async Task<ActionResult<List<Producto>>> GetProductosAsync()
+    public async Task<ActionResult<List<ProductoDto>>> GetProductosAsync()
     {
         try
         {
@@ -34,22 +34,10 @@ public class ProductoController : ControllerBase
     }
 
     [HttpPost("add")]
-    public async Task<ActionResult> AddProductoAsync(
-        [FromQuery] string nombre,
-        [FromQuery] string descripcion,
-        [FromQuery] decimal costo,
-        [FromQuery] uint loteDisponible)
+    public async Task<ActionResult> AddProductoAsync([FromQuery] ProductoDto producto)
     {
         try
         {
-            var producto = new Producto
-            {
-                Nombre = nombre,
-                Descripcion = descripcion,
-                Costo = costo,
-                LoteDisponible = loteDisponible
-            };
-
             var result = await _productoService.AddProductoAsync(producto);
             if (result > 0)
             {
@@ -66,19 +54,10 @@ public class ProductoController : ControllerBase
     }
 
     [HttpPut("update")]
-    public async Task<ActionResult> UpdateProductoAsync(ProductoDto productoDto)
+    public async Task<ActionResult> UpdateProductoAsync([FromQuery] ProductoDto producto)
     {
         try
         {
-            var producto = new Producto
-            {
-                IdProducto = productoDto.IdProducto,
-                Nombre = productoDto.Nombre,
-                Descripcion = productoDto.Descripcion,
-                Costo = productoDto.Costo,
-                LoteDisponible = productoDto.LoteDisponible
-            };
-
             var result = await _productoService.UpdateProductoAsync(producto);
             if (result > 0)
             {

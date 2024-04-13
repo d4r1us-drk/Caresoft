@@ -22,7 +22,6 @@ public class ConsultaController : ControllerBase
     {
         try
         {
-
             int result = await _consultaService.AddConsultaAsync(consulta);
             return Ok(result);
 

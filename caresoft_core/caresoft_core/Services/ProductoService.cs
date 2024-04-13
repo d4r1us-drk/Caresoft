@@ -1,4 +1,5 @@
 using caresoft_core.Models;
+using caresoft_core.Dto;
 using caresoft_core.Utils;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Context;
@@ -10,11 +11,22 @@ public class ProductoService(CaresoftDbContext dbContext) : IProductoService
 {
     private readonly LogHandler<ProductoService> _logHandler = new();
 
-    public async Task<List<Producto>> GetProductosAsync()
+    public async Task<List<ProductoDto>> GetProductosAsync()
     {
         try
         {
-            return await dbContext.Productos.ToListAsync();
+            var productos = await dbContext.Productos.ToListAsync();
+
+            var productosDtoList = productos.Select(p => new ProductoDto()
+            {
+                IdProducto = p.IdProducto,
+                Costo = p.Costo,
+                Descripcion = p.Descripcion,
+                LoteDisponible = p.LoteDisponible,
+                Nombre = p.Nombre
+            }).ToList();
+
+            return productosDtoList;
         }
         catch (Exception ex)
         {
@@ -23,11 +35,12 @@ public class ProductoService(CaresoftDbContext dbContext) : IProductoService
         }
     }
 
-    public async Task<int> AddProductoAsync(Producto producto)
+    public async Task<int> AddProductoAsync(ProductoDto producto)
     {
         try
         {
-            dbContext.Productos.Add(producto);
+            Producto result = Producto.FromDto(producto);
+            dbContext.Productos.Add(result);
             return await dbContext.SaveChangesAsync();
         }
         catch (Exception ex)
@@ -37,11 +50,12 @@ public class ProductoService(CaresoftDbContext dbContext) : IProductoService
         }
     }
 
-    public async Task<int> UpdateProductoAsync(Producto producto)
+    public async Task<int> UpdateProductoAsync(ProductoDto producto)
     {
         try
         {
-            dbContext.Productos.Update(producto);
+            Producto result = Producto.FromDto(producto);
+            dbContext.Productos.Update(result);
             return await dbContext.SaveChangesAsync();
         }
         catch (Exception ex)
