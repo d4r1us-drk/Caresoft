@@ -11,79 +11,70 @@ namespace Caresoft__web
 {
 
 
-    public partial class Registrar
+    public partial class WebForm3
     {
 
         /// <summary>
-        /// form1 control.
+        /// PanelMensaje control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.Panel PanelMensaje;
 
         /// <summary>
-        /// userbox control.
+        /// PanelCita control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText userbox;
+        protected global::System.Web.UI.WebControls.Panel PanelCita;
 
         /// <summary>
-        /// apellidobox control.
+        /// LabelFecha control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText apellidobox;
+        protected global::System.Web.UI.WebControls.Label LabelFecha;
 
         /// <summary>
-        /// correobox control.
+        /// TextBoxFecha control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText correobox;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxFecha;
 
         /// <summary>
-        /// idbox control.
+        /// LabelHora control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText idbox;
+        protected global::System.Web.UI.WebControls.Label LabelHora;
 
         /// <summary>
-        /// passwordbox control.
+        /// TextBoxHora control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputPassword passwordbox;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxHora;
 
         /// <summary>
-        /// confirmpassbox control.
+        /// ButtonAgendarCita control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputPassword confirmpassbox;
-
-        /// <summary>
-        /// Button1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button ButtonAgendarCita;
     }
 }

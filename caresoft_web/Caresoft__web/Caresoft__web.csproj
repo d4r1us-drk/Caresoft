@@ -211,7 +211,8 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="css\Login.css" />
-    <Content Include="css\Default.css" />
+    <Content Include="css\Inicio.css" />
+    <Content Include="css\Registrar.css" />
     <Content Include="images\Foto doctor.jpg" />
     <Content Include="Login.aspx" />
     <Content Include="favicon.ico" />
@@ -253,8 +254,10 @@
     <Content Include="fonts\BebasNeue-Regular.ttf" />
     <Content Include="fonts\Kanit-Regular.ttf" />
     <Content Include="fonts\PTSansNarrow-Regular.ttf" />
-    <Content Include="Default.aspx" />
     <Content Include="Account.aspx" />
+    <Content Include="Inicio.aspx" />
+    <Content Include="Citas.aspx" />
+    <Content Include="Caja.aspx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -346,19 +349,33 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Account.aspx.cs">
       <DependentUpon>Account.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Account.aspx.designer.cs">
       <DependentUpon>Account.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inicio.aspx.cs">
+      <DependentUpon>Inicio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inicio.aspx.designer.cs">
+      <DependentUpon>Inicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Citas.aspx.cs">
+      <DependentUpon>Citas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Citas.aspx.designer.cs">
+      <DependentUpon>Citas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Caja.aspx.cs">
+      <DependentUpon>Caja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Caja.aspx.designer.cs">
+      <DependentUpon>Caja.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

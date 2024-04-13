@@ -1,0 +1,72 @@
+﻿
+@font-face {
+    font-family: "BebasNeue";
+    src: url(../fonts/BebasNeue-Regular.ttf)
+}
+
+@font-face {
+    font-family: "Kanit";
+    src: url(../fonts/Kanit-Regular.ttf);
+}
+
+@font-face {
+    font-family: "PTSansNarrow";
+    src: url("../fonts/PTSansNarrow-Regular.ttf");
+}
+
+
+body {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin:0;
+    height: 100vh;
+    background-image: url(../images/caresoft-logo.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    background-color: rgba(0, 139, 139, 0.5);
+}
+
+.registrar {
+    margin-top: 100px;
+    text-align: center;
+    background-color: rgb(255, 255, 255, 0.8);
+    width: 400px;
+    height: 400px;
+    border: 3px solid rgba(0,0,0,.3);
+    border-radius: 10px;
+}
+
+.registrar h1{
+    font-family:Kanit;
+    font-size:36px;
+    text-align:center;
+}
+
+.input-box{
+    font-family:PTSansNarrow;
+    display:flex;
+    justify-content:space-between;
+    width:300px;
+    align-content:center;
+    margin-left:15%;
+    margin-top:10px;
+}
+
+.input-box input{
+    border:2px solid rgba(0,0,0,.3);
+    border-radius:8px;
+}
+
+.boton {
+    margin-top: 50px;
+}
+
+    .boton input {
+        width:100px;
+        height:45px;
+        border: 3px solid rgba(0,0,0,.3);
+        border-radius: 8px;
+        cursor:pointer;
+    }
