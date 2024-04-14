@@ -41,7 +41,7 @@ public class ConsultorioController(IConsultorioService consultorioService) : Con
     }
 
     [HttpPost("add")]
-    public async Task<ActionResult> CreateConsultorio(Consultorio consultorio)
+    public async Task<ActionResult> CreateConsultorio([FromQuery] Consultorio consultorio)
     {
         try
         {
@@ -58,14 +58,9 @@ public class ConsultorioController(IConsultorioService consultorioService) : Con
         }
     }
 
-    [HttpPut("update/{id}")]
-    public async Task<ActionResult> UpdateConsultorio(uint id, Consultorio consultorio)
+    [HttpPut("update")]
+    public async Task<ActionResult> UpdateConsultorio([FromQuery] Consultorio consultorio)
     {
-        if (id != consultorio.IdConsultorio)
-        {
-            return BadRequest();
-        }
-
         try
         {
             var result = await consultorioService.UpdateConsultorioAsync(consultorio);
