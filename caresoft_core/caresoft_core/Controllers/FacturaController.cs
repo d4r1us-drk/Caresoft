@@ -1,4 +1,3 @@
-using caresoft_core.Models;
 using caresoft_core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using caresoft_core.Dto;

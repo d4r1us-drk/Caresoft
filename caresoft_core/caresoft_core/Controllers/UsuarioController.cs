@@ -1,4 +1,3 @@
-using caresoft_core.Models;
 using caresoft_core.Dto;
 using caresoft_core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +9,7 @@ namespace caresoft_core.Controllers;
 public class UsuarioController(IUsuarioService usuarioService) : ControllerBase
 {
     [HttpGet("get/{codigoODocumento}")]
-    public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosByIdAsync([FromQuery] string codigoODocumento)
+    public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosByIdAsync(string codigoODocumento)
     {
         try
         {
@@ -51,7 +50,7 @@ public class UsuarioController(IUsuarioService usuarioService) : ControllerBase
     }
     [HttpPut("update")]
 
-    public async Task<ActionResult<int>> UpdateUsuarioAsync([FromQuery] UsuarioDto? usuario)
+    public async Task<ActionResult<int>> UpdateUsuarioAsync([FromQuery] UsuarioDto usuario)
     {
         try
         {
@@ -64,8 +63,8 @@ public class UsuarioController(IUsuarioService usuarioService) : ControllerBase
         }
     }
 
-    [HttpDelete("delete")]
-    public async Task<ActionResult<int>> DeleteUsuarioAsync([FromQuery] string codigoOdocumento)
+    [HttpDelete("delete/{codigoOdocumento}")]
+    public async Task<ActionResult<int>> DeleteUsuarioAsync(string codigoOdocumento)
     {
         try
         {
@@ -78,8 +77,8 @@ public class UsuarioController(IUsuarioService usuarioService) : ControllerBase
         }
     }
 
-    [HttpGet("cuenta")]
-    public async Task<ActionResult<CuentumDto>> GetCuentaByUsuarioCodigoOrDocumentoAsync([FromQuery] string codigoOdocumento)
+    [HttpGet("cuenta/{codigoOdocumento}")]
+    public async Task<ActionResult<CuentumDto>> GetCuentaByUsuarioCodigoOrDocumentoAsync(string codigoOdocumento)
     {
         try
         {
@@ -99,8 +98,8 @@ public class UsuarioController(IUsuarioService usuarioService) : ControllerBase
         }
     }
 
-    [HttpPut("toggle-state-cuenta")]
-    public async Task<ActionResult<int>> ToggleUsuarioCuentaAsync([FromQuery] string codigoOdocumento)
+    [HttpPut("toggle-state-cuenta/{codigoOdocumento}")]
+    public async Task<ActionResult<int>> ToggleUsuarioCuentaAsync(string codigoOdocumento)
     {
         try
         {

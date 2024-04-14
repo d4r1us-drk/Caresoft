@@ -9,9 +9,9 @@ namespace caresoft_core.Controllers;
 public class MetodoPagoController(IMetodoPagoService metodoPagoService) : ControllerBase
 {
     [HttpPost("add")]
-    public async Task<IActionResult> AddMetodoPago([FromBody] MetodoPagoDto metodoPagoDto)
+    public async Task<IActionResult> AddMetodoPago([FromQuery] MetodoPagoDto metodoPagoDto)
     {
-        int result = await metodoPagoService.AddMetodoPagoAsync(metodoPagoDto);
+        var result = await metodoPagoService.AddMetodoPagoAsync(metodoPagoDto);
         if (result == 1)
             return Ok("MetodoPago added successfully.");
         return BadRequest("Failed to add MetodoPago.");
@@ -25,9 +25,9 @@ public class MetodoPagoController(IMetodoPagoService metodoPagoService) : Contro
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateMetodoPago([FromBody] MetodoPagoDto metodoPagoDto)
+    public async Task<IActionResult> UpdateMetodoPago([FromQuery] MetodoPagoDto metodoPagoDto)
     {
-        int result = await metodoPagoService.UpdateMetodoPagoAsync(metodoPagoDto);
+        var result = await metodoPagoService.UpdateMetodoPagoAsync(metodoPagoDto);
         if (result == 1)
             return Ok("MetodoPago updated successfully.");
         return NotFound("MetodoPago not found.");
@@ -36,7 +36,7 @@ public class MetodoPagoController(IMetodoPagoService metodoPagoService) : Contro
     [HttpDelete("delete/{id}")]
     public async Task<IActionResult> DeleteMetodoPago(uint id)
     {
-        int result = await metodoPagoService.DeleteMetodoPagoAsync(id);
+        var result = await metodoPagoService.DeleteMetodoPagoAsync(id);
         if (result == 1)
             return Ok("MetodoPago deleted successfully.");
         return NotFound("MetodoPago not found.");

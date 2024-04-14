@@ -1,4 +1,3 @@
-using caresoft_core.Models;
 using caresoft_core.Dto;
 using caresoft_core.Utils;
 using caresoft_core.Services.Interfaces;
@@ -12,7 +11,7 @@ public class ReservaServicioController(IReservaServicioService reservaServicioSe
 {
     private readonly LogHandler<ReservaServicioController> _logHandler = new();
 
-    [HttpGet("list")]
+    [HttpGet("get")]
     public async Task<ActionResult<List<ReservaServicioDto>>> GetReservaServiciosListAsync()
     {
         try
@@ -35,10 +34,7 @@ public class ReservaServicioController(IReservaServicioService reservaServicioSe
         {
             var result = await reservaServicioService.AddReservaServicioAsync(reserva);
 
-            if (result == 1)
-                return Ok("Reserva servicio added successfully.");
-
-            return StatusCode(500, "An error occurred while adding reserva servicio.");
+            return result == 1 ? Ok("Reserva servicio added successfully.") : StatusCode(500, "An error occurred while adding reserva servicio.");
         }
         catch (Exception ex)
         {
@@ -54,10 +50,7 @@ public class ReservaServicioController(IReservaServicioService reservaServicioSe
         {
             var result = await reservaServicioService.UpdateReservaServicioAsync(reserva);
 
-            if (result > 0)
-                return Ok("Reserva servicio updated successfully.");
-
-            return StatusCode(500, "An error occurred while updating a reserva de servicio.");
+            return result > 0 ? Ok("Reserva servicio updated successfully.") : StatusCode(500, "An error occurred while updating a reserva de servicio.");
         }
         catch (Exception ex)
         {
@@ -73,10 +66,7 @@ public class ReservaServicioController(IReservaServicioService reservaServicioSe
         {
             var result = await reservaServicioService.ToggleEstadoReservaServicioAsync(id);
 
-            if (result > 0)
-                return Ok("Reserva servicio state toggled successfully.");
-
-            return StatusCode(500, $"An error occurred while toggling reserva servicio state. Reserva servicio with ID {id} not found.");
+            return result > 0 ? Ok("Reserva servicio state toggled successfully.") : StatusCode(500, $"An error occurred while toggling reserva servicio state. Reserva servicio with ID {id} not found.");
         }
         catch (Exception ex)
         {
@@ -92,14 +82,10 @@ public class ReservaServicioController(IReservaServicioService reservaServicioSe
         {
             var result = await reservaServicioService.DeleteReservaServicioAsync(id);
 
-            if (result > 0)
-                return Ok("Reserva servicio deleted successfully.");
-
-            return StatusCode(500, $"An error occurred while deleting reserva servicio. Reserva servicio with ID {id} not found.");
+            return result > 0 ? Ok("Reserva servicio deleted successfully.") : StatusCode(500, $"An error occurred while deleting reserva servicio. Reserva servicio with ID {id} not found.");
         }
         catch (Exception ex)
         {
-            // Log the error
             _logHandler.LogFatal("An error occurred while deleting reserva servicio.", ex);
             return StatusCode(500, "An error occurred while deleting reserva servicio.");
         }

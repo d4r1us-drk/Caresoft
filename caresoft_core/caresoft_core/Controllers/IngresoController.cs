@@ -10,13 +10,8 @@ namespace caresoft_core.Controllers;
 public class IngresoController(IIngresoService ingresoService) : ControllerBase
 {
     [HttpPost("add")]
-    public async Task<IActionResult> AddIngreso([FromBody] IngresoDto ingresoDto)
+    public async Task<IActionResult> AddIngreso([FromQuery] IngresoDto ingresoDto)
     {
-        if (ingresoDto == null)
-        {
-            return BadRequest("Invalid data.");
-        }
-
         try
         {
             var result = await ingresoService.AddIngresoAsync(ingresoDto);
@@ -31,7 +26,7 @@ public class IngresoController(IIngresoService ingresoService) : ControllerBase
     }
 
     [HttpPut("update/{id}")]
-    public async Task<IActionResult> UpdateIngreso([FromBody] IngresoDto ingresoDto)
+    public async Task<IActionResult> UpdateIngreso([FromQuery] IngresoDto ingresoDto)
     {
         try
         {
