@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static CajaHospital.views.RegistrarPaciente;
 
 namespace CajaHospital
 {
@@ -16,15 +17,25 @@ namespace CajaHospital
         readonly PrincipalView _principalView;
         readonly Pagos _pagos;
         readonly ConsultarCuentaCliente _consultarCuentaCliente;
-        readonly RegistrarTransaccion _registrarTransaccion;
+        public FacturarView _facturarPaciente;
+        readonly FacturarView _facturarCargaDescarga;
+        readonly RegistrarPaciente _registrarPaciente;
 
         public Main(string nombre, string documento)
         {
             InitializeComponent();
+
             _principalView = new PrincipalView(nombre, documento) { Dock = DockStyle.Fill };
+
             _pagos = new Pagos() { Dock = DockStyle.Fill };
+
             _consultarCuentaCliente = new ConsultarCuentaCliente() { Dock = DockStyle.Fill };
-            _registrarTransaccion = new RegistrarTransaccion() { Dock = DockStyle.Fill };
+
+            _facturarPaciente = new FacturarView('E') { Dock = DockStyle.Fill };
+            _facturarCargaDescarga = new FacturarView('C') { Dock = DockStyle.Fill };
+            _registrarPaciente = new RegistrarPaciente();
+
+            _registrarPaciente.CuentaCreada += registrarPaciente_CuentaCreada;
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -32,9 +43,12 @@ namespace CajaHospital
             SwapView(_principalView);
         }
 
-        private void principalToolStripMenuItem_Click(object sender, EventArgs e)
+        private void registrarPaciente_CuentaCreada(object sender, EventArgs e)
         {
-
+            if (e is CrearCuentaArgs messageEventArgs)
+            {
+                SwapView(_facturarPaciente);
+            }
         }
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
@@ -52,10 +66,11 @@ namespace CajaHospital
             SwapView(_pagos);
         }
 
-        private void registrarTransaccionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SwapView(_registrarTransaccion);
-        }
+        //NO SE USARA
+        //private void registrarTransaccionToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    SwapView(_registrarTransaccion);
+        //}
 
         private void SwapView(UserControl view)
         {
@@ -66,6 +81,16 @@ namespace CajaHospital
         private void consultarCuentaClienteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SwapView(_consultarCuentaCliente);
+        }
+
+        private void clienteExistenteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SwapView(_facturarPaciente);
+        }
+
+        private void nuevoClienteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SwapView(_registrarPaciente);
         }
     }
 }

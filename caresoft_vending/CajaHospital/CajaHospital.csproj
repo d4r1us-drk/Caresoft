@@ -165,17 +165,23 @@
     <Compile Include="views\PrincipalView.Designer.cs">
       <DependentUpon>PrincipalView.cs</DependentUpon>
     </Compile>
-    <Compile Include="views\RegistrarTransaccion.cs">
+    <Compile Include="views\FacturarView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="views\RegistrarTransaccion.Designer.cs">
-      <DependentUpon>RegistrarTransaccion.cs</DependentUpon>
+    <Compile Include="views\FacturarView.Designer.cs">
+      <DependentUpon>FacturarView.cs</DependentUpon>
     </Compile>
     <Compile Include="views\Pagos.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="views\Pagos.Designer.cs">
       <DependentUpon>Pagos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="views\RegistrarPaciente.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="views\RegistrarPaciente.Designer.cs">
+      <DependentUpon>RegistrarPaciente.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="views\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
@@ -198,11 +204,14 @@
     <EmbeddedResource Include="views\PrincipalView.resx">
       <DependentUpon>PrincipalView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="views\RegistrarTransaccion.resx">
-      <DependentUpon>RegistrarTransaccion.cs</DependentUpon>
+    <EmbeddedResource Include="views\FacturarView.resx">
+      <DependentUpon>FacturarView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="views\Pagos.resx">
       <DependentUpon>Pagos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="views\RegistrarPaciente.resx">
+      <DependentUpon>RegistrarPaciente.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

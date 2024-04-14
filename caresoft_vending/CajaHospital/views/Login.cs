@@ -45,7 +45,7 @@ namespace CajaHospital
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    if (reader.GetString("usuarioContra") == clave && reader.GetChar("tipoDocumento") == tipoDoc)
+                    if (reader.GetString("usuarioContra") == clave && reader.GetChar("tipoDocumento") == tipoDoc && reader.GetChar("rol") == 'A')
                     {
                         nombre = $"{reader.GetString("nombre")} {reader.GetString("apellido")}";
                         MessageBox.Show($"Inicio de sesion exitoso! \nUsuario: {nombre}", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);

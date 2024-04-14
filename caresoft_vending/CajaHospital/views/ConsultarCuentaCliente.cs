@@ -56,13 +56,13 @@ namespace CajaHospital.views
 
                 if (!reader.HasRows)
                 {
-                    MessageBox.Show("Cliente no encontrado, por favor valide los datos", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Paciente no encontrado, por favor valide los datos", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 while (reader.Read())
                 {
-                    if (reader.GetChar("tipoDocumento") == tipoDoc)
+                    if (reader.GetChar("tipoDocumento") == tipoDoc && reader.GetChar("rol") == 'P')
                     {
                         textBoxNombre.Text = $"{reader.GetString("nombre")} {reader.GetString("apellido")}";
                         textBoxGenero.Text = reader.GetString("genero") == "M"? "Masculino" : "Femenino";
@@ -74,7 +74,7 @@ namespace CajaHospital.views
                     }
                     else
                     {
-                        MessageBox.Show("Cliente no encontrado, por favor valide los datos", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Paciente no encontrado, por favor valide los datos", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
