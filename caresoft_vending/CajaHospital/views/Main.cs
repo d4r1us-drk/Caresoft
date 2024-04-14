@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using static CajaHospital.views.RegistrarPaciente;
 
 namespace CajaHospital
@@ -48,7 +49,16 @@ namespace CajaHospital
             if (e is CrearCuentaArgs messageEventArgs)
             {
                 SwapView(_facturarPaciente);
+                CuentaLista?.Invoke(this, new CuentaListaArgs { Documento = messageEventArgs.Documento, TipoDoc = messageEventArgs.TipoDoc });
             }
+        }
+
+        public event EventHandler<CuentaListaArgs> CuentaLista;
+
+        public class CuentaListaArgs : EventArgs
+        {
+            public string Documento { get; set; }
+            public char TipoDoc { get; set; }
         }
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
@@ -91,6 +101,11 @@ namespace CajaHospital
         private void nuevoClienteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SwapView(_registrarPaciente);
+        }
+
+        private void cargaODescargaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SwapView(_facturarCargaDescarga);
         }
     }
 }
