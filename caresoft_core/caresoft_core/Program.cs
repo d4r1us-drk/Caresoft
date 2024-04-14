@@ -53,6 +53,7 @@ namespace caresoft_core
             services.AddScoped<IProductoService, ProductoService>();
             services.AddScoped<IAutorizacionService, AutorizacionService>();
             services.AddScoped<IFacturaService, FacturaService>();
+            services.AddScoped<ISucursalService, SucursalService>();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
         }
