@@ -20,7 +20,7 @@ public class SalaController(ISalaService salaService) : ControllerBase
     [HttpGet("get")]
     public async Task<ActionResult<List<SalaDto>>> GetAllSalas()
     {
-        var salas = await salaService.GetAllSalasAsync();
+        var salas = await salaService.GetSalasAsync();
         return Ok(salas);
     }
 

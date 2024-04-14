@@ -42,7 +42,7 @@ namespace caresoft_core.Services
             }
         }
 
-        public async Task<List<SalaDto>> GetAllSalasAsync()
+        public async Task<List<SalaDto>> GetSalasAsync()
         {
             try
             {
