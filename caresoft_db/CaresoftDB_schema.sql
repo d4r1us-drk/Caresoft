@@ -2717,4 +2717,27 @@ BEGIN
     END IF;
 END //
 
+CREATE TRIGGER CheckCuentaBalanceBeforePagoInsert
+BEFORE INSERT ON Pago
+FOR EACH ROW
+BEGIN
+    DECLARE cuentaBalance DECIMAL(10,2);
+
+    -- Get the balance of the related Cuenta
+    SELECT balance INTO cuentaBalance
+    FROM Cuenta
+    WHERE idCuenta = NEW.idCuenta;
+
+    -- Check if the balance is greater than zero
+    IF cuentaBalance > 0 THEN
+        -- Update the balance of the Cuenta after the Pago
+        UPDATE Cuenta
+        SET balance = balance - NEW.montoPagado
+        WHERE idCuenta = NEW.idCuenta;
+    ELSE
+        -- Raise an error if the balance is zero
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La cuenta tiene balance en cero, no hay nada que pagar';
+    END IF
+END//
+
 DELIMITER ;

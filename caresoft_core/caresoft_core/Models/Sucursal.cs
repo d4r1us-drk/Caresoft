@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using caresoft_core.Dto;
 
 namespace caresoft_core.Models;
 
-public partial class Sucursal
+public class Sucursal
 {
     public uint IdSucursal { get; set; }
 
@@ -14,4 +13,15 @@ public partial class Sucursal
     public string Telefono { get; set; } = null!;
 
     public virtual ICollection<Factura> Facturas { get; set; } = new List<Factura>();
+
+    public static Sucursal FromDto(SucursalDto sucursalDto)
+    {
+        return new Sucursal
+        {
+            IdSucursal = sucursalDto.IdSucursal,
+            Nombre = sucursalDto.Nombre,
+            Direccion = sucursalDto.Direccion,
+            Telefono = sucursalDto.Telefono
+        };
+    }
 }

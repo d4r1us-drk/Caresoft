@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace caresoft_core.Models;
 
-namespace caresoft_core.Models;
-
-public partial class Pago
+public class Pago
 {
     public uint IdPago { get; set; }
 

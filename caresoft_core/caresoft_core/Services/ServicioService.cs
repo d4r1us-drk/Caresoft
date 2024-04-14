@@ -5,114 +5,77 @@ using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
 using Microsoft.EntityFrameworkCore;
 
-namespace caresoft_core.Services
+namespace caresoft_core.Services;
+
+public class ServicioService(CaresoftDbContext dbContext) : IServicioService
 {
-    public class ServicioService : IServicioService
+    private readonly LogHandler<ServicioService> _logHandler = new();
+
+    public async Task<int> CreateServicioAsync(ServicioDto servicioDto)
     {
-        private readonly CaresoftDbContext _dbContext;
-        private readonly LogHandler<ServicioService> _logHandler = new LogHandler<ServicioService>();
-
-        public ServicioService(CaresoftDbContext dbContext)
+        try
         {
-            _dbContext = dbContext;
+            var servicio = Servicio.FromDto(servicioDto);
+            dbContext.Servicios.Add(servicio);
+
+            return await dbContext.SaveChangesAsync();
         }
-
-        public async Task<int> CreateServicioAsync(ServicioDto servicioDto)
+        catch (Exception ex)
         {
-            try
-            {
-                var servicio = new Servicio
-                {
-                    ServicioCodigo = servicioDto.ServicioCodigo,
-                    IdTipoServicio = servicioDto.IdTipoServicio,
-                    Nombre = servicioDto.Nombre,
-                    Descripcion = servicioDto.Descripcion,
-                    Costo = servicioDto.Costo
-                };
-
-                _dbContext.Servicios.Add(servicio);
-                await _dbContext.SaveChangesAsync();
-                _logHandler.LogInfo("Servicio created successfully.");
-                return 1;
-            }
-            catch (Exception ex)
-            {
-                _logHandler.LogError("Failed to create servicio.", ex);
-                throw;
-            }
+            _logHandler.LogError("Failed to create servicio.", ex);
+            throw;
         }
+    }
 
-        public async Task<List<ServicioDto>> GetServiciosAsync()
+    public async Task<List<ServicioDto>> GetServiciosAsync()
+    {
+        try
         {
-            try
-            {
-                return await _dbContext.Servicios
-                    .Select(s => new ServicioDto
-                    {
-                        ServicioCodigo = s.ServicioCodigo,
-                        IdTipoServicio = s.IdTipoServicio,
-                        Nombre = s.Nombre,
-                        Descripcion = s.Descripcion,
-                        Costo = s.Costo
-                    })
-                    .ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                _logHandler.LogError("Failed to retrieve servicios.", ex);
-                throw;
-            }
+            return await dbContext.Servicios
+                .Select(s => ServicioDto.FromModel(s)).ToListAsync();
         }
-
-        public async Task<int> UpdateServicioAsync(ServicioDto servicioDto)
+        catch (Exception ex)
         {
-            try
-            {
-                var servicio = await _dbContext.Servicios.FindAsync(servicioDto.ServicioCodigo);
-                if (servicio == null)
-                {
-                    _logHandler.LogInfo("Servicio not found.");
-                    return 0;
-                }
-
-                servicio.IdTipoServicio = servicioDto.IdTipoServicio;
-                servicio.Nombre = servicioDto.Nombre;
-                servicio.Descripcion = servicioDto.Descripcion;
-                servicio.Costo = servicioDto.Costo;
-
-                _dbContext.Servicios.Update(servicio);
-                await _dbContext.SaveChangesAsync();
-                _logHandler.LogInfo("Servicio updated successfully.");
-                return 1;
-            }
-            catch (Exception ex)
-            {
-                _logHandler.LogError("Failed to update servicio.", ex);
-                throw;
-            }
+            _logHandler.LogError("Failed to retrieve servicios.", ex);
+            throw;
         }
+    }
 
-        public async Task<int> DeleteServicioAsync(string servicioCodigo)
+    public async Task<int> UpdateServicioAsync(ServicioDto servicioDto)
+    {
+        try
         {
-            try
-            {
-                var servicio = await _dbContext.Servicios.FindAsync(servicioCodigo);
-                if (servicio == null)
-                {
-                    _logHandler.LogInfo("Servicio not found.");
-                    return 0;
-                }
+            var servicio = Servicio.FromDto(servicioDto);
+            dbContext.Servicios.Update(servicio);
 
-                _dbContext.Servicios.Remove(servicio);
-                await _dbContext.SaveChangesAsync();
-                _logHandler.LogInfo("Servicio deleted successfully.");
-                return 1;
-            }
-            catch (Exception ex)
+            return await dbContext.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            _logHandler.LogError("Failed to update servicio.", ex);
+            throw;
+        }
+    }
+
+    public async Task<int> DeleteServicioAsync(string servicioCodigo)
+    {
+        try
+        {
+            var servicio = await dbContext.Servicios.FindAsync(servicioCodigo);
+            if (servicio == null)
             {
-                _logHandler.LogError("Failed to delete servicio.", ex);
-                throw;
+                _logHandler.LogInfo("Servicio not found.");
+                return 0;
             }
+
+            dbContext.Servicios.Remove(servicio);
+
+            return await dbContext.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            _logHandler.LogError("Failed to delete servicio.", ex);
+            throw;
         }
     }
 }
