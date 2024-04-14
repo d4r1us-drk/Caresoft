@@ -2,17 +2,16 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Caja</h1>
     <div class="menu">
-        <table id="tblDatos" class="table" runat="server">
-            <thead>
-                <tr>
-                    <th>Concepto</th>
-                    <th>Monto</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Data rows will be added dynamically from code-behind -->
-            </tbody>
-        </table>
+        <asp:Table ID="tblDatos" CssClass="table" runat="server">
+            <asp:TableHeaderRow>
+                <asp:TableHeaderCell>Seleccionar</asp:TableHeaderCell>
+                <asp:TableHeaderCell>Concepto</asp:TableHeaderCell>
+                <asp:TableHeaderCell>Monto</asp:TableHeaderCell>
+            </asp:TableHeaderRow>
+        </asp:Table>
         <asp:Button ID="btnPagar" runat="server" Text="Pagar" OnClick="pagar_Click" />
+    </div>
+    <div class="popup" id="popup" Visible="false" runat="server">
+        <h1>Pagar</h1>
     </div>
 </asp:Content>
