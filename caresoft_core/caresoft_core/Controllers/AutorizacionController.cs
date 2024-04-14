@@ -9,7 +9,7 @@ namespace caresoft_core.Controllers;
 [ApiController]
 public class AutorizacionController(IAutorizacionService autorizacionService) : ControllerBase
 {
-    [HttpGet]
+    [HttpGet("get")]
     public async Task<ActionResult<IEnumerable<AutorizacionDto>>> GetAutorizacions()
     {
         try
@@ -17,13 +17,14 @@ public class AutorizacionController(IAutorizacionService autorizacionService) : 
             return (await autorizacionService.GetAutorizaciones())
                 .Select(s => AutorizacionDto.FromAutorizacion(s))
                 .ToList();
-        } catch (Exception)
+        }
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, "Error al obtener las autorizaciones");
         }
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("get/{id}")]
     public async Task<ActionResult<AutorizacionDto>> GetAutorizacion(uint id)
     {
         try
@@ -43,14 +44,9 @@ public class AutorizacionController(IAutorizacionService autorizacionService) : 
 
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutAutorizacion(uint id, AutorizacionDto autorizacionDto)
+    [HttpPut("update")]
+    public async Task<IActionResult> PutAutorizacion([FromQuery] AutorizacionDto autorizacionDto)
     {
-        if (id != autorizacionDto.IdAutorizacion)
-        {
-            return BadRequest();
-        }
-
         try
         {
             var autorizacion = Autorizacion.FromDto(autorizacionDto);
@@ -63,7 +59,7 @@ public class AutorizacionController(IAutorizacionService autorizacionService) : 
 
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public async Task<ActionResult<Autorizacion>> PostAutorizacion([FromQuery] AutorizacionDto autorizacionDto,
         int? idIngreso,
         string? consultaCodigo,
@@ -87,7 +83,7 @@ public class AutorizacionController(IAutorizacionService autorizacionService) : 
         }
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public async Task<IActionResult> DeleteAutorizacion(uint id)
     {
         try

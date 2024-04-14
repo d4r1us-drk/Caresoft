@@ -1,4 +1,3 @@
-using caresoft_core.Models;
 using caresoft_core.Dto;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
@@ -12,7 +11,7 @@ public class ProductoController(IProductoService productoService) : ControllerBa
 {
     private readonly LogHandler<ProductoController> _logHandler = new();
 
-    [HttpGet("list")]
+    [HttpGet("get")]
     public async Task<ActionResult<List<ProductoDto>>> GetProductosAsync()
     {
         try

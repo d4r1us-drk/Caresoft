@@ -11,7 +11,7 @@ public class AseguradoraController(IAseguradoraService aseguradoraService) : Con
 {
     private readonly LogHandler<AseguradoraController> _logHandler = new();
 
-    [HttpGet]
+    [HttpGet("get")]
     public async Task<ActionResult<IEnumerable<Aseguradora>>> GetAseguradoras()
     {
         try
@@ -45,16 +45,11 @@ public class AseguradoraController(IAseguradoraService aseguradoraService) : Con
         }
     }
 
-    [HttpPut("update/{id}")]
-    public async Task<IActionResult> PutAseguradora(uint id, [FromQuery] Aseguradora aseguradora)
+    [HttpPut("update")]
+    public async Task<IActionResult> PutAseguradora([FromQuery] Aseguradora aseguradora)
     {
         try
         {
-            if (id != aseguradora.IdAseguradora)
-            {
-                return BadRequest();
-            }
-
             var updated = await aseguradoraService.UpdateAseguradora(aseguradora);
 
             if (updated == 0)
@@ -70,7 +65,7 @@ public class AseguradoraController(IAseguradoraService aseguradoraService) : Con
         }
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public async Task<ActionResult<Aseguradora>> PostAseguradora([FromQuery] Aseguradora aseguradora)
     {
         try
@@ -90,7 +85,7 @@ public class AseguradoraController(IAseguradoraService aseguradoraService) : Con
 
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public async Task<IActionResult> DeleteAseguradora(uint id)
     {
         try
