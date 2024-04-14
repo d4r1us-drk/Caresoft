@@ -5,14 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace caresoft_core
 {
-    public class Program
+    public class Program(IConfiguration configuration)
     {
-        private readonly IConfiguration _configuration;
-
-        public Program(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
+        private readonly IConfiguration _configuration = configuration;
 
         public static void Main(string[] args)
         {
@@ -54,6 +49,8 @@ namespace caresoft_core
             services.AddScoped<IAutorizacionService, AutorizacionService>();
             services.AddScoped<IFacturaService, FacturaService>();
             services.AddScoped<ISucursalService, SucursalService>();
+            services.AddScoped<IAfeccionService, AfeccionService>();
+            services.AddScoped<IProveedorService, ProveedorService>();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
         }

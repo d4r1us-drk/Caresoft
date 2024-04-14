@@ -87,10 +87,8 @@ public class UsuarioController(IUsuarioService usuarioService) : ControllerBase
             {
                 return Ok(cuenta);
             }
-            else
-            {
-                return NotFound();
-            }
+
+            return NotFound();
         }
         catch (Exception ex)
         {

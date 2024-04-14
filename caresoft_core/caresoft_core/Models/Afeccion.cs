@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace caresoft_core.Models;
 
-namespace caresoft_core.Models;
-
-public partial class Afeccion
+public class Afeccion
 {
     public uint IdAfeccion { get; set; }
 
