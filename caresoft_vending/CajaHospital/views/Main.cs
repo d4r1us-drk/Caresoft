@@ -21,10 +21,10 @@ namespace CajaHospital
         public Main(string nombre, string documento)
         {
             InitializeComponent();
-            _principalView = new PrincipalView(nombre, documento);
-            _pagos = new Pagos();
-            _consultarCuentaCliente = new ConsultarCuentaCliente();
-            _registrarTransaccion = new RegistrarTransaccion();
+            _principalView = new PrincipalView(nombre, documento) { Dock = DockStyle.Fill };
+            _pagos = new Pagos() { Dock = DockStyle.Fill };
+            _consultarCuentaCliente = new ConsultarCuentaCliente() { Dock = DockStyle.Fill };
+            _registrarTransaccion = new RegistrarTransaccion() { Dock = DockStyle.Fill };
         }
 
         private void Main_Load(object sender, EventArgs e)
