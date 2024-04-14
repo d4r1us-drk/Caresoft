@@ -2737,7 +2737,7 @@ BEGIN
     ELSE
         -- Raise an error if the balance is zero
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La cuenta tiene balance en cero, no hay nada que pagar';
-    END IF
+    END IF;
 END//
 
 DELIMITER ;
