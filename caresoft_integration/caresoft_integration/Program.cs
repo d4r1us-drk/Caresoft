@@ -2,6 +2,8 @@ using caresoft_core.Services;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using caresoft_integration.Client;
 
 namespace caresoft_core;
 
@@ -26,14 +28,33 @@ public class Program(IConfiguration configuration)
 
     public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("CaresoftDB_Integration");
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll",
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+        });
+
+
+        var localConnectionString = configuration.GetConnectionString("LocalDB");
+        //var connectionString = configuration.GetConnectionString("LocalDB");
 
         services.AddControllers();
 
         services.AddDbContext<CaresoftDbContext>(options =>
         {
-            if (connectionString != null) options.UseMySQL(connectionString);
+            if (localConnectionString != null) options.UseMySQL(localConnectionString);
             else throw new ArgumentException("The connection string is null.");
+        });
+
+        services.AddHttpClient<CoreApiClient>(client =>
+        {
+            client.BaseAddress = new Uri("http://api.core.example.com/"); // URL del API del core
         });
 
         services.AddScoped<IUsuarioService, UsuarioService>();
@@ -65,6 +86,15 @@ public class Program(IConfiguration configuration)
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        app.UseCors("AllowAll"); // Asegúrate de llamar a UseCors antes de UseRouting y UseEndpoints.
+
+        app.UseRouting();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+        });
 
         app.UseHttpsRedirection();
 
