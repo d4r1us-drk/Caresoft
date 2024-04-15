@@ -7480,7 +7480,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<UsuarioDto>> ApiUsuarioGetAsync(string codigoODocumento)
+        public virtual System.Threading.Tasks.Task<UsuarioDto?> ApiUsuarioGetAsync(string codigoODocumento)
         {
             return ApiUsuarioGetAsync(codigoODocumento, System.Threading.CancellationToken.None);
         }
@@ -7488,7 +7488,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<UsuarioDto>> ApiUsuarioGetAsync(string codigoODocumento, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UsuarioDto?> ApiUsuarioGetAsync(string codigoODocumento, System.Threading.CancellationToken cancellationToken)
         {
             if (codigoODocumento == null)
                 throw new System.ArgumentNullException("codigoODocumento");
@@ -7529,7 +7529,7 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<UsuarioDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<UsuarioDto?>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);

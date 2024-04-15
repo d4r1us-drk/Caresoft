@@ -1,4 +1,5 @@
-﻿using caresoft_core_client.Models;
+﻿using caresoft_core_client.CoreWebApi;
+using caresoft_core_client.Models;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -6,7 +7,8 @@ namespace caresoft_core_client
 {
     public partial class frmInventarioActualizar : Form
     {
-        private const string baseUrl = "http://localhost:5143/api/Producto/";
+        private const string BaseUrl = "https://localhost:7038";
+        private readonly CoreWebApi.Client API = new(BaseUrl);
 
         public frmInventarioActualizar()
         {
@@ -16,13 +18,11 @@ namespace caresoft_core_client
 
         private async void LoadProductos()
         {
-            using (var client = new HttpClient())
-            {
                 try
                 {
-                    var response = await client.GetAsync(baseUrl + "get");
-                    response.EnsureSuccessStatusCode();
-                    var productos = await response.Content.ReadAsAsync<List<Producto>>();
+
+                    var productos = await API.ApiProductoGetAsync();
+
 
                     dbgrdProductos.DataSource = productos;
                 }
@@ -30,18 +30,17 @@ namespace caresoft_core_client
                 {
                     MessageBox.Show($"Error loading productos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
         }
 
-        private async Task LoadProveedores(uint idProducto)
+        private async Task LoadProveedores(int idProducto)
         {
-            using (var client = new HttpClient())
-            {
                 try
                 {
-                    var response = await client.GetAsync(baseUrl + $"{idProducto}/proveedores");
-                    response.EnsureSuccessStatusCode();
-                    var proveedores = await response.Content.ReadAsAsync<List<Proveedor>>();
+                    var proveedores = await API.ApiProductoProveedoresAsync(idProducto);
+                    if(proveedores == null)
+                    {
+                        return;
+                    }
 
                     chklbProveedores.DataSource = proveedores;
                     chklbProveedores.DisplayMember = "Nombre";
@@ -51,39 +50,38 @@ namespace caresoft_core_client
                 {
                     MessageBox.Show($"Error loading proveedores: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
         }
 
-        private async Task UpdateProveedores(uint idProducto)
+        private async Task UpdateProveedores(int idProducto)
         {
-            using (var client = new HttpClient())
-            {
+          
                 try
                 {
-                    // Add selected providers
                     foreach (var proveedor in chklbProveedores.CheckedItems)
                     {
-                        var rncProveedor = ((Proveedor)proveedor).RncProveedor;
-                        var response = await client.PostAsync(baseUrl + $"add-provider/{idProducto}/{rncProveedor}", null);
-                        response.EnsureSuccessStatusCode();
+                        var rncProveedor = ((ProveedorDto)proveedor).RncProveedor;
+                        await API.ApiProductoAddProviderAsync(idProducto, rncProveedor);
+
                     }
+
+
 
                     // Remove unselected providers
                     foreach (var proveedor in chklbProveedores.Items)
                     {
                         if (!chklbProveedores.CheckedItems.Contains(proveedor))
                         {
-                            var rncProveedor = ((Proveedor)proveedor).RncProveedor;
-                            var response = await client.DeleteAsync(baseUrl + $"delete-provider/{idProducto}/{rncProveedor}");
-                            response.EnsureSuccessStatusCode();
+                            var rncProveedor = ((ProveedorDto)proveedor).RncProveedor;
+                            await API.ApiProductoDeleteProviderAsync((int)idProducto, (int)rncProveedor);
                         }
                     }
+
+                    MessageBox.Show("Proveedores actualizados correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error updating proveedores: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -99,7 +97,7 @@ namespace caresoft_core_client
                 return;
             }
 
-            var selectedProduct = (Producto)dbgrdProductos.SelectedRows[0].DataBoundItem;
+            var selectedProduct = (ProductoDto)dbgrdProductos.SelectedRows[0].DataBoundItem;
 
             txtIdProducto.Text = selectedProduct.IdProducto.ToString();
             txtNombreProducto.Text = selectedProduct.Nombre;
@@ -117,27 +115,19 @@ namespace caresoft_core_client
                 return;
             }
 
-            var producto = new Producto
+            var producto = new ProductoDto
             {
-                IdProducto = uint.Parse(txtIdProducto.Text),
+                IdProducto = int.Parse(txtIdProducto.Text),
                 Nombre = txtNombreProducto.Text,
                 Descripcion = txtDescripcionProducto.Text,
-                Costo = decimal.Parse(txtCostoProducto.Text),
-                LoteDisponible = uint.Parse(txtLoteProducto.Text)
+                Costo = double.Parse(txtCostoProducto.Text),
+                LoteDisponible = int.Parse(txtLoteProducto.Text)
             };
 
-            await UpdateProveedores(producto.IdProducto);
-
-            var json = JsonConvert.SerializeObject(producto);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            using (var client = new HttpClient())
-            {
                 try
                 {
-                    var response = await client.PostAsync(baseUrl + "update", content);
-                    response.EnsureSuccessStatusCode();
-
+                    await API.ApiProductoUpdateAsync(producto.IdProducto, producto.Nombre, producto.Descripcion, producto.Costo, producto.LoteDisponible);
+                    await UpdateProveedores(producto.IdProducto);
                     MessageBox.Show("Product updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ClearFields();
                     LoadProductos();
@@ -146,7 +136,6 @@ namespace caresoft_core_client
                 {
                     MessageBox.Show($"Error updating product: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
         }
 
         private void ClearFields()
