@@ -1,16 +1,13 @@
-﻿using caresoft_core_client.CoreWebApi;
-
+﻿using caresoft_core.CoreWebApi;
 namespace caresoft_core_client;
 
 public partial class frmReporteConsultas : Form
 {
     private readonly Client API;
-    private readonly string baseUrl;
 
     public frmReporteConsultas(string baseUrl)
     {
         InitializeComponent();
-        baseUrl = baseUrl ?? string.Empty;
         API = new Client(baseUrl);
     }
 

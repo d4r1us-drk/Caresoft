@@ -16,13 +16,9 @@ namespace caresoft_core_client
 
 
             // Create an instance of frmMain and frmLogin
-<<<<<<< HEAD
             frmMain mainForm = new frmMain(baseURL);
             frmLogin loginForm = new frmLogin(baseURL);
-=======
-            frmMain mainForm = new frmMain();
-            frmLogin loginForm = new frmLogin(baseUrl);
->>>>>>> 15b1860d97c6b0c6ff56d9e0e44eda5649091804
+
 
             // Pass references to each other
             mainForm.SetLoginForm(loginForm);
