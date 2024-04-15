@@ -258,5 +258,68 @@ namespace caresoft_integration.Client
             return response.IsSuccessStatusCode ? 1 : 0;
         }
 
+        // Método CRUD para Usuario
+        public async Task<UsuarioDto?> GetUsuarioByIdAsync(string id)
+        {
+            var response = await _httpClient.GetAsync($"api/usuario/get/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<UsuarioDto>(jsonResponse);
+            }
+            return null;
+        }
+
+        public async Task<List<UsuarioDto>> GetUsuariosListAsync()
+        {
+            var response = await _httpClient.GetAsync("api/usuario/list");
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<UsuarioDto>>(jsonResponse);
+            }
+            return new List<UsuarioDto>();
+        }
+
+        public async Task<int> AddUsuarioAsync(UsuarioDto usuario)
+        {
+            string json = JsonConvert.SerializeObject(usuario);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("api/usuario/add", content);
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> UpdateUsuarioAsync(UsuarioDto usuario)
+        {
+            string json = JsonConvert.SerializeObject(usuario);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync("api/usuario/update", content);
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> DeleteUsuarioAsync(string codigoOdocumento)
+        {
+            var response = await _httpClient.DeleteAsync($"api/usuario/delete/{codigoOdocumento}");
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> ToggleUsuarioCuentaAsync(string codigoOdocumento)
+        {
+            var response = await _httpClient.PutAsync($"api/usuario/toggle-state-cuenta/{codigoOdocumento}", null);
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<CuentumDto?> GetCuentaByUsuarioCodigoOrDocumentoAsync(string codigoOdocumento)
+        {
+            var response = await _httpClient.GetAsync($"api/usuario/cuenta/{codigoOdocumento}");
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<CuentumDto>(jsonResponse);
+            }
+            return null;
+        }
+
+
     }
 }
