@@ -9,27 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="CoreWebApi\ConnectedService.json" />
-    <None Remove="CoreWebApi\CoreWebApi.nswag.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="CoreWebApi\ConnectedService.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="CoreWebApi\CoreWebApi.nswag.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
     <PackageReference Include="NLog" Version="5.2.8" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\caresoft_core\caresoft_core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

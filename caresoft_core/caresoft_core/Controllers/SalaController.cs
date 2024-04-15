@@ -9,7 +9,7 @@ namespace caresoft_core.Controllers;
 public class SalaController(ISalaService salaService) : ControllerBase
 {
     [HttpPost("add")]
-    public async Task<IActionResult> CreateSala([FromQuery] SalaDto salaDto)
+    public async Task<ActionResult<string>> CreateSala([FromQuery] SalaDto salaDto)
     {
         var result = await salaService.CreateSalaAsync(salaDto);
         if (result == 1)
@@ -18,14 +18,14 @@ public class SalaController(ISalaService salaService) : ControllerBase
     }
 
     [HttpGet("get")]
-    public async Task<ActionResult<List<SalaDto>>> GetAllSalas()
+    public async Task<ActionResult<List<SalaDto>?>> GetAllSalas()
     {
         var salas = await salaService.GetSalasAsync();
         return Ok(salas);
     }
 
     [HttpPut("update/{numSala}")]
-    public async Task<IActionResult> UpdateSalaEstado(uint numSala)
+    public async Task<ActionResult<string>> UpdateSalaEstado(uint numSala)
     {
         var result = await salaService.UpdateSalaEstadoAsync(numSala);
         if (result == 1)
@@ -34,7 +34,7 @@ public class SalaController(ISalaService salaService) : ControllerBase
     }
 
     [HttpDelete("delete/{numSala}")]
-    public async Task<IActionResult> DeleteSala(uint numSala)
+    public async Task<ActionResult<string>> DeleteSala(uint numSala)
     {
         var result = await salaService.DeleteSalaAsync(numSala);
         if (result == 1)

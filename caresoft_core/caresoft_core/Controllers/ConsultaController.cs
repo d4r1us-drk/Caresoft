@@ -12,7 +12,7 @@ public class ConsultaController(IConsultaService consultaService) : ControllerBa
     private readonly LogHandler<ConsultaController> _logHandler = new();
 
     [HttpPost("add")]
-    public async Task<IActionResult> CrearConsulta([FromQuery] ConsultaDto consulta)
+    public async Task<ActionResult<int>> CrearConsulta([FromQuery] ConsultaDto consulta)
     {
         try
         {
@@ -28,7 +28,7 @@ public class ConsultaController(IConsultaService consultaService) : ControllerBa
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> ActualizarConsulta([FromQuery] ConsultaDto consultaDto)
+    public async Task<ActionResult<int>> ActualizarConsulta([FromQuery] ConsultaDto consultaDto)
     {
         try
         {
@@ -44,7 +44,7 @@ public class ConsultaController(IConsultaService consultaService) : ControllerBa
     }
 
     [HttpDelete("delete/{consultaCodigo}")]
-    public async Task<IActionResult> EliminarConsulta(string consultaCodigo)
+    public async Task<ActionResult<int>> EliminarConsulta(string consultaCodigo)
     {
         try
         {
@@ -60,7 +60,7 @@ public class ConsultaController(IConsultaService consultaService) : ControllerBa
     }
 
     [HttpGet("get")]
-    public async Task<IActionResult> ListarConsultas()
+    public async Task<ActionResult<List<ConsultaDto>?>> ListarConsultas()
     {
         try
         {
@@ -75,7 +75,7 @@ public class ConsultaController(IConsultaService consultaService) : ControllerBa
     }
 
     [HttpPost("addServicio/{consultaCodigo}/{servicioCodigo}")]
-    public async Task<IActionResult> RelacionarServicio(string consultaCodigo, string servicioCodigo)
+    public async Task<ActionResult<int>> RelacionarServicio(string consultaCodigo, string servicioCodigo)
     {
         try
         {
@@ -91,7 +91,7 @@ public class ConsultaController(IConsultaService consultaService) : ControllerBa
     }
 
     [HttpDelete("deleteServicio/{consultaCodigo}/{servicioCodigo}")]
-    public async Task<IActionResult> DesrelacionarServicio(string consultaCodigo, string servicioCodigo)
+    public async Task<ActionResult<int>> DesrelacionarServicio(string consultaCodigo, string servicioCodigo)
     {
         try
         {
@@ -106,7 +106,7 @@ public class ConsultaController(IConsultaService consultaService) : ControllerBa
     }
 
     [HttpGet("getServicios/{consultaCodigo}/")]
-    public async Task<IActionResult> ListarServicios(string consultaCodigo)
+    public async Task<ActionResult<List<ServicioDto>>> ListarServicios(string consultaCodigo)
     {
         try
         {
@@ -121,7 +121,7 @@ public class ConsultaController(IConsultaService consultaService) : ControllerBa
     }
 
     [HttpPost("addProducto/{consultaCodigo}/{idProducto}/{cantidad}")]
-    public async Task<IActionResult> RelacionarProducto(string consultaCodigo, uint idProducto, int cantidad)
+    public async Task<ActionResult<int>> RelacionarProducto(string consultaCodigo, uint idProducto, int cantidad)
     {
         try
         {
@@ -136,7 +136,7 @@ public class ConsultaController(IConsultaService consultaService) : ControllerBa
     }
 
     [HttpDelete("deleteProducto/{consultaCodigo}/{idProducto}/{cantidad}")]
-    public async Task<IActionResult> DesrelacionarProducto(string consultaCodigo, uint idProducto, int cantidad)
+    public async Task<ActionResult<int>> DesrelacionarProducto(string consultaCodigo, uint idProducto, int cantidad)
     {
         try
         {
@@ -151,7 +151,7 @@ public class ConsultaController(IConsultaService consultaService) : ControllerBa
     }
 
     [HttpGet("getProductos/{consultaCodigo}")]
-    public async Task<IActionResult> ListarProductos(string consultaCodigo)
+    public async Task<ActionResult<List<ProductoDto>?>> ListarProductos(string consultaCodigo)
     {
         try
         {

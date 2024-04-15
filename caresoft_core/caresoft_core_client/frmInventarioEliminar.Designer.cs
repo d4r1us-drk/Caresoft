@@ -33,12 +33,14 @@
             pnlTitulos = new Panel();
             lblTitulo = new Label();
             pnlDatos = new Panel();
+            dataGridView1 = new DataGridView();
             pnlBotones = new Panel();
             btnEliminar = new Button();
             btnCancelar = new Button();
             ((System.ComponentModel.ISupportInitialize)dbgrdProductos).BeginInit();
             pnlTitulos.SuspendLayout();
             pnlDatos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             pnlBotones.SuspendLayout();
             SuspendLayout();
             // 
@@ -72,12 +74,21 @@
             // 
             // pnlDatos
             // 
+            pnlDatos.Controls.Add(dataGridView1);
             pnlDatos.Controls.Add(dbgrdProductos);
             pnlDatos.Dock = DockStyle.Fill;
             pnlDatos.Location = new Point(0, 57);
             pnlDatos.Name = "pnlDatos";
             pnlDatos.Size = new Size(875, 504);
             pnlDatos.TabIndex = 2;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(0, 0);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.Size = new Size(875, 473);
+            dataGridView1.TabIndex = 1;
             // 
             // pnlBotones
             // 
@@ -98,6 +109,7 @@
             btnEliminar.TabIndex = 1;
             btnEliminar.Text = "Eliminar Producto";
             btnEliminar.UseVisualStyleBackColor = true;
+            btnEliminar.Click += btnEliminar_Click;
             // 
             // btnCancelar
             // 
@@ -128,6 +140,7 @@
             pnlTitulos.ResumeLayout(false);
             pnlTitulos.PerformLayout();
             pnlDatos.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             pnlBotones.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -141,5 +154,6 @@
         private Label lblTitulo;
         private Button btnEliminar;
         private Button btnCancelar;
+        private DataGridView dataGridView1;
     }
 }

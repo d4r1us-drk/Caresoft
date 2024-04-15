@@ -9,7 +9,7 @@ namespace caresoft_core.Controllers;
 public class FacturaController(IFacturaService facturaService) : ControllerBase
 {
     [HttpPost("add")]
-    public async Task<IActionResult> AddFacturaAsync([FromQuery] FacturaDto facturaDto)
+    public async Task<ActionResult<int>> AddFacturaAsync([FromQuery] FacturaDto facturaDto)
     {
         try
         {
@@ -23,7 +23,7 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateFacturaAsync([FromQuery] FacturaDto facturaDto)
+    public async Task<ActionResult<int>> UpdateFacturaAsync([FromQuery] FacturaDto facturaDto)
     {
         try
         {
@@ -37,7 +37,7 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
     }
 
     [HttpDelete("delete/{facturaCodigo}")]
-    public async Task<IActionResult> DeleteFacturaAsync(string facturaCodigo)
+    public async Task<ActionResult<int>> DeleteFacturaAsync(string facturaCodigo)
     {
         try
         {
@@ -51,7 +51,7 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
     }
 
     [HttpGet("get")]
-    public async Task<IActionResult> GetFacturasAsync()
+    public async Task<ActionResult<List<FacturaDto>?>> GetFacturasAsync()
     {
         try
         {
@@ -65,7 +65,7 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
     }
 
     [HttpPost("addFacturaServicio")]
-    public async Task<IActionResult> AddFacturaServicioAsync([FromQuery] FacturaServicioDto facturaServicioDto)
+    public async Task<ActionResult<int>> AddFacturaServicioAsync([FromQuery] FacturaServicioDto facturaServicioDto)
     {
         try
         {
@@ -79,7 +79,7 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
     }
 
     [HttpDelete("deleteFacturaServicio/{facturaCodigo}/{servicioCodigo}")]
-    public async Task<IActionResult> DeleteFacturaServicioAsync(string facturaCodigo, string servicioCodigo)
+    public async Task<ActionResult<int>> DeleteFacturaServicioAsync(string facturaCodigo, string servicioCodigo)
     {
         try
         {
@@ -93,7 +93,7 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
     }
 
     [HttpGet("getFacturaServicios/{facturaCodigo}")]
-    public async Task<IActionResult> GetFacturaServiciosAsync(string facturaCodigo)
+    public async Task<ActionResult<List<ServicioDto>?>> GetFacturaServiciosAsync(string facturaCodigo)
     {
         try
         {
@@ -107,7 +107,7 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
     }
 
     [HttpPost("addFacturaProducto")]
-    public async Task<IActionResult> AddFacturaProductoAsync([FromQuery] FacturaProductoDto facturaProductoDto)
+    public async Task<ActionResult<int>> AddFacturaProductoAsync([FromQuery] FacturaProductoDto facturaProductoDto)
     {
         try
         {
@@ -121,7 +121,7 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
     }
 
     [HttpDelete("deleteFacturaProducto/{facturaCodigo}/{idProducto}")]
-    public async Task<IActionResult> DeleteFacturaProductoAsync(string facturaCodigo, uint idProducto)
+    public async Task<ActionResult<int>> DeleteFacturaProductoAsync(string facturaCodigo, uint idProducto)
     {
         try
         {
@@ -135,7 +135,7 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
     }
 
     [HttpGet("getFacturaProductos/{facturaCodigo}")]
-    public async Task<IActionResult> GetFacturaProductosAsync(string facturaCodigo)
+    public async Task<ActionResult<List<FacturaProductoDto>?>> GetFacturaProductosAsync(string facturaCodigo)
     {
         try
         {
@@ -149,7 +149,7 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
     }
 
     [HttpPost("addFacturaMetodoPago/{facturaCodigo}/{idMetodoPago}")]
-    public async Task<IActionResult> AddFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
+    public async Task<ActionResult<int>> AddFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
     {
         try
         {
@@ -163,7 +163,7 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
     }
 
     [HttpDelete("deleteFacturaMetodoPago/{facturaCodigo}/{idMetodoPago}")]
-    public async Task<IActionResult> DeleteFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
+    public async Task<ActionResult<int>> DeleteFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
     {
         try
         {
@@ -177,7 +177,7 @@ public class FacturaController(IFacturaService facturaService) : ControllerBase
     }
 
     [HttpGet("getMetodoPagos/{facturaCodigo}")]
-    public async Task<IActionResult> GetMetodoPagosAsync(string facturaCodigo)
+    public async Task<ActionResult<List<MetodoPagoDto>?>> GetMetodoPagosAsync(string facturaCodigo)
     {
         try
         {

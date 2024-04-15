@@ -14,7 +14,7 @@
 #pragma warning disable 3016 // Disable "CS3016 Arrays as attribute arguments is not CLS-compliant"
 #pragma warning disable 8603 // Disable "CS8603 Possible null reference return"
 
-namespace caresoft_core_client.CoreWebApi
+namespace caresoft_core.CoreWebApi
 {
     using System = global::System;
 
@@ -1297,7 +1297,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiConsultaAddAsync(string consultaCodigo, string documentoPaciente, string documentoMedico, int? idConsultorio, int? idAutorizacion, System.DateTimeOffset? fecha, string motivo, string comentarios, string estado, double? costo)
+        public virtual System.Threading.Tasks.Task<int> ApiConsultaAddAsync(string consultaCodigo, string documentoPaciente, string documentoMedico, int? idConsultorio, int? idAutorizacion, System.DateTimeOffset? fecha, string motivo, string comentarios, string estado, double? costo)
         {
             return ApiConsultaAddAsync(consultaCodigo, documentoPaciente, documentoMedico, idConsultorio, idAutorizacion, fecha, motivo, comentarios, estado, costo, System.Threading.CancellationToken.None);
         }
@@ -1305,7 +1305,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiConsultaAddAsync(string consultaCodigo, string documentoPaciente, string documentoMedico, int? idConsultorio, int? idAutorizacion, System.DateTimeOffset? fecha, string motivo, string comentarios, string estado, double? costo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiConsultaAddAsync(string consultaCodigo, string documentoPaciente, string documentoMedico, int? idConsultorio, int? idAutorizacion, System.DateTimeOffset? fecha, string motivo, string comentarios, string estado, double? costo, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Consulta/add?");
@@ -1357,8 +1357,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -1383,7 +1384,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -1407,7 +1413,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiConsultaUpdateAsync(string consultaCodigo, string documentoPaciente, string documentoMedico, int? idConsultorio, int? idAutorizacion, System.DateTimeOffset? fecha, string motivo, string comentarios, string estado, double? costo)
+        public virtual System.Threading.Tasks.Task<int> ApiConsultaUpdateAsync(string consultaCodigo, string documentoPaciente, string documentoMedico, int? idConsultorio, int? idAutorizacion, System.DateTimeOffset? fecha, string motivo, string comentarios, string estado, double? costo)
         {
             return ApiConsultaUpdateAsync(consultaCodigo, documentoPaciente, documentoMedico, idConsultorio, idAutorizacion, fecha, motivo, comentarios, estado, costo, System.Threading.CancellationToken.None);
         }
@@ -1415,7 +1421,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiConsultaUpdateAsync(string consultaCodigo, string documentoPaciente, string documentoMedico, int? idConsultorio, int? idAutorizacion, System.DateTimeOffset? fecha, string motivo, string comentarios, string estado, double? costo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiConsultaUpdateAsync(string consultaCodigo, string documentoPaciente, string documentoMedico, int? idConsultorio, int? idAutorizacion, System.DateTimeOffset? fecha, string motivo, string comentarios, string estado, double? costo, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Consulta/update?");
@@ -1467,8 +1473,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -1493,7 +1500,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -1517,7 +1529,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiConsultaDeleteAsync(string consultaCodigo)
+        public virtual System.Threading.Tasks.Task<int> ApiConsultaDeleteAsync(string consultaCodigo)
         {
             return ApiConsultaDeleteAsync(consultaCodigo, System.Threading.CancellationToken.None);
         }
@@ -1525,7 +1537,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiConsultaDeleteAsync(string consultaCodigo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiConsultaDeleteAsync(string consultaCodigo, System.Threading.CancellationToken cancellationToken)
         {
             if (consultaCodigo == null)
                 throw new System.ArgumentNullException("consultaCodigo");
@@ -1541,6 +1553,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -1565,7 +1578,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -1589,7 +1607,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiConsultaGetAsync()
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ConsultaDto>> ApiConsultaGetAsync()
         {
             return ApiConsultaGetAsync(System.Threading.CancellationToken.None);
         }
@@ -1597,7 +1615,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiConsultaGetAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ConsultaDto>> ApiConsultaGetAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Consulta/get");
@@ -1609,6 +1627,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -1633,7 +1652,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<ConsultaDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -1657,7 +1681,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiConsultaAddServicioAsync(string consultaCodigo, string servicioCodigo)
+        public virtual System.Threading.Tasks.Task<int> ApiConsultaAddServicioAsync(string consultaCodigo, string servicioCodigo)
         {
             return ApiConsultaAddServicioAsync(consultaCodigo, servicioCodigo, System.Threading.CancellationToken.None);
         }
@@ -1665,7 +1689,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiConsultaAddServicioAsync(string consultaCodigo, string servicioCodigo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiConsultaAddServicioAsync(string consultaCodigo, string servicioCodigo, System.Threading.CancellationToken cancellationToken)
         {
             if (consultaCodigo == null)
                 throw new System.ArgumentNullException("consultaCodigo");
@@ -1684,8 +1708,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -1710,7 +1735,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -1734,7 +1764,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiConsultaDeleteServicioAsync(string consultaCodigo, string servicioCodigo)
+        public virtual System.Threading.Tasks.Task<int> ApiConsultaDeleteServicioAsync(string consultaCodigo, string servicioCodigo)
         {
             return ApiConsultaDeleteServicioAsync(consultaCodigo, servicioCodigo, System.Threading.CancellationToken.None);
         }
@@ -1742,7 +1772,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiConsultaDeleteServicioAsync(string consultaCodigo, string servicioCodigo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiConsultaDeleteServicioAsync(string consultaCodigo, string servicioCodigo, System.Threading.CancellationToken cancellationToken)
         {
             if (consultaCodigo == null)
                 throw new System.ArgumentNullException("consultaCodigo");
@@ -1762,6 +1792,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -1786,7 +1817,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -1810,7 +1846,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiConsultaGetServiciosAsync(string consultaCodigo)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ServicioDto>> ApiConsultaGetServiciosAsync(string consultaCodigo)
         {
             return ApiConsultaGetServiciosAsync(consultaCodigo, System.Threading.CancellationToken.None);
         }
@@ -1818,7 +1854,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiConsultaGetServiciosAsync(string consultaCodigo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ServicioDto>> ApiConsultaGetServiciosAsync(string consultaCodigo, System.Threading.CancellationToken cancellationToken)
         {
             if (consultaCodigo == null)
                 throw new System.ArgumentNullException("consultaCodigo");
@@ -1834,6 +1870,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -1858,7 +1895,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<ServicioDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -1882,7 +1924,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiConsultaAddProductoAsync(string consultaCodigo, int idProducto, int cantidad)
+        public virtual System.Threading.Tasks.Task<int> ApiConsultaAddProductoAsync(string consultaCodigo, int idProducto, int cantidad)
         {
             return ApiConsultaAddProductoAsync(consultaCodigo, idProducto, cantidad, System.Threading.CancellationToken.None);
         }
@@ -1890,7 +1932,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiConsultaAddProductoAsync(string consultaCodigo, int idProducto, int cantidad, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiConsultaAddProductoAsync(string consultaCodigo, int idProducto, int cantidad, System.Threading.CancellationToken cancellationToken)
         {
             if (consultaCodigo == null)
                 throw new System.ArgumentNullException("consultaCodigo");
@@ -1913,8 +1955,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -1939,7 +1982,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -1963,7 +2011,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiConsultaDeleteProductoAsync(string consultaCodigo, int idProducto, int cantidad)
+        public virtual System.Threading.Tasks.Task<int> ApiConsultaDeleteProductoAsync(string consultaCodigo, int idProducto, int cantidad)
         {
             return ApiConsultaDeleteProductoAsync(consultaCodigo, idProducto, cantidad, System.Threading.CancellationToken.None);
         }
@@ -1971,7 +2019,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiConsultaDeleteProductoAsync(string consultaCodigo, int idProducto, int cantidad, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiConsultaDeleteProductoAsync(string consultaCodigo, int idProducto, int cantidad, System.Threading.CancellationToken cancellationToken)
         {
             if (consultaCodigo == null)
                 throw new System.ArgumentNullException("consultaCodigo");
@@ -1995,6 +2043,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -2019,7 +2068,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -2043,7 +2097,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiConsultaGetProductosAsync(string consultaCodigo)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ProductoDto>> ApiConsultaGetProductosAsync(string consultaCodigo)
         {
             return ApiConsultaGetProductosAsync(consultaCodigo, System.Threading.CancellationToken.None);
         }
@@ -2051,7 +2105,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiConsultaGetProductosAsync(string consultaCodigo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ProductoDto>> ApiConsultaGetProductosAsync(string consultaCodigo, System.Threading.CancellationToken cancellationToken)
         {
             if (consultaCodigo == null)
                 throw new System.ArgumentNullException("consultaCodigo");
@@ -2067,6 +2121,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -2091,7 +2146,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<ProductoDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -2519,7 +2579,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiFacturaAddAsync(string facturaCodigo, int? idCuenta, string consultaCodigo, int? idIngreso, int? idSucursal, string documentoCajero, double? montoSubtotal, double? montoTotal, System.DateTimeOffset? fecha)
+        public virtual System.Threading.Tasks.Task<int> ApiFacturaAddAsync(string facturaCodigo, int? idCuenta, string consultaCodigo, int? idIngreso, int? idSucursal, string documentoCajero, double? montoSubtotal, double? montoTotal, System.DateTimeOffset? fecha)
         {
             return ApiFacturaAddAsync(facturaCodigo, idCuenta, consultaCodigo, idIngreso, idSucursal, documentoCajero, montoSubtotal, montoTotal, fecha, System.Threading.CancellationToken.None);
         }
@@ -2527,7 +2587,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiFacturaAddAsync(string facturaCodigo, int? idCuenta, string consultaCodigo, int? idIngreso, int? idSucursal, string documentoCajero, double? montoSubtotal, double? montoTotal, System.DateTimeOffset? fecha, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiFacturaAddAsync(string facturaCodigo, int? idCuenta, string consultaCodigo, int? idIngreso, int? idSucursal, string documentoCajero, double? montoSubtotal, double? montoTotal, System.DateTimeOffset? fecha, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Factura/add?");
@@ -2575,8 +2635,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -2601,7 +2662,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -2625,7 +2691,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiFacturaUpdateAsync(string facturaCodigo, int? idCuenta, string consultaCodigo, int? idIngreso, int? idSucursal, string documentoCajero, double? montoSubtotal, double? montoTotal, System.DateTimeOffset? fecha)
+        public virtual System.Threading.Tasks.Task<int> ApiFacturaUpdateAsync(string facturaCodigo, int? idCuenta, string consultaCodigo, int? idIngreso, int? idSucursal, string documentoCajero, double? montoSubtotal, double? montoTotal, System.DateTimeOffset? fecha)
         {
             return ApiFacturaUpdateAsync(facturaCodigo, idCuenta, consultaCodigo, idIngreso, idSucursal, documentoCajero, montoSubtotal, montoTotal, fecha, System.Threading.CancellationToken.None);
         }
@@ -2633,7 +2699,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiFacturaUpdateAsync(string facturaCodigo, int? idCuenta, string consultaCodigo, int? idIngreso, int? idSucursal, string documentoCajero, double? montoSubtotal, double? montoTotal, System.DateTimeOffset? fecha, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiFacturaUpdateAsync(string facturaCodigo, int? idCuenta, string consultaCodigo, int? idIngreso, int? idSucursal, string documentoCajero, double? montoSubtotal, double? montoTotal, System.DateTimeOffset? fecha, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Factura/update?");
@@ -2681,8 +2747,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -2707,7 +2774,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -2731,7 +2803,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiFacturaDeleteAsync(string facturaCodigo)
+        public virtual System.Threading.Tasks.Task<int> ApiFacturaDeleteAsync(string facturaCodigo)
         {
             return ApiFacturaDeleteAsync(facturaCodigo, System.Threading.CancellationToken.None);
         }
@@ -2739,7 +2811,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiFacturaDeleteAsync(string facturaCodigo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiFacturaDeleteAsync(string facturaCodigo, System.Threading.CancellationToken cancellationToken)
         {
             if (facturaCodigo == null)
                 throw new System.ArgumentNullException("facturaCodigo");
@@ -2755,6 +2827,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -2779,7 +2852,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -2803,7 +2881,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiFacturaGetAsync()
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<FacturaDto>> ApiFacturaGetAsync()
         {
             return ApiFacturaGetAsync(System.Threading.CancellationToken.None);
         }
@@ -2811,7 +2889,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiFacturaGetAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<FacturaDto>> ApiFacturaGetAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Factura/get");
@@ -2823,6 +2901,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -2847,7 +2926,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<FacturaDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -2871,7 +2955,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiFacturaAddFacturaServicioAsync(string facturaCodigo, string servicioCodigo, int? idAutorizacion, string resultados, double? costo)
+        public virtual System.Threading.Tasks.Task<int> ApiFacturaAddFacturaServicioAsync(string facturaCodigo, string servicioCodigo, int? idAutorizacion, string resultados, double? costo)
         {
             return ApiFacturaAddFacturaServicioAsync(facturaCodigo, servicioCodigo, idAutorizacion, resultados, costo, System.Threading.CancellationToken.None);
         }
@@ -2879,7 +2963,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiFacturaAddFacturaServicioAsync(string facturaCodigo, string servicioCodigo, int? idAutorizacion, string resultados, double? costo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiFacturaAddFacturaServicioAsync(string facturaCodigo, string servicioCodigo, int? idAutorizacion, string resultados, double? costo, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Factura/addFacturaServicio?");
@@ -2911,8 +2995,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -2937,7 +3022,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -2961,7 +3051,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiFacturaDeleteFacturaServicioAsync(string facturaCodigo, string servicioCodigo)
+        public virtual System.Threading.Tasks.Task<int> ApiFacturaDeleteFacturaServicioAsync(string facturaCodigo, string servicioCodigo)
         {
             return ApiFacturaDeleteFacturaServicioAsync(facturaCodigo, servicioCodigo, System.Threading.CancellationToken.None);
         }
@@ -2969,7 +3059,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiFacturaDeleteFacturaServicioAsync(string facturaCodigo, string servicioCodigo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiFacturaDeleteFacturaServicioAsync(string facturaCodigo, string servicioCodigo, System.Threading.CancellationToken cancellationToken)
         {
             if (facturaCodigo == null)
                 throw new System.ArgumentNullException("facturaCodigo");
@@ -2989,6 +3079,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -3013,7 +3104,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -3037,7 +3133,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiFacturaGetFacturaServiciosAsync(string facturaCodigo)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ServicioDto>> ApiFacturaGetFacturaServiciosAsync(string facturaCodigo)
         {
             return ApiFacturaGetFacturaServiciosAsync(facturaCodigo, System.Threading.CancellationToken.None);
         }
@@ -3045,7 +3141,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiFacturaGetFacturaServiciosAsync(string facturaCodigo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ServicioDto>> ApiFacturaGetFacturaServiciosAsync(string facturaCodigo, System.Threading.CancellationToken cancellationToken)
         {
             if (facturaCodigo == null)
                 throw new System.ArgumentNullException("facturaCodigo");
@@ -3061,6 +3157,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -3085,7 +3182,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<ServicioDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -3109,7 +3211,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiFacturaAddFacturaProductoAsync(string facturaCodigo, int? idProducto, int? idAutorizacion, string resultados, double? costo)
+        public virtual System.Threading.Tasks.Task<int> ApiFacturaAddFacturaProductoAsync(string facturaCodigo, int? idProducto, int? idAutorizacion, string resultados, double? costo)
         {
             return ApiFacturaAddFacturaProductoAsync(facturaCodigo, idProducto, idAutorizacion, resultados, costo, System.Threading.CancellationToken.None);
         }
@@ -3117,7 +3219,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiFacturaAddFacturaProductoAsync(string facturaCodigo, int? idProducto, int? idAutorizacion, string resultados, double? costo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiFacturaAddFacturaProductoAsync(string facturaCodigo, int? idProducto, int? idAutorizacion, string resultados, double? costo, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Factura/addFacturaProducto?");
@@ -3149,8 +3251,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -3175,7 +3278,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -3199,7 +3307,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiFacturaDeleteFacturaProductoAsync(string facturaCodigo, int idProducto)
+        public virtual System.Threading.Tasks.Task<int> ApiFacturaDeleteFacturaProductoAsync(string facturaCodigo, int idProducto)
         {
             return ApiFacturaDeleteFacturaProductoAsync(facturaCodigo, idProducto, System.Threading.CancellationToken.None);
         }
@@ -3207,7 +3315,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiFacturaDeleteFacturaProductoAsync(string facturaCodigo, int idProducto, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiFacturaDeleteFacturaProductoAsync(string facturaCodigo, int idProducto, System.Threading.CancellationToken cancellationToken)
         {
             if (facturaCodigo == null)
                 throw new System.ArgumentNullException("facturaCodigo");
@@ -3227,6 +3335,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -3251,7 +3360,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -3275,7 +3389,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiFacturaGetFacturaProductosAsync(string facturaCodigo)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<FacturaProductoDto>> ApiFacturaGetFacturaProductosAsync(string facturaCodigo)
         {
             return ApiFacturaGetFacturaProductosAsync(facturaCodigo, System.Threading.CancellationToken.None);
         }
@@ -3283,7 +3397,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiFacturaGetFacturaProductosAsync(string facturaCodigo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<FacturaProductoDto>> ApiFacturaGetFacturaProductosAsync(string facturaCodigo, System.Threading.CancellationToken cancellationToken)
         {
             if (facturaCodigo == null)
                 throw new System.ArgumentNullException("facturaCodigo");
@@ -3299,6 +3413,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -3323,7 +3438,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<FacturaProductoDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -3347,7 +3467,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiFacturaAddFacturaMetodoPagoAsync(string facturaCodigo, int idMetodoPago)
+        public virtual System.Threading.Tasks.Task<int> ApiFacturaAddFacturaMetodoPagoAsync(string facturaCodigo, int idMetodoPago)
         {
             return ApiFacturaAddFacturaMetodoPagoAsync(facturaCodigo, idMetodoPago, System.Threading.CancellationToken.None);
         }
@@ -3355,7 +3475,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiFacturaAddFacturaMetodoPagoAsync(string facturaCodigo, int idMetodoPago, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiFacturaAddFacturaMetodoPagoAsync(string facturaCodigo, int idMetodoPago, System.Threading.CancellationToken cancellationToken)
         {
             if (facturaCodigo == null)
                 throw new System.ArgumentNullException("facturaCodigo");
@@ -3374,8 +3494,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -3400,7 +3521,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -3424,7 +3550,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiFacturaDeleteFacturaMetodoPagoAsync(string facturaCodigo, int idMetodoPago)
+        public virtual System.Threading.Tasks.Task<int> ApiFacturaDeleteFacturaMetodoPagoAsync(string facturaCodigo, int idMetodoPago)
         {
             return ApiFacturaDeleteFacturaMetodoPagoAsync(facturaCodigo, idMetodoPago, System.Threading.CancellationToken.None);
         }
@@ -3432,7 +3558,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiFacturaDeleteFacturaMetodoPagoAsync(string facturaCodigo, int idMetodoPago, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiFacturaDeleteFacturaMetodoPagoAsync(string facturaCodigo, int idMetodoPago, System.Threading.CancellationToken cancellationToken)
         {
             if (facturaCodigo == null)
                 throw new System.ArgumentNullException("facturaCodigo");
@@ -3452,6 +3578,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -3476,7 +3603,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -3500,7 +3632,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiFacturaGetMetodoPagosAsync(string facturaCodigo)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MetodoPagoDto>> ApiFacturaGetMetodoPagosAsync(string facturaCodigo)
         {
             return ApiFacturaGetMetodoPagosAsync(facturaCodigo, System.Threading.CancellationToken.None);
         }
@@ -3508,7 +3640,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiFacturaGetMetodoPagosAsync(string facturaCodigo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MetodoPagoDto>> ApiFacturaGetMetodoPagosAsync(string facturaCodigo, System.Threading.CancellationToken cancellationToken)
         {
             if (facturaCodigo == null)
                 throw new System.ArgumentNullException("facturaCodigo");
@@ -3524,6 +3656,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -3548,7 +3681,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<MetodoPagoDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -3572,7 +3710,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiIngresoAddAsync(int? idIngreso, string documentoPaciente, string documentoEnfermero, string documentoMedico, string consultaCodigo, int? idAutorizacion, int? numSala, double? costoEstancia, System.DateTimeOffset? fechaIngreso, System.DateTimeOffset? fechaAlta)
+        public virtual System.Threading.Tasks.Task<string> ApiIngresoAddAsync(int? idIngreso, string documentoPaciente, string documentoEnfermero, string documentoMedico, string consultaCodigo, int? idAutorizacion, int? numSala, double? costoEstancia, System.DateTimeOffset? fechaIngreso, System.DateTimeOffset? fechaAlta)
         {
             return ApiIngresoAddAsync(idIngreso, documentoPaciente, documentoEnfermero, documentoMedico, consultaCodigo, idAutorizacion, numSala, costoEstancia, fechaIngreso, fechaAlta, System.Threading.CancellationToken.None);
         }
@@ -3580,7 +3718,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiIngresoAddAsync(int? idIngreso, string documentoPaciente, string documentoEnfermero, string documentoMedico, string consultaCodigo, int? idAutorizacion, int? numSala, double? costoEstancia, System.DateTimeOffset? fechaIngreso, System.DateTimeOffset? fechaAlta, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiIngresoAddAsync(int? idIngreso, string documentoPaciente, string documentoEnfermero, string documentoMedico, string consultaCodigo, int? idAutorizacion, int? numSala, double? costoEstancia, System.DateTimeOffset? fechaIngreso, System.DateTimeOffset? fechaAlta, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Ingreso/add?");
@@ -3632,8 +3770,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -3658,7 +3797,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -3682,7 +3826,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiIngresoUpdateAsync(int? idIngreso, string documentoPaciente, string documentoEnfermero, string documentoMedico, string consultaCodigo, int? idAutorizacion, int? numSala, double? costoEstancia, System.DateTimeOffset? fechaIngreso, System.DateTimeOffset? fechaAlta, string id)
+        public virtual System.Threading.Tasks.Task<string> ApiIngresoUpdateAsync(int? idIngreso, string documentoPaciente, string documentoEnfermero, string documentoMedico, string consultaCodigo, int? idAutorizacion, int? numSala, double? costoEstancia, System.DateTimeOffset? fechaIngreso, System.DateTimeOffset? fechaAlta, string id)
         {
             return ApiIngresoUpdateAsync(idIngreso, documentoPaciente, documentoEnfermero, documentoMedico, consultaCodigo, idAutorizacion, numSala, costoEstancia, fechaIngreso, fechaAlta, id, System.Threading.CancellationToken.None);
         }
@@ -3690,7 +3834,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiIngresoUpdateAsync(int? idIngreso, string documentoPaciente, string documentoEnfermero, string documentoMedico, string consultaCodigo, int? idAutorizacion, int? numSala, double? costoEstancia, System.DateTimeOffset? fechaIngreso, System.DateTimeOffset? fechaAlta, string id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiIngresoUpdateAsync(int? idIngreso, string documentoPaciente, string documentoEnfermero, string documentoMedico, string consultaCodigo, int? idAutorizacion, int? numSala, double? costoEstancia, System.DateTimeOffset? fechaIngreso, System.DateTimeOffset? fechaAlta, string id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -3746,8 +3890,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -3772,7 +3917,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -3796,7 +3946,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiIngresoDeleteAsync(int id)
+        public virtual System.Threading.Tasks.Task<string> ApiIngresoDeleteAsync(int id)
         {
             return ApiIngresoDeleteAsync(id, System.Threading.CancellationToken.None);
         }
@@ -3804,7 +3954,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiIngresoDeleteAsync(int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiIngresoDeleteAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -3820,6 +3970,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -3844,7 +3995,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -4020,7 +4176,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiIngresoAfeccionesPostAsync(int idIngreso, int idAfeccion)
+        public virtual System.Threading.Tasks.Task<string> ApiIngresoAfeccionesPostAsync(int idIngreso, int idAfeccion)
         {
             return ApiIngresoAfeccionesPostAsync(idIngreso, idAfeccion, System.Threading.CancellationToken.None);
         }
@@ -4028,7 +4184,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiIngresoAfeccionesPostAsync(int idIngreso, int idAfeccion, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiIngresoAfeccionesPostAsync(int idIngreso, int idAfeccion, System.Threading.CancellationToken cancellationToken)
         {
             if (idIngreso == null)
                 throw new System.ArgumentNullException("idIngreso");
@@ -4047,8 +4203,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -4073,7 +4230,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -4097,7 +4259,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiIngresoAfeccionesDeleteAsync(int idIngreso, int idAfeccion)
+        public virtual System.Threading.Tasks.Task<string> ApiIngresoAfeccionesDeleteAsync(int idIngreso, int idAfeccion)
         {
             return ApiIngresoAfeccionesDeleteAsync(idIngreso, idAfeccion, System.Threading.CancellationToken.None);
         }
@@ -4105,7 +4267,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiIngresoAfeccionesDeleteAsync(int idIngreso, int idAfeccion, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiIngresoAfeccionesDeleteAsync(int idIngreso, int idAfeccion, System.Threading.CancellationToken cancellationToken)
         {
             if (idIngreso == null)
                 throw new System.ArgumentNullException("idIngreso");
@@ -4125,6 +4287,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -4149,7 +4312,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -4251,7 +4419,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiMetodoPagoAddAsync(int? idMetodoPago, string nombre)
+        public virtual System.Threading.Tasks.Task<string> ApiMetodoPagoAddAsync(int? idMetodoPago, string nombre)
         {
             return ApiMetodoPagoAddAsync(idMetodoPago, nombre, System.Threading.CancellationToken.None);
         }
@@ -4259,7 +4427,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiMetodoPagoAddAsync(int? idMetodoPago, string nombre, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiMetodoPagoAddAsync(int? idMetodoPago, string nombre, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/MetodoPago/add?");
@@ -4279,8 +4447,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -4305,7 +4474,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -4403,7 +4577,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiMetodoPagoUpdateAsync(int? idMetodoPago, string nombre)
+        public virtual System.Threading.Tasks.Task<string> ApiMetodoPagoUpdateAsync(int? idMetodoPago, string nombre)
         {
             return ApiMetodoPagoUpdateAsync(idMetodoPago, nombre, System.Threading.CancellationToken.None);
         }
@@ -4411,7 +4585,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiMetodoPagoUpdateAsync(int? idMetodoPago, string nombre, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiMetodoPagoUpdateAsync(int? idMetodoPago, string nombre, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/MetodoPago/update?");
@@ -4431,8 +4605,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -4457,7 +4632,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -4481,7 +4661,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiMetodoPagoDeleteAsync(int id)
+        public virtual System.Threading.Tasks.Task<string> ApiMetodoPagoDeleteAsync(int id)
         {
             return ApiMetodoPagoDeleteAsync(id, System.Threading.CancellationToken.None);
         }
@@ -4489,7 +4669,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiMetodoPagoDeleteAsync(int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiMetodoPagoDeleteAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -4505,6 +4685,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -4529,7 +4710,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -5968,7 +6154,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiReservaServicioAddAsync(int? idReserva, string documentoPaciente, string documentoMedico, string servicioCodigo, System.DateTimeOffset? fechaReservada, string estado)
+        public virtual System.Threading.Tasks.Task<string> ApiReservaServicioAddAsync(int? idReserva, string documentoPaciente, string documentoMedico, string servicioCodigo, System.DateTimeOffset? fechaReservada, string estado)
         {
             return ApiReservaServicioAddAsync(idReserva, documentoPaciente, documentoMedico, servicioCodigo, fechaReservada, estado, System.Threading.CancellationToken.None);
         }
@@ -5976,7 +6162,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiReservaServicioAddAsync(int? idReserva, string documentoPaciente, string documentoMedico, string servicioCodigo, System.DateTimeOffset? fechaReservada, string estado, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiReservaServicioAddAsync(int? idReserva, string documentoPaciente, string documentoMedico, string servicioCodigo, System.DateTimeOffset? fechaReservada, string estado, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ReservaServicio/add?");
@@ -6012,8 +6198,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -6038,7 +6225,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6062,7 +6254,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiReservaServicioUpdateAsync(int? idReserva, string documentoPaciente, string documentoMedico, string servicioCodigo, System.DateTimeOffset? fechaReservada, string estado)
+        public virtual System.Threading.Tasks.Task<string> ApiReservaServicioUpdateAsync(int? idReserva, string documentoPaciente, string documentoMedico, string servicioCodigo, System.DateTimeOffset? fechaReservada, string estado)
         {
             return ApiReservaServicioUpdateAsync(idReserva, documentoPaciente, documentoMedico, servicioCodigo, fechaReservada, estado, System.Threading.CancellationToken.None);
         }
@@ -6070,7 +6262,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiReservaServicioUpdateAsync(int? idReserva, string documentoPaciente, string documentoMedico, string servicioCodigo, System.DateTimeOffset? fechaReservada, string estado, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiReservaServicioUpdateAsync(int? idReserva, string documentoPaciente, string documentoMedico, string servicioCodigo, System.DateTimeOffset? fechaReservada, string estado, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ReservaServicio/update?");
@@ -6106,8 +6298,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -6132,7 +6325,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6156,7 +6354,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiReservaServicioToggleStateAsync(int id)
+        public virtual System.Threading.Tasks.Task<string> ApiReservaServicioToggleStateAsync(int id)
         {
             return ApiReservaServicioToggleStateAsync(id, System.Threading.CancellationToken.None);
         }
@@ -6164,7 +6362,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiReservaServicioToggleStateAsync(int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiReservaServicioToggleStateAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -6179,8 +6377,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -6205,7 +6404,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6229,7 +6433,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiReservaServicioDeleteAsync(int id)
+        public virtual System.Threading.Tasks.Task<string> ApiReservaServicioDeleteAsync(int id)
         {
             return ApiReservaServicioDeleteAsync(id, System.Threading.CancellationToken.None);
         }
@@ -6237,7 +6441,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiReservaServicioDeleteAsync(int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiReservaServicioDeleteAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -6253,6 +6457,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -6277,7 +6482,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6301,7 +6511,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiSalaAddAsync(int? numSala, string estado)
+        public virtual System.Threading.Tasks.Task<string> ApiSalaAddAsync(int? numSala, string estado)
         {
             return ApiSalaAddAsync(numSala, estado, System.Threading.CancellationToken.None);
         }
@@ -6309,7 +6519,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiSalaAddAsync(int? numSala, string estado, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiSalaAddAsync(int? numSala, string estado, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Sala/add?");
@@ -6329,8 +6539,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -6355,7 +6566,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6453,7 +6669,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiSalaUpdateAsync(int numSala)
+        public virtual System.Threading.Tasks.Task<string> ApiSalaUpdateAsync(int numSala)
         {
             return ApiSalaUpdateAsync(numSala, System.Threading.CancellationToken.None);
         }
@@ -6461,7 +6677,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiSalaUpdateAsync(int numSala, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiSalaUpdateAsync(int numSala, System.Threading.CancellationToken cancellationToken)
         {
             if (numSala == null)
                 throw new System.ArgumentNullException("numSala");
@@ -6476,8 +6692,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -6502,7 +6719,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6526,7 +6748,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiSalaDeleteAsync(int numSala)
+        public virtual System.Threading.Tasks.Task<string> ApiSalaDeleteAsync(int numSala)
         {
             return ApiSalaDeleteAsync(numSala, System.Threading.CancellationToken.None);
         }
@@ -6534,7 +6756,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiSalaDeleteAsync(int numSala, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiSalaDeleteAsync(int numSala, System.Threading.CancellationToken cancellationToken)
         {
             if (numSala == null)
                 throw new System.ArgumentNullException("numSala");
@@ -6550,6 +6772,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -6574,7 +6797,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6598,7 +6826,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiServicioAddAsync(ServicioDto body)
+        public virtual System.Threading.Tasks.Task<string> ApiServicioAddAsync(ServicioDto body)
         {
             return ApiServicioAddAsync(body, System.Threading.CancellationToken.None);
         }
@@ -6606,7 +6834,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiServicioAddAsync(ServicioDto body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiServicioAddAsync(ServicioDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Servicio/add");
@@ -6622,6 +6850,7 @@ namespace caresoft_core_client.CoreWebApi
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -6646,7 +6875,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6744,7 +6978,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiServicioUpdateAsync(ServicioDto body)
+        public virtual System.Threading.Tasks.Task<string> ApiServicioUpdateAsync(ServicioDto body)
         {
             return ApiServicioUpdateAsync(body, System.Threading.CancellationToken.None);
         }
@@ -6752,7 +6986,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiServicioUpdateAsync(ServicioDto body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiServicioUpdateAsync(ServicioDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Servicio/update");
@@ -6768,6 +7002,7 @@ namespace caresoft_core_client.CoreWebApi
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -6792,7 +7027,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6816,7 +7056,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiServicioDeleteAsync(string servicioCodigo)
+        public virtual System.Threading.Tasks.Task<string> ApiServicioDeleteAsync(string servicioCodigo)
         {
             return ApiServicioDeleteAsync(servicioCodigo, System.Threading.CancellationToken.None);
         }
@@ -6824,7 +7064,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiServicioDeleteAsync(string servicioCodigo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiServicioDeleteAsync(string servicioCodigo, System.Threading.CancellationToken cancellationToken)
         {
             if (servicioCodigo == null)
                 throw new System.ArgumentNullException("servicioCodigo");
@@ -6840,6 +7080,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -6864,7 +7105,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -6888,7 +7134,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiSucursalPostAsync(SucursalDto body)
+        public virtual System.Threading.Tasks.Task<string> ApiSucursalPostAsync(SucursalDto body)
         {
             return ApiSucursalPostAsync(body, System.Threading.CancellationToken.None);
         }
@@ -6896,7 +7142,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiSucursalPostAsync(SucursalDto body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiSucursalPostAsync(SucursalDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Sucursal");
@@ -6912,6 +7158,7 @@ namespace caresoft_core_client.CoreWebApi
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -6936,7 +7183,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -7034,7 +7286,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiSucursalPutAsync(SucursalDto body)
+        public virtual System.Threading.Tasks.Task<string> ApiSucursalPutAsync(SucursalDto body)
         {
             return ApiSucursalPutAsync(body, System.Threading.CancellationToken.None);
         }
@@ -7042,7 +7294,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiSucursalPutAsync(SucursalDto body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiSucursalPutAsync(SucursalDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Sucursal");
@@ -7058,6 +7310,7 @@ namespace caresoft_core_client.CoreWebApi
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -7082,7 +7335,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -7106,7 +7364,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiSucursalDeleteAsync(int id)
+        public virtual System.Threading.Tasks.Task<string> ApiSucursalDeleteAsync(int id)
         {
             return ApiSucursalDeleteAsync(id, System.Threading.CancellationToken.None);
         }
@@ -7114,7 +7372,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiSucursalDeleteAsync(int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiSucursalDeleteAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -7130,6 +7388,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -7154,7 +7413,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -7178,7 +7442,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiTipoServicioAddAsync(int? idTipoServicio, string nombre)
+        public virtual System.Threading.Tasks.Task<string> ApiTipoServicioAddAsync(int? idTipoServicio, string nombre)
         {
             return ApiTipoServicioAddAsync(idTipoServicio, nombre, System.Threading.CancellationToken.None);
         }
@@ -7186,7 +7450,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiTipoServicioAddAsync(int? idTipoServicio, string nombre, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> ApiTipoServicioAddAsync(int? idTipoServicio, string nombre, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/TipoServicio/add?");
@@ -7206,8 +7470,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -7232,7 +7497,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -7330,7 +7600,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiTipoServicioUpdateAsync(int? idTipoServicio, string nombre)
+        public virtual System.Threading.Tasks.Task<int> ApiTipoServicioUpdateAsync(int? idTipoServicio, string nombre)
         {
             return ApiTipoServicioUpdateAsync(idTipoServicio, nombre, System.Threading.CancellationToken.None);
         }
@@ -7338,7 +7608,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiTipoServicioUpdateAsync(int? idTipoServicio, string nombre, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiTipoServicioUpdateAsync(int? idTipoServicio, string nombre, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/TipoServicio/update?");
@@ -7358,8 +7628,9 @@ namespace caresoft_core_client.CoreWebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -7384,7 +7655,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -7408,7 +7684,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiTipoServicioDeleteAsync(int id)
+        public virtual System.Threading.Tasks.Task<int> ApiTipoServicioDeleteAsync(int id)
         {
             return ApiTipoServicioDeleteAsync(id, System.Threading.CancellationToken.None);
         }
@@ -7416,7 +7692,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiTipoServicioDeleteAsync(int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<int> ApiTipoServicioDeleteAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -7432,6 +7708,7 @@ namespace caresoft_core_client.CoreWebApi
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -7456,7 +7733,12 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var objectResponse_ = await ReadObjectResponseAsync<int>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -7480,7 +7762,7 @@ namespace caresoft_core_client.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<UsuarioDto?> ApiUsuarioGetAsync(string codigoODocumento)
+        public virtual System.Threading.Tasks.Task<UsuarioDto> ApiUsuarioGetAsync(string codigoODocumento)
         {
             return ApiUsuarioGetAsync(codigoODocumento, System.Threading.CancellationToken.None);
         }
@@ -7488,7 +7770,7 @@ namespace caresoft_core_client.CoreWebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<UsuarioDto?> ApiUsuarioGetAsync(string codigoODocumento, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UsuarioDto> ApiUsuarioGetAsync(string codigoODocumento, System.Threading.CancellationToken cancellationToken)
         {
             if (codigoODocumento == null)
                 throw new System.ArgumentNullException("codigoODocumento");
@@ -7529,7 +7811,7 @@ namespace caresoft_core_client.CoreWebApi
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<UsuarioDto?>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<UsuarioDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -8311,6 +8593,41 @@ namespace caresoft_core_client.CoreWebApi
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.19.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.3.0))")]
+    public partial class ConsultaDto
+    {
+        [Newtonsoft.Json.JsonProperty("consultaCodigo", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ConsultaCodigo { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("documentoPaciente", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string DocumentoPaciente { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("documentoMedico", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string DocumentoMedico { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("idConsultorio", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int IdConsultorio { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("idAutorizacion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? IdAutorizacion { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("fecha", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset Fecha { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("motivo", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Motivo { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("comentarios", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Comentarios { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("estado", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Estado { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("costo", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double Costo { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.19.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.3.0))")]
     public partial class Consultorio
     {
         [Newtonsoft.Json.JsonProperty("idConsultorio", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -8486,6 +8803,38 @@ namespace caresoft_core_client.CoreWebApi
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.19.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.3.0))")]
+    public partial class FacturaDto
+    {
+        [Newtonsoft.Json.JsonProperty("facturaCodigo", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string FacturaCodigo { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("idCuenta", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int IdCuenta { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("consultaCodigo", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ConsultaCodigo { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("idIngreso", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? IdIngreso { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("idSucursal", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int IdSucursal { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("documentoCajero", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string DocumentoCajero { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("montoSubtotal", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double MontoSubtotal { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("montoTotal", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double MontoTotal { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("fecha", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset Fecha { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.19.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.3.0))")]
     public partial class FacturaProducto
     {
         [Newtonsoft.Json.JsonProperty("facturaCodigo", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -8511,6 +8860,26 @@ namespace caresoft_core_client.CoreWebApi
 
         [Newtonsoft.Json.JsonProperty("idProductoNavigation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Producto IdProductoNavigation { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.19.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.3.0))")]
+    public partial class FacturaProductoDto
+    {
+        [Newtonsoft.Json.JsonProperty("facturaCodigo", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string FacturaCodigo { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("idProducto", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int IdProducto { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("idAutorizacion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? IdAutorizacion { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("resultados", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Resultados { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("costo", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double Costo { get; set; }
 
     }
 

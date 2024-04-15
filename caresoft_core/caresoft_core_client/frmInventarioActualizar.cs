@@ -1,4 +1,4 @@
-﻿using caresoft_core_client.CoreWebApi;
+﻿using caresoft_core.CoreWebApi;
 using caresoft_core_client.Models;
 using Newtonsoft.Json;
 using System.Text;
@@ -7,13 +7,13 @@ namespace caresoft_core_client
 {
     public partial class frmInventarioActualizar : Form
     {
-        private const string BaseUrl = "https://localhost:7038";
-        private readonly CoreWebApi.Client API = new(BaseUrl);
+        private readonly Client API;
 
-        public frmInventarioActualizar()
+        public frmInventarioActualizar(string baseUrl)
         {
             InitializeComponent();
             LoadProductos();
+            API = new Client(baseUrl);
         }
 
         private async void LoadProductos()

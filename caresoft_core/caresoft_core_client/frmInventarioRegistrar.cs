@@ -1,17 +1,18 @@
-﻿using caresoft_core_client.Models;
+﻿using caresoft_core.CoreWebApi;
+using caresoft_core_client.Models;
 
 namespace caresoft_core_client
 {
     public partial class frmInventarioRegistrar : Form
     {
-        private readonly HttpClient httpClient = new();
 
-        private readonly caresoft_core_client.CoreWebApi.Client API = new("https://localhost:7038");
+        private readonly Client API;
 
-        public frmInventarioRegistrar()
+        public frmInventarioRegistrar(string baseURL)
         {
             InitializeComponent();
             LoadProviders();
+            API = new(baseURL);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -25,18 +26,18 @@ namespace caresoft_core_client
             // Get input values
             string nombre = txtNombreProducto.Text.Trim();
             string descripcion = txtDescripcionProducto.Text.Trim();
-            decimal costo = decimal.Parse(txtCostoProducto.Text);
-            uint loteDisponible = uint.Parse(txtLoteProducto.Text);
+            double costo = double.Parse(txtCostoProducto.Text);
+            int loteDisponible = int.Parse(txtLoteProducto.Text);
 
             // Get selected providers
-            var selectedProviders = new List<Proveedor>();
+            var selectedProviders = new List<ProveedorDto>();
             foreach (object itemChecked in chklbProveedores.CheckedItems)
             {
-                selectedProviders.Add((Proveedor)itemChecked);
+                selectedProviders.Add((ProveedorDto)itemChecked);
             }
 
             // Create the new product object
-            var newProduct = new Producto
+            var newProduct = new ProductoDto
             {
                 Nombre = nombre,
                 Descripcion = descripcion,
@@ -45,7 +46,7 @@ namespace caresoft_core_client
             };
             try
             {
-                await API.ApiProductoAddAsync(null, nombre: newProduct.Nombre, descripcion: newProduct.Descripcion, costo: (double)newProduct.Costo, loteDisponible: (int)newProduct.LoteDisponible);
+                await API.ApiProductoAddAsync(null, nombre: newProduct.Nombre, descripcion: newProduct.Descripcion, costo: newProduct.Costo, loteDisponible: newProduct.LoteDisponible);
                 MessageBox.Show("Producto registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } catch (Exception ex)
             {
@@ -58,13 +59,8 @@ namespace caresoft_core_client
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync("http://localhost:5143/api/Proveedor/get");
+                    var providers = await API.ApiProveedorGetGetAsync();
 
-                if (response.IsSuccessStatusCode)
-                {
-                    List<Proveedor> providers = await response.Content.ReadAsAsync<List<Proveedor>>();
-
-                    // Check if providers list is not null or empty
                     if (providers != null && providers.Count > 0)
                     {
                         // Populate the providers in the checked list box
@@ -76,11 +72,6 @@ namespace caresoft_core_client
                     {
                         MessageBox.Show("No se encontraron proveedores.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-                }
-                else
-                {
-                    MessageBox.Show("Hubo un error al cargar la lista de proveedores. Por favor, inténtelo de nuevo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
             }
             catch (Exception ex)
             {

@@ -150,6 +150,7 @@
             eliminarProductoToolStripMenuItem.Name = "eliminarProductoToolStripMenuItem";
             eliminarProductoToolStripMenuItem.Size = new Size(180, 22);
             eliminarProductoToolStripMenuItem.Text = "Eliminar producto";
+            eliminarProductoToolStripMenuItem.Click += eliminarProductoToolStripMenuItem_Click;
             // 
             // gestionarProveedoresToolStripMenuItem
             // 
@@ -349,19 +350,19 @@
             // añadirSucursalToolStripMenuItem
             // 
             añadirSucursalToolStripMenuItem.Name = "añadirSucursalToolStripMenuItem";
-            añadirSucursalToolStripMenuItem.Size = new Size(180, 22);
+            añadirSucursalToolStripMenuItem.Size = new Size(172, 22);
             añadirSucursalToolStripMenuItem.Text = "Añadir sucursal";
             // 
             // actualizarSucursalToolStripMenuItem
             // 
             actualizarSucursalToolStripMenuItem.Name = "actualizarSucursalToolStripMenuItem";
-            actualizarSucursalToolStripMenuItem.Size = new Size(180, 22);
+            actualizarSucursalToolStripMenuItem.Size = new Size(172, 22);
             actualizarSucursalToolStripMenuItem.Text = "Actualizar sucursal";
             // 
             // eliminarSucursalToolStripMenuItem
             // 
             eliminarSucursalToolStripMenuItem.Name = "eliminarSucursalToolStripMenuItem";
-            eliminarSucursalToolStripMenuItem.Size = new Size(180, 22);
+            eliminarSucursalToolStripMenuItem.Size = new Size(172, 22);
             eliminarSucursalToolStripMenuItem.Text = "Eliminar sucursal";
             // 
             // reportesToolStripMenuItem

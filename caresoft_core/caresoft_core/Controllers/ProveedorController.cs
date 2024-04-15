@@ -10,7 +10,7 @@ namespace caresoft_core.Controllers;
 public class ProveedorController(IProveedorService proveedorService) : ControllerBase
 {
     [HttpGet("get")]
-    public async Task<ActionResult<IEnumerable<ProveedorDto>>> GetProveedores()
+    public async Task<ActionResult<List<ProveedorDto>?>> GetProveedores()
     {
         try
         {
@@ -24,7 +24,7 @@ public class ProveedorController(IProveedorService proveedorService) : Controlle
     }
 
     [HttpGet("get/{rncProveedor}")]
-    public async Task<ActionResult<ProveedorDto>> GetProveedor(uint rncProveedor)
+    public async Task<ActionResult<ProveedorDto?>> GetProveedor(uint rncProveedor)
     {
         try
         {

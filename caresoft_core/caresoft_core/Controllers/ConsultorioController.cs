@@ -23,7 +23,7 @@ public class ConsultorioController(IConsultorioService consultorioService) : Con
     }
 
     [HttpGet("get/{id}")]
-    public async Task<ActionResult<Consultorio>> GetConsultorioById(uint id)
+    public async Task<ActionResult<Consultorio?>> GetConsultorioById(uint id)
     {
         try
         {

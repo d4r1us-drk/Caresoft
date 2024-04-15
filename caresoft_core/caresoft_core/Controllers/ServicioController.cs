@@ -9,7 +9,7 @@ namespace caresoft_core.Controllers;
 public class ServicioController(IServicioService servicioService) : ControllerBase
 {
     [HttpPost("add")]
-    public async Task<IActionResult> CreateServicio([FromBody] ServicioDto servicioDto)
+    public async Task<ActionResult<string>> CreateServicio([FromBody] ServicioDto servicioDto)
     {
         var result = await servicioService.CreateServicioAsync(servicioDto);
         return result == 1 ? Ok("Servicio created successfully.") : BadRequest("Failed to create servicio.");
@@ -23,14 +23,14 @@ public class ServicioController(IServicioService servicioService) : ControllerBa
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateServicio([FromBody] ServicioDto servicioDto)
+    public async Task<ActionResult<string>> UpdateServicio([FromBody] ServicioDto servicioDto)
     {
         var result = await servicioService.UpdateServicioAsync(servicioDto);
         return result == 1 ? Ok("Servicio updated successfully.") : NotFound("Servicio not found.");
     }
 
     [HttpDelete("delete/{servicioCodigo}")]
-    public async Task<IActionResult> DeleteServicio(string servicioCodigo)
+    public async Task<ActionResult<string>> DeleteServicio(string servicioCodigo)
     {
         var result = await servicioService.DeleteServicioAsync(servicioCodigo);
         return result == 1 ? Ok("Servicio deleted successfully.") : NotFound("Servicio not found.");

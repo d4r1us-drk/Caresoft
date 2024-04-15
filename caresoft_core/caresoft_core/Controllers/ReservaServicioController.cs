@@ -28,7 +28,7 @@ public class ReservaServicioController(IReservaServicioService reservaServicioSe
     }
 
     [HttpPost("add")]
-    public async Task<ActionResult> AddReservaServicioAsync([FromQuery] ReservaServicioDto reserva)
+    public async Task<ActionResult<string>> AddReservaServicioAsync([FromQuery] ReservaServicioDto reserva)
     {
         try
         {
@@ -44,7 +44,7 @@ public class ReservaServicioController(IReservaServicioService reservaServicioSe
     }
 
     [HttpPut("update")]
-    public async Task<ActionResult> UpdateReservaServicioAsync([FromQuery] ReservaServicioDto reserva)
+    public async Task<ActionResult<string>> UpdateReservaServicioAsync([FromQuery] ReservaServicioDto reserva)
     {
         try
         {
@@ -60,7 +60,7 @@ public class ReservaServicioController(IReservaServicioService reservaServicioSe
     }
 
     [HttpPut("toggle-state/{id}")]
-    public async Task<ActionResult> ToggleEstadoReservaServicioAsync(uint id)
+    public async Task<ActionResult<string>> ToggleEstadoReservaServicioAsync(uint id)
     {
         try
         {
@@ -76,7 +76,7 @@ public class ReservaServicioController(IReservaServicioService reservaServicioSe
     }
 
     [HttpDelete("delete/{id}")]
-    public async Task<ActionResult> DeleteReservaServicioAsync(uint id)
+    public async Task<ActionResult<string>> DeleteReservaServicioAsync(uint id)
     {
         try
         {

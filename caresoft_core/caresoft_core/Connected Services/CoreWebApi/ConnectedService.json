@@ -7,7 +7,7 @@
   "ExtendedData": {
     "ServiceName": "CoreWebApi",
     "AcceptAllUntrustedCertificates": true,
-    "GeneratedFileName": "CoreWebApi",
+    "GeneratedFileName": "OpenAPI",
     "Endpoint": "https://localhost:7038/swagger/v1/swagger.json",
     "GeneratedFileNamePrefix": null,
     "GenerateCSharpClient": true,
@@ -96,7 +96,7 @@
       "EnumNameGeneratorType": null,
       "ServiceHost": null,
       "ServiceSchemes": null,
-      "output": "CoreWebApi.cs",
+      "output": "OpenAPI.cs",
       "newLineBehavior": 0
     },
     "ExcludeTypeNamesLater": false,

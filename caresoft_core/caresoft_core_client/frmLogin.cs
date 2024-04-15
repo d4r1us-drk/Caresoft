@@ -1,4 +1,5 @@
-﻿using caresoft_core_client.Models;
+﻿using caresoft_core.CoreWebApi;
+using caresoft_core_client.Models;
 using caresoft_core_client.Utils;
 
 namespace caresoft_core_client
@@ -7,11 +8,13 @@ namespace caresoft_core_client
     {
         private readonly HttpClient _httpClient = new HttpClient();
         private readonly LogHandler<frmLogin> _logHandler = new();
+        private readonly Client API;
         private frmMain mainForm;
 
-        public frmLogin()
+        public frmLogin(string baseURL)
         {
             InitializeComponent();
+            API = new Client(baseURL);
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -37,37 +40,33 @@ namespace caresoft_core_client
 
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync($"http://localhost:5143/api/Usuario/get/{userName}");
-
-                if (response.IsSuccessStatusCode)
+                var userData = await API.ApiUsuarioGetAsync(userName);
+                if(userData == null)
                 {
-                    var userData = await response.Content.ReadAsAsync<Usuario>();
-
-                    if (userData.UsuarioContra == password)
+                    MessageBox.Show("Usuario o contraseña invalidos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (userData.UsuarioContra == password)
+                {
+                    if (userData.Rol == "A")
                     {
-                        if (userData.Rol == "A")
-                        {
-                            _logHandler.LogInfo($"Inicio de sesión exitoso por usuario con código o documento {txtNombreUsuario.Text}");
-                            txtNombreUsuario.Text = "";
-                            txtContraseña.Text = "";
-                            mainForm.Show();
-                            Hide();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Solo usuarios del rol administrador están permitidos acceder al CORE.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                        _logHandler.LogInfo($"Inicio de sesión exitoso por usuario con código o documento {txtNombreUsuario.Text}");
+                        txtNombreUsuario.Text = "";
+                        txtContraseña.Text = "";
+                        mainForm.Show();
+                        Hide();
                     }
                     else
                     {
-                        MessageBox.Show("Usuario o contraseña invalidos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Solo usuarios del rol administrador están permitidos acceder al CORE.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Usuario no encontrado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Usuario o contraseña invalidos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show($"Ha ocurrido un error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

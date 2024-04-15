@@ -25,7 +25,7 @@ public class PagoController(IPagoService pagoService) : ControllerBase
     }
 
     [HttpGet("get/{idPago}")]
-    public async Task<ActionResult<Pago>> GetPagoById(uint idPago)
+    public async Task<ActionResult<Pago?>> GetPagoById(uint idPago)
     {
         try
         {
@@ -53,7 +53,7 @@ public class PagoController(IPagoService pagoService) : ControllerBase
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdatePago(Pago pago)
+    public async Task<ActionResult> UpdatePago(Pago pago)
     {
         try
         {
@@ -67,7 +67,7 @@ public class PagoController(IPagoService pagoService) : ControllerBase
     }
 
     [HttpDelete("delete/{idPago}")]
-    public async Task<IActionResult> DeletePago(uint idPago)
+    public async Task<ActionResult> DeletePago(uint idPago)
     {
         try
         {
