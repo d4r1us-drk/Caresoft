@@ -1,4 +1,5 @@
 using caresoft_core.Context;
+using caresoft_core.Dto;
 using caresoft_core.Models;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
@@ -15,7 +16,7 @@ public class ProveedorService : IProveedorService
 {
     private readonly CaresoftDbContext _dbContext;
     private readonly CoreApiClient _coreApiClient;
-    private readonly LogHandler<ProveedorService> _logHandler = new();
+    private readonly LogHandler<ProveedorService> _logHandler = new LogHandler<ProveedorService>();
 
     public ProveedorService(CaresoftDbContext dbContext, CoreApiClient coreApiClient)
     {
@@ -23,74 +24,75 @@ public class ProveedorService : IProveedorService
         _coreApiClient = coreApiClient;
     }
 
-    public async Task<IEnumerable<Proveedor>> GetProveedoresAsync()
+    public async Task<IEnumerable<ProveedorDto>> GetProveedoresAsync()
     {
-        try
-        {
-            return await _coreApiClient.GetProveedoresAsync();
-        }
-        catch (Exception)
-        {
-            return await _dbContext.Proveedors.ToListAsync();
-        }
+        var proveedores = await _coreApiClient.GetProveedoresAsync();
+        if (proveedores.Any())
+            return proveedores;
+
+        // Fallback to local DB
+        return await _dbContext.Proveedors
+            .Select(p => ProveedorDto.FromModel(p))
+            .ToListAsync();
     }
 
-    public async Task<Proveedor> GetProveedorByIdAsync(uint rncProveedor)
+    public async Task<ProveedorDto> GetProveedorByIdAsync(uint rncProveedor)
     {
-        try
-        {
-            return await _coreApiClient.GetProveedorByIdAsync(rncProveedor);
-        }
-        catch (Exception)
-        {
-            return await _dbContext.Proveedors.FindAsync(rncProveedor);
-        }
+        var proveedor = await _coreApiClient.GetProveedorByIdAsync(rncProveedor);
+        if (proveedor != null)
+            return proveedor;
+
+        // Fallback to local DB
+        var localProveedor = await _dbContext.Proveedors.FindAsync(rncProveedor);
+        return localProveedor != null ? ProveedorDto.FromModel(localProveedor) : null;
     }
 
-    public async Task<int> CreateProveedorAsync(Proveedor proveedor)
+    public async Task<int> CreateProveedorAsync(ProveedorDto proveedorDto)
     {
-        try
-        {
-            return await _coreApiClient.CreateProveedorAsync(proveedor);
-        }
-        catch (Exception)
-        {
-            if (_dbContext.Proveedors.Any(e => e.RncProveedor == proveedor.RncProveedor))
-            {
-                return 0; // Proveedor ya existe
-            }
-            _dbContext.Proveedors.Add(proveedor);
-            await _dbContext.SaveChangesAsync();
+        int result = await _coreApiClient.CreateProveedorAsync(proveedorDto);
+        if (result == 1)
             return 1;
-        }
+
+        // Fallback to local DB
+        var proveedor = Proveedor.FromDto(proveedorDto);
+        _dbContext.Proveedors.Add(proveedor);
+        await _dbContext.SaveChangesAsync();
+        return 1;
     }
 
-    public async Task<int> UpdateProveedorAsync(Proveedor proveedor)
+    public async Task<int> UpdateProveedorAsync(ProveedorDto proveedorDto)
     {
-        try
-        {
-            return await _coreApiClient.UpdateProveedorAsync(proveedor);
-        }
-        catch (Exception)
-        {
-            _dbContext.Proveedors.Update(proveedor);
-            return await _dbContext.SaveChangesAsync();
-        }
+        int result = await _coreApiClient.UpdateProveedorAsync(proveedorDto);
+        if (result == 1)
+            return 1;
+
+        // Fallback to local DB
+        var proveedor = await _dbContext.Proveedors.FindAsync(proveedorDto.RncProveedor);
+        if (proveedor == null)
+            return 0;
+
+        proveedor.Nombre = proveedorDto.Nombre;
+        proveedor.Direccion = proveedorDto.Direccion;
+        proveedor.Telefono = proveedorDto.Telefono;
+        proveedor.Correo = proveedorDto.Correo;
+        _dbContext.Proveedors.Update(proveedor);
+        await _dbContext.SaveChangesAsync();
+        return 1;
     }
 
     public async Task<int> DeleteProveedorAsync(uint rncProveedor)
     {
-        try
-        {
-            return await _coreApiClient.DeleteProveedorAsync(rncProveedor);
-        }
-        catch (Exception)
-        {
-            var proveedor = await _dbContext.Proveedors.FindAsync(rncProveedor);
-            if (proveedor == null) return 0;
-            _dbContext.Proveedors.Remove(proveedor);
-            await _dbContext.SaveChangesAsync();
+        int result = await _coreApiClient.DeleteProveedorAsync(rncProveedor);
+        if (result == 1)
             return 1;
-        }
+
+        // Fallback to local DB
+        var proveedor = await _dbContext.Proveedors.FindAsync(rncProveedor);
+        if (proveedor == null)
+            return 0;
+
+        _dbContext.Proveedors.Remove(proveedor);
+        await _dbContext.SaveChangesAsync();
+        return 1;
     }
 }

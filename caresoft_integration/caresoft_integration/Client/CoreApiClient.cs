@@ -211,50 +211,47 @@ namespace caresoft_integration.Client
         }
 
         // Método CRUD para Proveedor
-        public async Task<IEnumerable<Proveedor>> GetProveedoresAsync()
+        public async Task<IEnumerable<ProveedorDto>> GetProveedoresAsync()
         {
             var response = await _httpClient.GetAsync("api/proveedor/get");
             if (response.IsSuccessStatusCode)
             {
-                string jsonResponse = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<IEnumerable<Proveedor>>(jsonResponse);
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<IEnumerable<ProveedorDto>>(jsonResponse);
             }
-            return new List<Proveedor>();
+            return new List<ProveedorDto>();
         }
 
-        public async Task<Proveedor> GetProveedorByIdAsync(uint rncProveedor)
+        public async Task<ProveedorDto> GetProveedorByIdAsync(uint rncProveedor)
         {
             var response = await _httpClient.GetAsync($"api/proveedor/get/{rncProveedor}");
             if (response.IsSuccessStatusCode)
             {
-                string jsonResponse = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<Proveedor>(jsonResponse);
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<ProveedorDto>(jsonResponse);
             }
             return null;
         }
 
-        public async Task<int> CreateProveedorAsync(Proveedor proveedor)
+        public async Task<int> CreateProveedorAsync(ProveedorDto proveedorDto)
         {
-            string json = JsonConvert.SerializeObject(proveedor);
+            string json = JsonConvert.SerializeObject(proveedorDto);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync("api/proveedor/add", content);
-
             return response.IsSuccessStatusCode ? 1 : 0;
         }
 
-        public async Task<int> UpdateProveedorAsync(Proveedor proveedor)
+        public async Task<int> UpdateProveedorAsync(ProveedorDto proveedorDto)
         {
-            string json = JsonConvert.SerializeObject(proveedor);
+            string json = JsonConvert.SerializeObject(proveedorDto);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PutAsync($"api/proveedor/update", content);
-
+            var response = await _httpClient.PutAsync($"api/proveedor/update/{proveedorDto.RncProveedor}", content);
             return response.IsSuccessStatusCode ? 1 : 0;
         }
 
         public async Task<int> DeleteProveedorAsync(uint rncProveedor)
         {
             var response = await _httpClient.DeleteAsync($"api/proveedor/delete/{rncProveedor}");
-
             return response.IsSuccessStatusCode ? 1 : 0;
         }
 
