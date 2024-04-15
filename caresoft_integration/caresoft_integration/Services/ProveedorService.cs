@@ -6,58 +6,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace caresoft_core.Services;
 
-public class ProveedorService(CaresoftDbContext dbContext) : IProveedorService
+public class ProveedorService : IProveedorService
 {
-    private readonly LogHandler<ProveedorService> _logHandler = new();
+    private readonly CaresoftDbContext _dbContext;
+    private readonly LogHandler<ProveedorService> _logHandler = new LogHandler<ProveedorService>();
+
+    public ProveedorService(CaresoftDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
 
     public async Task<int> CreateProveedorAsync(Proveedor proveedor)
     {
         try
         {
-            if (ProveedorExists(proveedor.RncProveedor))
+            if (_dbContext.Proveedors.Any(e => e.RncProveedor == proveedor.RncProveedor))
             {
-                return 0;
+                _logHandler.LogInfo($"Proveedor with RNC {proveedor.RncProveedor} already exists.");
+                return 0;  // RNC already exists
             }
-            dbContext.Proveedors.Add(proveedor);
-            await dbContext.SaveChangesAsync();
+
+            _dbContext.Proveedors.Add(proveedor);
+            await _dbContext.SaveChangesAsync();
+            _logHandler.LogInfo("Proveedor created successfully.");
             return 1;
         }
         catch (Exception ex)
         {
-            _logHandler.LogError("Error al crear proveedor", ex);
-            throw;
-        }
-    }
-
-    public async Task<int> DeleteProveedorAsync(uint rncProveedor)
-    {
-        try
-        {
-            var proveedor = await dbContext.Proveedors.FindAsync(rncProveedor);
-            if (proveedor == null)
-            {
-                return 0;
-            }
-            dbContext.Proveedors.Remove(proveedor);
-            await dbContext.SaveChangesAsync();
-            return 1;
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Error al eliminar proveedor", ex);
-            throw;
-        }
-    }
-
-    public async Task<Proveedor> GetProveedorByIdAsync(uint rncProveedor)
-    {
-        try
-        {
-            return await dbContext.Proveedors.FindAsync(rncProveedor);
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Error al obtener proveedor", ex);
+            _logHandler.LogError("Failed to create proveedor.", ex);
             throw;
         }
     }
@@ -66,11 +42,30 @@ public class ProveedorService(CaresoftDbContext dbContext) : IProveedorService
     {
         try
         {
-            return await dbContext.Proveedors.ToListAsync();
+            return await _dbContext.Proveedors.ToListAsync();
         }
         catch (Exception ex)
         {
-            _logHandler.LogError("Error al listar proveedores", ex);
+            _logHandler.LogError("Failed to retrieve proveedores.", ex);
+            throw;
+        }
+    }
+
+    public async Task<Proveedor> GetProveedorByIdAsync(uint rncProveedor)
+    {
+        try
+        {
+            var proveedor = await _dbContext.Proveedors.FindAsync(rncProveedor);
+            if (proveedor == null)
+            {
+                _logHandler.LogInfo($"Proveedor with RNC {rncProveedor} not found.");
+                return null;
+            }
+            return proveedor;
+        }
+        catch (Exception ex)
+        {
+            _logHandler.LogError("Failed to retrieve proveedor.", ex);
             throw;
         }
     }
@@ -79,19 +74,50 @@ public class ProveedorService(CaresoftDbContext dbContext) : IProveedorService
     {
         try
         {
-            dbContext.Entry(proveedor).State = EntityState.Modified;
-            await dbContext.SaveChangesAsync();
+            var existingProveedor = await _dbContext.Proveedors.FindAsync(proveedor.RncProveedor);
+            if (existingProveedor == null)
+            {
+                _logHandler.LogInfo($"Proveedor with RNC {proveedor.RncProveedor} not found.");
+                return 0;
+            }
+
+            existingProveedor.Nombre = proveedor.Nombre;
+            existingProveedor.Direccion = proveedor.Direccion;
+            existingProveedor.Telefono = proveedor.Telefono;
+            existingProveedor.Correo = proveedor.Correo;
+
+            _dbContext.Proveedors.Update(existingProveedor);
+            await _dbContext.SaveChangesAsync();
+            _logHandler.LogInfo("Proveedor updated successfully.");
             return 1;
         }
         catch (Exception ex)
         {
-            _logHandler.LogError("Error al actualizar proveedor", ex);
+            _logHandler.LogError("Failed to update proveedor.", ex);
             throw;
         }
     }
 
-    private bool ProveedorExists(uint rncProveedor)
+    public async Task<int> DeleteProveedorAsync(uint rncProveedor)
     {
-        return dbContext.Proveedors.Any(e => e.RncProveedor == rncProveedor);
+        try
+        {
+            var proveedor = await _dbContext.Proveedors.FindAsync(rncProveedor);
+            if (proveedor == null)
+            {
+                _logHandler.LogInfo($"Proveedor with RNC {rncProveedor} not found.");
+                return 0;
+            }
+
+            _dbContext.Proveedors.Remove(proveedor);
+            await _dbContext.SaveChangesAsync();
+            _logHandler.LogInfo("Proveedor deleted successfully.");
+            return 1;
+        }
+        catch (Exception ex)
+        {
+            _logHandler.LogError("Failed to delete proveedor.", ex);
+            throw;
+        }
     }
 }

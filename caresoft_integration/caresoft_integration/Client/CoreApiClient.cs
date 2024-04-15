@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using caresoft_core.Dto;
 using System.Text;
+using caresoft_core.Models;
 
 namespace caresoft_integration.Client
 {
@@ -205,6 +206,54 @@ namespace caresoft_integration.Client
         public async Task<int> DeleteReservaServicioAsync(uint idReserva)
         {
             var response = await _httpClient.DeleteAsync($"api/reservaServicio/delete/{idReserva}");
+
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        // Método CRUD para Proveedor
+        public async Task<IEnumerable<Proveedor>> GetProveedoresAsync()
+        {
+            var response = await _httpClient.GetAsync("api/proveedor/get");
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<IEnumerable<Proveedor>>(jsonResponse);
+            }
+            return new List<Proveedor>();
+        }
+
+        public async Task<Proveedor> GetProveedorByIdAsync(uint rncProveedor)
+        {
+            var response = await _httpClient.GetAsync($"api/proveedor/get/{rncProveedor}");
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Proveedor>(jsonResponse);
+            }
+            return null;
+        }
+
+        public async Task<int> CreateProveedorAsync(Proveedor proveedor)
+        {
+            string json = JsonConvert.SerializeObject(proveedor);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("api/proveedor/add", content);
+
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> UpdateProveedorAsync(Proveedor proveedor)
+        {
+            string json = JsonConvert.SerializeObject(proveedor);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync($"api/proveedor/update", content);
+
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> DeleteProveedorAsync(uint rncProveedor)
+        {
+            var response = await _httpClient.DeleteAsync($"api/proveedor/delete/{rncProveedor}");
 
             return response.IsSuccessStatusCode ? 1 : 0;
         }
