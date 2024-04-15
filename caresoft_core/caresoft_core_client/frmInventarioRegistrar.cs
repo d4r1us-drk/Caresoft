@@ -53,7 +53,7 @@ namespace caresoft_core_client
 
                     if (!providerResponse.IsSuccessStatusCode)
                     {
-                        MessageBox.Show("Hubo un error al añadir el producto (problema con los proveedores). Por favor, inténtelo de nuevo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"Hubo un error al añadir el producto (problema con los proveedores) {providerResponse.ReasonPhrase}. Por favor, inténtelo de nuevo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
 
@@ -63,7 +63,7 @@ namespace caresoft_core_client
                 }
                 else
                 {
-                    MessageBox.Show("Hubo un error al añadir el producto. Por favor, inténtelo de nuevo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Hubo un error al añadir el producto. Por favor, inténtelo de nuevo. {response.ReasonPhrase}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)

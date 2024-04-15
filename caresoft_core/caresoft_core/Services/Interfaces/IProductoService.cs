@@ -10,5 +10,5 @@ public interface IProductoService
     Task<int> DeleteProductoAsync(uint idProducto);
     Task<int> AddProductoProveedorAsync(uint idProducto, uint rncProveedor);
     Task<int> DeleteProductoProveedorAsync(uint idProducto, uint rncProveedor);
-    Task<List<uint>> GetProductoProveedoresAsync(uint idProducto);
+    Task<List<ProveedorDto>> GetProductoProveedoresAsync(uint idProducto);
 }

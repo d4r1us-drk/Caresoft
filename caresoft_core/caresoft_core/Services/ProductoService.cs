@@ -113,16 +113,23 @@ public class ProductoService(CaresoftDbContext dbContext) : IProductoService
         }
     }
 
-    public async Task<List<uint>> GetProductoProveedoresAsync(uint idProducto)
+    public async Task<List<ProveedorDto>> GetProductoProveedoresAsync(uint idProducto)
     {
         try
         {
-            var producto = await dbContext.Productos.Include(p => p.RncProveedors).FirstOrDefaultAsync(p => p.IdProducto == idProducto);
+            var producto = await dbContext.Productos
+                .Include(p => p.RncProveedors)
+                .FirstOrDefaultAsync(p => p.IdProducto == idProducto);
+
             if (producto != null)
             {
-                return producto.RncProveedors.Select(p => p.RncProveedor).ToList();
+                var proveedorDtos = producto.RncProveedors
+                    .Select(proveedor => ProveedorDto.FromModel(proveedor))
+                    .ToList();
+
+                return proveedorDtos;
             }
-            return new List<uint>();
+            return new List<ProveedorDto>(); // Return an empty list if the producto is not found
         }
         catch (Exception ex)
         {

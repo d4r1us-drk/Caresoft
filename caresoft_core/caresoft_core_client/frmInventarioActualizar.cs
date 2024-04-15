@@ -39,13 +39,13 @@ namespace caresoft_core_client
             {
                 try
                 {
-                    var response = await client.GetAsync(baseUrl + $"/{idProducto}/proveedores");
+                    var response = await client.GetAsync(baseUrl + $"{idProducto}/proveedores");
                     response.EnsureSuccessStatusCode();
                     var proveedores = await response.Content.ReadAsAsync<List<Proveedor>>();
 
                     chklbProveedores.DataSource = proveedores;
                     chklbProveedores.DisplayMember = "Nombre";
-                    chklbProveedores.ValueMember = "RNC";
+                    chklbProveedores.ValueMember = "RncProveedor";
                 }
                 catch (Exception ex)
                 {

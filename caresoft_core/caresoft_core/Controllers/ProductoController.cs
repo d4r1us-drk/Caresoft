@@ -117,7 +117,7 @@ public class ProductoController(IProductoService productoService) : ControllerBa
     }
 
     [HttpGet("{idProducto}/proveedores")]
-    public async Task<ActionResult<List<uint>>> GetProductoProveedoresAsync(uint idProducto)
+    public async Task<ActionResult<List<ProveedorDto>>> GetProductoProveedoresAsync(uint idProducto)
     {
         try
         {
