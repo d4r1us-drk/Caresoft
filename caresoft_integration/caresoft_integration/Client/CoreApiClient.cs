@@ -374,5 +374,129 @@ namespace caresoft_integration.Client
             return new List<uint>();
         }
 
+        // Métodos CRUD para Pago
+        public async Task<IEnumerable<Pago>> GetPagosAsync()
+        {
+            var response = await _httpClient.GetAsync("api/pago/get");
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<IEnumerable<Pago>>(jsonResponse);
+            }
+            return new List<Pago>();
+        }
+
+        public async Task<Pago> GetPagoByIdAsync(uint idPago)
+        {
+            var response = await _httpClient.GetAsync($"api/pago/get/{idPago}");
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Pago>(jsonResponse);
+            }
+            return null;
+        }
+
+        public async Task<int> CreatePagoAsync(Pago pago)
+        {
+            string json = JsonConvert.SerializeObject(pago);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("api/pago/add", content);
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> UpdatePagoAsync(Pago pago)
+        {
+            string json = JsonConvert.SerializeObject(pago);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync($"api/pago/update", content);
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> DeletePagoAsync(uint idPago)
+        {
+            var response = await _httpClient.DeleteAsync($"api/pago/delete/{idPago}");
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        // Métodos CRUD para MetodoPago
+        public async Task<int> AddMetodoPagoAsync(MetodoPagoDto metodoPagoDto)
+        {
+            string json = JsonConvert.SerializeObject(metodoPagoDto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("api/MetodoPago/add", content);
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<List<MetodoPagoDto>> GetMetodosPagoAsync()
+        {
+            var response = await _httpClient.GetAsync("api/MetodoPago/get");
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<MetodoPagoDto>>(jsonResponse);
+            }
+            return new List<MetodoPagoDto>();
+        }
+
+        public async Task<int> UpdateMetodoPagoAsync(MetodoPagoDto metodoPagoDto)
+        {
+            string json = JsonConvert.SerializeObject(metodoPagoDto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync($"api/MetodoPago/update", content);
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> DeleteMetodoPagoAsync(uint idMetodoPago)
+        {
+            var response = await _httpClient.DeleteAsync($"api/MetodoPago/delete/{idMetodoPago}");
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        //Métodos CRUD para Aseguradora
+        public async Task<List<Aseguradora>> GetAllAseguradoras()
+        {
+            var response = await _httpClient.GetAsync("api/Aseguradora/get");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<Aseguradora>>(content);
+            }
+            return new List<Aseguradora>();
+        }
+
+        public async Task<Aseguradora> GetAseguradoraById(uint id)
+        {
+            var response = await _httpClient.GetAsync($"api/Aseguradora/get/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Aseguradora>(content);
+            }
+            return null;
+        }
+
+        public async Task<int> CreateAseguradora(Aseguradora aseguradora)
+        {
+            string json = JsonConvert.SerializeObject(aseguradora);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("api/Aseguradora/add", content);
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> UpdateAseguradora(Aseguradora aseguradora)
+        {
+            string json = JsonConvert.SerializeObject(aseguradora);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync($"api/Aseguradora/update", content);
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> DeleteAseguradora(uint id)
+        {
+            var response = await _httpClient.DeleteAsync($"api/Aseguradora/delete/{id}");
+            return response.IsSuccessStatusCode ? 1 : 0;
+
+        }
     }
 }

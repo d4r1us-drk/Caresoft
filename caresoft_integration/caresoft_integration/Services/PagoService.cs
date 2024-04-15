@@ -2,86 +2,65 @@ using caresoft_core.Context;
 using caresoft_core.Models;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
+using caresoft_integration.Client;
 using Microsoft.EntityFrameworkCore;
 
 namespace caresoft_core.Services;
 
-public class PagoService(CaresoftDbContext dbContext) : IPagoService
+public class PagoService : IPagoService
 {
+    private readonly CaresoftDbContext _dbContext;
+    private readonly CoreApiClient _coreApiClient;
     private readonly LogHandler<PagoService> _logHandler = new();
 
-    public async Task<int> CreatePagoAsync(Pago pago)
+    public PagoService(CaresoftDbContext dbContext, CoreApiClient coreApiClient)
     {
-        try
-        {
-            dbContext.Pagos.Add(pago);
-            await dbContext.SaveChangesAsync();
-            return 1;
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Error creating Pago", ex);
-            throw;
-        }
-    }
-
-    public async Task<int> DeletePagoAsync(uint idPago)
-    {
-        try
-        {
-            var pago = await dbContext.Pagos.FindAsync(idPago);
-            if (pago == null)
-                return 0;
-
-            dbContext.Pagos.Remove(pago);
-            await dbContext.SaveChangesAsync();
-            return 1;
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogError($"Error deleting Pago with id {idPago}", ex);
-            throw;
-        }
+        _dbContext = dbContext;
+        _coreApiClient = coreApiClient;
     }
 
     public async Task<IEnumerable<Pago>> GetPagosAsync()
     {
-        try
-        {
-            return await dbContext.Pagos.ToListAsync();
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Error retrieving Pagos", ex);
-            throw;
-        }
+        var pagos = await _coreApiClient.GetPagosAsync();
+        return pagos.Any() ? pagos : await _dbContext.Pagos.ToListAsync();
     }
 
     public async Task<Pago> GetPagoByIdAsync(uint idPago)
     {
-        try
-        {
-            return await dbContext.Pagos.FindAsync(idPago);
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogError($"Error retrieving Pago with id {idPago}", ex);
-            throw;
-        }
+        var pago = await _coreApiClient.GetPagoByIdAsync(idPago);
+        return pago ?? await _dbContext.Pagos.FindAsync(idPago);
+    }
+
+    public async Task<int> CreatePagoAsync(Pago pago)
+    {
+        int result = await _coreApiClient.CreatePagoAsync(pago);
+        if (result == 1) return result;
+
+        _dbContext.Pagos.Add(pago);
+        await _dbContext.SaveChangesAsync();
+        return 1;
     }
 
     public async Task<int> UpdatePagoAsync(Pago pago)
     {
-        try
-        {
-            dbContext.Entry(pago).State = EntityState.Modified;
-            await dbContext.SaveChangesAsync();
-            return 1;
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogError($"Error updating Pago with id {pago.IdPago}", ex);
-            throw;
-        }
+        int result = await _coreApiClient.UpdatePagoAsync(pago);
+        if (result == 1) return result;
+
+        _dbContext.Entry(pago).State = EntityState.Modified;
+        await _dbContext.SaveChangesAsync();
+        return 1;
+    }
+
+    public async Task<int> DeletePagoAsync(uint idPago)
+    {
+        int result = await _coreApiClient.DeletePagoAsync(idPago);
+        if (result == 1) return result;
+
+        var pago = await _dbContext.Pagos.FindAsync(idPago);
+        if (pago == null) return 0;
+
+        _dbContext.Pagos.Remove(pago);
+        await _dbContext.SaveChangesAsync();
+        return 1;
     }
 }

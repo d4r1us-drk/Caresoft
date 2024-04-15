@@ -3,32 +3,46 @@ using caresoft_core.Dto;
 using caresoft_core.Models;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
+using caresoft_integration.Client;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace caresoft_core.Services
 {
     public class MetodoPagoService : IMetodoPagoService
     {
         private readonly CaresoftDbContext _dbContext;
-        private readonly LogHandler<MetodoPagoService> _logHandler = new LogHandler<MetodoPagoService>();
+        private readonly CoreApiClient _coreApiClient;
+        private readonly LogHandler<MetodoPagoService> _logHandler = new();
 
-        public MetodoPagoService(CaresoftDbContext dbContext)
+        public MetodoPagoService(CaresoftDbContext dbContext, CoreApiClient coreApiClient)
         {
             _dbContext = dbContext;
+            _coreApiClient = coreApiClient;
         }
 
-        public async Task<int> AddMetodoPagoAsync(MetodoPagoDto metodoPago)
+        public async Task<int> AddMetodoPagoAsync(MetodoPagoDto metodoPagoDto)
         {
             try
             {
+                int result = await _coreApiClient.AddMetodoPagoAsync(metodoPagoDto);
+                if (result == 1)
+                {
+                    _logHandler.LogInfo("MetodoPago added successfully via API.");
+                    return result;
+                }
+
                 var newMetodoPago = new MetodoPago
                 {
-                    Nombre = metodoPago.Nombre
+                    Nombre = metodoPagoDto.Nombre
                 };
 
                 _dbContext.MetodoPagos.Add(newMetodoPago);
                 await _dbContext.SaveChangesAsync();
-                _logHandler.LogInfo("MetodoPago added successfully.");
+                _logHandler.LogInfo("MetodoPago added successfully to local DB.");
                 return 1;
             }
             catch (Exception ex)
@@ -42,33 +56,48 @@ namespace caresoft_core.Services
         {
             try
             {
-                return await _dbContext.MetodoPagos
+                var metodosPago = await _coreApiClient.GetMetodosPagoAsync();
+                if (metodosPago.Any())
+                {
+                    _logHandler.LogInfo("MetodosPago retrieved successfully via API.");
+                    return metodosPago;
+                }
+
+                var localMetodosPago = await _dbContext.MetodoPagos
                     .Select(m => new MetodoPagoDto { IdMetodoPago = m.IdMetodoPago, Nombre = m.Nombre })
                     .ToListAsync();
+                _logHandler.LogInfo("MetodosPago retrieved successfully from local DB.");
+                return localMetodosPago;
             }
             catch (Exception ex)
             {
-                _logHandler.LogError("Failed to retrieve MetodoPagos.", ex);
+                _logHandler.LogError("Failed to retrieve MetodosPago.", ex);
                 throw;
             }
         }
 
-        public async Task<int> UpdateMetodoPagoAsync(MetodoPagoDto metodoPago)
+        public async Task<int> UpdateMetodoPagoAsync(MetodoPagoDto metodoPagoDto)
         {
             try
             {
-                var existingMetodoPago = await _dbContext.MetodoPagos.FindAsync(metodoPago.IdMetodoPago);
+                int result = await _coreApiClient.UpdateMetodoPagoAsync(metodoPagoDto);
+                if (result == 1)
+                {
+                    _logHandler.LogInfo("MetodoPago updated successfully via API.");
+                    return result;
+                }
+
+                var existingMetodoPago = await _dbContext.MetodoPagos.FindAsync(metodoPagoDto.IdMetodoPago);
                 if (existingMetodoPago == null)
                 {
-                    _logHandler.LogInfo("MetodoPago not found.");
+                    _logHandler.LogInfo("MetodoPago not found in local DB.");
                     return 0;
                 }
 
-                existingMetodoPago.Nombre = metodoPago.Nombre;
-
+                existingMetodoPago.Nombre = metodoPagoDto.Nombre;
                 _dbContext.MetodoPagos.Update(existingMetodoPago);
                 await _dbContext.SaveChangesAsync();
-                _logHandler.LogInfo("MetodoPago updated successfully.");
+                _logHandler.LogInfo("MetodoPago updated successfully in local DB.");
                 return 1;
             }
             catch (Exception ex)
@@ -82,16 +111,23 @@ namespace caresoft_core.Services
         {
             try
             {
+                int result = await _coreApiClient.DeleteMetodoPagoAsync(idMetodoPago);
+                if (result == 1)
+                {
+                    _logHandler.LogInfo("MetodoPago deleted successfully via API.");
+                    return result;
+                }
+
                 var metodoPago = await _dbContext.MetodoPagos.FindAsync(idMetodoPago);
                 if (metodoPago == null)
                 {
-                    _logHandler.LogInfo("MetodoPago not found.");
+                    _logHandler.LogInfo("MetodoPago not found in local DB.");
                     return 0;
                 }
 
                 _dbContext.MetodoPagos.Remove(metodoPago);
                 await _dbContext.SaveChangesAsync();
-                _logHandler.LogInfo("MetodoPago deleted successfully.");
+                _logHandler.LogInfo("MetodoPago deleted successfully from local DB.");
                 return 1;
             }
             catch (Exception ex)
