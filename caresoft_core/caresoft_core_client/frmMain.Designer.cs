@@ -35,54 +35,60 @@
             cerrarProgramaToolStripMenuItem = new ToolStripMenuItem();
             inventarioToolStripMenuItem = new ToolStripMenuItem();
             gestionarProductosToolStripMenuItem = new ToolStripMenuItem();
+            añadirProductoToolStripMenuItem = new ToolStripMenuItem();
+            actualizarProductoToolStripMenuItem = new ToolStripMenuItem();
+            eliminarProductoToolStripMenuItem = new ToolStripMenuItem();
             gestionarProveedoresToolStripMenuItem = new ToolStripMenuItem();
+            añadirProveedorToolStripMenuItem = new ToolStripMenuItem();
+            actualizarProveedorToolStripMenuItem = new ToolStripMenuItem();
+            eliminarProveedorToolStripMenuItem = new ToolStripMenuItem();
             consultarProductosToolStripMenuItem = new ToolStripMenuItem();
             consultarProveedoresToolStripMenuItem = new ToolStripMenuItem();
             serviciosToolStripMenuItem = new ToolStripMenuItem();
             gestionarServiciosToolStripMenuItem1 = new ToolStripMenuItem();
-            consultaDeServiciosToolStripMenuItem = new ToolStripMenuItem();
-            segurosMedicosToolStripMenuItem = new ToolStripMenuItem();
-            gestionarAseguradorasToolStripMenuItem = new ToolStripMenuItem();
-            consultarAseguradorasToolStripMenuItem = new ToolStripMenuItem();
-            gestionDelHospitalToolStripMenuItem = new ToolStripMenuItem();
-            gestionarHabitacionesToolStripMenuItem = new ToolStripMenuItem();
-            gestionarConsultoriosToolStripMenuItem = new ToolStripMenuItem();
-            gestionarSucursalesToolStripMenuItem = new ToolStripMenuItem();
-            reportesToolStripMenuItem = new ToolStripMenuItem();
-            reportesDeConsultasToolStripMenuItem = new ToolStripMenuItem();
-            reportesDeIngresosToolStripMenuItem = new ToolStripMenuItem();
-            reportesDeFacturasToolStripMenuItem = new ToolStripMenuItem();
-            añadirProductoToolStripMenuItem = new ToolStripMenuItem();
-            actualizarProductoToolStripMenuItem = new ToolStripMenuItem();
-            eliminarProductoToolStripMenuItem = new ToolStripMenuItem();
-            añadirProveedorToolStripMenuItem = new ToolStripMenuItem();
-            actualizarProveedorToolStripMenuItem = new ToolStripMenuItem();
-            eliminarProveedorToolStripMenuItem = new ToolStripMenuItem();
             añadirTipoDeServicioToolStripMenuItem = new ToolStripMenuItem();
             añadirServicioToolStripMenuItem = new ToolStripMenuItem();
             actualizarTipoDeServicioToolStripMenuItem = new ToolStripMenuItem();
             actualizarServicioToolStripMenuItem = new ToolStripMenuItem();
             eliminarTipoDeServicioToolStripMenuItem = new ToolStripMenuItem();
             eliminarServicioToolStripMenuItem = new ToolStripMenuItem();
+            consultaDeServiciosToolStripMenuItem = new ToolStripMenuItem();
+            segurosMedicosToolStripMenuItem = new ToolStripMenuItem();
+            gestionarAseguradorasToolStripMenuItem = new ToolStripMenuItem();
             añadirAseguradoraToolStripMenuItem = new ToolStripMenuItem();
             actualizarAseguradoraToolStripMenuItem = new ToolStripMenuItem();
             eliminarAseguradoraToolStripMenuItem = new ToolStripMenuItem();
+            consultarAseguradorasToolStripMenuItem = new ToolStripMenuItem();
+            gestionDelHospitalToolStripMenuItem = new ToolStripMenuItem();
+            gestionarHabitacionesToolStripMenuItem = new ToolStripMenuItem();
             añadirHabitaciónToolStripMenuItem = new ToolStripMenuItem();
             actualizarEstadoDeHabitaciónToolStripMenuItem = new ToolStripMenuItem();
             eliminarHabitaciónToolStripMenuItem = new ToolStripMenuItem();
+            gestionarConsultoriosToolStripMenuItem = new ToolStripMenuItem();
             añadirConsultorioToolStripMenuItem = new ToolStripMenuItem();
             actualizarConsultorioToolStripMenuItem = new ToolStripMenuItem();
             eliminarConsultorioToolStripMenuItem = new ToolStripMenuItem();
+            gestionarSucursalesToolStripMenuItem = new ToolStripMenuItem();
             añadirSucursalToolStripMenuItem = new ToolStripMenuItem();
             actualizarSucursalToolStripMenuItem = new ToolStripMenuItem();
             eliminarSucursalToolStripMenuItem = new ToolStripMenuItem();
+            reportesToolStripMenuItem = new ToolStripMenuItem();
+            reportesDeConsultasToolStripMenuItem = new ToolStripMenuItem();
+            reportesDeIngresosToolStripMenuItem = new ToolStripMenuItem();
+            reportesDeFacturasToolStripMenuItem = new ToolStripMenuItem();
+            usuariosToolStripMenuItem = new ToolStripMenuItem();
+            gestionarUsuariosToolStripMenuItem = new ToolStripMenuItem();
+            añadirUsuarioToolStripMenuItem = new ToolStripMenuItem();
+            actualizarDatosDeUnUsuarioToolStripMenuItem = new ToolStripMenuItem();
+            eliminarUnUsuarioToolStripMenuItem = new ToolStripMenuItem();
+            consultarDatosDeUsuariosToolStripMenuItem = new ToolStripMenuItem();
             mnuMain.SuspendLayout();
             SuspendLayout();
             // 
             // mnuMain
             // 
             mnuMain.ImageScalingSize = new Size(20, 20);
-            mnuMain.Items.AddRange(new ToolStripItem[] { inicioToolStripMenuItem, inventarioToolStripMenuItem, serviciosToolStripMenuItem, segurosMedicosToolStripMenuItem, gestionDelHospitalToolStripMenuItem, reportesToolStripMenuItem });
+            mnuMain.Items.AddRange(new ToolStripItem[] { inicioToolStripMenuItem, inventarioToolStripMenuItem, serviciosToolStripMenuItem, segurosMedicosToolStripMenuItem, gestionDelHospitalToolStripMenuItem, reportesToolStripMenuItem, usuariosToolStripMenuItem });
             mnuMain.Location = new Point(0, 0);
             mnuMain.Name = "mnuMain";
             mnuMain.Padding = new Padding(5, 2, 0, 2);
@@ -125,12 +131,50 @@
             gestionarProductosToolStripMenuItem.Size = new Size(193, 22);
             gestionarProductosToolStripMenuItem.Text = "Gestionar productos";
             // 
+            // añadirProductoToolStripMenuItem
+            // 
+            añadirProductoToolStripMenuItem.Name = "añadirProductoToolStripMenuItem";
+            añadirProductoToolStripMenuItem.Size = new Size(180, 22);
+            añadirProductoToolStripMenuItem.Text = "Añadir producto";
+            añadirProductoToolStripMenuItem.Click += añadirProductoToolStripMenuItem_Click;
+            // 
+            // actualizarProductoToolStripMenuItem
+            // 
+            actualizarProductoToolStripMenuItem.Name = "actualizarProductoToolStripMenuItem";
+            actualizarProductoToolStripMenuItem.Size = new Size(180, 22);
+            actualizarProductoToolStripMenuItem.Text = "Actualizar producto";
+            actualizarProductoToolStripMenuItem.Click += actualizarProductoToolStripMenuItem_Click;
+            // 
+            // eliminarProductoToolStripMenuItem
+            // 
+            eliminarProductoToolStripMenuItem.Name = "eliminarProductoToolStripMenuItem";
+            eliminarProductoToolStripMenuItem.Size = new Size(180, 22);
+            eliminarProductoToolStripMenuItem.Text = "Eliminar producto";
+            // 
             // gestionarProveedoresToolStripMenuItem
             // 
             gestionarProveedoresToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { añadirProveedorToolStripMenuItem, actualizarProveedorToolStripMenuItem, eliminarProveedorToolStripMenuItem });
             gestionarProveedoresToolStripMenuItem.Name = "gestionarProveedoresToolStripMenuItem";
             gestionarProveedoresToolStripMenuItem.Size = new Size(193, 22);
             gestionarProveedoresToolStripMenuItem.Text = "Gestionar provedores";
+            // 
+            // añadirProveedorToolStripMenuItem
+            // 
+            añadirProveedorToolStripMenuItem.Name = "añadirProveedorToolStripMenuItem";
+            añadirProveedorToolStripMenuItem.Size = new Size(183, 22);
+            añadirProveedorToolStripMenuItem.Text = "Añadir proveedor";
+            // 
+            // actualizarProveedorToolStripMenuItem
+            // 
+            actualizarProveedorToolStripMenuItem.Name = "actualizarProveedorToolStripMenuItem";
+            actualizarProveedorToolStripMenuItem.Size = new Size(183, 22);
+            actualizarProveedorToolStripMenuItem.Text = "Actualizar proveedor";
+            // 
+            // eliminarProveedorToolStripMenuItem
+            // 
+            eliminarProveedorToolStripMenuItem.Name = "eliminarProveedorToolStripMenuItem";
+            eliminarProveedorToolStripMenuItem.Size = new Size(183, 22);
+            eliminarProveedorToolStripMenuItem.Text = "Eliminar proveedor";
             // 
             // consultarProductosToolStripMenuItem
             // 
@@ -157,122 +201,6 @@
             gestionarServiciosToolStripMenuItem1.Name = "gestionarServiciosToolStripMenuItem1";
             gestionarServiciosToolStripMenuItem1.Size = new Size(185, 22);
             gestionarServiciosToolStripMenuItem1.Text = "Gestionar servicios";
-            // 
-            // consultaDeServiciosToolStripMenuItem
-            // 
-            consultaDeServiciosToolStripMenuItem.Name = "consultaDeServiciosToolStripMenuItem";
-            consultaDeServiciosToolStripMenuItem.Size = new Size(185, 22);
-            consultaDeServiciosToolStripMenuItem.Text = "Consulta de servicios";
-            // 
-            // segurosMedicosToolStripMenuItem
-            // 
-            segurosMedicosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gestionarAseguradorasToolStripMenuItem, consultarAseguradorasToolStripMenuItem });
-            segurosMedicosToolStripMenuItem.Name = "segurosMedicosToolStripMenuItem";
-            segurosMedicosToolStripMenuItem.Size = new Size(109, 20);
-            segurosMedicosToolStripMenuItem.Text = "Seguros Médicos";
-            // 
-            // gestionarAseguradorasToolStripMenuItem
-            // 
-            gestionarAseguradorasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { añadirAseguradoraToolStripMenuItem, actualizarAseguradoraToolStripMenuItem, eliminarAseguradoraToolStripMenuItem });
-            gestionarAseguradorasToolStripMenuItem.Name = "gestionarAseguradorasToolStripMenuItem";
-            gestionarAseguradorasToolStripMenuItem.Size = new Size(198, 22);
-            gestionarAseguradorasToolStripMenuItem.Text = "Gestionar aseguradoras";
-            // 
-            // consultarAseguradorasToolStripMenuItem
-            // 
-            consultarAseguradorasToolStripMenuItem.Name = "consultarAseguradorasToolStripMenuItem";
-            consultarAseguradorasToolStripMenuItem.Size = new Size(198, 22);
-            consultarAseguradorasToolStripMenuItem.Text = "Consultar aseguradoras";
-            // 
-            // gestionDelHospitalToolStripMenuItem
-            // 
-            gestionDelHospitalToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gestionarHabitacionesToolStripMenuItem, gestionarConsultoriosToolStripMenuItem, gestionarSucursalesToolStripMenuItem });
-            gestionDelHospitalToolStripMenuItem.Name = "gestionDelHospitalToolStripMenuItem";
-            gestionDelHospitalToolStripMenuItem.Size = new Size(125, 20);
-            gestionDelHospitalToolStripMenuItem.Text = "Gestión del Hospital";
-            // 
-            // gestionarHabitacionesToolStripMenuItem
-            // 
-            gestionarHabitacionesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { añadirHabitaciónToolStripMenuItem, actualizarEstadoDeHabitaciónToolStripMenuItem, eliminarHabitaciónToolStripMenuItem });
-            gestionarHabitacionesToolStripMenuItem.Name = "gestionarHabitacionesToolStripMenuItem";
-            gestionarHabitacionesToolStripMenuItem.Size = new Size(194, 22);
-            gestionarHabitacionesToolStripMenuItem.Text = "Gestionar habitaciones";
-            // 
-            // gestionarConsultoriosToolStripMenuItem
-            // 
-            gestionarConsultoriosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { añadirConsultorioToolStripMenuItem, actualizarConsultorioToolStripMenuItem, eliminarConsultorioToolStripMenuItem });
-            gestionarConsultoriosToolStripMenuItem.Name = "gestionarConsultoriosToolStripMenuItem";
-            gestionarConsultoriosToolStripMenuItem.Size = new Size(194, 22);
-            gestionarConsultoriosToolStripMenuItem.Text = "Gestionar consultorios";
-            // 
-            // gestionarSucursalesToolStripMenuItem
-            // 
-            gestionarSucursalesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { añadirSucursalToolStripMenuItem, actualizarSucursalToolStripMenuItem, eliminarSucursalToolStripMenuItem });
-            gestionarSucursalesToolStripMenuItem.Name = "gestionarSucursalesToolStripMenuItem";
-            gestionarSucursalesToolStripMenuItem.Size = new Size(194, 22);
-            gestionarSucursalesToolStripMenuItem.Text = "Gestionar sucursales";
-            // 
-            // reportesToolStripMenuItem
-            // 
-            reportesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { reportesDeConsultasToolStripMenuItem, reportesDeIngresosToolStripMenuItem, reportesDeFacturasToolStripMenuItem });
-            reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
-            reportesToolStripMenuItem.Size = new Size(65, 20);
-            reportesToolStripMenuItem.Text = "Reportes";
-            // 
-            // reportesDeConsultasToolStripMenuItem
-            // 
-            reportesDeConsultasToolStripMenuItem.Name = "reportesDeConsultasToolStripMenuItem";
-            reportesDeConsultasToolStripMenuItem.Size = new Size(189, 22);
-            reportesDeConsultasToolStripMenuItem.Text = "Reportes de consultas";
-            // 
-            // reportesDeIngresosToolStripMenuItem
-            // 
-            reportesDeIngresosToolStripMenuItem.Name = "reportesDeIngresosToolStripMenuItem";
-            reportesDeIngresosToolStripMenuItem.Size = new Size(189, 22);
-            reportesDeIngresosToolStripMenuItem.Text = "Reportes de ingresos";
-            // 
-            // reportesDeFacturasToolStripMenuItem
-            // 
-            reportesDeFacturasToolStripMenuItem.Name = "reportesDeFacturasToolStripMenuItem";
-            reportesDeFacturasToolStripMenuItem.Size = new Size(189, 22);
-            reportesDeFacturasToolStripMenuItem.Text = "Reportes de facturas";
-            // 
-            // añadirProductoToolStripMenuItem
-            // 
-            añadirProductoToolStripMenuItem.Name = "añadirProductoToolStripMenuItem";
-            añadirProductoToolStripMenuItem.Size = new Size(180, 22);
-            añadirProductoToolStripMenuItem.Text = "Añadir producto";
-            añadirProductoToolStripMenuItem.Click += añadirProductoToolStripMenuItem_Click;
-            // 
-            // actualizarProductoToolStripMenuItem
-            // 
-            actualizarProductoToolStripMenuItem.Name = "actualizarProductoToolStripMenuItem";
-            actualizarProductoToolStripMenuItem.Size = new Size(180, 22);
-            actualizarProductoToolStripMenuItem.Text = "Actualizar producto";
-            // 
-            // eliminarProductoToolStripMenuItem
-            // 
-            eliminarProductoToolStripMenuItem.Name = "eliminarProductoToolStripMenuItem";
-            eliminarProductoToolStripMenuItem.Size = new Size(180, 22);
-            eliminarProductoToolStripMenuItem.Text = "Eliminar producto";
-            // 
-            // añadirProveedorToolStripMenuItem
-            // 
-            añadirProveedorToolStripMenuItem.Name = "añadirProveedorToolStripMenuItem";
-            añadirProveedorToolStripMenuItem.Size = new Size(183, 22);
-            añadirProveedorToolStripMenuItem.Text = "Añadir proveedor";
-            // 
-            // actualizarProveedorToolStripMenuItem
-            // 
-            actualizarProveedorToolStripMenuItem.Name = "actualizarProveedorToolStripMenuItem";
-            actualizarProveedorToolStripMenuItem.Size = new Size(183, 22);
-            actualizarProveedorToolStripMenuItem.Text = "Actualizar proveedor";
-            // 
-            // eliminarProveedorToolStripMenuItem
-            // 
-            eliminarProveedorToolStripMenuItem.Name = "eliminarProveedorToolStripMenuItem";
-            eliminarProveedorToolStripMenuItem.Size = new Size(183, 22);
-            eliminarProveedorToolStripMenuItem.Text = "Eliminar proveedor";
             // 
             // añadirTipoDeServicioToolStripMenuItem
             // 
@@ -310,6 +238,26 @@
             eliminarServicioToolStripMenuItem.Size = new Size(209, 22);
             eliminarServicioToolStripMenuItem.Text = "Eliminar servicio";
             // 
+            // consultaDeServiciosToolStripMenuItem
+            // 
+            consultaDeServiciosToolStripMenuItem.Name = "consultaDeServiciosToolStripMenuItem";
+            consultaDeServiciosToolStripMenuItem.Size = new Size(185, 22);
+            consultaDeServiciosToolStripMenuItem.Text = "Consulta de servicios";
+            // 
+            // segurosMedicosToolStripMenuItem
+            // 
+            segurosMedicosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gestionarAseguradorasToolStripMenuItem, consultarAseguradorasToolStripMenuItem });
+            segurosMedicosToolStripMenuItem.Name = "segurosMedicosToolStripMenuItem";
+            segurosMedicosToolStripMenuItem.Size = new Size(109, 20);
+            segurosMedicosToolStripMenuItem.Text = "Seguros Médicos";
+            // 
+            // gestionarAseguradorasToolStripMenuItem
+            // 
+            gestionarAseguradorasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { añadirAseguradoraToolStripMenuItem, actualizarAseguradoraToolStripMenuItem, eliminarAseguradoraToolStripMenuItem });
+            gestionarAseguradorasToolStripMenuItem.Name = "gestionarAseguradorasToolStripMenuItem";
+            gestionarAseguradorasToolStripMenuItem.Size = new Size(198, 22);
+            gestionarAseguradorasToolStripMenuItem.Text = "Gestionar aseguradoras";
+            // 
             // añadirAseguradoraToolStripMenuItem
             // 
             añadirAseguradoraToolStripMenuItem.Name = "añadirAseguradoraToolStripMenuItem";
@@ -327,6 +275,26 @@
             eliminarAseguradoraToolStripMenuItem.Name = "eliminarAseguradoraToolStripMenuItem";
             eliminarAseguradoraToolStripMenuItem.Size = new Size(194, 22);
             eliminarAseguradoraToolStripMenuItem.Text = "Eliminar aseguradora";
+            // 
+            // consultarAseguradorasToolStripMenuItem
+            // 
+            consultarAseguradorasToolStripMenuItem.Name = "consultarAseguradorasToolStripMenuItem";
+            consultarAseguradorasToolStripMenuItem.Size = new Size(198, 22);
+            consultarAseguradorasToolStripMenuItem.Text = "Consultar aseguradoras";
+            // 
+            // gestionDelHospitalToolStripMenuItem
+            // 
+            gestionDelHospitalToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gestionarHabitacionesToolStripMenuItem, gestionarConsultoriosToolStripMenuItem, gestionarSucursalesToolStripMenuItem });
+            gestionDelHospitalToolStripMenuItem.Name = "gestionDelHospitalToolStripMenuItem";
+            gestionDelHospitalToolStripMenuItem.Size = new Size(125, 20);
+            gestionDelHospitalToolStripMenuItem.Text = "Gestión del Hospital";
+            // 
+            // gestionarHabitacionesToolStripMenuItem
+            // 
+            gestionarHabitacionesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { añadirHabitaciónToolStripMenuItem, actualizarEstadoDeHabitaciónToolStripMenuItem, eliminarHabitaciónToolStripMenuItem });
+            gestionarHabitacionesToolStripMenuItem.Name = "gestionarHabitacionesToolStripMenuItem";
+            gestionarHabitacionesToolStripMenuItem.Size = new Size(194, 22);
+            gestionarHabitacionesToolStripMenuItem.Text = "Gestionar habitaciones";
             // 
             // añadirHabitaciónToolStripMenuItem
             // 
@@ -346,6 +314,13 @@
             eliminarHabitaciónToolStripMenuItem.Size = new Size(239, 22);
             eliminarHabitaciónToolStripMenuItem.Text = "Eliminar habitación";
             // 
+            // gestionarConsultoriosToolStripMenuItem
+            // 
+            gestionarConsultoriosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { añadirConsultorioToolStripMenuItem, actualizarConsultorioToolStripMenuItem, eliminarConsultorioToolStripMenuItem });
+            gestionarConsultoriosToolStripMenuItem.Name = "gestionarConsultoriosToolStripMenuItem";
+            gestionarConsultoriosToolStripMenuItem.Size = new Size(194, 22);
+            gestionarConsultoriosToolStripMenuItem.Text = "Gestionar consultorios";
+            // 
             // añadirConsultorioToolStripMenuItem
             // 
             añadirConsultorioToolStripMenuItem.Name = "añadirConsultorioToolStripMenuItem";
@@ -364,6 +339,13 @@
             eliminarConsultorioToolStripMenuItem.Size = new Size(189, 22);
             eliminarConsultorioToolStripMenuItem.Text = "Eliminar consultorio";
             // 
+            // gestionarSucursalesToolStripMenuItem
+            // 
+            gestionarSucursalesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { añadirSucursalToolStripMenuItem, actualizarSucursalToolStripMenuItem, eliminarSucursalToolStripMenuItem });
+            gestionarSucursalesToolStripMenuItem.Name = "gestionarSucursalesToolStripMenuItem";
+            gestionarSucursalesToolStripMenuItem.Size = new Size(194, 22);
+            gestionarSucursalesToolStripMenuItem.Text = "Gestionar sucursales";
+            // 
             // añadirSucursalToolStripMenuItem
             // 
             añadirSucursalToolStripMenuItem.Name = "añadirSucursalToolStripMenuItem";
@@ -381,6 +363,69 @@
             eliminarSucursalToolStripMenuItem.Name = "eliminarSucursalToolStripMenuItem";
             eliminarSucursalToolStripMenuItem.Size = new Size(180, 22);
             eliminarSucursalToolStripMenuItem.Text = "Eliminar sucursal";
+            // 
+            // reportesToolStripMenuItem
+            // 
+            reportesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { reportesDeConsultasToolStripMenuItem, reportesDeIngresosToolStripMenuItem, reportesDeFacturasToolStripMenuItem });
+            reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
+            reportesToolStripMenuItem.Size = new Size(65, 20);
+            reportesToolStripMenuItem.Text = "Reportes";
+            // 
+            // reportesDeConsultasToolStripMenuItem
+            // 
+            reportesDeConsultasToolStripMenuItem.Name = "reportesDeConsultasToolStripMenuItem";
+            reportesDeConsultasToolStripMenuItem.Size = new Size(189, 22);
+            reportesDeConsultasToolStripMenuItem.Text = "Reportes de consultas";
+            // 
+            // reportesDeIngresosToolStripMenuItem
+            // 
+            reportesDeIngresosToolStripMenuItem.Name = "reportesDeIngresosToolStripMenuItem";
+            reportesDeIngresosToolStripMenuItem.Size = new Size(189, 22);
+            reportesDeIngresosToolStripMenuItem.Text = "Reportes de ingresos";
+            // 
+            // reportesDeFacturasToolStripMenuItem
+            // 
+            reportesDeFacturasToolStripMenuItem.Name = "reportesDeFacturasToolStripMenuItem";
+            reportesDeFacturasToolStripMenuItem.Size = new Size(189, 22);
+            reportesDeFacturasToolStripMenuItem.Text = "Reportes de facturas";
+            // 
+            // usuariosToolStripMenuItem
+            // 
+            usuariosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gestionarUsuariosToolStripMenuItem, consultarDatosDeUsuariosToolStripMenuItem });
+            usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
+            usuariosToolStripMenuItem.Size = new Size(64, 20);
+            usuariosToolStripMenuItem.Text = "Usuarios";
+            // 
+            // gestionarUsuariosToolStripMenuItem
+            // 
+            gestionarUsuariosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { añadirUsuarioToolStripMenuItem, actualizarDatosDeUnUsuarioToolStripMenuItem, eliminarUnUsuarioToolStripMenuItem });
+            gestionarUsuariosToolStripMenuItem.Name = "gestionarUsuariosToolStripMenuItem";
+            gestionarUsuariosToolStripMenuItem.Size = new Size(220, 22);
+            gestionarUsuariosToolStripMenuItem.Text = "Gestionar usuarios";
+            // 
+            // añadirUsuarioToolStripMenuItem
+            // 
+            añadirUsuarioToolStripMenuItem.Name = "añadirUsuarioToolStripMenuItem";
+            añadirUsuarioToolStripMenuItem.Size = new Size(233, 22);
+            añadirUsuarioToolStripMenuItem.Text = "Añadir usuario";
+            // 
+            // actualizarDatosDeUnUsuarioToolStripMenuItem
+            // 
+            actualizarDatosDeUnUsuarioToolStripMenuItem.Name = "actualizarDatosDeUnUsuarioToolStripMenuItem";
+            actualizarDatosDeUnUsuarioToolStripMenuItem.Size = new Size(233, 22);
+            actualizarDatosDeUnUsuarioToolStripMenuItem.Text = "Actualizar datos de un usuario";
+            // 
+            // eliminarUnUsuarioToolStripMenuItem
+            // 
+            eliminarUnUsuarioToolStripMenuItem.Name = "eliminarUnUsuarioToolStripMenuItem";
+            eliminarUnUsuarioToolStripMenuItem.Size = new Size(233, 22);
+            eliminarUnUsuarioToolStripMenuItem.Text = "Eliminar un usuario";
+            // 
+            // consultarDatosDeUsuariosToolStripMenuItem
+            // 
+            consultarDatosDeUsuariosToolStripMenuItem.Name = "consultarDatosDeUsuariosToolStripMenuItem";
+            consultarDatosDeUsuariosToolStripMenuItem.Size = new Size(220, 22);
+            consultarDatosDeUsuariosToolStripMenuItem.Text = "Consultar datos de usuarios";
             // 
             // frmMain
             // 
@@ -453,5 +498,11 @@
         private ToolStripMenuItem añadirSucursalToolStripMenuItem;
         private ToolStripMenuItem actualizarSucursalToolStripMenuItem;
         private ToolStripMenuItem eliminarSucursalToolStripMenuItem;
+        private ToolStripMenuItem usuariosToolStripMenuItem;
+        private ToolStripMenuItem gestionarUsuariosToolStripMenuItem;
+        private ToolStripMenuItem añadirUsuarioToolStripMenuItem;
+        private ToolStripMenuItem actualizarDatosDeUnUsuarioToolStripMenuItem;
+        private ToolStripMenuItem eliminarUnUsuarioToolStripMenuItem;
+        private ToolStripMenuItem consultarDatosDeUsuariosToolStripMenuItem;
     }
 }

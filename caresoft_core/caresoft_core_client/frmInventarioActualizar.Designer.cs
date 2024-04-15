@@ -33,19 +33,31 @@
             lblTituloDatos = new Label();
             lblProductos = new Label();
             pnlDatos = new Panel();
-            panel2 = new Panel();
+            chklbProveedores = new CheckedListBox();
+            txtIdProducto = new TextBox();
+            lblIdProducto = new Label();
+            lblProveedorProducto = new Label();
+            lblLoteProducto = new Label();
+            txtLoteProducto = new TextBox();
+            lblCostoProducto = new Label();
+            txtCostoProducto = new TextBox();
+            lblDescripcionProducto = new Label();
+            txtDescripcionProducto = new TextBox();
+            lblNombreProducto = new Label();
+            txtNombreProducto = new TextBox();
+            pnlBotonActualizar = new Panel();
             btnActualizar = new Button();
             pnlConsulta = new Panel();
-            panel1 = new Panel();
-            btnSalir = new Button();
+            pnlBotones = new Panel();
+            btnCancelar = new Button();
             btnCargarDatos = new Button();
-            dataGridView1 = new DataGridView();
+            dbgrdProductos = new DataGridView();
             pnlTitulos.SuspendLayout();
             pnlDatos.SuspendLayout();
-            panel2.SuspendLayout();
+            pnlBotonActualizar.SuspendLayout();
             pnlConsulta.SuspendLayout();
-            panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            pnlBotones.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dbgrdProductos).BeginInit();
             SuspendLayout();
             // 
             // pnlTitulos
@@ -80,21 +92,132 @@
             // 
             // pnlDatos
             // 
-            pnlDatos.Controls.Add(panel2);
+            pnlDatos.Controls.Add(chklbProveedores);
+            pnlDatos.Controls.Add(txtIdProducto);
+            pnlDatos.Controls.Add(lblIdProducto);
+            pnlDatos.Controls.Add(lblProveedorProducto);
+            pnlDatos.Controls.Add(lblLoteProducto);
+            pnlDatos.Controls.Add(txtLoteProducto);
+            pnlDatos.Controls.Add(lblCostoProducto);
+            pnlDatos.Controls.Add(txtCostoProducto);
+            pnlDatos.Controls.Add(lblDescripcionProducto);
+            pnlDatos.Controls.Add(txtDescripcionProducto);
+            pnlDatos.Controls.Add(lblNombreProducto);
+            pnlDatos.Controls.Add(txtNombreProducto);
+            pnlDatos.Controls.Add(pnlBotonActualizar);
             pnlDatos.Dock = DockStyle.Left;
             pnlDatos.Location = new Point(0, 55);
             pnlDatos.Name = "pnlDatos";
-            pnlDatos.Size = new Size(300, 395);
+            pnlDatos.Size = new Size(300, 476);
             pnlDatos.TabIndex = 1;
             // 
-            // panel2
+            // chklbProveedores
             // 
-            panel2.Controls.Add(btnActualizar);
-            panel2.Dock = DockStyle.Bottom;
-            panel2.Location = new Point(0, 368);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(300, 27);
-            panel2.TabIndex = 3;
+            chklbProveedores.FormattingEnabled = true;
+            chklbProveedores.Location = new Point(129, 309);
+            chklbProveedores.Name = "chklbProveedores";
+            chklbProveedores.Size = new Size(148, 112);
+            chklbProveedores.TabIndex = 27;
+            // 
+            // txtIdProducto
+            // 
+            txtIdProducto.Enabled = false;
+            txtIdProducto.Location = new Point(129, 39);
+            txtIdProducto.Name = "txtIdProducto";
+            txtIdProducto.Size = new Size(148, 23);
+            txtIdProducto.TabIndex = 15;
+            // 
+            // lblIdProducto
+            // 
+            lblIdProducto.AutoSize = true;
+            lblIdProducto.Location = new Point(22, 42);
+            lblIdProducto.Name = "lblIdProducto";
+            lblIdProducto.Size = new Size(85, 15);
+            lblIdProducto.TabIndex = 14;
+            lblIdProducto.Text = "Id de Producto";
+            // 
+            // lblProveedorProducto
+            // 
+            lblProveedorProducto.AutoSize = true;
+            lblProveedorProducto.Location = new Point(22, 309);
+            lblProveedorProducto.Name = "lblProveedorProducto";
+            lblProveedorProducto.Size = new Size(61, 15);
+            lblProveedorProducto.TabIndex = 13;
+            lblProveedorProducto.Text = "Proveedor";
+            // 
+            // lblLoteProducto
+            // 
+            lblLoteProducto.AutoSize = true;
+            lblLoteProducto.Location = new Point(22, 266);
+            lblLoteProducto.Name = "lblLoteProducto";
+            lblLoteProducto.Size = new Size(89, 15);
+            lblLoteProducto.TabIndex = 11;
+            lblLoteProducto.Text = "Lote Disponible";
+            // 
+            // txtLoteProducto
+            // 
+            txtLoteProducto.Location = new Point(129, 263);
+            txtLoteProducto.Name = "txtLoteProducto";
+            txtLoteProducto.Size = new Size(148, 23);
+            txtLoteProducto.TabIndex = 10;
+            // 
+            // lblCostoProducto
+            // 
+            lblCostoProducto.AutoSize = true;
+            lblCostoProducto.Location = new Point(22, 223);
+            lblCostoProducto.Name = "lblCostoProducto";
+            lblCostoProducto.Size = new Size(38, 15);
+            lblCostoProducto.TabIndex = 9;
+            lblCostoProducto.Text = "Costo";
+            // 
+            // txtCostoProducto
+            // 
+            txtCostoProducto.Location = new Point(129, 220);
+            txtCostoProducto.Name = "txtCostoProducto";
+            txtCostoProducto.Size = new Size(148, 23);
+            txtCostoProducto.TabIndex = 8;
+            // 
+            // lblDescripcionProducto
+            // 
+            lblDescripcionProducto.AutoSize = true;
+            lblDescripcionProducto.Location = new Point(22, 126);
+            lblDescripcionProducto.Name = "lblDescripcionProducto";
+            lblDescripcionProducto.Size = new Size(69, 15);
+            lblDescripcionProducto.TabIndex = 7;
+            lblDescripcionProducto.Text = "Descripción";
+            // 
+            // txtDescripcionProducto
+            // 
+            txtDescripcionProducto.Location = new Point(129, 123);
+            txtDescripcionProducto.Multiline = true;
+            txtDescripcionProducto.Name = "txtDescripcionProducto";
+            txtDescripcionProducto.Size = new Size(148, 79);
+            txtDescripcionProducto.TabIndex = 6;
+            // 
+            // lblNombreProducto
+            // 
+            lblNombreProducto.AutoSize = true;
+            lblNombreProducto.Location = new Point(22, 86);
+            lblNombreProducto.Name = "lblNombreProducto";
+            lblNombreProducto.Size = new Size(51, 15);
+            lblNombreProducto.TabIndex = 5;
+            lblNombreProducto.Text = "Nombre";
+            // 
+            // txtNombreProducto
+            // 
+            txtNombreProducto.Location = new Point(129, 83);
+            txtNombreProducto.Name = "txtNombreProducto";
+            txtNombreProducto.Size = new Size(148, 23);
+            txtNombreProducto.TabIndex = 4;
+            // 
+            // pnlBotonActualizar
+            // 
+            pnlBotonActualizar.Controls.Add(btnActualizar);
+            pnlBotonActualizar.Dock = DockStyle.Bottom;
+            pnlBotonActualizar.Location = new Point(0, 449);
+            pnlBotonActualizar.Name = "pnlBotonActualizar";
+            pnlBotonActualizar.Size = new Size(300, 27);
+            pnlBotonActualizar.TabIndex = 3;
             // 
             // btnActualizar
             // 
@@ -105,36 +228,39 @@
             btnActualizar.TabIndex = 2;
             btnActualizar.Text = "Actualizar";
             btnActualizar.UseVisualStyleBackColor = true;
+            btnActualizar.Click += btnActualizar_Click;
             // 
             // pnlConsulta
             // 
-            pnlConsulta.Controls.Add(panel1);
-            pnlConsulta.Controls.Add(dataGridView1);
+            pnlConsulta.AutoScroll = true;
+            pnlConsulta.Controls.Add(pnlBotones);
+            pnlConsulta.Controls.Add(dbgrdProductos);
             pnlConsulta.Dock = DockStyle.Fill;
             pnlConsulta.Location = new Point(300, 55);
             pnlConsulta.Name = "pnlConsulta";
-            pnlConsulta.Size = new Size(500, 395);
+            pnlConsulta.Size = new Size(500, 476);
             pnlConsulta.TabIndex = 2;
             // 
-            // panel1
+            // pnlBotones
             // 
-            panel1.Controls.Add(btnSalir);
-            panel1.Controls.Add(btnCargarDatos);
-            panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 368);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(500, 27);
-            panel1.TabIndex = 1;
+            pnlBotones.Controls.Add(btnCancelar);
+            pnlBotones.Controls.Add(btnCargarDatos);
+            pnlBotones.Dock = DockStyle.Bottom;
+            pnlBotones.Location = new Point(0, 449);
+            pnlBotones.Name = "pnlBotones";
+            pnlBotones.Size = new Size(500, 27);
+            pnlBotones.TabIndex = 1;
             // 
-            // btnSalir
+            // btnCancelar
             // 
-            btnSalir.Dock = DockStyle.Right;
-            btnSalir.Location = new Point(410, 0);
-            btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(90, 27);
-            btnSalir.TabIndex = 1;
-            btnSalir.Text = "Salir";
-            btnSalir.UseVisualStyleBackColor = true;
+            btnCancelar.Dock = DockStyle.Right;
+            btnCancelar.Location = new Point(410, 0);
+            btnCancelar.Name = "btnCancelar";
+            btnCancelar.Size = new Size(90, 27);
+            btnCancelar.TabIndex = 1;
+            btnCancelar.Text = "Cancelar";
+            btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.Click += btnSalir_Click;
             // 
             // btnCargarDatos
             // 
@@ -145,34 +271,45 @@
             btnCargarDatos.TabIndex = 0;
             btnCargarDatos.Text = "Cargar Datos";
             btnCargarDatos.UseVisualStyleBackColor = true;
+            btnCargarDatos.Click += btnCargarDatos_Click;
             // 
-            // dataGridView1
+            // dbgrdProductos
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(0, 0);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(500, 395);
-            dataGridView1.TabIndex = 0;
+            dbgrdProductos.AllowUserToAddRows = false;
+            dbgrdProductos.AllowUserToDeleteRows = false;
+            dbgrdProductos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dbgrdProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dbgrdProductos.Dock = DockStyle.Fill;
+            dbgrdProductos.Location = new Point(0, 0);
+            dbgrdProductos.Name = "dbgrdProductos";
+            dbgrdProductos.ReadOnly = true;
+            dbgrdProductos.Size = new Size(500, 476);
+            dbgrdProductos.TabIndex = 0;
             // 
             // frmInventarioActualizar
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            CancelButton = btnCancelar;
+            ClientSize = new Size(800, 531);
             Controls.Add(pnlConsulta);
             Controls.Add(pnlDatos);
             Controls.Add(pnlTitulos);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "frmInventarioActualizar";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Actualizar Producto";
             pnlTitulos.ResumeLayout(false);
             pnlTitulos.PerformLayout();
             pnlDatos.ResumeLayout(false);
-            panel2.ResumeLayout(false);
+            pnlDatos.PerformLayout();
+            pnlBotonActualizar.ResumeLayout(false);
             pnlConsulta.ResumeLayout(false);
-            panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            pnlBotones.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dbgrdProductos).EndInit();
             ResumeLayout(false);
         }
 
@@ -182,12 +319,24 @@
         private Panel pnlDatos;
         private Panel pnlConsulta;
         private Label lblTituloDatos;
-        private DataGridView dataGridView1;
-        private Panel panel1;
-        private Button btnSalir;
+        private DataGridView dbgrdProductos;
+        private Panel pnlBotones;
+        private Button btnCancelar;
         private Button btnCargarDatos;
-        private Panel panel2;
+        private Panel pnlBotonActualizar;
         private Button btnActualizar;
         private Label lblProductos;
+        private Label lblNombreProducto;
+        private TextBox txtNombreProducto;
+        private Label lblDescripcionProducto;
+        private TextBox txtDescripcionProducto;
+        private Label lblCostoProducto;
+        private TextBox txtCostoProducto;
+        private Label lblLoteProducto;
+        private TextBox txtLoteProducto;
+        private Label lblProveedorProducto;
+        private TextBox txtIdProducto;
+        private Label lblIdProducto;
+        private CheckedListBox chklbProveedores;
     }
 }

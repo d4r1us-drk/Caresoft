@@ -3,7 +3,8 @@ namespace caresoft_core_client
     public partial class frmMain : Form
     {
         private frmLogin loginForm;
-        private frmInventarioRegistrar registroInventario = new();
+        private frmInventarioRegistrar registroInventario;
+        private frmInventarioActualizar actualizarInventario;
 
         public frmMain()
         {
@@ -33,8 +34,16 @@ namespace caresoft_core_client
 
         private void añadirProductoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            registroInventario = new();
             registroInventario.MdiParent = this;
             registroInventario.Show();
+        }
+
+        private void actualizarProductoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actualizarInventario = new();
+            actualizarInventario.MdiParent = this;
+            actualizarInventario.Show();
         }
     }
 }

@@ -1,5 +1,6 @@
 using caresoft_core.Context;
 using caresoft_core.Models;
+using caresoft_core.Dto;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
 using Microsoft.EntityFrameworkCore;
@@ -10,14 +11,15 @@ public class ProveedorService(CaresoftDbContext dbContext) : IProveedorService
 {
     private readonly LogHandler<ProveedorService> _logHandler = new();
 
-    public async Task<int> CreateProveedorAsync(Proveedor proveedor)
+    public async Task<int> CreateProveedorAsync(ProveedorDto proveedorDto)
     {
         try
         {
-            if (ProveedorExists(proveedor.RncProveedor))
+            if (ProveedorExists(proveedorDto.RncProveedor))
             {
                 return 0;
             }
+            var proveedor = Proveedor.FromDto(proveedorDto);
             dbContext.Proveedors.Add(proveedor);
             await dbContext.SaveChangesAsync();
             return 1;
@@ -49,11 +51,12 @@ public class ProveedorService(CaresoftDbContext dbContext) : IProveedorService
         }
     }
 
-    public async Task<Proveedor> GetProveedorByIdAsync(uint rncProveedor)
+    public async Task<ProveedorDto> GetProveedorByIdAsync(uint rncProveedor)
     {
         try
         {
-            return await dbContext.Proveedors.FindAsync(rncProveedor);
+            var proveedor = await dbContext.Proveedors.FindAsync(rncProveedor);
+            return ProveedorDto.FromModel(proveedor);
         }
         catch (Exception ex)
         {
@@ -62,11 +65,11 @@ public class ProveedorService(CaresoftDbContext dbContext) : IProveedorService
         }
     }
 
-    public async Task<IEnumerable<Proveedor>> GetProveedoresAsync()
+    public async Task<IEnumerable<ProveedorDto>> GetProveedoresAsync()
     {
         try
         {
-            return await dbContext.Proveedors.ToListAsync();
+            return (await dbContext.Proveedors.ToListAsync()).Select(p => ProveedorDto.FromModel(p)).ToList();
         }
         catch (Exception ex)
         {
@@ -75,10 +78,16 @@ public class ProveedorService(CaresoftDbContext dbContext) : IProveedorService
         }
     }
 
-    public async Task<int> UpdateProveedorAsync(Proveedor proveedor)
+    public async Task<int> UpdateProveedorAsync(ProveedorDto proveedorDto)
     {
         try
         {
+            var proveedor = await dbContext.Proveedors.FindAsync(proveedorDto.RncProveedor);
+            if (proveedor == null)
+            {
+                return 0;
+            }
+            proveedor = Proveedor.FromDto(proveedorDto);
             dbContext.Entry(proveedor).State = EntityState.Modified;
             await dbContext.SaveChangesAsync();
             return 1;
