@@ -96,6 +96,7 @@
             this.cargaODescargaToolStripMenuItem.Name = "cargaODescargaToolStripMenuItem";
             this.cargaODescargaToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.cargaODescargaToolStripMenuItem.Text = "Carga o descarga";
+            this.cargaODescargaToolStripMenuItem.Click += new System.EventHandler(this.cargaODescargaToolStripMenuItem_Click);
             // 
             // consultarCuentaClienteToolStripMenuItem
             // 
@@ -129,7 +130,7 @@
             // pagosToolStripMenuItem
             // 
             this.pagosToolStripMenuItem.Name = "pagosToolStripMenuItem";
-            this.pagosToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.pagosToolStripMenuItem.Size = new System.Drawing.Size(162, 34);
             this.pagosToolStripMenuItem.Text = "Pagos";
             this.pagosToolStripMenuItem.Click += new System.EventHandler(this.pagosToolStripMenuItem_Click);
             // 
