@@ -6,6 +6,8 @@ namespace caresoft_core_client
     {
         private readonly HttpClient httpClient = new();
 
+        private readonly caresoft_core_client.CoreWebApi.Client API = new("https://localhost:7038");
+
         public frmInventarioRegistrar()
         {
             InitializeComponent();
@@ -14,6 +16,7 @@ namespace caresoft_core_client
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             Close();
         }
 
@@ -40,36 +43,15 @@ namespace caresoft_core_client
                 Costo = costo,
                 LoteDisponible = loteDisponible
             };
-
-            // Send POST request to add the product
             try
             {
-                HttpResponseMessage response = await httpClient.PostAsJsonAsync("http://localhost:5143/api/Producto/add", newProduct);
-
-                foreach (var provider in selectedProviders)
-                {
-                    string url = $"http://localhost:5143/api/Producto/add-provider/{newProduct.IdProducto}/{provider.RncProveedor}";
-                    HttpResponseMessage providerResponse = await httpClient.PostAsync(url, new StringContent(""));
-
-                    if (!providerResponse.IsSuccessStatusCode)
-                    {
-                        MessageBox.Show($"Hubo un error al añadir el producto (problema con los proveedores) {providerResponse.ReasonPhrase}. Por favor, inténtelo de nuevo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-
-                if (response.IsSuccessStatusCode)
-                {
-                    MessageBox.Show("Producto añadido exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show($"Hubo un error al añadir el producto. Por favor, inténtelo de nuevo. {response.ReasonPhrase}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
+                await API.ApiProductoAddAsync(null, nombre: newProduct.Nombre, descripcion: newProduct.Descripcion, costo: (double)newProduct.Costo, loteDisponible: (int)newProduct.LoteDisponible);
+                MessageBox.Show("Producto registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            } catch (Exception ex)
             {
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
         private async void LoadProviders()
