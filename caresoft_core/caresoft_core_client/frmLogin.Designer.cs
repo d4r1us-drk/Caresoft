@@ -35,6 +35,7 @@
             lblTituloLogo = new Label();
             pbCaresoftLogo = new PictureBox();
             pnlPrincipal = new Panel();
+            btnMinimizar = new Button();
             btnIngresar = new Button();
             pnlEntradaDatos = new Panel();
             txtContraseña = new TextBox();
@@ -43,7 +44,6 @@
             txtNombreUsuario = new TextBox();
             label1 = new Label();
             btnCerrar = new Button();
-            btnMinimizar = new Button();
             pnlLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbCaresoftLogo).BeginInit();
             pnlPrincipal.SuspendLayout();
@@ -123,6 +123,22 @@
             pnlPrincipal.Name = "pnlPrincipal";
             pnlPrincipal.Size = new Size(438, 488);
             pnlPrincipal.TabIndex = 1;
+            // 
+            // btnMinimizar
+            // 
+            btnMinimizar.Cursor = Cursors.Hand;
+            btnMinimizar.FlatAppearance.BorderSize = 0;
+            btnMinimizar.FlatStyle = FlatStyle.Flat;
+            btnMinimizar.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnMinimizar.ForeColor = Color.FromArgb(2, 135, 188);
+            btnMinimizar.Location = new Point(355, 11);
+            btnMinimizar.Margin = new Padding(3, 2, 3, 2);
+            btnMinimizar.Name = "btnMinimizar";
+            btnMinimizar.Size = new Size(38, 37);
+            btnMinimizar.TabIndex = 7;
+            btnMinimizar.Text = "_";
+            btnMinimizar.UseVisualStyleBackColor = true;
+            btnMinimizar.Click += btnMinimizar_Click;
             // 
             // btnIngresar
             // 
@@ -234,22 +250,6 @@
             btnCerrar.UseVisualStyleBackColor = true;
             btnCerrar.Click += btnCerrar_Click;
             // 
-            // btnMinimizar
-            // 
-            btnMinimizar.Cursor = Cursors.Hand;
-            btnMinimizar.FlatAppearance.BorderSize = 0;
-            btnMinimizar.FlatStyle = FlatStyle.Flat;
-            btnMinimizar.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnMinimizar.ForeColor = Color.FromArgb(2, 135, 188);
-            btnMinimizar.Location = new Point(355, 11);
-            btnMinimizar.Margin = new Padding(3, 2, 3, 2);
-            btnMinimizar.Name = "btnMinimizar";
-            btnMinimizar.Size = new Size(38, 37);
-            btnMinimizar.TabIndex = 7;
-            btnMinimizar.Text = "_";
-            btnMinimizar.UseVisualStyleBackColor = true;
-            btnMinimizar.Click += btnMinimizar_Click;
-            // 
             // frmLogin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -266,6 +266,7 @@
             Name = "frmLogin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Caresoft Core Client - Login";
+            FormClosed += frmLogin_FormClosed;
             pnlLogo.ResumeLayout(false);
             pnlLogo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pbCaresoftLogo).EndInit();

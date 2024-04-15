@@ -7,6 +7,7 @@ namespace caresoft_core_client
     {
         private readonly HttpClient _httpClient = new HttpClient();
         private readonly LogHandler<frmLogin> _logHandler = new();
+        private frmMain mainForm;
 
         public frmLogin()
         {
@@ -16,6 +17,11 @@ namespace caresoft_core_client
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        public void SetMainForm(frmMain mainForm)
+        {
+            this.mainForm = mainForm;
         }
 
         private async void btnIngresar_Click(object sender, EventArgs e)
@@ -44,7 +50,6 @@ namespace caresoft_core_client
                             _logHandler.LogInfo($"Inicio de sesión exitoso por usuario con código o documento {txtNombreUsuario.Text}");
                             txtNombreUsuario.Text = "";
                             txtContraseña.Text = "";
-                            var mainForm = new frmMain();
                             mainForm.Show();
                             Hide();
                         }
@@ -91,6 +96,11 @@ namespace caresoft_core_client
         private void btnMinimizar_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
+        }
+
+        private void frmLogin_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

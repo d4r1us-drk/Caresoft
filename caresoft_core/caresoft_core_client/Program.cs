@@ -11,7 +11,17 @@ namespace caresoft_core_client
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new frmLogin());
+
+            // Create an instance of frmMain and frmLogin
+            frmMain mainForm = new frmMain();
+            frmLogin loginForm = new frmLogin();
+
+            // Pass references to each other
+            mainForm.SetLoginForm(loginForm);
+            loginForm.SetMainForm(mainForm);
+
+            // Run the login form
+            Application.Run(loginForm);
         }
     }
 }
