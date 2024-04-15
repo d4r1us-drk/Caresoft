@@ -2,50 +2,36 @@ using caresoft_core.Context;
 using caresoft_core.Models;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
+using caresoft_integration.Client;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace caresoft_core.Services;
 
-public class ProveedorService(CaresoftDbContext dbContext) : IProveedorService
+public class ProveedorService : IProveedorService
 {
+    private readonly CaresoftDbContext _dbContext;
+    private readonly CoreApiClient _coreApiClient;
     private readonly LogHandler<ProveedorService> _logHandler = new();
 
-    public async Task<int> CreateProveedorAsync(Proveedor proveedor)
+    public ProveedorService(CaresoftDbContext dbContext, CoreApiClient coreApiClient)
     {
-        try
-        {
-            if (ProveedorExists(proveedor.RncProveedor))
-            {
-                return 0;
-            }
-            dbContext.Proveedors.Add(proveedor);
-            await dbContext.SaveChangesAsync();
-            return 1;
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Error al crear proveedor", ex);
-            throw;
-        }
+        _dbContext = dbContext;
+        _coreApiClient = coreApiClient;
     }
 
-    public async Task<int> DeleteProveedorAsync(uint rncProveedor)
+    public async Task<IEnumerable<Proveedor>> GetProveedoresAsync()
     {
         try
         {
-            var proveedor = await dbContext.Proveedors.FindAsync(rncProveedor);
-            if (proveedor == null)
-            {
-                return 0;
-            }
-            dbContext.Proveedors.Remove(proveedor);
-            await dbContext.SaveChangesAsync();
-            return 1;
+            return await _coreApiClient.GetProveedoresAsync();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            _logHandler.LogError("Error al eliminar proveedor", ex);
-            throw;
+            return await _dbContext.Proveedors.ToListAsync();
         }
     }
 
@@ -53,25 +39,29 @@ public class ProveedorService(CaresoftDbContext dbContext) : IProveedorService
     {
         try
         {
-            return await dbContext.Proveedors.FindAsync(rncProveedor);
+            return await _coreApiClient.GetProveedorByIdAsync(rncProveedor);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            _logHandler.LogError("Error al obtener proveedor", ex);
-            throw;
+            return await _dbContext.Proveedors.FindAsync(rncProveedor);
         }
     }
 
-    public async Task<IEnumerable<Proveedor>> GetProveedoresAsync()
+    public async Task<int> CreateProveedorAsync(Proveedor proveedor)
     {
         try
         {
-            return await dbContext.Proveedors.ToListAsync();
+            return await _coreApiClient.CreateProveedorAsync(proveedor);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            _logHandler.LogError("Error al listar proveedores", ex);
-            throw;
+            if (_dbContext.Proveedors.Any(e => e.RncProveedor == proveedor.RncProveedor))
+            {
+                return 0; // Proveedor ya existe
+            }
+            _dbContext.Proveedors.Add(proveedor);
+            await _dbContext.SaveChangesAsync();
+            return 1;
         }
     }
 
@@ -79,19 +69,28 @@ public class ProveedorService(CaresoftDbContext dbContext) : IProveedorService
     {
         try
         {
-            dbContext.Entry(proveedor).State = EntityState.Modified;
-            await dbContext.SaveChangesAsync();
-            return 1;
+            return await _coreApiClient.UpdateProveedorAsync(proveedor);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            _logHandler.LogError("Error al actualizar proveedor", ex);
-            throw;
+            _dbContext.Proveedors.Update(proveedor);
+            return await _dbContext.SaveChangesAsync();
         }
     }
 
-    private bool ProveedorExists(uint rncProveedor)
+    public async Task<int> DeleteProveedorAsync(uint rncProveedor)
     {
-        return dbContext.Proveedors.Any(e => e.RncProveedor == rncProveedor);
+        try
+        {
+            return await _coreApiClient.DeleteProveedorAsync(rncProveedor);
+        }
+        catch (Exception)
+        {
+            var proveedor = await _dbContext.Proveedors.FindAsync(rncProveedor);
+            if (proveedor == null) return 0;
+            _dbContext.Proveedors.Remove(proveedor);
+            await _dbContext.SaveChangesAsync();
+            return 1;
+        }
     }
 }

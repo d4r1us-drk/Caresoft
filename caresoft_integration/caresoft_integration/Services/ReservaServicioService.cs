@@ -4,121 +4,123 @@ using caresoft_core.Context;
 using caresoft_core.Utils;
 using caresoft_core.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using caresoft_integration.Client;
 
-namespace caresoft_core.Services;
-
-public class ReservaServicioService : IReservaServicioService
+namespace caresoft_core.Services
 {
-    private readonly CaresoftDbContext _dbContext;
-    private readonly LogHandler<ReservaServicioService> _logHandler = new();
-
-    public ReservaServicioService(CaresoftDbContext dbContext)
+    public class ReservaServicioService : IReservaServicioService
     {
-        _dbContext = dbContext;
-    }
+        private readonly CaresoftDbContext _dbContext;
+        private readonly CoreApiClient _coreApiClient;
+        private readonly LogHandler<ReservaServicioService> _logHandler = new();
 
-    public async Task<List<ReservaServicioDto>> GetReservaServiciosListAsync()
-    {
-        try
+        public ReservaServicioService(CaresoftDbContext dbContext, CoreApiClient coreApiClient)
         {
-            var reservas = await _dbContext.ReservaServicios.ToListAsync();
+            _dbContext = dbContext;
+            _coreApiClient = coreApiClient;
+        }
 
-            // Manually map ReservaServicio entities to ReservaServicioDto objects
-            var reservaDtoList = reservas.Select(r => new ReservaServicioDto
+        public async Task<List<ReservaServicioDto>> GetReservaServiciosListAsync()
+        {
+            try
             {
-                IdReserva = r.IdReserva,
-                DocumentoPaciente = r.DocumentoPaciente,
-                DocumentoMedico = r.DocumentoMedico,
-                ServicioCodigo = r.ServicioCodigo,
-                FechaReservada = r.FechaReservada,
-                Estado = r.Estado
-            }).ToList();
+                var reservas = await _coreApiClient.GetReservaServiciosListAsync();
+                if (reservas.Count > 0) return reservas;
 
-            _logHandler.LogInfo("Data retrieved successfully.");
-            return reservaDtoList;
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogFatal("Something went wrong.", ex);
-            return new List<ReservaServicioDto>();
-        }
-    }
-
-    public async Task<int> AddReservaServicioAsync(ReservaServicioDto reserva)
-    {
-        try
-        {
-            ReservaServicio result = ReservaServicio.FromDto(reserva);
-            _dbContext.ReservaServicios.Add(result);
-            await _dbContext.SaveChangesAsync();
-            _logHandler.LogInfo("ReservaServicio was successfully added.");
-            return 1;
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogFatal("Something went wrong.", ex);
-            throw;
-        }
-    }
-
-    public async Task<int> UpdateReservaServicioAsync(ReservaServicioDto reserva)
-    {
-        try
-        {
-            ReservaServicio result = ReservaServicio.FromDto(reserva);
-            _dbContext.ReservaServicios.Update(result);
-            return await _dbContext.SaveChangesAsync();
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogFatal("Something went wrong.", ex);
-            throw;
-        }
-    }
-
-    public async Task<int> ToggleEstadoReservaServicioAsync(uint idReserva)
-    {
-        try
-        {
-            var reserva = await _dbContext.ReservaServicios.FindAsync(idReserva);
-            if (reserva != null)
-            {
-                reserva.Estado = reserva.Estado == "P" ? "R" : "P";
-                return await _dbContext.SaveChangesAsync();
+                return await _dbContext.ReservaServicios
+                    .Select(r => ReservaServicioDto.FromModel(r))
+                    .ToListAsync();
             }
-            else
+            catch (Exception ex)
             {
-                _logHandler.LogInfo($"ReservaServicio with ID {idReserva} not found.");
+                _logHandler.LogError("Failed to retrieve reserva servicios.", ex);
+                throw;
+            }
+        }
+
+        public async Task<int> AddReservaServicioAsync(ReservaServicioDto reserva)
+        {
+            try
+            {
+                return await _coreApiClient.AddReservaServicioAsync(reserva);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logHandler.LogError("Error communicating with core API", ex);
+                ReservaServicio newReserva = ReservaServicio.FromDto(reserva);
+                _dbContext.ReservaServicios.Add(newReserva);
+                await _dbContext.SaveChangesAsync();
+                return 1;
+            }
+        }
+
+        public async Task<int> UpdateReservaServicioAsync(ReservaServicioDto reserva)
+        {
+            try
+            {
+                int result = await _coreApiClient.UpdateReservaServicioAsync(reserva);
+                if (result == 1) return 1;
+
+                ReservaServicio existingReserva = await _dbContext.ReservaServicios.FindAsync(reserva.IdReserva);
+                if (existingReserva != null)
+                {
+                    existingReserva.DocumentoMedico = reserva.DocumentoMedico;
+                    existingReserva.DocumentoPaciente = reserva.DocumentoPaciente;
+                    existingReserva.ServicioCodigo = reserva.ServicioCodigo;
+                    existingReserva.FechaReservada = reserva.FechaReservada;
+                    existingReserva.Estado = reserva.Estado;
+                    _dbContext.ReservaServicios.Update(existingReserva);
+                    await _dbContext.SaveChangesAsync();
+                    return 1;
+                }
                 return 0;
             }
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogFatal("Something went wrong.", ex);
-            throw;
-        }
-    }
-
-    public async Task<int> DeleteReservaServicioAsync(uint idReserva)
-    {
-        try
-        {
-            var reserva = await _dbContext.ReservaServicios.FindAsync(idReserva);
-            if (reserva != null)
+            catch (Exception ex)
             {
-                _dbContext.ReservaServicios.Remove(reserva);
-                return await _dbContext.SaveChangesAsync();
+                _logHandler.LogError("Failed to update reserva servicio.", ex);
+                throw;
             }
-            else
+        }
+
+        public async Task<int> ToggleEstadoReservaServicioAsync(uint idReserva)
+        {
+            try
             {
-                _logHandler.LogInfo($"ReservaServicio with ID {idReserva} not found.");
+                var reserva = await _dbContext.ReservaServicios.FindAsync(idReserva);
+                if (reserva != null)
+                {
+                    reserva.Estado = reserva.Estado == "P" ? "R" : "P";
+                    await _dbContext.SaveChangesAsync();
+                    return 1;
+                }
                 return 0;
             }
+            catch (Exception ex)
+            {
+                _logHandler.LogError("Failed to toggle estado of reserva servicio.", ex);
+                throw;
+            }
         }
-        catch (Exception ex)
+
+        public async Task<int> DeleteReservaServicioAsync(uint idReserva)
         {
-            _logHandler.LogFatal("Something went wrong.", ex);
-            throw;
+            try
+            {
+                return await _coreApiClient.DeleteReservaServicioAsync(idReserva);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logHandler.LogError("Error communicating with core API", ex);
+                var reserva = await _dbContext.ReservaServicios.FindAsync(idReserva);
+                if (reserva != null)
+                {
+                    _dbContext.ReservaServicios.Remove(reserva);
+                    await _dbContext.SaveChangesAsync();
+                    return 1;
+                }
+                return 0;
+            }
         }
     }
 }
+
