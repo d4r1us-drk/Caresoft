@@ -1,0 +1,40 @@
+﻿
+@font-face {
+    font-family: "BebasNeue";
+    src: url(../fonts/BebasNeue-Regular.ttf)
+}
+
+@font-face {
+    font-family: "Kanit";
+    src: url(../fonts/Kanit-Regular.ttf);
+}
+
+@font-face {
+    font-family: "PTSansNarrow";
+    src: url("../fonts/PTSansNarrow-Regular.ttf");
+}
+
+
+body {
+}
+
+h1{
+    font-size:40px;
+    font-family: Kanit;
+}
+
+.menu h3{
+    font-size:28px;
+    font-family:PTSansNarrow;
+}
+
+.menu input{
+    margin-left:10px;
+}
+
+.botonSalir input{
+    font-family:PTSansNarrow;
+    border:3px solid white;
+    border-radius:8px;
+    background-color:red;
+}

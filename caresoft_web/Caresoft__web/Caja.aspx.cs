@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -55,6 +56,7 @@ namespace Caresoft__web
                             // Crear el RadioButton
                             RadioButton radioButton = new RadioButton();
                             radioButton.GroupName = "Seleccion";
+                            radioButton.ID = row["Id"].ToString(); // Asignar el ID de la deuda como valor del RadioButton
                             seleccionarCell.Controls.Add(radioButton);
 
                             // Asignar los valores de las columnas a las celdas
@@ -120,5 +122,101 @@ namespace Caresoft__web
             // Si no se seleccionó ningún RadioButton, mostrar un mensaje de error
             Response.Write("Por favor, seleccione una fila antes de pagar.");
         }
+
+        protected void btnRealizarPago_Click(object sender, EventArgs e)
+        {
+            // Buscar el RadioButton seleccionado
+            foreach (TableRow row in tblDatos.Rows)
+            {
+                foreach (Control control in row.Cells[0].Controls)
+                {
+                    if (control is RadioButton)
+                    {
+                        RadioButton radioButton = (RadioButton)control;
+                        if (radioButton.Checked)
+                        {
+                            // Obtener el ID de la deuda seleccionada
+                            string deudaId = radioButton.ID;
+
+                            // Realizar la eliminación de la deuda en la base de datos
+                            Historial(deudaId);
+                            EliminarDeuda(deudaId);
+
+                            // Mostrar un mensaje o realizar cualquier otra acción necesaria
+                            Response.Write("La deuda ha sido pagada con éxito.");
+
+                            popup.Visible = false;
+
+                            tblDatos.Rows.Remove(row);
+                            CargarDatosTabla();
+
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void EliminarDeuda(string deudaId)
+        {
+            // Conexión a la base de datos
+            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Melvin\\Documents\\GitHub\\Caresoft\\caresoft_web\\Caresoft__web\\App_Data\\Database1.mdf;Integrated Security=True";
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("DELETE FROM tblPagos WHERE Id = @Id", con))
+                {
+                    cmd.Parameters.AddWithValue("@Id", deudaId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void Historial(string deudaId)
+        {
+            // Obtener la información de la deuda de la base de datos
+            string concepto = "";
+            decimal monto = 0;
+            string identificacion = "";
+
+            // Conexión a la base de datos
+            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Melvin\\Documents\\GitHub\\Caresoft\\caresoft_web\\Caresoft__web\\App_Data\\Database1.mdf;Integrated Security=True";
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                string query = "SELECT Identificacion, Comentario, Deudas FROM tblPagos WHERE Id = @Id";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Id", deudaId);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                           identificacion = reader["Identificacion"].ToString();
+                            concepto = reader["Comentario"].ToString();
+                            monto = Convert.ToDecimal(reader["Deudas"]);
+                        }
+                    }
+                }
+            }
+
+            // Insertar la información en el historial
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("InsertarHistorial", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Concepto", concepto);
+                    cmd.Parameters.AddWithValue("@Identificacion", identificacion);
+                    cmd.Parameters.AddWithValue("@Monto", monto);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }

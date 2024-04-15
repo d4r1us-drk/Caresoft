@@ -10,7 +10,7 @@
             <asp:TextBox ID="TextBoxFecha" runat="server"></asp:TextBox><br />
             <asp:Label ID="LabelHora" runat="server" Text="Hora de la cita:"></asp:Label>
             <asp:TextBox ID="TextBoxHora" runat="server"></asp:TextBox><br />
-            <asp:Button ID="ButtonAgendarCita" runat="server" Text="Agendar Cita" />
+            <asp:Button ID="ButtonAgendarCita" runat="server" Text="Agendar Cita" OnClick="ButtonAgendarCita_Click" />
         </asp:Panel>
     </div>
 </asp:Content>

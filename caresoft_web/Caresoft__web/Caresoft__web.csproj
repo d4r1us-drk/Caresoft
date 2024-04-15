@@ -210,6 +210,9 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="css\Caja.css" />
+    <Content Include="css\Account.css" />
+    <Content Include="css\Citas.css" />
     <Content Include="css\Login.css" />
     <Content Include="css\Inicio.css" />
     <Content Include="css\Registrar.css" />

@@ -1,0 +1,13 @@
+﻿body {
+
+}
+
+.infopago h3{
+    font-size:18px;
+}
+
+.infopago input{
+    cursor:pointer;
+    border:2px solid rgb(0,0,0,.7);
+    border-radius:6px;
+}

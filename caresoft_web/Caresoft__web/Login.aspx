@@ -12,7 +12,7 @@
         <div class="login">
             <h1>Login</h1>
                 <div class="input-box">
-                  <input type="text" placeholder="Correo" ID="userbox" runat="server"  />
+                  <input type="text" placeholder="Correo" ID="userbox" runat="server" />
                     <asp:Image ID="ImageUser" runat="server" ImageUrl="~/images/user-regular-24.png" />
                  </div>
               <div class="input-box">
