@@ -1,5 +1,7 @@
 ﻿using caresoft_core_client.Models;
 using caresoft_core_client.Utils;
+using caresoft_core_client.CoreWebApi;
+
 
 namespace caresoft_core_client
 {
@@ -7,11 +9,15 @@ namespace caresoft_core_client
     {
         private readonly HttpClient _httpClient = new HttpClient();
         private readonly LogHandler<frmLogin> _logHandler = new();
+        private readonly string baseUrl;
+        private readonly Client API;
         private frmMain mainForm;
 
-        public frmLogin()
+        public frmLogin(string baseUrl)
         {
             InitializeComponent();
+            baseUrl = baseUrl ?? string.Empty;
+            API = new(baseUrl);
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -37,12 +43,10 @@ namespace caresoft_core_client
 
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync($"http://localhost:5143/api/Usuario/get/{userName}");
+                var userData = await API.ApiUsuarioGetAsync(userName);
 
-                if (response.IsSuccessStatusCode)
+                if (userData != null)
                 {
-                    var userData = await response.Content.ReadAsAsync<Usuario>();
-
                     if (userData.UsuarioContra == password)
                     {
                         if (userData.Rol == "A")

@@ -2,6 +2,7 @@ namespace caresoft_core_client
 {
     internal static class Program
     {
+        private static readonly string baseUrl = "http://localhost:5143";
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -14,7 +15,7 @@ namespace caresoft_core_client
 
             // Create an instance of frmMain and frmLogin
             frmMain mainForm = new frmMain();
-            frmLogin loginForm = new frmLogin();
+            frmLogin loginForm = new frmLogin(baseUrl);
 
             // Pass references to each other
             mainForm.SetLoginForm(loginForm);
