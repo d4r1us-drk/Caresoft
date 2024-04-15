@@ -10,7 +10,7 @@ namespace caresoft_core.Controllers;
 public class IngresoController(IIngresoService ingresoService) : ControllerBase
 {
     [HttpPost("add")]
-    public async Task<ActionResult<string>> AddIngreso([FromQuery] IngresoDto ingresoDto)
+    public async Task<IActionResult> AddIngreso([FromQuery] IngresoDto ingresoDto)
     {
         try
         {
@@ -26,7 +26,7 @@ public class IngresoController(IIngresoService ingresoService) : ControllerBase
     }
 
     [HttpPut("update/{id}")]
-    public async Task<ActionResult<string>> UpdateIngreso([FromQuery] IngresoDto ingresoDto)
+    public async Task<IActionResult> UpdateIngreso([FromQuery] IngresoDto ingresoDto)
     {
         try
         {
@@ -42,7 +42,7 @@ public class IngresoController(IIngresoService ingresoService) : ControllerBase
     }
 
     [HttpDelete("delete/{id}")]
-    public async Task<ActionResult<string>> DeleteIngreso(uint id)
+    public async Task<IActionResult> DeleteIngreso(uint id)
     {
         try
         {
@@ -89,14 +89,14 @@ public class IngresoController(IIngresoService ingresoService) : ControllerBase
 
     // Metodos con afecciones (relacion M:M)
     [HttpPost("{idIngreso}/afecciones/{idAfeccion}")]
-    public async Task<ActionResult<string>> AddIngresoAfeccion(uint idIngreso, uint idAfeccion)
+    public async Task<IActionResult> AddIngresoAfeccion(uint idIngreso, uint idAfeccion)
     {
         var result = await ingresoService.AddIngresoAfeccionAsync(idIngreso, idAfeccion);
         return result == 1 ? Ok("Afección added successfully.") : NotFound("Ingreso or Afección not found.");
     }
 
     [HttpDelete("{idIngreso}/afecciones/{idAfeccion}")]
-    public async Task<ActionResult<string>> RemoveIngresoAfeccion(uint idIngreso, uint idAfeccion)
+    public async Task<IActionResult> RemoveIngresoAfeccion(uint idIngreso, uint idAfeccion)
     {
         var result = await ingresoService.RemoveIngresoAfeccionAsync(idIngreso, idAfeccion);
         return result == 1 ? Ok("Afección removed successfully.") : NotFound("Ingreso or Afección not found.");

@@ -13,8 +13,8 @@ namespace caresoft_core_client
 
         public frmLogin(string baseURL)
         {
-            InitializeComponent();
             API = new Client(baseURL);
+            InitializeComponent();
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)

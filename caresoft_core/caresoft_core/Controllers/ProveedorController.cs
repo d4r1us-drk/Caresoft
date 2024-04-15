@@ -42,7 +42,7 @@ public class ProveedorController(IProveedorService proveedorService) : Controlle
     }
 
     [HttpPost("add")]
-    public async Task<ActionResult<Proveedor>> CreateProveedor([FromQuery] ProveedorDto proveedor)
+    public async Task<ActionResult> CreateProveedor([FromQuery] ProveedorDto proveedor)
     {
         try
         {
@@ -51,7 +51,7 @@ public class ProveedorController(IProveedorService proveedorService) : Controlle
             {
                 return Conflict($"Proveedor with RNC {proveedor.RncProveedor} already exists");
             }
-            return CreatedAtAction(nameof(GetProveedor), new { rncProveedor = proveedor.RncProveedor }, proveedor);
+            return Ok(result);
         }
         catch (Exception ex)
         {

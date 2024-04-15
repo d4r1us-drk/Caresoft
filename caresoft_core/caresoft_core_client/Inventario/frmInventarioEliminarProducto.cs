@@ -3,10 +3,10 @@ using caresoft_core.CoreWebApi;
 
 namespace caresoft_core_client
 {
-    public partial class frmInventarioEliminar : Form
+    public partial class frmInventarioEliminarProducto : Form
     {
         private readonly Client API;
-        public frmInventarioEliminar(string baseURL)
+        public frmInventarioEliminarProducto(string baseURL)
         {
             API = new(baseURL);
             InitializeComponent();

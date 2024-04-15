@@ -5,15 +5,15 @@ using System.Text;
 
 namespace caresoft_core_client
 {
-    public partial class frmInventarioActualizar : Form
+    public partial class frmInventarioActualizarProducto : Form
     {
         private readonly Client API;
 
-        public frmInventarioActualizar(string baseUrl)
+        public frmInventarioActualizarProducto(string baseUrl)
         {
+            API = new Client(baseUrl);
             InitializeComponent();
             LoadProductos();
-            API = new Client(baseUrl);
         }
 
         private async void LoadProductos()

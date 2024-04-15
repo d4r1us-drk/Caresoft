@@ -39,12 +39,12 @@ public class PagoController(IPagoService pagoService) : ControllerBase
     }
 
     [HttpPost("add")]
-    public async Task<ActionResult<Pago>> CreatePago(Pago pago)
+    public async Task<ActionResult> CreatePago(Pago pago)
     {
         try
         {
             await _pagoService.CreatePagoAsync(pago);
-            return CreatedAtAction(nameof(GetPagoById), new { idPago = pago.IdPago }, pago);
+            return Ok();
         }
         catch (Exception)
         {

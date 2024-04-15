@@ -1,6 +1,6 @@
 ﻿namespace caresoft_core_client
 {
-    partial class frmInventarioActualizar
+    partial class frmInventarioActualizarProducto
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioActualizar));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioActualizarProveedor));
             pnlTitulos = new Panel();
             lblTituloDatos = new Label();
             lblProductos = new Label();

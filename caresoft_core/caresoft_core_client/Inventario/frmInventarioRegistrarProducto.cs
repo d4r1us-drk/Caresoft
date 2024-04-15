@@ -3,16 +3,16 @@ using caresoft_core_client.Models;
 
 namespace caresoft_core_client
 {
-    public partial class frmInventarioRegistrar : Form
+    public partial class frmInventarioRegistrarProducto : Form
     {
 
         private readonly Client API;
 
-        public frmInventarioRegistrar(string baseURL)
+        public frmInventarioRegistrarProducto(string baseURL)
         {
+            API = new Client(baseURL);
             InitializeComponent();
             LoadProviders();
-            API = new(baseURL);
         }
 
         private void button1_Click(object sender, EventArgs e)

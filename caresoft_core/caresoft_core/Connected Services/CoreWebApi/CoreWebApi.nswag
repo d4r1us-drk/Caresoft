@@ -4,7 +4,7 @@
   "documentGenerator": {
     "fromDocument": {
       "url": "https://localhost:7038/swagger/v1/swagger.json",
-      "output": "OpenAPI.nswag.json",
+      "output": "CoreWebApi.nswag.json",
       "newLineBehavior": "Auto"
     }
   },
@@ -92,7 +92,7 @@
       "enumNameGeneratorType": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "OpenAPI.cs",
+      "output": "CoreWebApi.cs",
       "newLineBehavior": "Auto"
     }
   }

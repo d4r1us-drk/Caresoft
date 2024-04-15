@@ -134,21 +134,21 @@
             // añadirProductoToolStripMenuItem
             // 
             añadirProductoToolStripMenuItem.Name = "añadirProductoToolStripMenuItem";
-            añadirProductoToolStripMenuItem.Size = new Size(180, 22);
+            añadirProductoToolStripMenuItem.Size = new Size(178, 22);
             añadirProductoToolStripMenuItem.Text = "Añadir producto";
             añadirProductoToolStripMenuItem.Click += añadirProductoToolStripMenuItem_Click;
             // 
             // actualizarProductoToolStripMenuItem
             // 
             actualizarProductoToolStripMenuItem.Name = "actualizarProductoToolStripMenuItem";
-            actualizarProductoToolStripMenuItem.Size = new Size(180, 22);
+            actualizarProductoToolStripMenuItem.Size = new Size(178, 22);
             actualizarProductoToolStripMenuItem.Text = "Actualizar producto";
             actualizarProductoToolStripMenuItem.Click += actualizarProductoToolStripMenuItem_Click;
             // 
             // eliminarProductoToolStripMenuItem
             // 
             eliminarProductoToolStripMenuItem.Name = "eliminarProductoToolStripMenuItem";
-            eliminarProductoToolStripMenuItem.Size = new Size(180, 22);
+            eliminarProductoToolStripMenuItem.Size = new Size(178, 22);
             eliminarProductoToolStripMenuItem.Text = "Eliminar producto";
             eliminarProductoToolStripMenuItem.Click += eliminarProductoToolStripMenuItem_Click;
             // 
@@ -164,30 +164,35 @@
             añadirProveedorToolStripMenuItem.Name = "añadirProveedorToolStripMenuItem";
             añadirProveedorToolStripMenuItem.Size = new Size(183, 22);
             añadirProveedorToolStripMenuItem.Text = "Añadir proveedor";
+            añadirProveedorToolStripMenuItem.Click += añadirProveedorToolStripMenuItem_Click;
             // 
             // actualizarProveedorToolStripMenuItem
             // 
             actualizarProveedorToolStripMenuItem.Name = "actualizarProveedorToolStripMenuItem";
             actualizarProveedorToolStripMenuItem.Size = new Size(183, 22);
             actualizarProveedorToolStripMenuItem.Text = "Actualizar proveedor";
+            actualizarProveedorToolStripMenuItem.Click += actualizarProveedorToolStripMenuItem_Click;
             // 
             // eliminarProveedorToolStripMenuItem
             // 
             eliminarProveedorToolStripMenuItem.Name = "eliminarProveedorToolStripMenuItem";
             eliminarProveedorToolStripMenuItem.Size = new Size(183, 22);
             eliminarProveedorToolStripMenuItem.Text = "Eliminar proveedor";
+            eliminarProveedorToolStripMenuItem.Click += eliminarProveedorToolStripMenuItem_Click;
             // 
             // consultarProductosToolStripMenuItem
             // 
             consultarProductosToolStripMenuItem.Name = "consultarProductosToolStripMenuItem";
             consultarProductosToolStripMenuItem.Size = new Size(193, 22);
             consultarProductosToolStripMenuItem.Text = "Consultar Productos";
+            consultarProductosToolStripMenuItem.Click += consultarProductosToolStripMenuItem_Click;
             // 
             // consultarProveedoresToolStripMenuItem
             // 
             consultarProveedoresToolStripMenuItem.Name = "consultarProveedoresToolStripMenuItem";
             consultarProveedoresToolStripMenuItem.Size = new Size(193, 22);
             consultarProveedoresToolStripMenuItem.Text = "Consultar Proveedores";
+            consultarProveedoresToolStripMenuItem.Click += consultarProveedoresToolStripMenuItem_Click;
             // 
             // serviciosToolStripMenuItem
             // 
@@ -208,6 +213,7 @@
             añadirTipoDeServicioToolStripMenuItem.Name = "añadirTipoDeServicioToolStripMenuItem";
             añadirTipoDeServicioToolStripMenuItem.Size = new Size(209, 22);
             añadirTipoDeServicioToolStripMenuItem.Text = "Añadir tipo de servicio";
+            añadirTipoDeServicioToolStripMenuItem.Click += añadirTipoDeServicioToolStripMenuItem_Click;
             // 
             // añadirServicioToolStripMenuItem
             // 
@@ -220,6 +226,7 @@
             actualizarTipoDeServicioToolStripMenuItem.Name = "actualizarTipoDeServicioToolStripMenuItem";
             actualizarTipoDeServicioToolStripMenuItem.Size = new Size(209, 22);
             actualizarTipoDeServicioToolStripMenuItem.Text = "Actualizar tipo de servicio";
+            actualizarTipoDeServicioToolStripMenuItem.Click += actualizarTipoDeServicioToolStripMenuItem_Click;
             // 
             // actualizarServicioToolStripMenuItem
             // 
@@ -232,6 +239,7 @@
             eliminarTipoDeServicioToolStripMenuItem.Name = "eliminarTipoDeServicioToolStripMenuItem";
             eliminarTipoDeServicioToolStripMenuItem.Size = new Size(209, 22);
             eliminarTipoDeServicioToolStripMenuItem.Text = "Eliminar tipo de servicio";
+            eliminarTipoDeServicioToolStripMenuItem.Click += eliminarTipoDeServicioToolStripMenuItem_Click;
             // 
             // eliminarServicioToolStripMenuItem
             // 

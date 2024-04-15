@@ -66,7 +66,7 @@ public class AseguradoraController(IAseguradoraService aseguradoraService) : Con
     }
 
     [HttpPost("add")]
-    public async Task<ActionResult<Aseguradora>> PostAseguradora([FromQuery] Aseguradora aseguradora)
+    public async Task<ActionResult<int>> PostAseguradora([FromQuery] Aseguradora aseguradora)
     {
         try
         {
@@ -75,7 +75,7 @@ public class AseguradoraController(IAseguradoraService aseguradoraService) : Con
             {
                 return Conflict();
             }
-            return CreatedAtAction("GetAseguradora", new { id = aseguradora.IdAseguradora }, aseguradora);
+            return Ok(newAseguradora);
         }
         catch (Exception ex)
         {

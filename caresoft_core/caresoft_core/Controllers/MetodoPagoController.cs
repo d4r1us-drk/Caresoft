@@ -9,7 +9,7 @@ namespace caresoft_core.Controllers;
 public class MetodoPagoController(IMetodoPagoService metodoPagoService) : ControllerBase
 {
     [HttpPost("add")]
-    public async Task<ActionResult<string>> AddMetodoPago([FromQuery] MetodoPagoDto metodoPagoDto)
+    public async Task<IActionResult> AddMetodoPago([FromQuery] MetodoPagoDto metodoPagoDto)
     {
         var result = await metodoPagoService.AddMetodoPagoAsync(metodoPagoDto);
         if (result == 1)
@@ -25,7 +25,7 @@ public class MetodoPagoController(IMetodoPagoService metodoPagoService) : Contro
     }
 
     [HttpPut("update")]
-    public async Task<ActionResult<string>> UpdateMetodoPago([FromQuery] MetodoPagoDto metodoPagoDto)
+    public async Task<IActionResult> UpdateMetodoPago([FromQuery] MetodoPagoDto metodoPagoDto)
     {
         var result = await metodoPagoService.UpdateMetodoPagoAsync(metodoPagoDto);
         if (result == 1)
@@ -34,7 +34,7 @@ public class MetodoPagoController(IMetodoPagoService metodoPagoService) : Contro
     }
 
     [HttpDelete("delete/{id}")]
-    public async Task<ActionResult<string>> DeleteMetodoPago(uint id)
+    public async Task<IActionResult> DeleteMetodoPago(uint id)
     {
         var result = await metodoPagoService.DeleteMetodoPagoAsync(id);
         if (result == 1)

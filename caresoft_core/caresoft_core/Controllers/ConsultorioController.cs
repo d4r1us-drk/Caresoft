@@ -48,7 +48,7 @@ public class ConsultorioController(IConsultorioService consultorioService) : Con
             var result = await consultorioService.CreateConsultorioAsync(consultorio);
             if (result == 1)
             {
-                return CreatedAtAction(nameof(GetConsultorioById), new { id = consultorio.IdConsultorio }, consultorio);
+                return Ok(result);
             }
             return StatusCode(500, "Failed to create Consultorio");
         }

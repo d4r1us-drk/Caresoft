@@ -60,7 +60,7 @@ public class AutorizacionController(IAutorizacionService autorizacionService) : 
     }
 
     [HttpPost("add")]
-    public async Task<ActionResult<Autorizacion>> PostAutorizacion([FromQuery] AutorizacionDto autorizacionDto,
+    public async Task<ActionResult<int>> PostAutorizacion([FromQuery] AutorizacionDto autorizacionDto,
         int? idIngreso,
         string? consultaCodigo,
         string? facturaCodigo,
@@ -75,7 +75,7 @@ public class AutorizacionController(IAutorizacionService autorizacionService) : 
             {
                 return BadRequest();
             }
-            return CreatedAtAction("GetAutorizacion", new { id = autorizacion.IdAutorizacion }, autorizacion);
+            return Ok(result);
         }
         catch(Exception)
         {

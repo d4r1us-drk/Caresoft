@@ -1,6 +1,6 @@
 ﻿namespace caresoft_core_client
 {
-    partial class frmInventarioRegistrar
+    partial class frmInventarioRegistrarProducto
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioRegistrar));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioRegistrarProveedor));
             lblProveedorProducto = new Label();
             lblLoteProducto = new Label();
             txtLoteProducto = new TextBox();

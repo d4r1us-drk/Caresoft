@@ -27,7 +27,7 @@ public class ProductoController(IProductoService productoService) : ControllerBa
     }
 
     [HttpPost("add")]
-    public async Task<ActionResult> AddProductoAsync([FromQuery] ProductoDto producto)
+    public async Task<IActionResult> AddProductoAsync([FromQuery] ProductoDto producto)
     {
         try
         {
@@ -45,7 +45,7 @@ public class ProductoController(IProductoService productoService) : ControllerBa
     }
 
     [HttpPut("update")]
-    public async Task<ActionResult> UpdateProductoAsync([FromQuery] ProductoDto producto)
+    public async Task<IActionResult> UpdateProductoAsync([FromQuery] ProductoDto producto)
     {
         try
         {
@@ -63,7 +63,7 @@ public class ProductoController(IProductoService productoService) : ControllerBa
     }
 
     [HttpDelete("delete/{idProducto}")]
-    public async Task<ActionResult> DeleteProductoAsync(uint idProducto)
+    public async Task<IActionResult> DeleteProductoAsync(uint idProducto)
     {
         try
         {
@@ -81,7 +81,7 @@ public class ProductoController(IProductoService productoService) : ControllerBa
     }
 
     [HttpPost("add-provider/{idProducto}/{rncProveedor}")]
-    public async Task<ActionResult> AddProductoProveedorAsync(uint idProducto, uint rncProveedor)
+    public async Task<IActionResult> AddProductoProveedorAsync(uint idProducto, uint rncProveedor)
     {
         try
         {
@@ -99,7 +99,7 @@ public class ProductoController(IProductoService productoService) : ControllerBa
     }
 
     [HttpDelete("delete-provider/{idProducto}/{rncProveedor}")]
-    public async Task<ActionResult> DeleteProductoProveedorAsync(uint idProducto, uint rncProveedor)
+    public async Task<IActionResult> DeleteProductoProveedorAsync(uint idProducto, uint rncProveedor)
     {
         try
         {
