@@ -1,4 +1,5 @@
 using caresoft_core.Models;
+using caresoft_core.Dto;
 using caresoft_core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +10,7 @@ namespace caresoft_core.Controllers;
 public class ProveedorController(IProveedorService proveedorService) : ControllerBase
 {
     [HttpGet("get")]
-    public async Task<ActionResult<IEnumerable<Proveedor>>> GetProveedores()
+    public async Task<ActionResult<IEnumerable<ProveedorDto>>> GetProveedores()
     {
         try
         {
@@ -23,7 +24,7 @@ public class ProveedorController(IProveedorService proveedorService) : Controlle
     }
 
     [HttpGet("get/{rncProveedor}")]
-    public async Task<ActionResult<Proveedor>> GetProveedor(uint rncProveedor)
+    public async Task<ActionResult<ProveedorDto>> GetProveedor(uint rncProveedor)
     {
         try
         {
@@ -41,7 +42,7 @@ public class ProveedorController(IProveedorService proveedorService) : Controlle
     }
 
     [HttpPost("add")]
-    public async Task<ActionResult<Proveedor>> CreateProveedor(Proveedor proveedor)
+    public async Task<ActionResult<Proveedor>> CreateProveedor([FromQuery] ProveedorDto proveedor)
     {
         try
         {
@@ -59,7 +60,7 @@ public class ProveedorController(IProveedorService proveedorService) : Controlle
     }
 
     [HttpPut("update")]
-    public async Task<ActionResult> UpdateProveedor(Proveedor proveedor)
+    public async Task<ActionResult> UpdateProveedor([FromQuery] ProveedorDto proveedor)
     {
         try
         {
