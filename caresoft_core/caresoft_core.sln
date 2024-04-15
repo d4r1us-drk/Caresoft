@@ -3,20 +3,29 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "caresoft_core", "caresoft_core\caresoft_core.csproj", "{C549E137-1E62-4BEE-8BFE-A77AFDD1853C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "caresoft_core", "caresoft_core\caresoft_core.csproj", "{C549E137-1E62-4BEE-8BFE-A77AFDD1853C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "caresoft_core_client", "caresoft_core_client\caresoft_core_client.csproj", "{EEE8317E-7A24-4AF6-B1ED-1314F7604B95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C549E137-1E62-4BEE-8BFE-A77AFDD1853C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C549E137-1E62-4BEE-8BFE-A77AFDD1853C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C549E137-1E62-4BEE-8BFE-A77AFDD1853C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C549E137-1E62-4BEE-8BFE-A77AFDD1853C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEE8317E-7A24-4AF6-B1ED-1314F7604B95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEE8317E-7A24-4AF6-B1ED-1314F7604B95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEE8317E-7A24-4AF6-B1ED-1314F7604B95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEE8317E-7A24-4AF6-B1ED-1314F7604B95}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B6C0769E-DBB1-49E0-B59C-4DFB1BCE28B0}
 	EndGlobalSection
 EndGlobal
