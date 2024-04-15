@@ -1,6 +1,8 @@
 ﻿using caresoft_core.CoreWebApi;
 using caresoft_core_client.Models;
 using caresoft_core_client.Utils;
+using caresoft_core_client.CoreWebApi;
+
 
 namespace caresoft_core_client
 {
@@ -8,6 +10,7 @@ namespace caresoft_core_client
     {
         private readonly HttpClient _httpClient = new HttpClient();
         private readonly LogHandler<frmLogin> _logHandler = new();
+<<<<<<< HEAD
         private readonly Client API;
         private frmMain mainForm;
 
@@ -15,6 +18,17 @@ namespace caresoft_core_client
         {
             InitializeComponent();
             API = new Client(baseURL);
+=======
+        private readonly string baseUrl;
+        private readonly Client API;
+        private frmMain mainForm;
+
+        public frmLogin(string baseUrl)
+        {
+            InitializeComponent();
+            baseUrl = baseUrl ?? string.Empty;
+            API = new(baseUrl);
+>>>>>>> 15b1860d97c6b0c6ff56d9e0e44eda5649091804
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -41,6 +55,7 @@ namespace caresoft_core_client
             try
             {
                 var userData = await API.ApiUsuarioGetAsync(userName);
+<<<<<<< HEAD
                 if(userData == null)
                 {
                     MessageBox.Show("Usuario o contraseña invalidos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -49,6 +64,12 @@ namespace caresoft_core_client
                 if (userData.UsuarioContra == password)
                 {
                     if (userData.Rol == "A")
+=======
+
+                if (userData != null)
+                {
+                    if (userData.UsuarioContra == password)
+>>>>>>> 15b1860d97c6b0c6ff56d9e0e44eda5649091804
                     {
                         _logHandler.LogInfo($"Inicio de sesión exitoso por usuario con código o documento {txtNombreUsuario.Text}");
                         txtNombreUsuario.Text = "";
