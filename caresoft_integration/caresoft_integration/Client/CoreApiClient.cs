@@ -317,6 +317,62 @@ namespace caresoft_integration.Client
             return null;
         }
 
+        // Método CRUD para Producto
+        public async Task<List<ProductoDto>> GetProductosAsync()
+        {
+            var response = await _httpClient.GetAsync("api/producto/get");
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<ProductoDto>>(jsonResponse);
+            }
+            return new List<ProductoDto>();
+        }
+
+        public async Task<int> AddProductoAsync(ProductoDto productoDto)
+        {
+            string json = JsonConvert.SerializeObject(productoDto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("api/producto/add", content);
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> UpdateProductoAsync(ProductoDto productoDto)
+        {
+            string json = JsonConvert.SerializeObject(productoDto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync($"api/producto/update", content);
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> DeleteProductoAsync(uint idProducto)
+        {
+            var response = await _httpClient.DeleteAsync($"api/producto/delete/{idProducto}");
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> AddProductoProveedorAsync(uint idProducto, uint rncProveedor)
+        {
+            var response = await _httpClient.PostAsync($"api/producto/add-provider/{idProducto}/{rncProveedor}", null);
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> DeleteProductoProveedorAsync(uint idProducto, uint rncProveedor)
+        {
+            var response = await _httpClient.DeleteAsync($"api/producto/delete-provider/{idProducto}/{rncProveedor}");
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<List<uint>> GetProductoProveedoresAsync(uint idProducto)
+        {
+            var response = await _httpClient.GetAsync($"api/producto/{idProducto}/proveedores");
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<uint>>(jsonResponse);
+            }
+            return new List<uint>();
+        }
 
     }
 }
