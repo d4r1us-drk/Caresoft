@@ -133,14 +133,14 @@ namespace caresoft_integration.Client
         {
             string json = JsonConvert.SerializeObject(salaDto);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync("api/sala", content);
+            var response = await _httpClient.PostAsync("api/sala/add", content);
 
             return response.IsSuccessStatusCode ? 1 : 0;
         }
 
         public async Task<List<SalaDto>> GetSalasAsync()
         {
-            var response = await _httpClient.GetAsync("api/sala");
+            var response = await _httpClient.GetAsync("api/sala/get");
             if (response.IsSuccessStatusCode)
             {
                 string jsonResponse = await response.Content.ReadAsStringAsync();
@@ -149,18 +149,62 @@ namespace caresoft_integration.Client
             return new List<SalaDto>();
         }
 
-        public async Task<int> UpdateSalaEstadoAsync(SalaDto salaDto)
+        public async Task<int> UpdateSalaEstadoAsync(uint numSala, string nuevoEstado)
         {
-            string json = JsonConvert.SerializeObject(salaDto);
+            string json = JsonConvert.SerializeObject(new { NumSala = numSala, Estado = nuevoEstado });
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PutAsync($"api/sala/{salaDto.NumSala}", content);
+            var response = await _httpClient.PutAsync($"api/sala/update/{numSala}", content);
 
             return response.IsSuccessStatusCode ? 1 : 0;
         }
 
         public async Task<int> DeleteSalaAsync(uint numSala)
         {
-            var response = await _httpClient.DeleteAsync($"api/sala/{numSala}");
+            var response = await _httpClient.DeleteAsync($"api/sala/delete/{numSala}");
+
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        // Método CRUD para Reserva
+        public async Task<int> AddReservaServicioAsync(ReservaServicioDto reserva)
+        {
+            string json = JsonConvert.SerializeObject(reserva);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("api/reservaServicio/add", content);
+
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<List<ReservaServicioDto>> GetReservaServiciosListAsync()
+        {
+            var response = await _httpClient.GetAsync("api/reservaServicio/get");
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<ReservaServicioDto>>(jsonResponse);
+            }
+            return new List<ReservaServicioDto>();
+        }
+
+        public async Task<int> UpdateReservaServicioAsync(ReservaServicioDto reserva)
+        {
+            string json = JsonConvert.SerializeObject(reserva);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync($"api/reservaServicio/update", content);
+
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> ToggleEstadoReservaServicioAsync(uint idReserva)
+        {
+            var response = await _httpClient.PutAsync($"api/reservaServicio/toggle-state/{idReserva}", null);
+
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> DeleteReservaServicioAsync(uint idReserva)
+        {
+            var response = await _httpClient.DeleteAsync($"api/reservaServicio/delete/{idReserva}");
 
             return response.IsSuccessStatusCode ? 1 : 0;
         }
