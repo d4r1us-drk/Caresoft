@@ -128,5 +128,42 @@ namespace caresoft_integration.Client
             return response.IsSuccessStatusCode ? 1 : 0;
         }
 
+        // Métodos CRUD para Sala
+        public async Task<int> CreateSalaAsync(SalaDto salaDto)
+        {
+            string json = JsonConvert.SerializeObject(salaDto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("api/sala", content);
+
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<List<SalaDto>> GetSalasAsync()
+        {
+            var response = await _httpClient.GetAsync("api/sala");
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<SalaDto>>(jsonResponse);
+            }
+            return new List<SalaDto>();
+        }
+
+        public async Task<int> UpdateSalaEstadoAsync(SalaDto salaDto)
+        {
+            string json = JsonConvert.SerializeObject(salaDto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync($"api/sala/{salaDto.NumSala}", content);
+
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
+        public async Task<int> DeleteSalaAsync(uint numSala)
+        {
+            var response = await _httpClient.DeleteAsync($"api/sala/{numSala}");
+
+            return response.IsSuccessStatusCode ? 1 : 0;
+        }
+
     }
 }

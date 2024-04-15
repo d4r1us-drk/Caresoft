@@ -8,23 +8,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using caresoft_integration.Client;
 
 namespace caresoft_core.Services
 {
     public class SalaService : ISalaService
     {
         private readonly CaresoftDbContext _dbContext;
+        private readonly CoreApiClient _coreApiClient;
         private readonly LogHandler<SalaService> _logHandler = new LogHandler<SalaService>();
 
-        public SalaService(CaresoftDbContext dbContext)
+        public SalaService(CaresoftDbContext dbContext, CoreApiClient coreApiClient)
         {
             _dbContext = dbContext;
+            _coreApiClient = coreApiClient;
         }
 
         public async Task<int> CreateSalaAsync(SalaDto salaDto)
         {
             try
             {
+                int result = await _coreApiClient.CreateSalaAsync(salaDto);
+                if (result == 1) return 1; // If successful, return 1
+
                 var sala = new Sala
                 {
                     Estado = salaDto.Estado
@@ -32,7 +38,6 @@ namespace caresoft_core.Services
 
                 _dbContext.Salas.Add(sala);
                 await _dbContext.SaveChangesAsync();
-                _logHandler.LogInfo("Sala created successfully.");
                 return 1;
             }
             catch (Exception ex)
@@ -46,6 +51,9 @@ namespace caresoft_core.Services
         {
             try
             {
+                var salas = await _coreApiClient.GetSalasAsync();
+                if (salas.Count > 0) return salas;
+
                 return await _dbContext.Salas
                     .Select(s => new SalaDto { NumSala = s.NumSala, Estado = s.Estado })
                     .ToListAsync();
@@ -68,10 +76,13 @@ namespace caresoft_core.Services
                     return 0;
                 }
 
-                sala.Estado = sala.Estado == "D" ? "O" : "D";
+                string nuevoEstado = sala.Estado == "D" ? "O" : "D";
+                int result = await _coreApiClient.UpdateSalaEstadoAsync(numSala, nuevoEstado);
+                if (result == 1) return 1;
+
+                sala.Estado = nuevoEstado;
                 _dbContext.Salas.Update(sala);
                 await _dbContext.SaveChangesAsync();
-                _logHandler.LogInfo("Sala estado toggled successfully.");
                 return 1;
             }
             catch (Exception ex)
@@ -85,6 +96,9 @@ namespace caresoft_core.Services
         {
             try
             {
+                int result = await _coreApiClient.DeleteSalaAsync(numSala);
+                if (result == 1) return 1; // Si fue exitoso, retorna 1
+
                 var sala = await _dbContext.Salas.FindAsync(numSala);
                 if (sala == null)
                 {
@@ -94,7 +108,6 @@ namespace caresoft_core.Services
 
                 _dbContext.Salas.Remove(sala);
                 await _dbContext.SaveChangesAsync();
-                _logHandler.LogInfo("Sala deleted successfully.");
                 return 1;
             }
             catch (Exception ex)
@@ -103,6 +116,5 @@ namespace caresoft_core.Services
                 throw;
             }
         }
-
     }
 }
