@@ -1,6 +1,6 @@
 ﻿namespace caresoft_core_client.Servicios
 {
-    partial class frmServiciosEliminarTipoServicio
+    partial class frmServiciosEliminarServicio
     {
         /// <summary>
         /// Required designer variable.
@@ -28,45 +28,54 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServiciosEliminarTipoServicio));
-            lblTitulo = new Label();
-            pnlTitulos = new Panel();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServiciosEliminarServicio));
             dataGridView1 = new DataGridView();
-            btnCancelar = new Button();
+            lblTitulo = new Label();
             pnlBotones = new Panel();
             btnEliminar = new Button();
-            pnlTitulos.SuspendLayout();
+            btnCancelar = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             pnlBotones.SuspendLayout();
             SuspendLayout();
             // 
-            // lblTitulo
-            // 
-            lblTitulo.AutoSize = true;
-            lblTitulo.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitulo.Location = new Point(311, 18);
-            lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(232, 25);
-            lblTitulo.TabIndex = 27;
-            lblTitulo.Text = "Eliminar Tipo de Servicio";
-            lblTitulo.Click += lblTitulo_Click;
-            // 
-            // pnlTitulos
-            // 
-            pnlTitulos.Controls.Add(lblTitulo);
-            pnlTitulos.Dock = DockStyle.Top;
-            pnlTitulos.Location = new Point(0, 0);
-            pnlTitulos.Name = "pnlTitulos";
-            pnlTitulos.Size = new Size(839, 57);
-            pnlTitulos.TabIndex = 4;
-            // 
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(0, 58);
+            dataGridView1.Location = new Point(0, 37);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(839, 399);
-            dataGridView1.TabIndex = 5;
+            dataGridView1.Size = new Size(836, 399);
+            dataGridView1.TabIndex = 28;
+            // 
+            // lblTitulo
+            // 
+            lblTitulo.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitulo.Location = new Point(0, 9);
+            lblTitulo.Name = "lblTitulo";
+            lblTitulo.Size = new Size(836, 25);
+            lblTitulo.TabIndex = 30;
+            lblTitulo.Text = "Eliminar  Servicio";
+            lblTitulo.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // pnlBotones
+            // 
+            pnlBotones.Controls.Add(btnEliminar);
+            pnlBotones.Controls.Add(btnCancelar);
+            pnlBotones.Dock = DockStyle.Bottom;
+            pnlBotones.Location = new Point(0, 446);
+            pnlBotones.Name = "pnlBotones";
+            pnlBotones.Size = new Size(836, 32);
+            pnlBotones.TabIndex = 29;
+            // 
+            // btnEliminar
+            // 
+            btnEliminar.Dock = DockStyle.Right;
+            btnEliminar.Location = new Point(689, 0);
+            btnEliminar.Name = "btnEliminar";
+            btnEliminar.Size = new Size(147, 32);
+            btnEliminar.TabIndex = 1;
+            btnEliminar.Text = "Eliminar ";
+            btnEliminar.UseVisualStyleBackColor = true;
+            btnEliminar.Click += btnEliminar_Click;
             // 
             // btnCancelar
             // 
@@ -79,40 +88,17 @@
             btnCancelar.UseVisualStyleBackColor = true;
             btnCancelar.Click += btnCancelar_Click;
             // 
-            // pnlBotones
-            // 
-            pnlBotones.Controls.Add(btnEliminar);
-            pnlBotones.Controls.Add(btnCancelar);
-            pnlBotones.Dock = DockStyle.Bottom;
-            pnlBotones.Location = new Point(0, 463);
-            pnlBotones.Name = "pnlBotones";
-            pnlBotones.Size = new Size(839, 32);
-            pnlBotones.TabIndex = 6;
-            // 
-            // btnEliminar
-            // 
-            btnEliminar.Dock = DockStyle.Right;
-            btnEliminar.Location = new Point(692, 0);
-            btnEliminar.Name = "btnEliminar";
-            btnEliminar.Size = new Size(147, 32);
-            btnEliminar.TabIndex = 1;
-            btnEliminar.Text = "Eliminar ";
-            btnEliminar.UseVisualStyleBackColor = true;
-            btnEliminar.Click += btnEliminar_Click;
-            // 
-            // frmServiciosEliminarTipoServicio
+            // frmServiciosEliminarServicio
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(839, 495);
-            Controls.Add(pnlTitulos);
+            ClientSize = new Size(836, 478);
             Controls.Add(dataGridView1);
+            Controls.Add(lblTitulo);
             Controls.Add(pnlBotones);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "frmServiciosEliminarTipoServicio";
-            Text = "Eliminar Tipo de Servicio";
-            pnlTitulos.ResumeLayout(false);
-            pnlTitulos.PerformLayout();
+            Name = "frmServiciosEliminarServicio";
+            Text = "Eliminar Servicio";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             pnlBotones.ResumeLayout(false);
             ResumeLayout(false);
@@ -120,11 +106,10 @@
 
         #endregion
 
-        private Label lblTitulo;
-        private Panel pnlTitulos;
         private DataGridView dataGridView1;
-        private Button btnCancelar;
+        private Label lblTitulo;
         private Panel pnlBotones;
         private Button btnEliminar;
+        private Button btnCancelar;
     }
 }

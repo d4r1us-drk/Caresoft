@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServiciosAnadirTipoServicio));
             pnlBotones = new Panel();
             btnRegistrar = new Button();
             button1 = new Button();
@@ -83,10 +84,10 @@
             pnlInputDatos.Size = new Size(288, 135);
             pnlInputDatos.TabIndex = 32;
             // 
-            // txtNombreProveedor
+            // txtNombre
             // 
             txtNombre.Location = new Point(104, 33);
-            txtNombre.Name = "txtNombreProveedor";
+            txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(148, 23);
             txtNombre.TabIndex = 16;
             // 
@@ -126,6 +127,7 @@
             Controls.Add(pnlBotones);
             Controls.Add(pnlInputDatos);
             Controls.Add(pnlTitulo);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmServiciosAnadirTipoServicio";
             Text = "Añadir Tipo de Servicio";
             pnlBotones.ResumeLayout(false);

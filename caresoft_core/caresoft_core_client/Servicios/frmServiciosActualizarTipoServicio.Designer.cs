@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServiciosActualizarTipoServicio));
             pnlTitulos = new Panel();
             lblTituloDatos = new Label();
             lblProductos = new Label();
@@ -198,6 +199,7 @@
             Controls.Add(pnlBotones);
             Controls.Add(pnlDatos);
             Controls.Add(pnlTitulos);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmServiciosActualizarTipoServicio";
             Text = "Actualizar Tipo de Servicio";
             pnlTitulos.ResumeLayout(false);

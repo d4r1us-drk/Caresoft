@@ -45,6 +45,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Servicios\frmServiciosConsultarTipoServicio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Servicios\frmServiciosConsultarServicio.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

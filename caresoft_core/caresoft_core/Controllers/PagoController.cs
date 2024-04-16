@@ -58,7 +58,7 @@ public class PagoController(IPagoService pagoService) : ControllerBase
         try
         {
             await _pagoService.UpdatePagoAsync(pago);
-            return NoContent();
+            return Ok();
         }
         catch (Exception)
         {
@@ -76,7 +76,7 @@ public class PagoController(IPagoService pagoService) : ControllerBase
             {
                 return NotFound();
             }
-            return NoContent();
+            return Ok();
         }
         catch (Exception)
         {

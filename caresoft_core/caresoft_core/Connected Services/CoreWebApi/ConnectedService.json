@@ -8,7 +8,7 @@
     "ServiceName": "CoreWebApi",
     "AcceptAllUntrustedCertificates": true,
     "GeneratedFileName": "CoreWebApi",
-    "Endpoint": "https://localhost:7038/swagger/v1/swagger.json",
+    "Endpoint": "http://localhost:5143/swagger/v1/swagger.json",
     "GeneratedFileNamePrefix": null,
     "GenerateCSharpClient": true,
     "GenerateTypeScriptClient": false,

@@ -11,34 +11,33 @@ using System.Windows.Forms;
 
 namespace caresoft_core_client.Servicios
 {
-    public partial class frmServiciosAnadirTipoServicio : Form
+    public partial class frmServiciosConsultarTipoServicio : Form
     {
         private readonly Client API;
-        public frmServiciosAnadirTipoServicio(string baseUrl)
+
+        public frmServiciosConsultarTipoServicio(string baseUrl)
         {
             API = new Client(baseUrl);
             InitializeComponent();
+            LoadServicios();
+        }
+        private async void LoadServicios()
+        {
+            try
+            {
+                var servicios = await API.ApiTipoServicioGetAsync();
+                dataGridView1.DataSource = servicios;
+
+            } catch (Exception ex)
+            {
+                FormHelper.ErrorBox("Error al cargar los tipos de servicio");
+            }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private async void btnRegistrar_Click(object sender, EventArgs e)
-        {
-
-            try
-            {
-                await API.ApiTipoServicioAddAsync(null,txtNombre.Text);
-                FormHelper.InfoBox("Tipo de servicio añadido correctamente");
-
-            } catch (Exception ex)
-            {
-                FormHelper.ErrorBox(ex.Message);
-            }
-
-
-        }
     }
 }
