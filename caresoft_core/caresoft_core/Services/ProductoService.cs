@@ -43,7 +43,7 @@ public class ProductoService(CaresoftDbContext dbContext) : IProductoService
     {
         try
         {
-            Producto result = Producto.FromDto(producto);
+            var result = Producto.FromDto(producto);
             dbContext.Productos.Update(result);
             return await dbContext.SaveChangesAsync();
         }
