@@ -8430,6 +8430,8 @@ namespace caresoft_integration.CoreAPI
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.19.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.3.0))")]
     public partial class AutorizacionDto
     {
+        internal readonly DateTime FechaAutorizacion;
+
         [Newtonsoft.Json.JsonProperty("idAutorizacion", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int IdAutorizacion { get; set; }
 

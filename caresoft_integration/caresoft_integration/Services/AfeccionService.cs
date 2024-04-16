@@ -1,98 +1,39 @@
-using caresoft_integration.Context;
 using caresoft_integration.Models;
-using caresoft_integration.Utils;
 using caresoft_integration.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace caresoft_integration.Services;
-
-public class AfeccionService(CaresoftDbContext dbContext) : IAfeccionService
+public class AfeccionService : IAfeccionService
 {
-    private readonly LogHandler<AfeccionService> _logHandler = new();
+    private readonly FallbackHttpClient _fallbackHttpClient;
+
+    public AfeccionService(FallbackHttpClient fallbackHttpClient)
+    {
+        _fallbackHttpClient = fallbackHttpClient;
+    }
 
     public async Task<int> CreateAfeccionAsync(Afeccion afeccion)
     {
-        try
-        {
-            dbContext.Afeccions.Add(afeccion);
-            await dbContext.SaveChangesAsync();
-            return 1;
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Error occurred while creating Afeccion.", ex);
-            throw;
-        }
-    }
-
-    public async Task<int> DeleteAfeccionAsync(uint id)
-    {
-        try
-        {
-            var afeccion = await dbContext.Afeccions.FindAsync(id);
-            if (afeccion == null)
-                return 0;
-
-            dbContext.Afeccions.Remove(afeccion);
-            await dbContext.SaveChangesAsync();
-            return 1;
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Error occurred while deleting Afeccion.", ex);
-            throw;
-        }
+        return await _fallbackHttpClient.CreateAfeccionAsync(afeccion);
     }
 
     public async Task<IEnumerable<Afeccion>> GetAfeccionesAsync()
     {
-        try
-        {
-            return await dbContext.Afeccions.ToListAsync();
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Error occurred while getting Afecciones.", ex);
-            throw;
-        }
+        return await _fallbackHttpClient.GetAfeccionesAsync();
     }
 
-    public async Task<Afeccion?> GetAfeccionByIdAsync(uint id)
+    public async Task<Afeccion> GetAfeccionByIdAsync(uint id)
     {
-        try
-        {
-            return await dbContext.Afeccions.FindAsync(id);
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogError($"Error occurred while getting Afeccion with ID: {id}.", ex);
-            throw;
-        }
+        return await _fallbackHttpClient.GetAfeccionByIdAsync((int)id);
     }
 
     public async Task<int> UpdateAfeccionAsync(Afeccion afeccion)
     {
-        try
-        {
-            dbContext.Entry(afeccion).State = EntityState.Modified;
-            await dbContext.SaveChangesAsync();
-            return 1;
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!AfeccionExists(afeccion.IdAfeccion))
-                return 0;
-            throw;
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Error occurred while updating Afeccion.", ex);
-            throw;
-        }
+        return await _fallbackHttpClient.UpdateAfeccionAsync(afeccion);
     }
 
-    private bool AfeccionExists(uint id)
+    public async Task<int> DeleteAfeccionAsync(uint id)
     {
-        return dbContext.Afeccions.Any(e => e.IdAfeccion == id);
+        return await _fallbackHttpClient.DeleteAfeccionAsync(id);
     }
 }
