@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using caresoft_core.Models;
+using caresoft_integration.Models;
 
-namespace caresoft_core.Context;
+namespace caresoft_integration.Context;
 
 public partial class CaresoftDbContext : DbContext
 {

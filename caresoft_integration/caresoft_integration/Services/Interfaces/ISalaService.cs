@@ -1,8 +1,8 @@
-﻿using caresoft_core.Dto;
+﻿using caresoft_integration.Dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace caresoft_core.Services.Interfaces
+namespace caresoft_integration.Services.Interfaces
 {
     public interface ISalaService
     {

@@ -1,4 +1,4 @@
-﻿namespace caresoft_core.Models;
+﻿namespace caresoft_integration.Models;
 
 public class Pago
 {

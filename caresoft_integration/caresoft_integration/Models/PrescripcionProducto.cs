@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace caresoft_core.Models;
+namespace caresoft_integration.Models;
 
 public partial class PrescripcionProducto
 {

@@ -1,6 +1,6 @@
-﻿using caresoft_core.Dto;
+﻿using caresoft_integration.Dto;
 
-namespace caresoft_core.Models;
+namespace caresoft_integration.Models;
 
 public class Usuario
 {

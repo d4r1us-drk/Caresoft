@@ -1,6 +1,6 @@
-﻿using caresoft_core.Models;
+﻿using caresoft_integration.Models;
 
-namespace caresoft_core.Dto;
+namespace caresoft_integration.Dto;
 
 public class ServicioDto
 {

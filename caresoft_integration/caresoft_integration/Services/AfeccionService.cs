@@ -1,10 +1,10 @@
-using caresoft_core.Context;
-using caresoft_core.Models;
-using caresoft_core.Utils;
-using caresoft_core.Services.Interfaces;
+using caresoft_integration.Context;
+using caresoft_integration.Models;
+using caresoft_integration.Utils;
+using caresoft_integration.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace caresoft_core.Services;
+namespace caresoft_integration.Services;
 
 public class AfeccionService(CaresoftDbContext dbContext) : IAfeccionService
 {
