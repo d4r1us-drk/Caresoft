@@ -80,21 +80,21 @@
             // nuevoClienteToolStripMenuItem
             // 
             this.nuevoClienteToolStripMenuItem.Name = "nuevoClienteToolStripMenuItem";
-            this.nuevoClienteToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.nuevoClienteToolStripMenuItem.Size = new System.Drawing.Size(252, 34);
             this.nuevoClienteToolStripMenuItem.Text = "Nuevo cliente";
             this.nuevoClienteToolStripMenuItem.Click += new System.EventHandler(this.nuevoClienteToolStripMenuItem_Click);
             // 
             // clienteExistenteToolStripMenuItem
             // 
             this.clienteExistenteToolStripMenuItem.Name = "clienteExistenteToolStripMenuItem";
-            this.clienteExistenteToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.clienteExistenteToolStripMenuItem.Size = new System.Drawing.Size(252, 34);
             this.clienteExistenteToolStripMenuItem.Text = "Cliente existente";
             this.clienteExistenteToolStripMenuItem.Click += new System.EventHandler(this.clienteExistenteToolStripMenuItem_Click);
             // 
             // cargaODescargaToolStripMenuItem
             // 
             this.cargaODescargaToolStripMenuItem.Name = "cargaODescargaToolStripMenuItem";
-            this.cargaODescargaToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.cargaODescargaToolStripMenuItem.Size = new System.Drawing.Size(252, 34);
             this.cargaODescargaToolStripMenuItem.Text = "Carga o descarga";
             this.cargaODescargaToolStripMenuItem.Click += new System.EventHandler(this.cargaODescargaToolStripMenuItem_Click);
             // 
@@ -130,8 +130,8 @@
             // pagosToolStripMenuItem
             // 
             this.pagosToolStripMenuItem.Name = "pagosToolStripMenuItem";
-            this.pagosToolStripMenuItem.Size = new System.Drawing.Size(162, 34);
-            this.pagosToolStripMenuItem.Text = "Pagos";
+            this.pagosToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.pagosToolStripMenuItem.Text = "Facturas";
             this.pagosToolStripMenuItem.Click += new System.EventHandler(this.pagosToolStripMenuItem_Click);
             // 
             // Main
