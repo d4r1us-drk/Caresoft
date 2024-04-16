@@ -5,9 +5,9 @@ namespace caresoft_integration.Services.Interfaces;
 
 public interface IReservaServicioService
 {
-    public Task<List<ReservaServicioDto>> GetReservaServiciosListAsync();
-    public Task<int> AddReservaServicioAsync(ReservaServicioDto reserva);
-    public Task<int> UpdateReservaServicioAsync(ReservaServicioDto reserva);
-    public Task<int> ToggleEstadoReservaServicioAsync(uint idReserva);
-    public Task<int> DeleteReservaServicioAsync(uint idReserva);
+    Task<List<ReservaServicioDto>> GetReservaServiciosListAsync();
+    Task<int> AddReservaServicioAsync(ReservaServicioDto reservaServicioDto);
+    Task<int> UpdateReservaServicioAsync(ReservaServicioDto reservaServicioDto);
+    Task<int> ToggleEstadoReservaServicioAsync(int idReserva);
+    Task<int> DeleteReservaServicioAsync(int idReserva);
 }

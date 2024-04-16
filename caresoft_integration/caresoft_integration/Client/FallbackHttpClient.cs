@@ -379,7 +379,6 @@ public class FallbackHttpClient
             return usuarios.Select(u => caresoft_integration.Dto.UsuarioDto.FromModel(u)).ToList();
         }
     }
-
     public async Task<caresoft_integration.Dto.UsuarioDto?> GetUsuarioByIdAsync(string id)
     {
         try
@@ -413,7 +412,6 @@ public class FallbackHttpClient
             return usuario != null ? caresoft_integration.Dto.UsuarioDto.FromModel(usuario) : null;
         }
     }
-
     public async Task<int> AddUsuarioAsync(caresoft_integration.Dto.UsuarioDto usuarioDto)
     {
         try
@@ -443,7 +441,6 @@ public class FallbackHttpClient
             return 1;
         }
     }
-
     public async Task<int> UpdateUsuarioAsync(caresoft_integration.Dto.UsuarioDto usuarioDto)
     {
         try
@@ -473,7 +470,6 @@ public class FallbackHttpClient
             return 1;
         }
     }
-
     public async Task<int> DeleteUsuarioAsync(string codigoOdocumento)
     {
         try
@@ -496,7 +492,6 @@ public class FallbackHttpClient
             return 0;
         }
     }
-
     public async Task<int> ToggleUsuarioCuentaAsync(string codigoOdocumento)
     {
         try
@@ -517,7 +512,6 @@ public class FallbackHttpClient
             return 0;
         }
     }
-
     public async Task<caresoft_integration.Dto.CuentumDto?> GetCuentaByUsuarioCodigoOrDocumentoAsync(string codigoOdocumento)
     {
         try
@@ -535,6 +529,139 @@ public class FallbackHttpClient
             var cuenta = await _dbContext.Cuenta
                 .FirstOrDefaultAsync(c => c.DocumentoUsuario == codigoOdocumento);
             return cuenta != null ? caresoft_integration.Dto.CuentumDto.FromModel(cuenta) : null;
+        }
+    }
+
+
+
+    // Métodos CRUD y adicionales para ReservaServicio
+
+    public async Task<List<caresoft_integration.Dto.ReservaServicioDto>> GetReservaServiciosListAsync()
+    {
+        try
+        {
+            var reservaServiciosFromApi = await API.ApiReservaServicioGetAsync();
+            return reservaServiciosFromApi.Select(r => new caresoft_integration.Dto.ReservaServicioDto
+            {
+                IdReserva = (uint)r.IdReserva,
+                DocumentoPaciente = r.DocumentoPaciente,
+                DocumentoMedico = r.DocumentoMedico,
+                ServicioCodigo = r.ServicioCodigo,
+                FechaReservada = r.FechaReservada.DateTime, 
+                Estado = r.Estado
+            }).ToList();
+        }
+        catch (Exception)
+        {
+            var reservaServicios = await _dbContext.ReservaServicios.ToListAsync();
+            return reservaServicios.Select(r => new caresoft_integration.Dto.ReservaServicioDto
+            {
+                IdReserva = r.IdReserva,
+                DocumentoPaciente = r.DocumentoPaciente,
+                DocumentoMedico = r.DocumentoMedico,
+                ServicioCodigo = r.ServicioCodigo,
+                FechaReservada = r.FechaReservada,
+                Estado = r.Estado
+            }).ToList();
+        }
+    }
+    public async Task<int> AddReservaServicioAsync(caresoft_integration.Dto.ReservaServicioDto reservaServicioDto)
+    {
+        try
+        {
+            await API.ApiReservaServicioAddAsync(
+                (int?)reservaServicioDto.IdReserva,
+                reservaServicioDto.DocumentoPaciente,
+                reservaServicioDto.DocumentoMedico,
+                reservaServicioDto.ServicioCodigo,
+                reservaServicioDto.FechaReservada,
+                reservaServicioDto.Estado
+            );
+            return 1;
+        }
+        catch (Exception)
+        {
+            var reservaServicio = new caresoft_integration.Models.ReservaServicio
+            {
+                IdReserva = reservaServicioDto.IdReserva,
+                DocumentoPaciente = reservaServicioDto.DocumentoPaciente,
+                DocumentoMedico = reservaServicioDto.DocumentoMedico,
+                ServicioCodigo = reservaServicioDto.ServicioCodigo,
+                FechaReservada = reservaServicioDto.FechaReservada,
+                Estado = reservaServicioDto.Estado
+            };
+            _dbContext.ReservaServicios.Add(reservaServicio);
+            await _dbContext.SaveChangesAsync();
+            return 1;
+        }
+    }
+    public async Task<int> UpdateReservaServicioAsync(caresoft_integration.Dto.ReservaServicioDto reservaServicioDto)
+    {
+        try
+        {
+            await API.ApiReservaServicioUpdateAsync(
+                (int?)reservaServicioDto.IdReserva,
+                reservaServicioDto.DocumentoPaciente,
+                reservaServicioDto.DocumentoMedico,
+                reservaServicioDto.ServicioCodigo,
+                reservaServicioDto.FechaReservada,
+                reservaServicioDto.Estado
+            );
+            return 1;
+        }
+        catch (Exception)
+        {
+            var reservaServicio = new caresoft_integration.Models.ReservaServicio
+            {
+                IdReserva = reservaServicioDto.IdReserva,
+                DocumentoPaciente = reservaServicioDto.DocumentoPaciente,
+                DocumentoMedico = reservaServicioDto.DocumentoMedico,
+                ServicioCodigo = reservaServicioDto.ServicioCodigo,
+                FechaReservada = reservaServicioDto.FechaReservada,
+                Estado = reservaServicioDto.Estado
+            };
+            _dbContext.ReservaServicios.Update(reservaServicio);
+            await _dbContext.SaveChangesAsync();
+            return 1;
+        }
+    }
+    public async Task<int> ToggleEstadoReservaServicioAsync(int idReserva)
+    {
+        try
+        {
+            await API.ApiReservaServicioToggleStateAsync(idReserva);
+            return 1;
+        }
+        catch (Exception)
+        {
+            var reservaServicio = await _dbContext.ReservaServicios.FindAsync(idReserva);
+            if (reservaServicio != null)
+            {
+                reservaServicio.Estado = reservaServicio.Estado == "P" ? "R" : "P";
+                _dbContext.ReservaServicios.Update(reservaServicio);
+                await _dbContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
+        }
+    }
+    public async Task<int> DeleteReservaServicioAsync(int idReserva)
+    {
+        try
+        {
+            await API.ApiReservaServicioDeleteAsync(idReserva);
+            return 1;
+        }
+        catch (Exception)
+        {
+            var reservaServicio = await _dbContext.ReservaServicios.FindAsync(idReserva);
+            if (reservaServicio != null)
+            {
+                _dbContext.ReservaServicios.Remove(reservaServicio);
+                await _dbContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
         }
     }
 
