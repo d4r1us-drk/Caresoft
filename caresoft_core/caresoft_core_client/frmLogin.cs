@@ -1,99 +1,96 @@
 ﻿using caresoft_core.CoreWebApi;
-using caresoft_core_client.Models;
 using caresoft_core_client.Utils;
 
+namespace caresoft_core_client;
 
-namespace caresoft_core_client
+public partial class frmLogin : Form
 {
-    public partial class frmLogin : Form
+    private readonly LogHandler<frmLogin> _logHandler = new();
+    private readonly Client API;
+    private frmMain mainForm;
+
+    public frmLogin(string baseURL)
     {
-        private readonly LogHandler<frmLogin> _logHandler = new();
-        private readonly Client API;
-        private frmMain mainForm;
+        API = new Client(baseURL);
+        InitializeComponent();
+    }
 
-        public frmLogin(string baseURL)
+    private void btnCerrar_Click(object sender, EventArgs e)
+    {
+        Application.Exit();
+    }
+
+    public void SetMainForm(frmMain mainForm)
+    {
+        this.mainForm = mainForm;
+    }
+
+    private async void btnIngresar_Click(object sender, EventArgs e)
+    {
+        string userName = txtNombreUsuario.Text.Trim();
+        string password = txtContraseña.Text;
+
+        if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
         {
-            API = new Client(baseURL);
-            InitializeComponent();
+            MessageBox.Show("Por favor introduzca su nombre de usuario y contraseña.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
         }
 
-        private void btnCerrar_Click(object sender, EventArgs e)
+        try
         {
-            Application.Exit();
-        }
-
-        public void SetMainForm(frmMain mainForm)
-        {
-            this.mainForm = mainForm;
-        }
-
-        private async void btnIngresar_Click(object sender, EventArgs e)
-        {
-            string userName = txtNombreUsuario.Text.Trim();
-            string password = txtContraseña.Text;
-
-            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
+            var userData = await API.ApiUsuarioGetAsync(userName);
+            if(userData == null)
             {
-                MessageBox.Show("Por favor introduzca su nombre de usuario y contraseña.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Usuario o contraseña invalidos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            try
+            if (userData.UsuarioContra != password)
             {
-                var userData = await API.ApiUsuarioGetAsync(userName);
-                if(userData == null)
-                {
-                    MessageBox.Show("Usuario o contraseña invalidos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                if (userData.UsuarioContra != password)
-                {
-                    MessageBox.Show("Usuario o contraseña invalidos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                    if (userData.Rol != "A")
-                {
-                    MessageBox.Show("Solo usuarios del rol administrador están permitidos acceder al CORE.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                _logHandler.LogInfo($"Inicio de sesión exitoso por usuario con código o documento {txtNombreUsuario.Text}");
-                txtNombreUsuario.Text = "";
-                txtContraseña.Text = "";
-                mainForm.Show();
-                Hide();
+                MessageBox.Show("Usuario o contraseña invalidos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            catch (Exception ex)
+                if (userData.Rol != "A")
             {
-                MessageBox.Show($"Ha ocurrido un error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                _logHandler.LogError("Ha ocurrido un error al intentar iniciar sesión", ex);
+                MessageBox.Show("Solo usuarios del rol administrador están permitidos acceder al CORE.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            _logHandler.LogInfo($"Inicio de sesión exitoso por usuario con código o documento {txtNombreUsuario.Text}");
+            txtNombreUsuario.Text = "";
+            txtContraseña.Text = "";
+            mainForm.Show();
+            Hide();
         }
-
-        private void txtNombreUsuario_KeyPress(object sender, KeyPressEventArgs e)
+        catch (Exception ex)
         {
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                e.Handled = true;
-                btnIngresar.PerformClick();
-            }
+            MessageBox.Show($"Ha ocurrido un error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            _logHandler.LogError("Ha ocurrido un error al intentar iniciar sesión", ex);
         }
+    }
 
-        private void txtContraseña_KeyPress(object sender, KeyPressEventArgs e)
+    private void txtNombreUsuario_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (e.KeyChar == (char)Keys.Enter)
         {
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                e.Handled = true;
-                btnIngresar.PerformClick();
-            }
+            e.Handled = true;
+            btnIngresar.PerformClick();
         }
+    }
 
-        private void btnMinimizar_Click(object sender, EventArgs e)
+    private void txtContraseña_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (e.KeyChar == (char)Keys.Enter)
         {
-            WindowState = FormWindowState.Minimized;
+            e.Handled = true;
+            btnIngresar.PerformClick();
         }
+    }
 
-        private void frmLogin_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
+    private void btnMinimizar_Click(object sender, EventArgs e)
+    {
+        WindowState = FormWindowState.Minimized;
+    }
+
+    private void frmLogin_FormClosed(object sender, FormClosedEventArgs e)
+    {
+        Application.Exit();
     }
 }

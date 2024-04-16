@@ -19,14 +19,16 @@ namespace CajaHospital.views
     public partial class FacturarView : UserControl
     {
         readonly char _tipoFactura;
+        readonly string _documentoCajero;
         private Dictionary<string, string> servicios = new Dictionary<string, string>();
         private Dictionary<string, int> servicios_costos = new Dictionary<string, int>();
         private Dictionary<string, int> productos = new Dictionary<string, int>();
         private Dictionary<int, int> productos_costos = new Dictionary<int, int>();
-        public FacturarView( char tipoFactura )
+        public FacturarView( char tipoFactura, string documentoCajero = "" )
         {
             InitializeComponent();
             _tipoFactura = tipoFactura;
+            _documentoCajero = documentoCajero;
         }
 
         private void FacturarView_Load(object sender, EventArgs e)
@@ -139,6 +141,30 @@ namespace CajaHospital.views
             return subtotal.ToString();
         }
 
+        private int RecuperarIdCuenta()
+        {
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["vendingLocal"].ConnectionString);
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("spListarCuenta", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("p_documentoUsuario", txtDoc.Text);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                reader.Read();
+                int cuenta = reader.GetInt32("idCuenta");
+                conn.Close();
+
+                return cuenta;
+            }
+            catch (Exception)
+            {
+                return -1;
+                throw;
+            }
+        }
+
         private void chkRecarga_CheckedChanged(object sender, EventArgs e)
         {
             if ( chkRecarga.Checked)
@@ -202,13 +228,115 @@ namespace CajaHospital.views
 
         private void btnRemover_Click(object sender, EventArgs e)
         {
-            lsbSeleccionados.Items.RemoveAt(lsbDisponibles.SelectedIndex);
+            lsbSeleccionados.Items.RemoveAt(lsbSeleccionados.SelectedIndex);
             txtSubtotal.Text = CalcularSubtotal();
         }
 
         private void lsbSeleccionados_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnRemover.Enabled = true;
+        }
+
+        private void btnCrearFactura_Click(object sender, EventArgs e)
+        {
+            int idCuenta = RecuperarIdCuenta();
+            string facturaCodigo = Guid.NewGuid().ToString().Substring(2, 30);
+
+            if (idCuenta == -1 )
+            {
+                MessageBox.Show("No se ha encontrado la cuenta especificada", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["vendingLocal"].ConnectionString);
+                conn.Open();
+                MySqlTransaction transaction = conn.BeginTransaction();
+
+                MySqlCommand cmd = new MySqlCommand("spFacturaCrear", conn, transaction);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@p_facturaCodigo", facturaCodigo);
+                cmd.Parameters.AddWithValue("@p_idCuenta", idCuenta);
+                cmd.Parameters.AddWithValue("@p_idSucursal", ConfigurationManager.AppSettings["noSucursal"]);
+                cmd.Parameters.AddWithValue("@p_documentoCajero", _documentoCajero);
+
+                cmd.ExecuteNonQuery();
+                transaction.Commit();
+                conn.Close();
+
+                Dictionary<string, int> cantidades = new Dictionary<string, int>();
+                foreach (var item in lsbSeleccionados.Items)
+                {
+                    string seleccionado = item.ToString();
+
+                    if (cantidades.ContainsKey(seleccionado) )
+                    {
+                        cantidades[seleccionado]++;
+                    } else
+                    {
+                        cantidades.Add(seleccionado, 1);
+                    }
+                }
+                foreach (var item in cantidades.Keys)
+                {
+                    string seleccionado = item.ToString();
+                    conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["vendingLocal"].ConnectionString);
+                    conn.Open();
+                    transaction = conn.BeginTransaction();
+
+                    try
+                    {
+                        if (servicios.ContainsKey(seleccionado))
+                        {
+                            string codigo = servicios[seleccionado];
+                            decimal costo = Convert.ToDecimal(servicios_costos[codigo]) + 0.00M;
+
+                            cmd = new MySqlCommand("spFacturaRelacionarServicio", conn);
+                            cmd.CommandType=CommandType.StoredProcedure;
+                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddWithValue("@p_facturaCodigo", facturaCodigo);
+                            cmd.Parameters.AddWithValue("@p_servicioCodigo", codigo);
+                            cmd.Parameters.AddWithValue("@p_resultados", cantidades[seleccionado]);
+                            cmd.Parameters.AddWithValue("@p_costo", costo);
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            int codigo = productos[seleccionado];
+                            decimal costo = Convert.ToDecimal(productos_costos[codigo]) + 0.00M;
+
+                            cmd = new MySqlCommand("spFacturaRelacionarProducto", conn);
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddWithValue("@p_facturaCodigo", facturaCodigo);
+                            cmd.Parameters.AddWithValue("@p_idProducto", codigo);
+                            cmd.Parameters.AddWithValue("@p_resultados", cantidades[seleccionado]);
+                            cmd.Parameters.AddWithValue("@p_costo", costo);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+                        conn.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Algo salio mal, la factura no se registro", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        transaction.Rollback();
+                        throw ex;
+                    }
+
+                }
+
+                MessageBox.Show("Se ha registrado la factura con exito", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Algo salió mal", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, ex.Source);
+            };
         }
     }
 }

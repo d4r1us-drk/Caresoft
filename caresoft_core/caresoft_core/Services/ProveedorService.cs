@@ -82,15 +82,9 @@ public class ProveedorService(CaresoftDbContext dbContext) : IProveedorService
     {
         try
         {
-            var proveedor = await dbContext.Proveedors.FindAsync(proveedorDto.RncProveedor);
-            if (proveedor == null)
-            {
-                return 0;
-            }
-            proveedor = Proveedor.FromDto(proveedorDto);
-            dbContext.Entry(proveedor).State = EntityState.Modified;
-            await dbContext.SaveChangesAsync();
-            return 1;
+            var proveedor = Proveedor.FromDto(proveedorDto);
+            dbContext.Proveedors.Update(proveedor);
+            return await dbContext.SaveChangesAsync();
         }
         catch (Exception ex)
         {

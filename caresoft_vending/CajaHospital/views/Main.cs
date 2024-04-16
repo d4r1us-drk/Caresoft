@@ -32,7 +32,7 @@ namespace CajaHospital
 
             _consultarCuentaCliente = new ConsultarCuentaCliente() { Dock = DockStyle.Fill };
 
-            _facturarPaciente = new FacturarView('E') { Dock = DockStyle.Fill };
+            _facturarPaciente = new FacturarView('E', documento ) { Dock = DockStyle.Fill };
             _facturarCargaDescarga = new FacturarView('C') { Dock = DockStyle.Fill };
             _registrarPaciente = new RegistrarPaciente();
 
