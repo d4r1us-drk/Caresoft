@@ -344,8 +344,199 @@ public class FallbackHttpClient
         }
     }
 
+    // Métodos CRUD y adicionales para Usuario
 
+    public async Task<List<caresoft_integration.Dto.UsuarioDto>> GetUsuariosListAsync()
+    {
+        try
+        {
+            var usuariosFromApi = await API.ApiUsuarioListAsync();
+            var usuariosDtoList = usuariosFromApi.Select(apiDto => new caresoft_integration.Dto.UsuarioDto
+            {
+                UsuarioCodigo = apiDto.UsuarioCodigo,
+                Documento = apiDto.Documento,
+                UsuarioContra = apiDto.UsuarioContra,
+                TipoDocumento = apiDto.TipoDocumento,
+                NumLicenciaMedica = (uint?)apiDto.NumLicenciaMedica,
+                Nombre = apiDto.Nombre,
+                Apellido = apiDto.Apellido,
+                Genero = apiDto.Genero,
+                FechaNacimiento = apiDto.FechaNacimiento.UtcDateTime,
+                Telefono = apiDto.Telefono,
+                Correo = apiDto.Correo,
+                Direccion = apiDto.Direccion,
+                Rol = apiDto.Rol
 
+               
+            }).ToList();
+
+            return usuariosDtoList;
+        }
+        catch (Exception)
+        {
+            // Recurso de respaldo a la base de datos local
+            var usuarios = await _dbContext.Usuarios.ToListAsync();
+            return usuarios.Select(u => caresoft_integration.Dto.UsuarioDto.FromModel(u)).ToList();
+        }
+    }
+
+    public async Task<caresoft_integration.Dto.UsuarioDto?> GetUsuarioByIdAsync(string id)
+    {
+        try
+        {
+            var usuarioFromApi = await API.ApiUsuarioGetAsync(id);
+            var usuarioDto = new caresoft_integration.Dto.UsuarioDto
+            {
+                UsuarioCodigo = usuarioFromApi.UsuarioCodigo,
+                Documento = usuarioFromApi.Documento,
+                UsuarioContra = usuarioFromApi.UsuarioContra,
+                TipoDocumento = usuarioFromApi.TipoDocumento,
+                NumLicenciaMedica = (uint?)usuarioFromApi.NumLicenciaMedica,
+                Nombre = usuarioFromApi.Nombre,
+                Apellido = usuarioFromApi.Apellido,
+                Genero = usuarioFromApi.Genero,
+                FechaNacimiento = usuarioFromApi.FechaNacimiento.UtcDateTime,
+                Telefono = usuarioFromApi.Telefono,
+                Correo = usuarioFromApi.Correo,
+                Direccion = usuarioFromApi.Direccion,
+                Rol = usuarioFromApi.Rol
+            };
+
+            return usuarioDto;
+        }
+        catch (Exception)
+        {
+            var usuario = await _dbContext.Usuarios
+                .Include(u => u.DocumentoUsuarioNavigation)
+                .FirstOrDefaultAsync(u => u.UsuarioCodigo == id);
+
+            return usuario != null ? caresoft_integration.Dto.UsuarioDto.FromModel(usuario) : null;
+        }
+    }
+
+    public async Task<int> AddUsuarioAsync(caresoft_integration.Dto.UsuarioDto usuarioDto)
+    {
+        try
+        {
+            await API.ApiUsuarioAddAsync(
+                usuarioDto.UsuarioCodigo,
+                usuarioDto.Documento,
+                usuarioDto.UsuarioContra,
+                usuarioDto.TipoDocumento,
+                usuarioDto.NumLicenciaMedica.HasValue ? Convert.ToInt32(usuarioDto.NumLicenciaMedica.Value) : (int?)null,
+                usuarioDto.Nombre,
+                usuarioDto.Apellido,
+                usuarioDto.Genero,
+                usuarioDto.FechaNacimiento,
+                usuarioDto.Telefono,
+                usuarioDto.Correo,
+                usuarioDto.Direccion,
+                usuarioDto.Rol
+            );
+            return 1;
+        }
+        catch (Exception)
+        {
+            var usuario = caresoft_integration.Models.Usuario.FromDto(usuarioDto);
+            _dbContext.Usuarios.Add(usuario);
+            await _dbContext.SaveChangesAsync();
+            return 1;
+        }
+    }
+
+    public async Task<int> UpdateUsuarioAsync(caresoft_integration.Dto.UsuarioDto usuarioDto)
+    {
+        try
+        {
+            await API.ApiUsuarioUpdateAsync(
+                    usuarioDto.UsuarioCodigo,
+                    usuarioDto.Documento,
+                    usuarioDto.UsuarioContra,
+                    usuarioDto.TipoDocumento,
+                    usuarioDto.NumLicenciaMedica.HasValue ? Convert.ToInt32(usuarioDto.NumLicenciaMedica.Value) : (int?)null,
+                    usuarioDto.Nombre,
+                    usuarioDto.Apellido,
+                    usuarioDto.Genero,
+                    usuarioDto.FechaNacimiento,
+                    usuarioDto.Telefono,
+                    usuarioDto.Correo,
+                    usuarioDto.Direccion,
+                    usuarioDto.Rol
+            );
+            return 1;
+        }
+        catch (Exception)
+        {
+            var usuario = caresoft_integration.Models.Usuario.FromDto(usuarioDto);
+            _dbContext.Usuarios.Update(usuario);
+            await _dbContext.SaveChangesAsync();
+            return 1;
+        }
+    }
+
+    public async Task<int> DeleteUsuarioAsync(string codigoOdocumento)
+    {
+        try
+        {
+            // Llamada a la API para eliminar un usuario
+            await API.ApiUsuarioDeleteAsync(codigoOdocumento);
+            return 1;
+        }
+        catch (Exception)
+        {
+            // Buscar y eliminar el usuario en la base de datos local
+            var usuario = await _dbContext.Usuarios
+                .FirstOrDefaultAsync(u => u.UsuarioCodigo == codigoOdocumento || u.DocumentoUsuario == codigoOdocumento);
+            if (usuario != null)
+            {
+                _dbContext.Usuarios.Remove(usuario);
+                await _dbContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
+        }
+    }
+
+    public async Task<int> ToggleUsuarioCuentaAsync(string codigoOdocumento)
+    {
+        try
+        {
+            return await API.ApiUsuarioToggleStateCuentaAsync(codigoOdocumento);
+        }
+        catch (Exception)
+        {
+            var cuenta = await _dbContext.Cuenta
+                .FirstOrDefaultAsync(c => c.DocumentoUsuario == codigoOdocumento);
+            if (cuenta != null)
+            {
+                cuenta.Estado = cuenta.Estado == "A" ? "D" : "A";
+                _dbContext.Cuenta.Update(cuenta);
+                await _dbContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
+        }
+    }
+
+    public async Task<caresoft_integration.Dto.CuentumDto?> GetCuentaByUsuarioCodigoOrDocumentoAsync(string codigoOdocumento)
+    {
+        try
+        {
+            var cuentaDto = await API.ApiUsuarioCuentaAsync(codigoOdocumento);
+            return new caresoft_integration.Dto.CuentumDto
+            {
+                IdCuenta = (uint)cuentaDto.IdCuenta,
+                Balance = (decimal)cuentaDto.Balance,
+                Estado = cuentaDto.Estado
+            };
+        }
+        catch (Exception)
+        {
+            var cuenta = await _dbContext.Cuenta
+                .FirstOrDefaultAsync(c => c.DocumentoUsuario == codigoOdocumento);
+            return cuenta != null ? caresoft_integration.Dto.CuentumDto.FromModel(cuenta) : null;
+        }
+    }
 
 
 
