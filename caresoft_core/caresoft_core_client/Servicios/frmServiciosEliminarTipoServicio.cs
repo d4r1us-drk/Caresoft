@@ -1,4 +1,5 @@
 ﻿using caresoft_core.CoreWebApi;
+using caresoft_core_client.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -46,22 +47,30 @@ namespace caresoft_core_client.Servicios
 
         }
 
-        private async void btnEliminar_Click(object sender, EventArgs e)
+        private async void DeleteTipoServicios()
         {
             foreach (DataGridViewRow item in dataGridView1.SelectedRows)
             {
-                var tipoServicio = item.DataBoundItem as TipoServicioDto;
-                try
+                if(item.DataBoundItem is TipoServicioDto tipoServicio)
                 {
-                    await API.ApiTipoServicioDeleteAsync(tipoServicio.IdTipoServicio);
-                    FormHelper.InfoBox("Tipo de servicio eliminado correctamente");
-                    await LoadData();
+                    try
+                    {
+                        await API.ApiTipoServicioDeleteAsync(tipoServicio.IdTipoServicio);
+                        FormHelper.InfoBox("Tipo de servicio eliminado correctamente");
+                        await LoadData();
+                    }
+                    catch (Exception)
+                    {
+                        FormHelper.ErrorBox("Error al eliminar el tipo de servicio");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    FormHelper.ErrorBox(ex.Message);
-                }
+               
             }
+        }
+
+        private async void btnEliminar_Click(object sender, EventArgs e)
+        {
+            FormHelper.ConfirmBox("¿Está seguro de que desea eliminar el tipo de servicio?", DeleteTipoServicios, "Eliminar Tipo de Servicio");
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

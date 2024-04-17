@@ -1,4 +1,5 @@
 ﻿using caresoft_core.CoreWebApi;
+using caresoft_core_client.Utils;
 
 namespace caresoft_core_client.Proveedor;
 
@@ -16,17 +17,17 @@ public partial class frmInventarioConsultaProveedor : Form
     {
         try
         {
-            var proveedor = await _api.ApiProveedorGetGetAsync();
+            var proveedor = await _api.ApiProveedorListAsync();
             if(proveedor == null || proveedor.Count == 0)
             {
-                MessageBox.Show("No se encontraron proveedores", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                FormHelper.ErrorBox("No se encontraron proveedores");
                 return;
             }
 
             dbgrdDatosConsulta.DataSource = proveedor;
-        } catch (Exception ex)
+        } catch (Exception)
         {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FormHelper.ErrorBox("No se pudieron cargar los proveedores");
         }
     }
 }

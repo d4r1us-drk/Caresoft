@@ -19,13 +19,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Hospitales\Sucurales\frmHospitalesActualizarSucursal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Hospitales\Sucurales\frmHospitalesEliminarSucursal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Hospitales\Sucurales\frmHospitalesRegistrarSucursal.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Inventario\frmInventarioActualizarProducto.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Inventario\frmInventarioEliminarProducto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Inventario\frmInventarioAñadirProducto.cs">
+    <Compile Update="Inventario\frmInventarioAnadirProducto.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Aseguradora\frmAseguradoraActualizarAseguradora.cs">
@@ -49,7 +58,7 @@
     <Compile Update="Proveedor\frmInventarioEliminarProveedor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Proveedor\frmInventarioAñadirProveedor.cs">
+    <Compile Update="Proveedor\frmInventarioAnadirProveedor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Resources.Designer.cs">

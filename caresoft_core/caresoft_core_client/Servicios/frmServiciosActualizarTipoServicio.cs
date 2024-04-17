@@ -1,4 +1,5 @@
 ﻿using caresoft_core.CoreWebApi;
+using caresoft_core_client.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -60,11 +61,11 @@ namespace caresoft_core_client.Servicios
                 };
 
                 await API.ApiTipoServicioUpdateAsync(tipoServicio.IdTipoServicio, tipoServicio.Nombre);
-                    MessageBox.Show("Tipo de servicio actualizado correctamente");
+                    FormHelper.InfoBox("Tipo de servicio actualizado correctamente");
                     await LoadData();
-            } catch (Exception ex)
+            } catch (Exception)
             {
-                MessageBox.Show(ex.Message);
+                FormHelper.ErrorBox("Error al actualizar el tipo de servicio");
             }
         }
     }

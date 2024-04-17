@@ -2,11 +2,11 @@
 
 namespace caresoft_core_client.Proveedor;
 
-public partial class frmInventarioAñadirProveedor : Form
+public partial class frmInventarioAnadirProveedor : Form
 {
     private readonly Client _api;
 
-    public frmInventarioAñadirProveedor(string baseURL)
+    public frmInventarioAnadirProveedor(string baseURL)
     {
         _api = new(baseURL);
         InitializeComponent();

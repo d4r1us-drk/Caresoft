@@ -1,4 +1,5 @@
 ﻿using caresoft_core.CoreWebApi;
+using caresoft_core_client.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,8 +39,7 @@ namespace caresoft_core_client.Servicios
         {
             Close();
         }
-
-        private async void btnEliminar_Click(object sender, EventArgs e)
+        private async void DeleteServicios()
         {
             try
             {
@@ -54,10 +54,15 @@ namespace caresoft_core_client.Servicios
                 LoadServicios();
                 FormHelper.InfoBox("Servicio eliminado correctamente");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 FormHelper.ErrorBox("Error al eliminar el servicio");
             }
+        }
+        private async void btnEliminar_Click(object sender, EventArgs e)
+        {
+            FormHelper.ConfirmBox("¿Está seguro de que desea eliminar el servicio?", DeleteServicios, "Eliminar Servicios");
+           
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace caresoft_core_client.Proveedor;
 
-partial class frmInventarioAñadirProveedor
+partial class frmInventarioAnadirProveedor
 {
     /// <summary>
     /// Required designer variable.
@@ -28,7 +28,7 @@ partial class frmInventarioAñadirProveedor
     /// </summary>
     private void InitializeComponent()
     {
-        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioAñadirProveedor));
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioAnadirProveedor));
         lblCorreoProveedor = new Label();
         txtCorreoProveedor = new TextBox();
         lblTelefonoProveedor = new Label();

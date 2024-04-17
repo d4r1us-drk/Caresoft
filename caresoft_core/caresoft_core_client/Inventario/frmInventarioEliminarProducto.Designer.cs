@@ -1,4 +1,4 @@
-﻿namespace caresoft_core_client.Inventario;
+﻿namespace caresoft_core_client.Aseguradora;
 
 partial class frmInventarioEliminarProducto
 {

@@ -49,18 +49,19 @@ partial class frmInventarioConsultaProveedor
         dbgrdDatosConsulta.MultiSelect = false;
         dbgrdDatosConsulta.Name = "dbgrdDatosConsulta";
         dbgrdDatosConsulta.ReadOnly = true;
-        dbgrdDatosConsulta.Size = new Size(802, 404);
+        dbgrdDatosConsulta.Size = new Size(807, 431);
         dbgrdDatosConsulta.TabIndex = 0;
         // 
         // lblTituloConsulta
         // 
-        lblTituloConsulta.AutoSize = true;
+        lblTituloConsulta.Dock = DockStyle.Left;
         lblTituloConsulta.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold);
-        lblTituloConsulta.Location = new Point(12, 11);
+        lblTituloConsulta.Location = new Point(0, 0);
         lblTituloConsulta.Name = "lblTituloConsulta";
-        lblTituloConsulta.Size = new Size(207, 25);
+        lblTituloConsulta.Size = new Size(264, 48);
         lblTituloConsulta.TabIndex = 1;
         lblTituloConsulta.Text = "Consulta Proveedores";
+        lblTituloConsulta.TextAlign = ContentAlignment.MiddleCenter;
         // 
         // pnlTitulo
         // 
@@ -68,7 +69,7 @@ partial class frmInventarioConsultaProveedor
         pnlTitulo.Dock = DockStyle.Top;
         pnlTitulo.Location = new Point(0, 0);
         pnlTitulo.Name = "pnlTitulo";
-        pnlTitulo.Size = new Size(802, 48);
+        pnlTitulo.Size = new Size(807, 48);
         pnlTitulo.TabIndex = 2;
         // 
         // pnlDatos
@@ -78,14 +79,14 @@ partial class frmInventarioConsultaProveedor
         pnlDatos.Dock = DockStyle.Fill;
         pnlDatos.Location = new Point(0, 48);
         pnlDatos.Name = "pnlDatos";
-        pnlDatos.Size = new Size(802, 404);
+        pnlDatos.Size = new Size(807, 431);
         pnlDatos.TabIndex = 3;
         // 
         // frmInventarioConsultaProveedor
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(802, 452);
+        ClientSize = new Size(807, 479);
         Controls.Add(pnlDatos);
         Controls.Add(pnlTitulo);
         Icon = (Icon)resources.GetObject("$this.Icon");
@@ -93,7 +94,6 @@ partial class frmInventarioConsultaProveedor
         Text = "Consulta Proveedores";
         ((System.ComponentModel.ISupportInitialize)dbgrdDatosConsulta).EndInit();
         pnlTitulo.ResumeLayout(false);
-        pnlTitulo.PerformLayout();
         pnlDatos.ResumeLayout(false);
         ResumeLayout(false);
     }

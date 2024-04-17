@@ -1,4 +1,5 @@
 ﻿using caresoft_core.CoreWebApi;
+using caresoft_core_client.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,7 +36,7 @@ namespace caresoft_core_client.Servicios
 
             } catch (Exception ex)
             {
-                FormHelper.ErrorBox(ex.Message);
+                FormHelper.ErrorBox("No se pudo añadir el tipo de servicio");
             }
 
 

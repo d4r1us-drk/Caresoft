@@ -1,4 +1,5 @@
 ﻿using caresoft_core.CoreWebApi;
+using caresoft_core_client.Utils;
 
 namespace caresoft_core_client.Proveedor;
 
@@ -18,13 +19,13 @@ public partial class frmInventarioActualizarProveedor : Form
     {
         try
         {
-            var proveedores = await _api.ApiProveedorGetGetAsync();
+            var proveedores = await _api.ApiProveedorListAsync();
 
             dbgrdProveedor.DataSource = proveedores;
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Error al cargar la lista de proveedores: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FormHelper.ErrorBox($"Error al cargar los proveedores");
         }
     }
 
@@ -37,7 +38,7 @@ public partial class frmInventarioActualizarProveedor : Form
     {
         if (dbgrdProveedor.SelectedRows.Count == 0)
         {
-            MessageBox.Show("Porfavor selecciona un proveedor a actualizar.", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            FormHelper.InfoBox("Porfavor selecciona un proveedor a actualizar.");
             return;
         }
 
@@ -55,7 +56,7 @@ public partial class frmInventarioActualizarProveedor : Form
     {
         if (string.IsNullOrWhiteSpace(txtRncProveedor.Text))
         {
-            MessageBox.Show("Porfavor selecciona un proveedor a actualizar.", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            FormHelper.InfoBox("Porfavor selecciona un proveedor a actualizar");
             return;
         }
 
@@ -71,14 +72,14 @@ public partial class frmInventarioActualizarProveedor : Form
         try
         {
             await _api.ApiProveedorUpdateAsync(proveedor.RncProveedor, proveedor.Nombre, proveedor.Direccion, proveedor.Telefono, proveedor.Correo);
-            MessageBox.Show("Proveedor actualizado correctamente.", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            FormHelper.InfoBox("Proveedor actualizado correctamente.");
             ClearFields();
             LoadProveedor();
             ToggleControls();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            MessageBox.Show($"Error al actualizar un proveedor: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FormHelper.ErrorBox("No se pudo actualizar el proveedor");
         }
     }
 

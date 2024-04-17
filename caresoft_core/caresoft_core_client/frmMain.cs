@@ -1,4 +1,4 @@
-using caresoft_core_client.Inventario;
+using caresoft_core_client.Aseguradora;
 using caresoft_core_client.Proveedor;
 using caresoft_core_client.Servicios;
 
@@ -7,15 +7,15 @@ namespace caresoft_core_client
     public partial class frmMain : Form
     {
         private frmLogin loginForm;
-        private frmInventarioAñadirProducto frmInventarioRegistrarProducto;
+        private frmInventarioAnadirProducto frmInventarioRegistrarProducto;
         private frmInventarioActualizarProducto frmInventarioActualizarProducto;
         private frmInventarioEliminarProducto frmInventarioEliminarProducto;
         private frmInventarioConsultaProductos frmInventarioConsultaProductos;
 
 
-        private frmInventarioAñadirProveedor frmInventarioRegistrarProveedor;
+        private frmInventarioAnadirProveedor frmInventarioRegistrarProveedor;
         private frmInventarioActualizarProveedor frmInventarioActualizarProveedor;
-        private FrmInventarioEliminarProveedor frmInventarioEliminarProveedor;
+        private frmInventarioEliminarProveedor frmInventarioEliminarProveedor;
         private frmInventarioConsultaProveedor frmInventarioConsultaProveedores;
 
         private frmServiciosAnadirTipoServicio frmServiciosAnadirTipoServicio;
@@ -27,6 +27,15 @@ namespace caresoft_core_client
         private frmServiciosAnadirServicio frmServiciosAnadirServicio;
         private frmServiciosEliminarServicio frmServiciosEliminarServicio;
         private frmServiciosConsultarServicio frmServiciosConsultarServicio;
+
+        private frmAseguradoraRegistrarAseguradora frmAseguradoraRegistrarAseguradora;
+        private frmAseguradoraActualizarAseguradora frmAseguradoraActualizarAseguradora;
+        private frmAseguradoraEliminarAseguradora frmAseguradoraEliminarAseguradora;
+        private frmAseguradoraConsultarAseguradora frmAseguradoraConsultarAseguradora;
+
+        private frmHospitalesActualizarSucursal frmHospitalesActualizarSucursal;
+        private frmHospitalesRegistrarSucursal frmHospitalesRegistrarSucursal;
+        private frmHospitalesEliminarSucursal frmHospitalesEliminarSucursal;
 
 
         private string baseURL;
@@ -47,7 +56,7 @@ namespace caresoft_core_client
             this.loginForm = loginForm;
         }
 
-        private void cerrarSesiónToolStripMenuItem_Click(object sender, EventArgs e)
+        private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             loginForm.Show();
             Hide();
@@ -58,7 +67,7 @@ namespace caresoft_core_client
             Application.Exit();
         }
 
-        private void añadirProductoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void anadirProductoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmInventarioRegistrarProducto = new(baseURL);
             frmInventarioRegistrarProducto.MdiParent = this;
@@ -87,7 +96,7 @@ namespace caresoft_core_client
             frmInventarioConsultaProductos.Show();
         }
 
-        private void añadirProveedorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void anadirProveedorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmInventarioRegistrarProveedor = new(baseURL);
             frmInventarioRegistrarProveedor.MdiParent = this;
@@ -116,7 +125,7 @@ namespace caresoft_core_client
             frmInventarioConsultaProveedores.Show();
         }
 
-        private void añadirTipoDeServicioToolStripMenuItem_Click(object sender, EventArgs e)
+        private void anadirTipoDeServicioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmServiciosAnadirTipoServicio = new(baseURL);
             frmServiciosAnadirTipoServicio.MdiParent = this;
@@ -137,7 +146,7 @@ namespace caresoft_core_client
             frmServiciosEliminarTipoServicio.Show();
         }
 
-        private void añadirServicioToolStripMenuItem_Click(object sender, EventArgs e)
+        private void anadirServicioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmServiciosAnadirServicio = new(baseURL);
             frmServiciosAnadirServicio.MdiParent = this;
@@ -172,32 +181,54 @@ namespace caresoft_core_client
             frmServiciosConsultarTipoServicio.Show();
         }
 
-        private void a�adirAseguradoraToolStripMenuItem_Click(object sender, EventArgs e)
+        private void anadirAseguradoraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAseguradoraRegistrarAseguradora frmAseguradoraRegistrarAseguradora = new(baseURL);
+             frmAseguradoraRegistrarAseguradora = new(baseURL);
             frmAseguradoraRegistrarAseguradora.MdiParent = this;
             frmAseguradoraRegistrarAseguradora.Show();
         }
 
         private void actualizarAseguradoraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAseguradoraActualizarAseguradora frmAseguradoraActualizarAseguradora = new(baseURL);
+            frmAseguradoraActualizarAseguradora = new(baseURL);
             frmAseguradoraActualizarAseguradora.MdiParent = this;
             frmAseguradoraActualizarAseguradora.Show();
         }
 
         private void eliminarAseguradoraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAseguradoraEliminarAseguradora frmAseguradoraEliminarAseguradora = new(baseURL);
+            frmAseguradoraEliminarAseguradora = new(baseURL);
             frmAseguradoraEliminarAseguradora.MdiParent = this;
             frmAseguradoraEliminarAseguradora.Show();
         }
 
         private void consultarAseguradorasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAseguradoraConsultarAseguradora frmAseguradoraConsultarAseguradora = new(baseURL);
+            frmAseguradoraConsultarAseguradora = new(baseURL);
             frmAseguradoraConsultarAseguradora.MdiParent = this;
             frmAseguradoraConsultarAseguradora.Show();
+        }
+
+        private void a�adirSucursalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+             frmHospitalesRegistrarSucursal = new(baseURL);
+            frmHospitalesRegistrarSucursal.MdiParent = this;
+            frmHospitalesRegistrarSucursal.Show();
+        }
+
+        private void actualizarSucursalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmHospitalesActualizarSucursal = new(baseURL);
+            frmHospitalesActualizarSucursal.MdiParent = this;
+            frmHospitalesActualizarSucursal.Show();
+
+        }
+
+        private void eliminarSucursalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmHospitalesEliminarSucursal = new(baseURL);
+            frmHospitalesEliminarSucursal.MdiParent = this;
+            frmHospitalesEliminarSucursal.Show();
         }
     }
 }

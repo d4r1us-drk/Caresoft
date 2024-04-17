@@ -9,7 +9,7 @@ namespace caresoft_core.Controllers;
 public class UsuarioController(IUsuarioService usuarioService) : ControllerBase
 {
     [HttpGet("get/{codigoODocumento}")]
-    public async Task<ActionResult<UsuarioDto>> GetUsuariosByIdAsync(string codigoODocumento)
+    public async Task<ActionResult<UsuarioDto?>> GetUsuariosByIdAsync(string codigoODocumento)
     {
         try
         {
@@ -23,7 +23,7 @@ public class UsuarioController(IUsuarioService usuarioService) : ControllerBase
     }
 
     [HttpGet("list")]
-    public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosListAsync()
+    public async Task<ActionResult<List<UsuarioDto?>>> GetUsuariosListAsync()
     {
         try
         {

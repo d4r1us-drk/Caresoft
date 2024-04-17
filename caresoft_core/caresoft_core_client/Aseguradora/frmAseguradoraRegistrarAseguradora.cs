@@ -1,62 +1,38 @@
 ﻿using caresoft_core.CoreWebApi;
+using caresoft_core_client.Utils;
 
-namespace caresoft_core_client
+namespace caresoft_core_client.Aseguradora;
+
+public partial class frmAseguradoraRegistrarAseguradora : Form
 {
-    public partial class frmAseguradoraRegistrarAseguradora : Form
+    private readonly Client _api;
+
+    public frmAseguradoraRegistrarAseguradora(string baseURL)
     {
+        _api = new(baseURL);
+        InitializeComponent();
+    }
 
-        private readonly Client API;
+    private void button1_Click(object sender, EventArgs e)
+    {
+        Close();
+    }
 
-        public frmAseguradoraRegistrarAseguradora(string baseURL)
+    private async void btnRegistrar_Click(object sender, EventArgs e)
+    {
+        string nombre = txtNombre.Text.Trim();
+        string direccion = txtDireccion.Text.Trim();
+        string telefono = txtTelefono.Text;
+        string correo = txtCorreo.Text;
+
+        try
         {
-            API = new(baseURL);
-            InitializeComponent();
+            await _api.ApiAseguradoraAddAsync(null, nombre, direccion, telefono, correo, []);
+            FormHelper.InfoBox("Aseguradora registrada correctamente.");
         }
-
-        private void button1_Click(object sender, EventArgs e)
+        catch (Exception)
         {
-            
-            Close();
+            FormHelper.ErrorBox("No se pudo añadir la aseguradora");
         }
-
-        private async void btnRegistrar_Click(object sender, EventArgs e)
-        {
-            // Get input values
-            int rnc;
-            try
-            {
-                rnc = Convert.ToInt32(txtRncProveedor.Text.Trim());
-            } catch (Exception ex)
-            {
-                MessageBox.Show("El RNC debe ser un número entero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            string nombre = txtNombreProveedor.Text.Trim();
-            string direccion = txtDireccionProveedor.Text.Trim();
-            string telefono = txtTelefonoProveedor.Text;
-            string correo = txtCorreoProveedor.Text;
-
-            // Get selected providers
-            var newProvider = new ProveedorDto
-            {
-                RncProveedor = rnc,
-                Nombre = nombre,
-                Direccion = direccion,
-                Telefono = telefono,
-                Correo = correo
-            };
-            try
-            {
-
-                await API.ApiProveedorAddAsync(rncProveedor: newProvider.RncProveedor, nombre: newProvider.Nombre, direccion: newProvider.Direccion, telefono: newProvider.Telefono, correo: newProvider.Correo);
-                MessageBox.Show("Proveedor registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            } catch (Exception ex)
-            {
-                MessageBox.Show($"El proveedor ya existe", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-        }
-
-      
     }
 }

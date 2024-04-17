@@ -1,6 +1,7 @@
 ﻿using caresoft_core.CoreWebApi;
+using caresoft_core_client.Utils;
 
-namespace caresoft_core_client.Inventario;
+namespace caresoft_core_client.Aseguradora;
 
 public partial class frmInventarioConsultaProductos : Form
 {
@@ -19,14 +20,14 @@ public partial class frmInventarioConsultaProductos : Form
             var productos = await this._api.ApiProductoGetAsync();
             if(productos == null || productos.Count == 0)
             {
-                MessageBox.Show("No se encontraron productos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                FormHelper.ErrorBox("No se encontraron productos");
                 return;
             }
 
             this.dbgrdDatosConsulta.DataSource = productos;
         } catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FormHelper.ErrorBox("Error al mostrar los productos");
         }
     }
 }
