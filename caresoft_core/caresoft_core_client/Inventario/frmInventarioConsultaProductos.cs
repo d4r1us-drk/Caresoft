@@ -19,14 +19,14 @@ public partial class frmInventarioConsultaProductos : Form
             var productos = await this._api.ApiProductoGetAsync();
             if(productos == null || productos.Count == 0)
             {
-                MessageBox.Show("No se encontraron productos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                FormHelper.ErrorBox("No se encontraron productos");
                 return;
             }
 
             this.dbgrdDatosConsulta.DataSource = productos;
         } catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FormHelper.ErrorBox("Error al mostrar los productos");
         }
     }
 }

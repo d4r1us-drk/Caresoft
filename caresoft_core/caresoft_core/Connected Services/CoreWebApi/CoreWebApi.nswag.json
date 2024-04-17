@@ -2892,7 +2892,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Pago"
+                    "$ref": "#/components/schemas/PagoDto"
                   }
                 }
               },
@@ -2900,7 +2900,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Pago"
+                    "$ref": "#/components/schemas/PagoDto"
                   }
                 }
               },
@@ -2908,7 +2908,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Pago"
+                    "$ref": "#/components/schemas/PagoDto"
                   }
                 }
               }
@@ -2940,17 +2940,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Pago"
+                  "$ref": "#/components/schemas/PagoDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Pago"
+                  "$ref": "#/components/schemas/PagoDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Pago"
+                  "$ref": "#/components/schemas/PagoDto"
                 }
               }
             }
@@ -2968,17 +2968,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Pago"
+                "$ref": "#/components/schemas/PagoDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Pago"
+                "$ref": "#/components/schemas/PagoDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Pago"
+                "$ref": "#/components/schemas/PagoDto"
               }
             }
           }
@@ -3000,17 +3000,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Pago"
+                "$ref": "#/components/schemas/PagoDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Pago"
+                "$ref": "#/components/schemas/PagoDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Pago"
+                "$ref": "#/components/schemas/PagoDto"
               }
             }
           }
@@ -3331,12 +3331,12 @@
         }
       }
     },
-    "/api/Proveedor/get": {
+    "/api/Proveedor/list": {
       "get": {
         "tags": [
           "Proveedor"
         ],
-        "operationId": "getAll11",
+        "operationId": "list",
         "responses": {
           "200": {
             "description": "Success",
@@ -3542,7 +3542,7 @@
         "tags": [
           "ReservaServicio"
         ],
-        "operationId": "getAll12",
+        "operationId": "getAll11",
         "responses": {
           "200": {
             "description": "Success",
@@ -3777,7 +3777,7 @@
         "tags": [
           "Sala"
         ],
-        "operationId": "getAll13",
+        "operationId": "getAll12",
         "responses": {
           "200": {
             "description": "Success",
@@ -3896,7 +3896,7 @@
         "tags": [
           "Servicio"
         ],
-        "operationId": "getAll14",
+        "operationId": "getAll13",
         "responses": {
           "200": {
             "description": "Success",
@@ -4143,7 +4143,7 @@
         "tags": [
           "TipoServicio"
         ],
-        "operationId": "getAll15",
+        "operationId": "getAll14",
         "responses": {
           "200": {
             "description": "Success",
@@ -4276,7 +4276,7 @@
         "tags": [
           "Usuario"
         ],
-        "operationId": "list",
+        "operationId": "list2",
         "responses": {
           "200": {
             "description": "Success",
@@ -5422,6 +5422,28 @@
           },
           "idCuentaNavigation": {
             "$ref": "#/components/schemas/Cuentum"
+          }
+        }
+      },
+      "PagoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idPago": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idCuenta": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "montoPagado": {
+            "type": "number",
+            "format": "double"
+          },
+          "fecha": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },

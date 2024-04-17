@@ -1,6 +1,6 @@
 ﻿namespace caresoft_core_client
 {
-    partial class frmAseguradoraRegistrarAseguradora
+    partial class frmHospitalesRegistrarSucursal
     {
         /// <summary>
         /// Required designer variable.
@@ -28,15 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAseguradoraRegistrarAseguradora));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmHospitalesRegistrarSucursal));
             lblTitulo = new Label();
             btnRegistrar = new Button();
             button1 = new Button();
             pnlInputDatos = new Panel();
             txtNombre = new TextBox();
             lblIdProducto = new Label();
-            lblLoteProducto = new Label();
-            txtCorreo = new TextBox();
             lblCostoProducto = new Label();
             txtTelefono = new TextBox();
             lblDescripcionProducto = new Label();
@@ -54,9 +52,9 @@
             lblTitulo.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTitulo.Location = new Point(64, 19);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(189, 25);
+            lblTitulo.Size = new Size(149, 25);
             lblTitulo.TabIndex = 26;
-            lblTitulo.Text = "Añadir aseguradora";
+            lblTitulo.Text = "Añadir sucursal";
             // 
             // btnRegistrar
             // 
@@ -84,8 +82,6 @@
             // 
             pnlInputDatos.Controls.Add(txtNombre);
             pnlInputDatos.Controls.Add(lblIdProducto);
-            pnlInputDatos.Controls.Add(lblLoteProducto);
-            pnlInputDatos.Controls.Add(txtCorreo);
             pnlInputDatos.Controls.Add(lblCostoProducto);
             pnlInputDatos.Controls.Add(txtTelefono);
             pnlInputDatos.Controls.Add(lblDescripcionProducto);
@@ -111,22 +107,6 @@
             lblIdProducto.Size = new Size(51, 15);
             lblIdProducto.TabIndex = 22;
             lblIdProducto.Text = "Nombre";
-            // 
-            // lblLoteProducto
-            // 
-            lblLoteProducto.AutoSize = true;
-            lblLoteProducto.Location = new Point(18, 315);
-            lblLoteProducto.Name = "lblLoteProducto";
-            lblLoteProducto.Size = new Size(43, 15);
-            lblLoteProducto.TabIndex = 21;
-            lblLoteProducto.Text = "Correo";
-            // 
-            // txtCorreo
-            // 
-            txtCorreo.Location = new Point(125, 312);
-            txtCorreo.Name = "txtCorreo";
-            txtCorreo.Size = new Size(148, 23);
-            txtCorreo.TabIndex = 20;
             // 
             // lblCostoProducto
             // 
@@ -180,7 +160,7 @@
             pnlBotones.Size = new Size(291, 32);
             pnlBotones.TabIndex = 31;
             // 
-            // frmAseguradoraRegistrarAseguradora
+            // frmHospitalesRegistrarSucursal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -192,8 +172,8 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "frmAseguradoraRegistrarAseguradora";
-            Text = "Añadir aseguradora";
+            Name = "frmHospitalesRegistrarSucursal";
+            Text = " ";
             pnlInputDatos.ResumeLayout(false);
             pnlInputDatos.PerformLayout();
             pnlTitulo.ResumeLayout(false);
@@ -211,8 +191,6 @@
         private Panel pnlBotones;
         private TextBox txtNombre;
         private Label lblIdProducto;
-        private Label lblLoteProducto;
-        private TextBox txtCorreo;
         private Label lblCostoProducto;
         private TextBox txtTelefono;
         private Label lblDescripcionProducto;

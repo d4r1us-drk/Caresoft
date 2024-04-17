@@ -1,6 +1,6 @@
 ﻿namespace caresoft_core_client.Proveedor
 {
-    partial class FrmInventarioEliminarProveedor
+    partial class frmInventarioEliminarProveedor
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmInventarioEliminarProveedor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioEliminarProveedor));
             dbgrdProductos = new DataGridView();
             pnlTitulos = new Panel();
             lblTitulo = new Label();

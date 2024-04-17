@@ -109,7 +109,7 @@
             cerrarSesiónToolStripMenuItem.Name = "cerrarSesiónToolStripMenuItem";
             cerrarSesiónToolStripMenuItem.Size = new Size(161, 22);
             cerrarSesiónToolStripMenuItem.Text = "Cerrar sesión";
-            cerrarSesiónToolStripMenuItem.Click += cerrarSesiónToolStripMenuItem_Click;
+            cerrarSesiónToolStripMenuItem.Click += cerrarSesionToolStripMenuItem_Click;
             // 
             // cerrarProgramaToolStripMenuItem
             // 
@@ -137,7 +137,7 @@
             añadirProductoToolStripMenuItem.Name = "añadirProductoToolStripMenuItem";
             añadirProductoToolStripMenuItem.Size = new Size(178, 22);
             añadirProductoToolStripMenuItem.Text = "Añadir producto";
-            añadirProductoToolStripMenuItem.Click += añadirProductoToolStripMenuItem_Click;
+            añadirProductoToolStripMenuItem.Click += anadirProductoToolStripMenuItem_Click;
             // 
             // actualizarProductoToolStripMenuItem
             // 
@@ -165,7 +165,7 @@
             añadirProveedorToolStripMenuItem.Name = "añadirProveedorToolStripMenuItem";
             añadirProveedorToolStripMenuItem.Size = new Size(183, 22);
             añadirProveedorToolStripMenuItem.Text = "Añadir proveedor";
-            añadirProveedorToolStripMenuItem.Click += añadirProveedorToolStripMenuItem_Click;
+            añadirProveedorToolStripMenuItem.Click += anadirProveedorToolStripMenuItem_Click;
             // 
             // actualizarProveedorToolStripMenuItem
             // 
@@ -214,14 +214,14 @@
             añadirTipoDeServicioToolStripMenuItem.Name = "añadirTipoDeServicioToolStripMenuItem";
             añadirTipoDeServicioToolStripMenuItem.Size = new Size(209, 22);
             añadirTipoDeServicioToolStripMenuItem.Text = "Añadir tipo de servicio";
-            añadirTipoDeServicioToolStripMenuItem.Click += añadirTipoDeServicioToolStripMenuItem_Click;
+            añadirTipoDeServicioToolStripMenuItem.Click += anadirTipoDeServicioToolStripMenuItem_Click;
             // 
             // añadirServicioToolStripMenuItem
             // 
             añadirServicioToolStripMenuItem.Name = "añadirServicioToolStripMenuItem";
             añadirServicioToolStripMenuItem.Size = new Size(209, 22);
             añadirServicioToolStripMenuItem.Text = "Añadir servicio";
-            añadirServicioToolStripMenuItem.Click += añadirServicioToolStripMenuItem_Click;
+            añadirServicioToolStripMenuItem.Click += anadirServicioToolStripMenuItem_Click;
             // 
             // actualizarTipoDeServicioToolStripMenuItem
             // 
@@ -284,7 +284,7 @@
             añadirAseguradoraToolStripMenuItem.Name = "añadirAseguradoraToolStripMenuItem";
             añadirAseguradoraToolStripMenuItem.Size = new Size(194, 22);
             añadirAseguradoraToolStripMenuItem.Text = "Añadir aseguradora";
-            añadirAseguradoraToolStripMenuItem.Click += añadirAseguradoraToolStripMenuItem_Click;
+            añadirAseguradoraToolStripMenuItem.Click += anadirAseguradoraToolStripMenuItem_Click;
             // 
             // actualizarAseguradoraToolStripMenuItem
             // 

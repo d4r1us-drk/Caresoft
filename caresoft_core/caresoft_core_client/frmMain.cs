@@ -15,7 +15,7 @@ namespace caresoft_core_client
 
         private frmInventarioRegistrarProveedor frmInventarioRegistrarProveedor;
         private frmInventarioActualizarProveedor frmInventarioActualizarProveedor;
-        private FrmInventarioEliminarProveedor frmInventarioEliminarProveedor;
+        private frmInventarioEliminarProveedor frmInventarioEliminarProveedor;
         private frmInventarioConsultaProveedor frmInventarioConsultaProveedores;
 
         private frmServiciosAnadirTipoServicio frmServiciosAnadirTipoServicio;
@@ -47,7 +47,7 @@ namespace caresoft_core_client
             this.loginForm = loginForm;
         }
 
-        private void cerrarSesiónToolStripMenuItem_Click(object sender, EventArgs e)
+        private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             loginForm.Show();
             Hide();
@@ -58,7 +58,7 @@ namespace caresoft_core_client
             Application.Exit();
         }
 
-        private void añadirProductoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void anadirProductoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmInventarioRegistrarProducto = new(baseURL);
             frmInventarioRegistrarProducto.MdiParent = this;
@@ -87,7 +87,7 @@ namespace caresoft_core_client
             frmInventarioConsultaProductos.Show();
         }
 
-        private void añadirProveedorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void anadirProveedorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmInventarioRegistrarProveedor = new(baseURL);
             frmInventarioRegistrarProveedor.MdiParent = this;
@@ -116,7 +116,7 @@ namespace caresoft_core_client
             frmInventarioConsultaProveedores.Show();
         }
 
-        private void añadirTipoDeServicioToolStripMenuItem_Click(object sender, EventArgs e)
+        private void anadirTipoDeServicioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmServiciosAnadirTipoServicio = new(baseURL);
             frmServiciosAnadirTipoServicio.MdiParent = this;
@@ -137,7 +137,7 @@ namespace caresoft_core_client
             frmServiciosEliminarTipoServicio.Show();
         }
 
-        private void añadirServicioToolStripMenuItem_Click(object sender, EventArgs e)
+        private void anadirServicioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmServiciosAnadirServicio = new(baseURL);
             frmServiciosAnadirServicio.MdiParent = this;
@@ -172,7 +172,7 @@ namespace caresoft_core_client
             frmServiciosConsultarTipoServicio.Show();
         }
 
-        private void a�adirAseguradoraToolStripMenuItem_Click(object sender, EventArgs e)
+        private void anadirAseguradoraToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAseguradoraRegistrarAseguradora frmAseguradoraRegistrarAseguradora = new(baseURL);
             frmAseguradoraRegistrarAseguradora.MdiParent = this;

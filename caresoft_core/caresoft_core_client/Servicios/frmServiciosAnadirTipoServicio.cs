@@ -35,7 +35,7 @@ namespace caresoft_core_client.Servicios
 
             } catch (Exception ex)
             {
-                FormHelper.ErrorBox(ex.Message);
+                FormHelper.ErrorBox("No se pudo añadir el tipo de servicio");
             }
 
 

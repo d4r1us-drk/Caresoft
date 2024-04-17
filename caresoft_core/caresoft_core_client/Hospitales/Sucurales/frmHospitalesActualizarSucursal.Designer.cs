@@ -1,6 +1,6 @@
 ﻿namespace caresoft_core_client
 {
-    partial class frmAseguradoraActualizarAseguradora
+    partial class frmHospitalesActualizarSucursal
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAseguradoraActualizarAseguradora));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmHospitalesActualizarSucursal));
             pnlTitulos = new Panel();
             lblTituloDatos = new Label();
             lblProductos = new Label();
@@ -37,8 +37,6 @@
             label1 = new Label();
             txtNombre = new TextBox();
             lblIdProducto = new Label();
-            lblLoteProducto = new Label();
-            txtCorreo = new TextBox();
             lblCostoProducto = new Label();
             txtTelefono = new TextBox();
             lblDescripcionProducto = new Label();
@@ -84,9 +82,9 @@
             lblProductos.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblProductos.Location = new Point(447, 18);
             lblProductos.Name = "lblProductos";
-            lblProductos.Size = new Size(242, 25);
+            lblProductos.Size = new Size(212, 25);
             lblProductos.TabIndex = 1;
-            lblProductos.Text = "Aseguradoras Registradas";
+            lblProductos.Text = "Sucursales Registradas";
             // 
             // pnlDatos
             // 
@@ -94,8 +92,6 @@
             pnlDatos.Controls.Add(label1);
             pnlDatos.Controls.Add(txtNombre);
             pnlDatos.Controls.Add(lblIdProducto);
-            pnlDatos.Controls.Add(lblLoteProducto);
-            pnlDatos.Controls.Add(txtCorreo);
             pnlDatos.Controls.Add(lblCostoProducto);
             pnlDatos.Controls.Add(txtTelefono);
             pnlDatos.Controls.Add(lblDescripcionProducto);
@@ -139,22 +135,6 @@
             lblIdProducto.Size = new Size(51, 15);
             lblIdProducto.TabIndex = 14;
             lblIdProducto.Text = "Nombre";
-            // 
-            // lblLoteProducto
-            // 
-            lblLoteProducto.AutoSize = true;
-            lblLoteProducto.Location = new Point(22, 271);
-            lblLoteProducto.Name = "lblLoteProducto";
-            lblLoteProducto.Size = new Size(43, 15);
-            lblLoteProducto.TabIndex = 11;
-            lblLoteProducto.Text = "Correo";
-            // 
-            // txtCorreo
-            // 
-            txtCorreo.Location = new Point(129, 268);
-            txtCorreo.Name = "txtCorreo";
-            txtCorreo.Size = new Size(148, 23);
-            txtCorreo.TabIndex = 10;
             // 
             // lblCostoProducto
             // 
@@ -265,7 +245,7 @@
             dbgrdProductos.Size = new Size(500, 476);
             dbgrdProductos.TabIndex = 0;
             // 
-            // frmAseguradoraActualizarAseguradora
+            // frmHospitalesActualizarSucursal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -278,9 +258,9 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "frmAseguradoraActualizarAseguradora";
+            Name = "frmHospitalesActualizarSucursal";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Actualizar Aseguradoras";
+            Text = "Actualizar Sucursales";
             pnlTitulos.ResumeLayout(false);
             pnlTitulos.PerformLayout();
             pnlDatos.ResumeLayout(false);
@@ -309,8 +289,6 @@
         private TextBox txtDireccion;
         private Label lblCostoProducto;
         private TextBox txtTelefono;
-        private Label lblLoteProducto;
-        private TextBox txtCorreo;
         private TextBox txtNombre;
         private Label lblIdProducto;
         private TextBox txtIdentificacion;

@@ -28,7 +28,7 @@ namespace caresoft_core_client.Servicios
                 var servicios = await API.ApiServicioGetAsync();
                 dataGridView1.DataSource = servicios;
 
-            } catch (Exception ex)
+            } catch (Exception)
             {
                 FormHelper.ErrorBox("Error al cargar los servicios");
             }

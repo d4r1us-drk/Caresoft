@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioConsultaProveedor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAseguradoraConsultarAseguradora));
             dataGridView1 = new DataGridView();
             label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -48,11 +48,11 @@
             label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold);
             label1.Location = new Point(12, 9);
             label1.Name = "label1";
-            label1.Size = new Size(207, 25);
+            label1.Size = new Size(218, 25);
             label1.TabIndex = 1;
-            label1.Text = "Consulta Proveedores";
+            label1.Text = "Consulta Aseguradoras";
             // 
-            // frmInventarioConsultaProveedor
+            // frmAseguradoraConsultarAseguradora
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -60,9 +60,8 @@
             Controls.Add(label1);
             Controls.Add(dataGridView1);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "frmInventarioConsultaProveedor";
-            Text = "Consulta Proveedores";
-            Load += frmInventarioConsultaProductos_Load;
+            Name = "frmAseguradoraConsultarAseguradora";
+            Text = "Consultar Aseguradoras";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();

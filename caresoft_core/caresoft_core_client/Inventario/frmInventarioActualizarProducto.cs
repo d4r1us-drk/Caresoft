@@ -21,9 +21,9 @@ public partial class frmInventarioActualizarProducto : Form
             var productos = await _api.ApiProductoGetAsync();
             dbgrdProductos.DataSource = productos;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            MessageBox.Show($"Error loading productos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FormHelper.ErrorBox("No se pudieron cargar los productos");
         }
     }
 
@@ -32,7 +32,7 @@ public partial class frmInventarioActualizarProducto : Form
         try
         {
             // Fetch all proveedores
-            var allProveedores = await _api.ApiProveedorGetGetAsync();
+            var allProveedores = await _api.ApiProveedorListAsync();
 
             // Fetch proveedores related to the producto
             var productoProveedores = await _api.ApiProductoProveedoresAsync(idProducto);
@@ -56,7 +56,7 @@ public partial class frmInventarioActualizarProducto : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Error loading proveedores: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FormHelper.ErrorBox("No se pudieron cargar los proveedores");
         }
     }
 
@@ -94,7 +94,7 @@ public partial class frmInventarioActualizarProducto : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Error updating proveedores: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FormHelper.ErrorBox("No se pudieron actualizar los proveedores");
         }
     }
 
@@ -107,7 +107,7 @@ public partial class frmInventarioActualizarProducto : Form
     {
         if (dbgrdProductos.SelectedRows.Count == 0)
         {
-            MessageBox.Show("Please select a product to update.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            FormHelper.InfoBox("Seleccione el producto");
             return;
         }
 
@@ -126,7 +126,7 @@ public partial class frmInventarioActualizarProducto : Form
     {
         if (string.IsNullOrWhiteSpace(txtIdProducto.Text))
         {
-            MessageBox.Show("Please select a product to update.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            FormHelper.InfoBox("Seleccione el producto");
             return;
         }
 
@@ -143,14 +143,14 @@ public partial class frmInventarioActualizarProducto : Form
         {
             await _api.ApiProductoUpdateAsync(producto.IdProducto, producto.Nombre, producto.Descripcion, producto.Costo, producto.LoteDisponible);
             await UpdateProveedores(producto.IdProducto);
-            MessageBox.Show("Product updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            FormHelper.InfoBox("El producto se actualizó correctamente");
             ClearFields();
             LoadProductos();
             Toggle();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            MessageBox.Show($"Error updating product: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FormHelper.ErrorBox("No se pudo actualizar el producto");
         }
     }
 

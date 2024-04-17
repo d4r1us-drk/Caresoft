@@ -2,12 +2,12 @@
 
 namespace caresoft_core_client
 {
-    public partial class frmAseguradoraRegistrarAseguradora : Form
+    public partial class frmHospitalesRegistrarSucursal : Form
     {
 
         private readonly Client API;
 
-        public frmAseguradoraRegistrarAseguradora(string baseURL)
+        public frmHospitalesRegistrarSucursal(string baseURL)
         {
             API = new(baseURL);
             InitializeComponent();
@@ -24,16 +24,22 @@ namespace caresoft_core_client
             string nombre = txtNombre.Text.Trim();
             string direccion = txtDireccion.Text.Trim();
             string telefono = txtTelefono.Text;
-            string correo = txtCorreo.Text;
+
+            SucursalDto sucursal = new SucursalDto
+            {
+                Nombre = nombre,
+                Direccion = direccion,
+                Telefono = telefono
+            };
 
             try
             {
 
-                await API.ApiAseguradoraAddAsync(null, nombre, direccion, telefono, correo, []);
-                FormHelper.InfoBox("Aseguradora registrada correctamente.");
+                await API.ApiSucursalPostAsync(sucursal);
+                FormHelper.InfoBox("Sucursal registrada correctamente.");
             } catch (Exception)
             {
-                FormHelper.ErrorBox("No se pudo añadir la aseguradora");
+                FormHelper.ErrorBox("No se pudo añadir la Sucursal");
             }
 
         }

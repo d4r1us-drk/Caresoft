@@ -2580,13 +2580,13 @@ BEGIN
         SELECT costoEstancia INTO costo FROM Ingreso WHERE idIngreso = NEW.idIngreso;
     
         SET subtotal = subtotal + costo;
-        OLD.montoSubtotal = subtotal;
-        -- UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
+
+        New.montoSubtotal = subtotal;
         
         SELECT montoTotal INTO total FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
         SET total = total + costo;
-        OLD.montoTotal = total;
-        -- UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
+
+        New.montoTotal = total;
     END IF;
 END //
 
@@ -2604,12 +2604,10 @@ BEGIN
         SELECT costo INTO costoConsulta FROM Consulta WHERE consultaCodigo = NEW.consultaCodigo;
     
         SET subtotal = subtotal + costoConsulta;
-        OLD.montoSubtotal = subtotal;
-        -- UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
+        NEW.montoSubtotal = subtotal;
         
         SET total = total + costoConsulta;
-        OLD.montoTotal = total;
-        -- UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
+        NEW.montoTotal = total;
     END IF;
 END //
 

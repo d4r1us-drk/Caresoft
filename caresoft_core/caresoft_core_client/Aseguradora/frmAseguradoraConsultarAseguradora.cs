@@ -21,26 +21,22 @@ namespace caresoft_core_client.Inventario
             this.LoadData();
         }
 
-        private void frmInventarioConsultaProductos_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private async void LoadData()
         {
             try
             {
-                var proveedor = await this.API.ApiProveedorGetGetAsync();
+                var proveedor = await this.API.ApiAseguradoraGetGetAsync();
                 if(proveedor == null || proveedor.Count == 0)
                 {
-                    MessageBox.Show("No se encontraron proveedores", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    FormHelper.InfoBox("No se encontraron aseguradoras");
                     return;
                 }
 
                 this.dataGridView1.DataSource = proveedor;
-            } catch (Exception ex)
+            } catch (Exception)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                FormHelper.ErrorBox("No se pudieron cargar las aseguradoras");
             }
            
         }

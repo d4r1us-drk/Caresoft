@@ -31,11 +31,11 @@ namespace caresoft_core_client
                     Correo = txtCorreoProveedor.Text
                 };
                 await API.ApiProveedorAddAsync(newProvider.RncProveedor, newProvider.Nombre, newProvider.Direccion, newProvider.Telefono, newProvider.Correo);
-                MessageBox.Show("Proveedor registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                FormHelper.InfoBox("Proveedor registrado correctamente.");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show($"Ocurrio un error al introducir un proveedor {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                FormHelper.ErrorBox("No se pudo añadir el proveedor");
             }
 
         }

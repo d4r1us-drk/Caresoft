@@ -4,29 +4,29 @@ using System.Text;
 
 namespace caresoft_core_client
 {
-    public partial class frmAseguradoraActualizarAseguradora : Form
+    public partial class frmHospitalesActualizarSucursal : Form
     {
         private readonly Client API;
 
-        public frmAseguradoraActualizarAseguradora(string baseUrl)
+        public frmHospitalesActualizarSucursal(string baseUrl)
         {
             API = new Client(baseUrl);
             InitializeComponent();
-            LoadAseguradoras();
+            LoadSucrusales();
         }
 
-        private async void LoadAseguradoras()
+        private async void LoadSucrusales()
         {
                 try
                 {
 
-                    var aseguradoras = await API.ApiAseguradoraGetGetAsync();
+                    var sucursales = await API.ApiSucursalGetAsync();
 
-                    dbgrdProductos.DataSource = aseguradoras;
+                    dbgrdProductos.DataSource = sucursales;
                 }
                 catch (Exception)
                 {
-                    FormHelper.ErrorBox($"Error al cargar las aseguradoras");
+                    FormHelper.ErrorBox($"Error al cargar las sucursales");
                 }
         }
 
@@ -41,7 +41,7 @@ namespace caresoft_core_client
         {
             if (dbgrdProductos.SelectedRows.Count == 0)
             {
-                FormHelper.InfoBox("Seleccione una aseguradora.");
+                FormHelper.InfoBox("Seleccione una sucursal.");
                 return;
             }
 
@@ -50,7 +50,6 @@ namespace caresoft_core_client
             txtNombre.Text = selectedProduct.Nombre;
             txtDireccion.Text = selectedProduct.Direccion;
             txtTelefono.Text = selectedProduct.Telefono;
-            txtCorreo.Text = selectedProduct.Correo;
         }
 
         private async void btnActualizar_Click(object sender, EventArgs e)
@@ -61,25 +60,24 @@ namespace caresoft_core_client
                 return;
             }
 
-            var aseguradora = new Aseguradora
+            var sucursal = new SucursalDto
             {
-                IdAseguradora = int.Parse(txtIdentificacion.Text),
+                IdSucursal = int.Parse(txtIdentificacion.Text),
                 Nombre = txtNombre.Text,
                 Direccion = txtDireccion.Text,
                 Telefono = txtTelefono.Text,
-                Correo = txtCorreo.Text
             };
 
                 try
                 {
-                    await API.ApiAseguradoraUpdateAsync(aseguradora.IdAseguradora, aseguradora.Nombre, aseguradora.Direccion, aseguradora.Telefono, aseguradora.Correo, []);
-                    FormHelper.InfoBox("Aseguradora actualizada correctamente.");
+                    await API.ApiSucursalPutAsync(sucursal);
+                    FormHelper.InfoBox("Sucursal actualizada correctamente.");
                     ClearFields();
-                    LoadAseguradoras();
+                    LoadSucrusales();
                 }
                 catch (Exception)
                 {
-                    FormHelper.ErrorBox($"No se pudo actualizar la aseguradora");
+                    FormHelper.ErrorBox($"No se pudo actualizar la sucursal");
                 }
         }
 
@@ -88,7 +86,6 @@ namespace caresoft_core_client
             txtNombre.Clear();
             txtDireccion.Clear();
             txtTelefono.Clear();
-            txtCorreo.Clear();
         }
     }
 }

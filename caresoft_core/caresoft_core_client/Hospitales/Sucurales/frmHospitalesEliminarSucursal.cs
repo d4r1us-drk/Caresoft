@@ -3,10 +3,10 @@ using caresoft_core.CoreWebApi;
 
 namespace caresoft_core_client
 {
-    public partial class frmAseguradoraEliminarAseguradora : Form
+    public partial class frmHospitalesEliminarSucursal : Form
     {
         private readonly Client API;
-        public frmAseguradoraEliminarAseguradora(string baseURL)
+        public frmHospitalesEliminarSucursal(string baseURL)
         {
             API = new(baseURL);
             InitializeComponent();
@@ -22,28 +22,28 @@ namespace caresoft_core_client
             try
             {
 
-                var aseguradoras = await API.ApiAseguradoraGetGetAsync();
+                var aseguradoras = await API.ApiSucursalGetAsync();
 
                 dataGridView1.DataSource = aseguradoras;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                FormHelper.ErrorBox($"No se pudieron cargar las aseguradoras");
+                FormHelper.ErrorBox($"No se pudieron cargar las sucursales");
             }
         }
 
-        private async void DeleteAseguradoras()
+        private async void DeleteSucursales()
         {
             try
             {
                 foreach (DataGridViewRow row in dataGridView1.SelectedRows)
                 {
-                    var aseguradora = (Aseguradora)row.DataBoundItem;
+                    var aseguradora = (SucursalDto)row.DataBoundItem;
                     if (aseguradora != null)
-                        await API.ApiAseguradoraDeleteAsync(aseguradora.IdAseguradora);
+                        await API.ApiSucursalDeleteAsync(aseguradora.IdSucursal);
                 }
+                FormHelper.InfoBox("Sucursal eliminada correctamente");
                 LoadAseguradoras();
-                FormHelper.InfoBox("Aseguradora eliminada correctamente");
             }
             catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace caresoft_core_client
 
         private async void btnEliminar_Click(object sender, EventArgs e)
         {
-            FormHelper.ConfirmBox("Estas seguro que deseas eliminar la aseguradora?", DeleteAseguradoras,"Eliminar Aseguradora");
+            FormHelper.ConfirmBox("Estas seguro que deseas eliminar la sucursal?", DeleteSucursales,"Eliminar Sucursal");
         }
     }
 }

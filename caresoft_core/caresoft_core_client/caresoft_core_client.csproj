@@ -19,6 +19,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Hospitales\Sucurales\frmHospitalesActualizarSucursal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Hospitales\Sucurales\frmHospitalesEliminarSucursal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Hospitales\Sucurales\frmHospitalesRegistrarSucursal.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Inventario\frmInventarioActualizarProducto.cs">
       <SubType>Form</SubType>
     </Compile>

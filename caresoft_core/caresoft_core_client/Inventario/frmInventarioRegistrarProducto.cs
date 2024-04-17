@@ -50,11 +50,11 @@ public partial class frmInventarioRegistrarProducto : Form
                 await _api.ApiProductoAddProviderAsync(idProducto, provider.RncProveedor);
             }
 
-            MessageBox.Show("Producto registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            FormHelper.InfoBox("Producto registrado correctamente");
             ClearFields();
-        } catch (Exception ex)
+        } catch (Exception)
         {
-            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FormHelper.ErrorBox("No se pudo añadir el producto");
         }
 
     }
@@ -63,7 +63,7 @@ public partial class frmInventarioRegistrarProducto : Form
     {
         try
         {
-            var providers = await _api.ApiProveedorGetGetAsync();
+            var providers = await _api.ApiProveedorListAsync();
 
             if (providers != null && providers.Count > 0)
             {
@@ -74,12 +74,12 @@ public partial class frmInventarioRegistrarProducto : Form
             }
             else
             {
-                MessageBox.Show("No se encontraron proveedores.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                FormHelper.InfoBox("No se encontraron proveedores.");
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FormHelper.ErrorBox("Error al cargar los proveedores");
         }
     }
     

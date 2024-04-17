@@ -59,9 +59,9 @@ public partial class frmServiciosActualizarServicio : Form
             FormHelper.InfoBox("Servicio actualizado correctamente");
 
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            FormHelper.ErrorBox(ex.Message);
+            FormHelper.ErrorBox("No se pudo actualizar servicio");
         }
     }
 }

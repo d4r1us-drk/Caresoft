@@ -20,7 +20,7 @@ namespace caresoft_core_client
         {
             MessageBox.Show(message, "Advertencia", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
         }
-        public static void ConfirmBox(string message, Action onYes)
+        public static void ConfirmBox(string message, Action onYes, string title = "Confirmacoin")
         {
             var result = MessageBox.Show(message, "Confirmación", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
             if (result == System.Windows.Forms.DialogResult.Yes)

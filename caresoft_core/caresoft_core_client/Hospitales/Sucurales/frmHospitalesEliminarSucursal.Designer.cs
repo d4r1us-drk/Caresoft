@@ -2,7 +2,7 @@
 
 namespace caresoft_core_client
 {
-    partial class frmAseguradoraEliminarAseguradora
+    partial class frmHospitalesEliminarSucursal
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace caresoft_core_client
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAseguradoraEliminarAseguradora));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmHospitalesEliminarSucursal));
             dbgrdProductos = new DataGridView();
             pnlTitulos = new Panel();
             lblTitulo = new Label();
@@ -70,9 +70,9 @@ namespace caresoft_core_client
             lblTitulo.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTitulo.Location = new Point(350, 18);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(183, 25);
+            lblTitulo.Size = new Size(164, 25);
             lblTitulo.TabIndex = 27;
-            lblTitulo.Text = "Eliminar Proveedor";
+            lblTitulo.Text = "Eliminar Sucursal";
             // 
             // pnlDatos
             // 
@@ -109,7 +109,7 @@ namespace caresoft_core_client
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(147, 32);
             btnEliminar.TabIndex = 1;
-            btnEliminar.Text = "Eliminar Proveedor";
+            btnEliminar.Text = "Eliminar Sucursal";
             btnEliminar.UseVisualStyleBackColor = true;
             btnEliminar.Click += btnEliminar_Click;
             // 
@@ -124,7 +124,7 @@ namespace caresoft_core_client
             btnCancelar.UseVisualStyleBackColor = true;
             btnCancelar.Click += btnCancelar_Click;
             // 
-            // frmAseguradoraEliminarAseguradora
+            // frmHospitalesEliminarSucursal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -136,7 +136,7 @@ namespace caresoft_core_client
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "frmAseguradoraEliminarAseguradora";
+            Name = "frmHospitalesEliminarSucursal";
             Text = "Eliminar Proveedor";
             ((System.ComponentModel.ISupportInitialize)dbgrdProductos).EndInit();
             pnlTitulos.ResumeLayout(false);
