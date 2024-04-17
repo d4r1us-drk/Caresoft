@@ -44,8 +44,8 @@ namespace caresoft_core_client.Servicios
         private void btnCargarDatos_Click(object sender, EventArgs e)
         {
             var item = dbgrdTipoServicios.CurrentRow.DataBoundItem as TipoServicioDto;
-            this.txtNombre.Text = item.Nombre;
-            this.txtId.Text = item.IdTipoServicio.ToString();
+            this.txtNombreTipoServicio.Text = item.Nombre;
+            this.txtIdTipoServicio.Text = item.IdTipoServicio.ToString();
 
         }
 
@@ -55,8 +55,8 @@ namespace caresoft_core_client.Servicios
             {
                 var tipoServicio = new TipoServicioDto
                 {
-                    IdTipoServicio = int.Parse(txtId.Text),
-                    Nombre = txtNombre.Text
+                    IdTipoServicio = int.Parse(txtIdTipoServicio.Text),
+                    Nombre = txtNombreTipoServicio.Text
                 };
 
                 await API.ApiTipoServicioUpdateAsync(tipoServicio.IdTipoServicio, tipoServicio.Nombre);

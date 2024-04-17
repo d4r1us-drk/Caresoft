@@ -1,57 +1,51 @@
-﻿
-using caresoft_core.CoreWebApi;
+﻿using caresoft_core.CoreWebApi;
 
-namespace caresoft_core_client
+namespace caresoft_core_client.Proveedor;
+
+public partial class FrmInventarioEliminarProveedor : Form
 {
-    public partial class frmInventarioEliminarProveedor : Form
+    private readonly Client _api;
+    public FrmInventarioEliminarProveedor(string baseUrl)
     {
-        private readonly Client API;
-        public frmInventarioEliminarProveedor(string baseURL)
+        _api = new Client(baseUrl);
+        InitializeComponent();
+        LoadProductos();
+    }
+
+    private void btnCancelar_Click(object sender, EventArgs e)
+    {
+        Close();
+    }
+    private async void LoadProductos()
+    {
+        try
         {
-            API = new(baseURL);
-            InitializeComponent();
+            var proveedores = await _api.ApiProveedorGetGetAsync();
+
+            dbgrdDatosEliminarProveedor.DataSource = proveedores;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error loading proveedores: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private async void btnEliminar_Click(object sender, EventArgs e)
+    {
+        var result = MessageBox.Show("Estas seguro que deseas eliminar el proveedor?", "Eliminar Proveedor", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        if (result != DialogResult.Yes) return;
+        try
+        {
+            foreach (DataGridViewRow row in dbgrdDatosEliminarProveedor.SelectedRows)
+            {
+                var producto = (ProveedorDto)row.DataBoundItem;
+                if (producto != null)
+                    await _api.ApiProveedorDeleteAsync(producto.RncProveedor);
+            }
             LoadProductos();
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
+        } catch (Exception ex)
         {
-            Close();
-        }
-        private async void LoadProductos()
-        {
-            try
-            {
-
-                var proveedores = await API.ApiProveedorGetGetAsync();
-
-                dataGridView1.DataSource = proveedores;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading proveedores: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private async void btnEliminar_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("Estas seguro que deseas eliminar el proveedor?", "Eliminar Proveedor", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                try
-                {
-                    foreach (DataGridViewRow row in dataGridView1.SelectedRows)
-                    {
-                        var producto = (ProveedorDto)row.DataBoundItem;
-                        if (producto != null)
-                            await API.ApiProveedorDeleteAsync(producto.RncProveedor);
-                    }
-                    LoadProductos();
-                } catch (Exception ex)
-                {
-                    MessageBox.Show($"Error deleting proveedor: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-            }
+            MessageBox.Show($"Error deleting proveedor: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

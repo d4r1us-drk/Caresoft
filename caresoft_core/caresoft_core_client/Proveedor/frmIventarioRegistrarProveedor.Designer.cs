@@ -29,20 +29,20 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioRegistrarProveedor));
-            lblLoteProducto = new Label();
+            lblCorreoProveedor = new Label();
             txtCorreoProveedor = new TextBox();
-            lblCostoProducto = new Label();
+            lblTelefonoProveedor = new Label();
             txtTelefonoProveedor = new TextBox();
-            lblDescripcionProducto = new Label();
+            lblDireccionProveedor = new Label();
             txtDireccionProveedor = new TextBox();
-            lblNombreProducto = new Label();
+            lblNombreProveedor = new Label();
             txtNombreProveedor = new TextBox();
             lblTitulo = new Label();
             btnRegistrar = new Button();
-            button1 = new Button();
+            btnCancelar = new Button();
             pnlInputDatos = new Panel();
             txtRncProveedor = new TextBox();
-            label1 = new Label();
+            lblRncProveedor = new Label();
             pnlTitulo = new Panel();
             pnlBotones = new Panel();
             pnlInputDatos.SuspendLayout();
@@ -50,67 +50,67 @@
             pnlBotones.SuspendLayout();
             SuspendLayout();
             // 
-            // lblLoteProducto
+            // lblCorreoProveedor
             // 
-            lblLoteProducto.AutoSize = true;
-            lblLoteProducto.Location = new Point(14, 342);
-            lblLoteProducto.Name = "lblLoteProducto";
-            lblLoteProducto.Size = new Size(43, 15);
-            lblLoteProducto.TabIndex = 23;
-            lblLoteProducto.Text = "Correo";
+            lblCorreoProveedor.AutoSize = true;
+            lblCorreoProveedor.Location = new Point(14, 255);
+            lblCorreoProveedor.Name = "lblCorreoProveedor";
+            lblCorreoProveedor.Size = new Size(43, 15);
+            lblCorreoProveedor.TabIndex = 23;
+            lblCorreoProveedor.Text = "Correo";
             // 
             // txtCorreoProveedor
             // 
-            txtCorreoProveedor.Location = new Point(121, 339);
+            txtCorreoProveedor.Location = new Point(121, 252);
             txtCorreoProveedor.Name = "txtCorreoProveedor";
             txtCorreoProveedor.Size = new Size(148, 23);
             txtCorreoProveedor.TabIndex = 22;
             // 
-            // lblCostoProducto
+            // lblTelefonoProveedor
             // 
-            lblCostoProducto.AutoSize = true;
-            lblCostoProducto.Location = new Point(14, 299);
-            lblCostoProducto.Name = "lblCostoProducto";
-            lblCostoProducto.Size = new Size(52, 15);
-            lblCostoProducto.TabIndex = 21;
-            lblCostoProducto.Text = "Teléfono";
+            lblTelefonoProveedor.AutoSize = true;
+            lblTelefonoProveedor.Location = new Point(14, 226);
+            lblTelefonoProveedor.Name = "lblTelefonoProveedor";
+            lblTelefonoProveedor.Size = new Size(52, 15);
+            lblTelefonoProveedor.TabIndex = 21;
+            lblTelefonoProveedor.Text = "Teléfono";
             // 
             // txtTelefonoProveedor
             // 
-            txtTelefonoProveedor.Location = new Point(121, 296);
+            txtTelefonoProveedor.Location = new Point(121, 223);
             txtTelefonoProveedor.Name = "txtTelefonoProveedor";
             txtTelefonoProveedor.Size = new Size(148, 23);
             txtTelefonoProveedor.TabIndex = 20;
             // 
-            // lblDescripcionProducto
+            // lblDireccionProveedor
             // 
-            lblDescripcionProducto.AutoSize = true;
-            lblDescripcionProducto.Location = new Point(14, 202);
-            lblDescripcionProducto.Name = "lblDescripcionProducto";
-            lblDescripcionProducto.Size = new Size(57, 15);
-            lblDescripcionProducto.TabIndex = 19;
-            lblDescripcionProducto.Text = "Direccion";
+            lblDireccionProveedor.AutoSize = true;
+            lblDireccionProveedor.Location = new Point(14, 141);
+            lblDireccionProveedor.Name = "lblDireccionProveedor";
+            lblDireccionProveedor.Size = new Size(57, 15);
+            lblDireccionProveedor.TabIndex = 19;
+            lblDireccionProveedor.Text = "Direccion";
             // 
             // txtDireccionProveedor
             // 
-            txtDireccionProveedor.Location = new Point(121, 199);
+            txtDireccionProveedor.Location = new Point(121, 138);
             txtDireccionProveedor.Multiline = true;
             txtDireccionProveedor.Name = "txtDireccionProveedor";
             txtDireccionProveedor.Size = new Size(148, 79);
             txtDireccionProveedor.TabIndex = 18;
             // 
-            // lblNombreProducto
+            // lblNombreProveedor
             // 
-            lblNombreProducto.AutoSize = true;
-            lblNombreProducto.Location = new Point(14, 163);
-            lblNombreProducto.Name = "lblNombreProducto";
-            lblNombreProducto.Size = new Size(51, 15);
-            lblNombreProducto.TabIndex = 17;
-            lblNombreProducto.Text = "Nombre";
+            lblNombreProveedor.AutoSize = true;
+            lblNombreProveedor.Location = new Point(14, 112);
+            lblNombreProveedor.Name = "lblNombreProveedor";
+            lblNombreProveedor.Size = new Size(51, 15);
+            lblNombreProveedor.TabIndex = 17;
+            lblNombreProveedor.Text = "Nombre";
             // 
             // txtNombreProveedor
             // 
-            txtNombreProveedor.Location = new Point(121, 160);
+            txtNombreProveedor.Location = new Point(121, 109);
             txtNombreProveedor.Name = "txtNombreProveedor";
             txtNombreProveedor.Size = new Size(148, 23);
             txtNombreProveedor.TabIndex = 16;
@@ -136,33 +136,33 @@
             btnRegistrar.UseVisualStyleBackColor = true;
             btnRegistrar.Click += btnRegistrar_Click;
             // 
-            // button1
+            // btnCancelar
             // 
-            button1.Dock = DockStyle.Left;
-            button1.Location = new Point(0, 0);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 32);
-            button1.TabIndex = 28;
-            button1.Text = "Cancelar";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            btnCancelar.Dock = DockStyle.Left;
+            btnCancelar.Location = new Point(0, 0);
+            btnCancelar.Name = "btnCancelar";
+            btnCancelar.Size = new Size(75, 32);
+            btnCancelar.TabIndex = 28;
+            btnCancelar.Text = "Cancelar";
+            btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.Click += btnCancelar_Click;
             // 
             // pnlInputDatos
             // 
             pnlInputDatos.Controls.Add(txtRncProveedor);
-            pnlInputDatos.Controls.Add(label1);
+            pnlInputDatos.Controls.Add(lblRncProveedor);
             pnlInputDatos.Controls.Add(txtNombreProveedor);
-            pnlInputDatos.Controls.Add(lblNombreProducto);
+            pnlInputDatos.Controls.Add(lblNombreProveedor);
             pnlInputDatos.Controls.Add(txtDireccionProveedor);
-            pnlInputDatos.Controls.Add(lblDescripcionProducto);
+            pnlInputDatos.Controls.Add(lblDireccionProveedor);
             pnlInputDatos.Controls.Add(txtTelefonoProveedor);
-            pnlInputDatos.Controls.Add(lblCostoProducto);
-            pnlInputDatos.Controls.Add(lblLoteProducto);
+            pnlInputDatos.Controls.Add(lblTelefonoProveedor);
+            pnlInputDatos.Controls.Add(lblCorreoProveedor);
             pnlInputDatos.Controls.Add(txtCorreoProveedor);
             pnlInputDatos.Dock = DockStyle.Fill;
             pnlInputDatos.Location = new Point(0, 0);
             pnlInputDatos.Name = "pnlInputDatos";
-            pnlInputDatos.Size = new Size(291, 466);
+            pnlInputDatos.Size = new Size(291, 326);
             pnlInputDatos.TabIndex = 29;
             // 
             // txtRncProveedor
@@ -171,15 +171,16 @@
             txtRncProveedor.Name = "txtRncProveedor";
             txtRncProveedor.Size = new Size(148, 23);
             txtRncProveedor.TabIndex = 24;
+            txtRncProveedor.KeyPress += txtRncProveedor_KeyPress;
             // 
-            // label1
+            // lblRncProveedor
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(14, 83);
-            label1.Name = "label1";
-            label1.Size = new Size(31, 15);
-            label1.TabIndex = 25;
-            label1.Text = "RNC";
+            lblRncProveedor.AutoSize = true;
+            lblRncProveedor.Location = new Point(14, 83);
+            lblRncProveedor.Name = "lblRncProveedor";
+            lblRncProveedor.Size = new Size(31, 15);
+            lblRncProveedor.TabIndex = 25;
+            lblRncProveedor.Text = "RNC";
             // 
             // pnlTitulo
             // 
@@ -193,9 +194,9 @@
             // pnlBotones
             // 
             pnlBotones.Controls.Add(btnRegistrar);
-            pnlBotones.Controls.Add(button1);
+            pnlBotones.Controls.Add(btnCancelar);
             pnlBotones.Dock = DockStyle.Bottom;
-            pnlBotones.Location = new Point(0, 434);
+            pnlBotones.Location = new Point(0, 294);
             pnlBotones.Name = "pnlBotones";
             pnlBotones.Size = new Size(291, 32);
             pnlBotones.TabIndex = 31;
@@ -204,7 +205,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(291, 466);
+            ClientSize = new Size(291, 326);
             Controls.Add(pnlBotones);
             Controls.Add(pnlTitulo);
             Controls.Add(pnlInputDatos);
@@ -223,21 +224,21 @@
         }
 
         #endregion
-        private Label lblLoteProducto;
+        private Label lblCorreoProveedor;
         private TextBox txtCorreoProveedor;
-        private Label lblCostoProducto;
+        private Label lblTelefonoProveedor;
         private TextBox txtTelefonoProveedor;
-        private Label lblDescripcionProducto;
+        private Label lblDireccionProveedor;
         private TextBox txtDireccionProveedor;
-        private Label lblNombreProducto;
+        private Label lblNombreProveedor;
         private TextBox txtNombreProveedor;
         private Label lblTitulo;
         private Button btnRegistrar;
-        private Button button1;
+        private Button btnCancelar;
         private Panel pnlInputDatos;
         private Panel pnlTitulo;
         private Panel pnlBotones;
         private TextBox txtRncProveedor;
-        private Label label1;
+        private Label lblRncProveedor;
     }
 }

@@ -29,58 +29,58 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServiciosActualizarServicio));
-            dbgrdServicios = new DataGridView();
+            dbgrdDatosServicios = new DataGridView();
             pnlDatos = new Panel();
             txtCodigoServicio = new TextBox();
-            label1 = new Label();
-            listBoxTipoServicios = new ListBox();
-            lblProveedorProducto = new Label();
-            txtNombre = new TextBox();
-            lblNombreProducto = new Label();
-            txtDescripcion = new TextBox();
-            lblDescripcionProducto = new Label();
-            txtCosto = new TextBox();
-            lblCostoProducto = new Label();
+            lblCodigoServicio = new Label();
+            lstbxTipoServicios = new ListBox();
+            lblTipoServicio = new Label();
+            txtNombreServicio = new TextBox();
+            lblNombreServicio = new Label();
+            txtDescripcionServicio = new TextBox();
+            lblDescripcionServicio = new Label();
+            txtCostoServicio = new TextBox();
+            lblCostoServicio = new Label();
             pnlBotonActualizar = new Panel();
             btnActualizar = new Button();
             pnlTitulos = new Panel();
             lblTituloDatos = new Label();
-            lblProductos = new Label();
+            lblServicios = new Label();
             btnCancelar = new Button();
             pnlBotones = new Panel();
             btnCargarDatos = new Button();
-            ((System.ComponentModel.ISupportInitialize)dbgrdServicios).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dbgrdDatosServicios).BeginInit();
             pnlDatos.SuspendLayout();
             pnlBotonActualizar.SuspendLayout();
             pnlTitulos.SuspendLayout();
             pnlBotones.SuspendLayout();
             SuspendLayout();
             // 
-            // dbgrdServicios
+            // dbgrdDatosServicios
             // 
-            dbgrdServicios.AllowUserToAddRows = false;
-            dbgrdServicios.AllowUserToDeleteRows = false;
-            dbgrdServicios.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dbgrdServicios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dbgrdServicios.Dock = DockStyle.Fill;
-            dbgrdServicios.Location = new Point(300, 55);
-            dbgrdServicios.Name = "dbgrdServicios";
-            dbgrdServicios.ReadOnly = true;
-            dbgrdServicios.Size = new Size(500, 395);
-            dbgrdServicios.TabIndex = 7;
+            dbgrdDatosServicios.AllowUserToAddRows = false;
+            dbgrdDatosServicios.AllowUserToDeleteRows = false;
+            dbgrdDatosServicios.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dbgrdDatosServicios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dbgrdDatosServicios.Dock = DockStyle.Fill;
+            dbgrdDatosServicios.Location = new Point(300, 55);
+            dbgrdDatosServicios.Name = "dbgrdDatosServicios";
+            dbgrdDatosServicios.ReadOnly = true;
+            dbgrdDatosServicios.Size = new Size(500, 395);
+            dbgrdDatosServicios.TabIndex = 7;
             // 
             // pnlDatos
             // 
             pnlDatos.Controls.Add(txtCodigoServicio);
-            pnlDatos.Controls.Add(label1);
-            pnlDatos.Controls.Add(listBoxTipoServicios);
-            pnlDatos.Controls.Add(lblProveedorProducto);
-            pnlDatos.Controls.Add(txtNombre);
-            pnlDatos.Controls.Add(lblNombreProducto);
-            pnlDatos.Controls.Add(txtDescripcion);
-            pnlDatos.Controls.Add(lblDescripcionProducto);
-            pnlDatos.Controls.Add(txtCosto);
-            pnlDatos.Controls.Add(lblCostoProducto);
+            pnlDatos.Controls.Add(lblCodigoServicio);
+            pnlDatos.Controls.Add(lstbxTipoServicios);
+            pnlDatos.Controls.Add(lblTipoServicio);
+            pnlDatos.Controls.Add(txtNombreServicio);
+            pnlDatos.Controls.Add(lblNombreServicio);
+            pnlDatos.Controls.Add(txtDescripcionServicio);
+            pnlDatos.Controls.Add(lblDescripcionServicio);
+            pnlDatos.Controls.Add(txtCostoServicio);
+            pnlDatos.Controls.Add(lblCostoServicio);
             pnlDatos.Controls.Add(pnlBotonActualizar);
             pnlDatos.Dock = DockStyle.Left;
             pnlDatos.Location = new Point(0, 55);
@@ -96,81 +96,81 @@
             txtCodigoServicio.Size = new Size(148, 23);
             txtCodigoServicio.TabIndex = 52;
             // 
-            // label1
+            // lblCodigoServicio
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(23, 13);
-            label1.Name = "label1";
-            label1.Size = new Size(90, 15);
-            label1.TabIndex = 53;
-            label1.Text = "Código Servicio";
+            lblCodigoServicio.AutoSize = true;
+            lblCodigoServicio.Location = new Point(23, 13);
+            lblCodigoServicio.Name = "lblCodigoServicio";
+            lblCodigoServicio.Size = new Size(90, 15);
+            lblCodigoServicio.TabIndex = 53;
+            lblCodigoServicio.Text = "Código Servicio";
             // 
-            // listBoxTipoServicios
+            // lstbxTipoServicios
             // 
-            listBoxTipoServicios.FormattingEnabled = true;
-            listBoxTipoServicios.ItemHeight = 15;
-            listBoxTipoServicios.Location = new Point(130, 182);
-            listBoxTipoServicios.Name = "listBoxTipoServicios";
-            listBoxTipoServicios.Size = new Size(148, 124);
-            listBoxTipoServicios.TabIndex = 51;
+            lstbxTipoServicios.FormattingEnabled = true;
+            lstbxTipoServicios.ItemHeight = 15;
+            lstbxTipoServicios.Location = new Point(130, 182);
+            lstbxTipoServicios.Name = "lstbxTipoServicios";
+            lstbxTipoServicios.Size = new Size(148, 124);
+            lstbxTipoServicios.TabIndex = 51;
             // 
-            // lblProveedorProducto
+            // lblTipoServicio
             // 
-            lblProveedorProducto.AutoSize = true;
-            lblProveedorProducto.Location = new Point(23, 182);
-            lblProveedorProducto.Name = "lblProveedorProducto";
-            lblProveedorProducto.Size = new Size(73, 15);
-            lblProveedorProducto.TabIndex = 50;
-            lblProveedorProducto.Text = "Tipo servicio";
+            lblTipoServicio.AutoSize = true;
+            lblTipoServicio.Location = new Point(23, 182);
+            lblTipoServicio.Name = "lblTipoServicio";
+            lblTipoServicio.Size = new Size(73, 15);
+            lblTipoServicio.TabIndex = 50;
+            lblTipoServicio.Text = "Tipo servicio";
             // 
-            // txtNombre
+            // txtNombreServicio
             // 
-            txtNombre.Location = new Point(130, 39);
-            txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(148, 23);
-            txtNombre.TabIndex = 44;
+            txtNombreServicio.Location = new Point(130, 39);
+            txtNombreServicio.Name = "txtNombreServicio";
+            txtNombreServicio.Size = new Size(148, 23);
+            txtNombreServicio.TabIndex = 44;
             // 
-            // lblNombreProducto
+            // lblNombreServicio
             // 
-            lblNombreProducto.AutoSize = true;
-            lblNombreProducto.Location = new Point(23, 42);
-            lblNombreProducto.Name = "lblNombreProducto";
-            lblNombreProducto.Size = new Size(51, 15);
-            lblNombreProducto.TabIndex = 45;
-            lblNombreProducto.Text = "Nombre";
+            lblNombreServicio.AutoSize = true;
+            lblNombreServicio.Location = new Point(23, 42);
+            lblNombreServicio.Name = "lblNombreServicio";
+            lblNombreServicio.Size = new Size(51, 15);
+            lblNombreServicio.TabIndex = 45;
+            lblNombreServicio.Text = "Nombre";
             // 
-            // txtDescripcion
+            // txtDescripcionServicio
             // 
-            txtDescripcion.Location = new Point(130, 68);
-            txtDescripcion.Multiline = true;
-            txtDescripcion.Name = "txtDescripcion";
-            txtDescripcion.Size = new Size(148, 79);
-            txtDescripcion.TabIndex = 46;
+            txtDescripcionServicio.Location = new Point(130, 68);
+            txtDescripcionServicio.Multiline = true;
+            txtDescripcionServicio.Name = "txtDescripcionServicio";
+            txtDescripcionServicio.Size = new Size(148, 79);
+            txtDescripcionServicio.TabIndex = 46;
             // 
-            // lblDescripcionProducto
+            // lblDescripcionServicio
             // 
-            lblDescripcionProducto.AutoSize = true;
-            lblDescripcionProducto.Location = new Point(23, 71);
-            lblDescripcionProducto.Name = "lblDescripcionProducto";
-            lblDescripcionProducto.Size = new Size(69, 15);
-            lblDescripcionProducto.TabIndex = 47;
-            lblDescripcionProducto.Text = "Descripción";
+            lblDescripcionServicio.AutoSize = true;
+            lblDescripcionServicio.Location = new Point(23, 71);
+            lblDescripcionServicio.Name = "lblDescripcionServicio";
+            lblDescripcionServicio.Size = new Size(69, 15);
+            lblDescripcionServicio.TabIndex = 47;
+            lblDescripcionServicio.Text = "Descripción";
             // 
-            // txtCosto
+            // txtCostoServicio
             // 
-            txtCosto.Location = new Point(130, 153);
-            txtCosto.Name = "txtCosto";
-            txtCosto.Size = new Size(148, 23);
-            txtCosto.TabIndex = 48;
+            txtCostoServicio.Location = new Point(130, 153);
+            txtCostoServicio.Name = "txtCostoServicio";
+            txtCostoServicio.Size = new Size(148, 23);
+            txtCostoServicio.TabIndex = 48;
             // 
-            // lblCostoProducto
+            // lblCostoServicio
             // 
-            lblCostoProducto.AutoSize = true;
-            lblCostoProducto.Location = new Point(23, 156);
-            lblCostoProducto.Name = "lblCostoProducto";
-            lblCostoProducto.Size = new Size(38, 15);
-            lblCostoProducto.TabIndex = 49;
-            lblCostoProducto.Text = "Costo";
+            lblCostoServicio.AutoSize = true;
+            lblCostoServicio.Location = new Point(23, 156);
+            lblCostoServicio.Name = "lblCostoServicio";
+            lblCostoServicio.Size = new Size(38, 15);
+            lblCostoServicio.TabIndex = 49;
+            lblCostoServicio.Text = "Costo";
             // 
             // pnlBotonActualizar
             // 
@@ -195,7 +195,7 @@
             // pnlTitulos
             // 
             pnlTitulos.Controls.Add(lblTituloDatos);
-            pnlTitulos.Controls.Add(lblProductos);
+            pnlTitulos.Controls.Add(lblServicios);
             pnlTitulos.Dock = DockStyle.Top;
             pnlTitulos.Location = new Point(0, 0);
             pnlTitulos.Name = "pnlTitulos";
@@ -212,15 +212,15 @@
             lblTituloDatos.TabIndex = 0;
             lblTituloDatos.Text = "Datos";
             // 
-            // lblProductos
+            // lblServicios
             // 
-            lblProductos.AutoSize = true;
-            lblProductos.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblProductos.Location = new Point(447, 18);
-            lblProductos.Name = "lblProductos";
-            lblProductos.Size = new Size(207, 25);
-            lblProductos.TabIndex = 1;
-            lblProductos.Text = "Servicios Registratods";
+            lblServicios.AutoSize = true;
+            lblServicios.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblServicios.Location = new Point(447, 18);
+            lblServicios.Name = "lblServicios";
+            lblServicios.Size = new Size(200, 25);
+            lblServicios.TabIndex = 1;
+            lblServicios.Text = "Servicios Registrados";
             // 
             // btnCancelar
             // 
@@ -260,13 +260,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(pnlBotones);
-            Controls.Add(dbgrdServicios);
+            Controls.Add(dbgrdDatosServicios);
             Controls.Add(pnlDatos);
             Controls.Add(pnlTitulos);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmServiciosActualizarServicio";
             Text = "Actualizar Servicio";
-            ((System.ComponentModel.ISupportInitialize)dbgrdServicios).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dbgrdDatosServicios).EndInit();
             pnlDatos.ResumeLayout(false);
             pnlDatos.PerformLayout();
             pnlBotonActualizar.ResumeLayout(false);
@@ -278,23 +278,23 @@
 
         #endregion
 
-        private DataGridView dbgrdServicios;
+        private DataGridView dbgrdDatosServicios;
         private Panel pnlDatos;
         private Panel pnlBotonActualizar;
         private Button btnActualizar;
         private Panel pnlTitulos;
         private Label lblTituloDatos;
-        private Label lblProductos;
+        private Label lblServicios;
         private TextBox txtCodigoServicio;
-        private Label label1;
-        private ListBox listBoxTipoServicios;
-        private Label lblProveedorProducto;
-        private TextBox txtNombre;
-        private Label lblNombreProducto;
-        private TextBox txtDescripcion;
-        private Label lblDescripcionProducto;
-        private TextBox txtCosto;
-        private Label lblCostoProducto;
+        private Label lblCodigoServicio;
+        private ListBox lstbxTipoServicios;
+        private Label lblTipoServicio;
+        private TextBox txtNombreServicio;
+        private Label lblNombreServicio;
+        private TextBox txtDescripcionServicio;
+        private Label lblDescripcionServicio;
+        private TextBox txtCostoServicio;
+        private Label lblCostoServicio;
         private Button btnCancelar;
         private Panel pnlBotones;
         private Button btnCargarDatos;

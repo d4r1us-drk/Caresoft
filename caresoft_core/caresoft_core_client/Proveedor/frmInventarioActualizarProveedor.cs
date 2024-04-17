@@ -1,96 +1,101 @@
 ﻿using caresoft_core.CoreWebApi;
-using Newtonsoft.Json;
-using System.Text;
 
-namespace caresoft_core_client
+namespace caresoft_core_client.Proveedor;
+
+public partial class frmInventarioActualizarProveedor : Form
 {
-    public partial class frmInventarioActualizarProveedor : Form
+    private readonly Client _api;
+
+    public frmInventarioActualizarProveedor(string baseUrl)
     {
-        private readonly Client API;
+        _api = new Client(baseUrl);
+        InitializeComponent();
+        LoadProveedor();
+        ToggleControls();
+    }
 
-        public frmInventarioActualizarProveedor(string baseUrl)
+    private async void LoadProveedor()
+    {
+        try
         {
-            API = new Client(baseUrl);
-            InitializeComponent();
+            var proveedores = await _api.ApiProveedorGetGetAsync();
+
+            dbgrdProveedor.DataSource = proveedores;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error al cargar la lista de proveedores: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private void btnSalir_Click(object sender, EventArgs e)
+    {
+        Close();
+    }
+
+    private void btnCargarDatos_Click(object sender, EventArgs e)
+    {
+        if (dbgrdProveedor.SelectedRows.Count == 0)
+        {
+            MessageBox.Show("Porfavor selecciona un proveedor a actualizar.", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
+        }
+
+        var selectedProveedor = (ProveedorDto)dbgrdProveedor.SelectedRows[0].DataBoundItem;
+
+        txtRncProveedor.Text = selectedProveedor.RncProveedor.ToString();
+        txtNombreProveedor.Text = selectedProveedor.Nombre;
+        txtDireccionProveedor.Text = selectedProveedor.Direccion;
+        txtTelefonoProveedor.Text = selectedProveedor.Telefono;
+        txtCorreoProveedor.Text = selectedProveedor.Correo;
+        ToggleControls();
+    }
+
+    private async void btnActualizar_Click(object sender, EventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(txtRncProveedor.Text))
+        {
+            MessageBox.Show("Porfavor selecciona un proveedor a actualizar.", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
+        }
+
+        var proveedor = new ProveedorDto
+        {
+            RncProveedor = int.Parse(txtRncProveedor.Text),
+            Nombre = txtNombreProveedor.Text,
+            Direccion = txtDireccionProveedor.Text,
+            Telefono = txtTelefonoProveedor.Text,
+            Correo = txtCorreoProveedor.Text
+        };
+
+        try
+        {
+            await _api.ApiProveedorUpdateAsync(proveedor.RncProveedor, proveedor.Nombre, proveedor.Direccion, proveedor.Telefono, proveedor.Correo);
+            MessageBox.Show("Proveedor actualizado correctamente.", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ClearFields();
             LoadProveedor();
+            ToggleControls();
         }
-
-        private async void LoadProveedor()
+        catch (Exception ex)
         {
-                try
-                {
-
-                    var proveedores = await API.ApiProveedorGetGetAsync();
-
-                    dbgrdProductos.DataSource = proveedores;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error loading proveedores: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            MessageBox.Show($"Error al actualizar un proveedor: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+    }
 
-     
+    private void ClearFields()
+    {
+        txtRncProveedor.Clear();
+        txtNombreProveedor.Clear();
+        txtDireccionProveedor.Clear();
+        txtTelefonoProveedor.Clear();
+        txtCorreoProveedor.Clear();
+    }
 
-        private void btnSalir_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private async void btnCargarDatos_Click(object sender, EventArgs e)
-        {
-            if (dbgrdProductos.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Please select a proveedor to update.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            var selectedProduct = (ProveedorDto)dbgrdProductos.SelectedRows[0].DataBoundItem;
-
-            txtRncProveedor.Text = selectedProduct.RncProveedor.ToString();
-            txtNombreProveedor.Text = selectedProduct.Nombre;
-            txtDireccionProveedor.Text = selectedProduct.Direccion;
-            txtTelefonoProveedor.Text = selectedProduct.Telefono;
-            txtCorreoProveedor.Text = selectedProduct.Correo;
-        }
-
-        private async void btnActualizar_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtRncProveedor.Text))
-            {
-                MessageBox.Show("Please select a proveedor to update.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            var proveedor = new ProveedorDto
-            {
-                RncProveedor = int.Parse(txtRncProveedor.Text),
-                Nombre = txtNombreProveedor.Text,
-                Direccion = txtDireccionProveedor.Text,
-                Telefono = txtTelefonoProveedor.Text,
-                Correo = txtCorreoProveedor.Text
-            };
-
-                try
-                {
-                await API.ApiProveedorUpdateAsync(proveedor.RncProveedor, proveedor.Nombre, proveedor.Direccion, proveedor.Telefono, proveedor.Correo);
-                    MessageBox.Show("proveedor updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ClearFields();
-                    LoadProveedor();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error updating proveedor: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-        }
-
-        private void ClearFields()
-        {
-            txtRncProveedor.Clear();
-            txtNombreProveedor.Clear();
-            txtDireccionProveedor.Clear();
-            txtTelefonoProveedor.Clear();
-            txtCorreoProveedor.Clear();
-        }
+    private void ToggleControls()
+    {
+        txtNombreProveedor.Enabled = !txtNombreProveedor.Enabled;
+        txtDireccionProveedor.Enabled = !txtDireccionProveedor.Enabled;
+        txtTelefonoProveedor.Enabled = !txtTelefonoProveedor.Enabled;
+        txtCorreoProveedor.Enabled = !txtCorreoProveedor.Enabled;
     }
 }
