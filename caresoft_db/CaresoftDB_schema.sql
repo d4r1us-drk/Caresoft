@@ -2598,7 +2598,7 @@ BEGIN
         SET subtotal = subtotal + costoIngreso;
         UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
         
-        SET total = total + costo;
+        SET total = total + costoIngreso;
         UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
     END IF;
 
@@ -2610,7 +2610,7 @@ BEGIN
         SET subtotal = subtotal + costoConsulta;
         UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
 
-        SET total = total + costo;
+        SET total = total + costoIngreso;
         UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
     END IF;
 END //
