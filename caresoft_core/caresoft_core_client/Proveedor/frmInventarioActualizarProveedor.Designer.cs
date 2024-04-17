@@ -104,13 +104,13 @@ partial class frmInventarioActualizarProveedor
         pnlDatos.Dock = DockStyle.Left;
         pnlDatos.Location = new Point(0, 55);
         pnlDatos.Name = "pnlDatos";
-        pnlDatos.Size = new Size(300, 476);
+        pnlDatos.Size = new Size(300, 369);
         pnlDatos.TabIndex = 1;
         // 
         // txtRncProveedor
         // 
         txtRncProveedor.Enabled = false;
-        txtRncProveedor.Location = new Point(129, 87);
+        txtRncProveedor.Location = new Point(130, 46);
         txtRncProveedor.Name = "txtRncProveedor";
         txtRncProveedor.Size = new Size(148, 23);
         txtRncProveedor.TabIndex = 15;
@@ -118,7 +118,7 @@ partial class frmInventarioActualizarProveedor
         // lblRncProveedor
         // 
         lblRncProveedor.AutoSize = true;
-        lblRncProveedor.Location = new Point(22, 90);
+        lblRncProveedor.Location = new Point(23, 49);
         lblRncProveedor.Name = "lblRncProveedor";
         lblRncProveedor.Size = new Size(84, 15);
         lblRncProveedor.TabIndex = 14;
@@ -127,7 +127,7 @@ partial class frmInventarioActualizarProveedor
         // lblCorreoProveedor
         // 
         lblCorreoProveedor.AutoSize = true;
-        lblCorreoProveedor.Location = new Point(22, 314);
+        lblCorreoProveedor.Location = new Point(23, 273);
         lblCorreoProveedor.Name = "lblCorreoProveedor";
         lblCorreoProveedor.Size = new Size(43, 15);
         lblCorreoProveedor.TabIndex = 11;
@@ -135,7 +135,7 @@ partial class frmInventarioActualizarProveedor
         // 
         // txtCorreoProveedor
         // 
-        txtCorreoProveedor.Location = new Point(129, 311);
+        txtCorreoProveedor.Location = new Point(130, 270);
         txtCorreoProveedor.Name = "txtCorreoProveedor";
         txtCorreoProveedor.Size = new Size(148, 23);
         txtCorreoProveedor.TabIndex = 10;
@@ -143,7 +143,7 @@ partial class frmInventarioActualizarProveedor
         // lblTelefonoProveedor
         // 
         lblTelefonoProveedor.AutoSize = true;
-        lblTelefonoProveedor.Location = new Point(22, 271);
+        lblTelefonoProveedor.Location = new Point(23, 230);
         lblTelefonoProveedor.Name = "lblTelefonoProveedor";
         lblTelefonoProveedor.Size = new Size(52, 15);
         lblTelefonoProveedor.TabIndex = 9;
@@ -151,7 +151,7 @@ partial class frmInventarioActualizarProveedor
         // 
         // txtTelefonoProveedor
         // 
-        txtTelefonoProveedor.Location = new Point(129, 268);
+        txtTelefonoProveedor.Location = new Point(130, 227);
         txtTelefonoProveedor.Name = "txtTelefonoProveedor";
         txtTelefonoProveedor.Size = new Size(148, 23);
         txtTelefonoProveedor.TabIndex = 8;
@@ -159,7 +159,7 @@ partial class frmInventarioActualizarProveedor
         // lblDireccionProveedor
         // 
         lblDireccionProveedor.AutoSize = true;
-        lblDireccionProveedor.Location = new Point(22, 174);
+        lblDireccionProveedor.Location = new Point(23, 133);
         lblDireccionProveedor.Name = "lblDireccionProveedor";
         lblDireccionProveedor.Size = new Size(57, 15);
         lblDireccionProveedor.TabIndex = 7;
@@ -167,7 +167,7 @@ partial class frmInventarioActualizarProveedor
         // 
         // txtDireccionProveedor
         // 
-        txtDireccionProveedor.Location = new Point(129, 171);
+        txtDireccionProveedor.Location = new Point(130, 130);
         txtDireccionProveedor.Multiline = true;
         txtDireccionProveedor.Name = "txtDireccionProveedor";
         txtDireccionProveedor.Size = new Size(148, 79);
@@ -176,7 +176,7 @@ partial class frmInventarioActualizarProveedor
         // lblNombreProveedor
         // 
         lblNombreProveedor.AutoSize = true;
-        lblNombreProveedor.Location = new Point(22, 134);
+        lblNombreProveedor.Location = new Point(23, 93);
         lblNombreProveedor.Name = "lblNombreProveedor";
         lblNombreProveedor.Size = new Size(51, 15);
         lblNombreProveedor.TabIndex = 5;
@@ -184,7 +184,7 @@ partial class frmInventarioActualizarProveedor
         // 
         // txtNombreProveedor
         // 
-        txtNombreProveedor.Location = new Point(129, 131);
+        txtNombreProveedor.Location = new Point(130, 90);
         txtNombreProveedor.Name = "txtNombreProveedor";
         txtNombreProveedor.Size = new Size(148, 23);
         txtNombreProveedor.TabIndex = 4;
@@ -193,7 +193,7 @@ partial class frmInventarioActualizarProveedor
         // 
         pnlBotonActualizar.Controls.Add(btnActualizar);
         pnlBotonActualizar.Dock = DockStyle.Bottom;
-        pnlBotonActualizar.Location = new Point(0, 449);
+        pnlBotonActualizar.Location = new Point(0, 342);
         pnlBotonActualizar.Name = "pnlBotonActualizar";
         pnlBotonActualizar.Size = new Size(300, 27);
         pnlBotonActualizar.TabIndex = 3;
@@ -217,7 +217,7 @@ partial class frmInventarioActualizarProveedor
         pnlConsulta.Dock = DockStyle.Fill;
         pnlConsulta.Location = new Point(300, 55);
         pnlConsulta.Name = "pnlConsulta";
-        pnlConsulta.Size = new Size(500, 476);
+        pnlConsulta.Size = new Size(500, 369);
         pnlConsulta.TabIndex = 2;
         // 
         // pnlBotones
@@ -225,7 +225,7 @@ partial class frmInventarioActualizarProveedor
         pnlBotones.Controls.Add(btnCancelar);
         pnlBotones.Controls.Add(btnCargarDatos);
         pnlBotones.Dock = DockStyle.Bottom;
-        pnlBotones.Location = new Point(0, 449);
+        pnlBotones.Location = new Point(0, 342);
         pnlBotones.Name = "pnlBotones";
         pnlBotones.Size = new Size(500, 27);
         pnlBotones.TabIndex = 1;
@@ -262,7 +262,7 @@ partial class frmInventarioActualizarProveedor
         dbgrdProveedor.Location = new Point(0, 0);
         dbgrdProveedor.Name = "dbgrdProveedor";
         dbgrdProveedor.ReadOnly = true;
-        dbgrdProveedor.Size = new Size(500, 476);
+        dbgrdProveedor.Size = new Size(500, 369);
         dbgrdProveedor.TabIndex = 0;
         // 
         // frmInventarioActualizarProveedor
@@ -270,7 +270,7 @@ partial class frmInventarioActualizarProveedor
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         CancelButton = btnCancelar;
-        ClientSize = new Size(800, 531);
+        ClientSize = new Size(800, 424);
         Controls.Add(pnlConsulta);
         Controls.Add(pnlDatos);
         Controls.Add(pnlTitulos);

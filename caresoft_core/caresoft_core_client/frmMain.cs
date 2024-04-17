@@ -7,13 +7,13 @@ namespace caresoft_core_client
     public partial class frmMain : Form
     {
         private frmLogin loginForm;
-        private frmInventarioRegistrarProducto frmInventarioRegistrarProducto;
+        private frmInventarioAñadirProducto frmInventarioRegistrarProducto;
         private frmInventarioActualizarProducto frmInventarioActualizarProducto;
         private frmInventarioEliminarProducto frmInventarioEliminarProducto;
         private frmInventarioConsultaProductos frmInventarioConsultaProductos;
 
 
-        private frmInventarioRegistrarProveedor frmInventarioRegistrarProveedor;
+        private frmInventarioAñadirProveedor frmInventarioRegistrarProveedor;
         private frmInventarioActualizarProveedor frmInventarioActualizarProveedor;
         private frmInventarioEliminarProveedor frmInventarioEliminarProveedor;
         private frmInventarioConsultaProveedor frmInventarioConsultaProveedores;

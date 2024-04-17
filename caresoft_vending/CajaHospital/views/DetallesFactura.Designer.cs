@@ -56,11 +56,11 @@
             // 
             this.lblFactura.AutoSize = true;
             this.lblFactura.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFactura.Location = new System.Drawing.Point(214, 45);
+            this.lblFactura.Location = new System.Drawing.Point(175, 39);
             this.lblFactura.Name = "lblFactura";
-            this.lblFactura.Size = new System.Drawing.Size(100, 37);
+            this.lblFactura.Size = new System.Drawing.Size(713, 37);
             this.lblFactura.TabIndex = 1;
-            this.lblFactura.Text = "label1";
+            this.lblFactura.Text = "Pagar la factura: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
             // 
             // dgvProductos
             // 
@@ -132,6 +132,7 @@
             this.btnPagar.TabIndex = 9;
             this.btnPagar.Text = "Registrar el pago";
             this.btnPagar.UseVisualStyleBackColor = true;
+            this.btnPagar.Click += new System.EventHandler(this.btnPagar_Click);
             // 
             // frmDetallesFactura
             // 

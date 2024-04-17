@@ -91,7 +91,7 @@
             // txtCodigoServicio
             // 
             txtCodigoServicio.Enabled = false;
-            txtCodigoServicio.Location = new Point(130, 10);
+            txtCodigoServicio.Location = new Point(130, 38);
             txtCodigoServicio.Name = "txtCodigoServicio";
             txtCodigoServicio.Size = new Size(148, 23);
             txtCodigoServicio.TabIndex = 52;
@@ -99,7 +99,7 @@
             // lblCodigoServicio
             // 
             lblCodigoServicio.AutoSize = true;
-            lblCodigoServicio.Location = new Point(23, 13);
+            lblCodigoServicio.Location = new Point(23, 41);
             lblCodigoServicio.Name = "lblCodigoServicio";
             lblCodigoServicio.Size = new Size(90, 15);
             lblCodigoServicio.TabIndex = 53;
@@ -109,7 +109,7 @@
             // 
             lstbxTipoServicios.FormattingEnabled = true;
             lstbxTipoServicios.ItemHeight = 15;
-            lstbxTipoServicios.Location = new Point(130, 182);
+            lstbxTipoServicios.Location = new Point(130, 210);
             lstbxTipoServicios.Name = "lstbxTipoServicios";
             lstbxTipoServicios.Size = new Size(148, 124);
             lstbxTipoServicios.TabIndex = 51;
@@ -117,7 +117,7 @@
             // lblTipoServicio
             // 
             lblTipoServicio.AutoSize = true;
-            lblTipoServicio.Location = new Point(23, 182);
+            lblTipoServicio.Location = new Point(23, 210);
             lblTipoServicio.Name = "lblTipoServicio";
             lblTipoServicio.Size = new Size(73, 15);
             lblTipoServicio.TabIndex = 50;
@@ -125,7 +125,7 @@
             // 
             // txtNombreServicio
             // 
-            txtNombreServicio.Location = new Point(130, 39);
+            txtNombreServicio.Location = new Point(130, 67);
             txtNombreServicio.Name = "txtNombreServicio";
             txtNombreServicio.Size = new Size(148, 23);
             txtNombreServicio.TabIndex = 44;
@@ -133,7 +133,7 @@
             // lblNombreServicio
             // 
             lblNombreServicio.AutoSize = true;
-            lblNombreServicio.Location = new Point(23, 42);
+            lblNombreServicio.Location = new Point(23, 70);
             lblNombreServicio.Name = "lblNombreServicio";
             lblNombreServicio.Size = new Size(51, 15);
             lblNombreServicio.TabIndex = 45;
@@ -141,7 +141,7 @@
             // 
             // txtDescripcionServicio
             // 
-            txtDescripcionServicio.Location = new Point(130, 68);
+            txtDescripcionServicio.Location = new Point(130, 96);
             txtDescripcionServicio.Multiline = true;
             txtDescripcionServicio.Name = "txtDescripcionServicio";
             txtDescripcionServicio.Size = new Size(148, 79);
@@ -150,7 +150,7 @@
             // lblDescripcionServicio
             // 
             lblDescripcionServicio.AutoSize = true;
-            lblDescripcionServicio.Location = new Point(23, 71);
+            lblDescripcionServicio.Location = new Point(23, 99);
             lblDescripcionServicio.Name = "lblDescripcionServicio";
             lblDescripcionServicio.Size = new Size(69, 15);
             lblDescripcionServicio.TabIndex = 47;
@@ -158,15 +158,16 @@
             // 
             // txtCostoServicio
             // 
-            txtCostoServicio.Location = new Point(130, 153);
+            txtCostoServicio.Location = new Point(130, 181);
             txtCostoServicio.Name = "txtCostoServicio";
             txtCostoServicio.Size = new Size(148, 23);
             txtCostoServicio.TabIndex = 48;
+            txtCostoServicio.KeyPress += txtCostoServicio_KeyPress;
             // 
             // lblCostoServicio
             // 
             lblCostoServicio.AutoSize = true;
-            lblCostoServicio.Location = new Point(23, 156);
+            lblCostoServicio.Location = new Point(23, 184);
             lblCostoServicio.Name = "lblCostoServicio";
             lblCostoServicio.Size = new Size(38, 15);
             lblCostoServicio.TabIndex = 49;

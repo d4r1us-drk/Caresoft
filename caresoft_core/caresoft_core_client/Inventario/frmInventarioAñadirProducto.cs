@@ -2,11 +2,11 @@
 
 namespace caresoft_core_client.Inventario;
 
-public partial class frmInventarioRegistrarProducto : Form
+public partial class frmInventarioAñadirProducto : Form
 {
     private readonly Client _api;
 
-    public frmInventarioRegistrarProducto(string baseURL)
+    public frmInventarioAñadirProducto(string baseURL)
     {
         _api = new Client(baseURL);
         InitializeComponent();
@@ -50,11 +50,12 @@ public partial class frmInventarioRegistrarProducto : Form
                 await _api.ApiProductoAddProviderAsync(idProducto, provider.RncProveedor);
             }
 
-            FormHelper.InfoBox("Producto registrado correctamente");
+            MessageBox.Show("Producto registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             ClearFields();
-        } catch (Exception)
+        }
+        catch (Exception ex)
         {
-            FormHelper.ErrorBox("No se pudo añadir el producto");
+            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
     }
@@ -63,7 +64,7 @@ public partial class frmInventarioRegistrarProducto : Form
     {
         try
         {
-            var providers = await _api.ApiProveedorListAsync();
+            var providers = await _api.ApiProveedorGetGetAsync();
 
             if (providers != null && providers.Count > 0)
             {
@@ -74,15 +75,15 @@ public partial class frmInventarioRegistrarProducto : Form
             }
             else
             {
-                FormHelper.InfoBox("No se encontraron proveedores.");
+                MessageBox.Show("No se encontraron proveedores.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            FormHelper.ErrorBox("Error al cargar los proveedores");
+            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
-    
+
     private void ClearFields()
     {
         txtNombreProducto.Clear();
@@ -90,5 +91,29 @@ public partial class frmInventarioRegistrarProducto : Form
         txtCostoProducto.Clear();
         txtLoteProducto.Clear();
         chklbProveedores.ClearSelected();
+    }
+
+    private void txtCostoProducto_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        // Allow digits, decimal separator, and the backspace key
+        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+        {
+            e.Handled = true; // Ignore the key press event
+        }
+
+        // Allow only one decimal separator
+        if (e.KeyChar == '.' && ((TextBox)sender).Text.Contains('.'))
+        {
+            e.Handled = true; // Ignore the key press event
+        }
+    }
+
+    private void txtLoteProducto_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        // Allow digits and the backspace key
+        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+        {
+            e.Handled = true; // Ignore the key press event
+        }
     }
 }

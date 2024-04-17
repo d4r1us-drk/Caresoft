@@ -28,7 +28,7 @@ namespace CajaHospital.views
             dgvFacturas.ReadOnly = true;
 
 
-            if (dgvFacturas.Rows.Count > 1)
+            if (dgvFacturas.Rows.Count > 0)
             {
                 btnPagar.Enabled = true;
             }
@@ -82,6 +82,7 @@ namespace CajaHospital.views
                 facturaDto.MontoSubtotal = reader.GetDecimal("montoSubtotal");
                 facturaDto.MontoTotal = reader.GetDecimal("montoTotal");
                 facturaDto.Fecha = reader.GetDateTime("fecha");
+                facturaDto.Estado = reader.GetChar("estado");
 
                 _facturas.Add(facturaDto);
             }
@@ -105,8 +106,18 @@ namespace CajaHospital.views
                 MessageBox.Show("Seleccione una factura para pagar", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else
             {
-                frmDetallesFactura frmDetalles = new frmDetallesFactura(dgvFacturas.SelectedRows[0].Cells[0].Value.ToString(), Convert.ToDecimal(dgvFacturas.SelectedRows[0].Cells[5].Value));
-                frmDetalles.ShowDialog();
+                if (Convert.ToChar(dgvFacturas.SelectedRows[0].Cells[7].Value) == 'P')
+                {
+                    frmDetallesFactura frmDetalles = new frmDetallesFactura(dgvFacturas.SelectedRows[0].Cells[0].Value.ToString(), Convert.ToDecimal(dgvFacturas.SelectedRows[0].Cells[5].Value), Convert.ToInt32(dgvFacturas.SelectedRows[0].Cells[1].Value));
+                    frmDetalles.ShowDialog();
+                    if (frmDetalles.DialogResult == DialogResult.OK)
+                    {
+                        MessageBox.Show($"Factura codigo: {dgvFacturas.SelectedRows[0].Cells[0].Value.ToString()} fue pagada con exito", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                } else
+                {
+                    MessageBox.Show("Esta factura ya fue pagada");
+                }
             }
         }
     }

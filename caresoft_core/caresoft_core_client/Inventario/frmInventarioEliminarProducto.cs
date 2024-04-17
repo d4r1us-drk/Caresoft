@@ -1,10 +1,11 @@
 ﻿using caresoft_core.CoreWebApi;
 
-namespace caresoft_core_client;
+namespace caresoft_core_client.Inventario;
 
 public partial class frmInventarioEliminarProducto : Form
 {
     private readonly Client _api;
+
     public frmInventarioEliminarProducto(string baseUrl)
     {
         _api = new Client(baseUrl);

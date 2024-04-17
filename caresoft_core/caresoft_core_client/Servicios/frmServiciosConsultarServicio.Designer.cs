@@ -31,62 +31,93 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServiciosConsultarServicio));
             dataGridView1 = new DataGridView();
             lblTitulo = new Label();
+            panel1 = new Panel();
+            panel2 = new Panel();
             pnlBotones = new Panel();
-            btnCancelar = new Button();
+            btnSalir = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            panel1.SuspendLayout();
+            panel2.SuspendLayout();
             pnlBotones.SuspendLayout();
             SuspendLayout();
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(0, 37);
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.Location = new Point(0, 0);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(836, 399);
+            dataGridView1.ReadOnly = true;
+            dataGridView1.Size = new Size(836, 391);
             dataGridView1.TabIndex = 28;
             // 
             // lblTitulo
             // 
+            lblTitulo.Dock = DockStyle.Left;
             lblTitulo.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitulo.Location = new Point(0, 9);
+            lblTitulo.Location = new Point(0, 0);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(836, 25);
+            lblTitulo.Size = new Size(273, 55);
             lblTitulo.TabIndex = 30;
-            lblTitulo.Text = "Consulta Servicio";
-            lblTitulo.TextAlign = ContentAlignment.TopCenter;
+            lblTitulo.Text = "Consulta de servicios";
+            lblTitulo.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(lblTitulo);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(836, 55);
+            panel1.TabIndex = 31;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(dataGridView1);
+            panel2.Dock = DockStyle.Fill;
+            panel2.Location = new Point(0, 55);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(836, 391);
+            panel2.TabIndex = 32;
             // 
             // pnlBotones
             // 
-            pnlBotones.Controls.Add(btnCancelar);
+            pnlBotones.Controls.Add(btnSalir);
             pnlBotones.Dock = DockStyle.Bottom;
             pnlBotones.Location = new Point(0, 446);
             pnlBotones.Name = "pnlBotones";
             pnlBotones.Size = new Size(836, 32);
             pnlBotones.TabIndex = 29;
             // 
-            // btnCancelar
+            // btnSalir
             // 
-            btnCancelar.Dock = DockStyle.Left;
-            btnCancelar.Location = new Point(0, 0);
-            btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(75, 32);
-            btnCancelar.TabIndex = 0;
-            btnCancelar.Text = "Cancelar";
-            btnCancelar.UseVisualStyleBackColor = true;
-            btnCancelar.Click += btnCancelar_Click;
+            btnSalir.Dock = DockStyle.Left;
+            btnSalir.Location = new Point(0, 0);
+            btnSalir.Name = "btnSalir";
+            btnSalir.Size = new Size(75, 32);
+            btnSalir.TabIndex = 0;
+            btnSalir.Text = "Salir";
+            btnSalir.UseVisualStyleBackColor = true;
+            btnSalir.Click += btnCancelar_Click;
             // 
             // frmServiciosConsultarServicio
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(836, 478);
-            Controls.Add(dataGridView1);
-            Controls.Add(lblTitulo);
+            Controls.Add(panel2);
+            Controls.Add(panel1);
             Controls.Add(pnlBotones);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "frmServiciosConsultarServicio";
             Text = "Consultar Servicio";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            panel1.ResumeLayout(false);
+            panel2.ResumeLayout(false);
             pnlBotones.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -95,7 +126,9 @@
 
         private DataGridView dataGridView1;
         private Label lblTitulo;
+        private Panel panel1;
+        private Panel panel2;
         private Panel pnlBotones;
-        private Button btnCancelar;
+        private Button btnSalir;
     }
 }

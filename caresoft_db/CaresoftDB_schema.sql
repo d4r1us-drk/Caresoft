@@ -2549,6 +2549,13 @@ BEGIN
     SELECT montoTotal INTO total FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
     SET total = total + NEW.costo;
     UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
+
+    IF NEW.idAutorizacion IS NOT NULL THEN
+        UPDATE Factura f
+            JOIN Autorizacion a ON NEW.idAutorizacion = a.idAutorizacion
+        SET f.montoTotal = f.montoSubtotal - a.montoAsegurado
+        WHERE f.facturaCodigo = NEW.facturaCodigo;
+    END IF;
 END //
 
 CREATE TRIGGER trActualizarFacturaAfterInsertServicio
@@ -2565,49 +2572,46 @@ BEGIN
     SELECT montoTotal INTO total FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
     SET total = total + NEW.costo;
     UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
-END //
 
-CREATE TRIGGER trActualizarFacturaAfterInsertFacturaIngreso
-AFTER INSERT ON Factura
-FOR EACH ROW
-BEGIN
-    DECLARE subtotal DECIMAL(10,2);
-    DECLARE total DECIMAL(10,2);
-    DECLARE costo DECIMAL(10,2);
-    
-    IF NEW.idIngreso IS NOT NULL THEN
-        SELECT montoSubtotal INTO subtotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-        SELECT costoEstancia INTO costo FROM Ingreso WHERE idIngreso = NEW.idIngreso;
-    
-        SET subtotal = subtotal + costo;
-
-        New.montoSubtotal = subtotal;
-        
-        SELECT montoTotal INTO total FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-        SET total = total + costo;
-
-        New.montoTotal = total;
+    IF NEW.idAutorizacion IS NOT NULL THEN
+        UPDATE Factura f
+            JOIN Autorizacion a ON NEW.idAutorizacion = a.idAutorizacion
+        SET f.montoTotal = f.montoSubtotal - a.montoAsegurado
+        WHERE f.facturaCodigo = NEW.facturaCodigo;
     END IF;
 END //
 
-CREATE TRIGGER trActualizarFacturaAfterInsertFacturaConsulta
+CREATE TRIGGER trActualizarFacturaAfterInsertFactura
 AFTER INSERT ON Factura
 FOR EACH ROW
 BEGIN
     DECLARE subtotal DECIMAL(10,2);
     DECLARE total DECIMAL(10,2);
+    DECLARE costoIngreso DECIMAL(10,2);
     DECLARE costoConsulta   DECIMAL(10,2);
-    
+
+    IF NEW.idIngreso IS NOT NULL THEN
+        SELECT montoSubtotal INTO subtotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
+        SELECT costoEstancia INTO costoIngreso FROM Ingreso WHERE idIngreso = NEW.idIngreso;
+        SELECT montoTotal INTO total FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
+
+        SET subtotal = subtotal + costoIngreso;
+        UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
+        
+        SET total = total + costoIngreso;
+        UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
+    END IF;
+
     IF NEW.consultaCodigo IS NOT NULL THEN
         SELECT montoSubtotal INTO subtotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
         SELECT montoTotal INTO total FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
         SELECT costo INTO costoConsulta FROM Consulta WHERE consultaCodigo = NEW.consultaCodigo;
-    
+
         SET subtotal = subtotal + costoConsulta;
-        NEW.montoSubtotal = subtotal;
-        
-        SET total = total + costoConsulta;
-        NEW.montoTotal = total;
+        UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
+
+        SET total = total + costoIngreso;
+        UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
     END IF;
 END //
 
@@ -2636,29 +2640,50 @@ BEGIN
 END //
 
 CREATE TRIGGER trActualizarMontoTotalFacturaAfterUpdateIngreso
-AFTER UPDATE ON Ingreso
-FOR EACH ROW
+    BEFORE UPDATE ON Ingreso
+    FOR EACH ROW
 BEGIN
-    IF OLD.idAutorizacion IS NULL AND OLD.idAutorizacion <> NEW.idAutorizacion THEN
+    DECLARE factura_exists INT;
+
+    SELECT COUNT(*) INTO factura_exists
+    FROM Factura
+    WHERE idIngreso = NEW.idIngreso;
+
+    IF NEW.idAutorizacion IS NOT NULL AND factura_exists = 0 THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Cannot update Ingreso: idAutorizacion cannot be set before a relation between Factura and Ingreso exists. Create a factura for the Ingreso first.';
+    END IF;
+
+    IF factura_exists > 0 AND OLD.idAutorizacion IS NULL AND OLD.idAutorizacion <> NEW.idAutorizacion THEN
         UPDATE Factura f
-        JOIN Autorizacion a ON NEW.idAutorizacion = a.idAutorizacion
+            JOIN Autorizacion a ON NEW.idAutorizacion = a.idAutorizacion
         SET f.montoTotal = f.montoSubtotal - a.montoAsegurado
         WHERE f.idIngreso = NEW.idIngreso;
     END IF;
 END //
 
 CREATE TRIGGER trActualizarMontoTotalFacturaAfterUpdateConsulta
-AFTER UPDATE ON Consulta
-FOR EACH ROW
+    BEFORE UPDATE ON Consulta
+    FOR EACH ROW
 BEGIN
-    IF OLD.idAutorizacion IS NULL AND OLD.idAutorizacion <> NEW.idAutorizacion THEN
+    DECLARE factura_exists INT;
+
+    SELECT COUNT(*) INTO factura_exists
+    FROM Factura
+    WHERE consultaCodigo = NEW.consultaCodigo;
+
+    IF NEW.idAutorizacion IS NOT NULL AND factura_exists = 0 THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Cannot update Consulta: idAutorizacion cannot be set before a relation between Factura and Consulta exists. Create a factura for the Consulta first.';
+    END IF;
+
+    IF factura_exists > 0 AND OLD.idAutorizacion IS NULL AND OLD.idAutorizacion <> NEW.idAutorizacion THEN
         UPDATE Factura f
-        JOIN Autorizacion a ON NEW.idAutorizacion = a.idAutorizacion
+            JOIN Autorizacion a ON NEW.idAutorizacion = a.idAutorizacion
         SET f.montoTotal = f.montoSubtotal - a.montoAsegurado
         WHERE f.consultaCodigo = NEW.consultaCodigo;
     END IF;
 END //
-DELIMITER ;
 
 -- TRIGGERS PARA VALIDACION
 

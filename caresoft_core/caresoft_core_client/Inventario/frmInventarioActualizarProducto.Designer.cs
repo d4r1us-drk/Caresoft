@@ -160,6 +160,7 @@ partial class frmInventarioActualizarProducto
         txtLoteProducto.Name = "txtLoteProducto";
         txtLoteProducto.Size = new Size(148, 23);
         txtLoteProducto.TabIndex = 10;
+        txtLoteProducto.KeyPress += txtLoteProducto_KeyPress;
         // 
         // lblCostoProducto
         // 
@@ -176,6 +177,7 @@ partial class frmInventarioActualizarProducto
         txtCostoProducto.Name = "txtCostoProducto";
         txtCostoProducto.Size = new Size(148, 23);
         txtCostoProducto.TabIndex = 8;
+        txtCostoProducto.KeyPress += txtCostoProducto_KeyPress;
         // 
         // lblDescripcionProducto
         // 

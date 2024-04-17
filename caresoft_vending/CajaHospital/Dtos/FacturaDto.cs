@@ -13,5 +13,6 @@ namespace CajaHospital
         public decimal MontoSubtotal { get; set; }
         public decimal MontoTotal { get; set; }
         public DateTime Fecha { get; set; }
+        public char Estado { get; set; }
     }
 }
