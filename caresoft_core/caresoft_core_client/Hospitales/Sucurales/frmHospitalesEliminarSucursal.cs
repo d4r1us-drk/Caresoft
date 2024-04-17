@@ -1,5 +1,6 @@
 ﻿
 using caresoft_core.CoreWebApi;
+using caresoft_core_client.Utils;
 
 namespace caresoft_core_client
 {

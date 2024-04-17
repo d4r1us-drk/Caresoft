@@ -1,6 +1,6 @@
 ﻿using caresoft_core.CoreWebApi;
 
-namespace caresoft_core_client.Inventario;
+namespace caresoft_core_client.Aseguradora;
 
 public partial class frmInventarioAnadirProducto : Form
 {

@@ -1,6 +1,7 @@
 ﻿using caresoft_core.CoreWebApi;
+using caresoft_core_client.Utils;
 
-namespace caresoft_core_client.Inventario;
+namespace caresoft_core_client.Aseguradora;
 
 public partial class frmInventarioConsultaProductos : Form
 {

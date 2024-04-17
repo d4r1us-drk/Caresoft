@@ -1,4 +1,4 @@
-using caresoft_core_client.Inventario;
+using caresoft_core_client.Aseguradora;
 using caresoft_core_client.Proveedor;
 using caresoft_core_client.Servicios;
 
