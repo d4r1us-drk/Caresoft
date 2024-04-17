@@ -7,13 +7,13 @@ namespace caresoft_core_client
     public partial class frmMain : Form
     {
         private frmLogin loginForm;
-        private frmInventarioAñadirProducto frmInventarioRegistrarProducto;
+        private frmInventarioAnadirProducto frmInventarioRegistrarProducto;
         private frmInventarioActualizarProducto frmInventarioActualizarProducto;
         private frmInventarioEliminarProducto frmInventarioEliminarProducto;
         private frmInventarioConsultaProductos frmInventarioConsultaProductos;
 
 
-        private frmInventarioAñadirProveedor frmInventarioRegistrarProveedor;
+        private frmInventarioAnadirProveedor frmInventarioRegistrarProveedor;
         private frmInventarioActualizarProveedor frmInventarioActualizarProveedor;
         private frmInventarioEliminarProveedor frmInventarioEliminarProveedor;
         private frmInventarioConsultaProveedor frmInventarioConsultaProveedores;
@@ -27,6 +27,15 @@ namespace caresoft_core_client
         private frmServiciosAnadirServicio frmServiciosAnadirServicio;
         private frmServiciosEliminarServicio frmServiciosEliminarServicio;
         private frmServiciosConsultarServicio frmServiciosConsultarServicio;
+
+        private frmAseguradoraRegistrarAseguradora frmAseguradoraRegistrarAseguradora;
+        private frmAseguradoraActualizarAseguradora frmAseguradoraActualizarAseguradora;
+        private frmAseguradoraEliminarAseguradora frmAseguradoraEliminarAseguradora;
+        private frmAseguradoraConsultarAseguradora frmAseguradoraConsultarAseguradora;
+
+        private frmHospitalesActualizarSucursal frmHospitalesActualizarSucursal;
+        private frmHospitalesRegistrarSucursal frmHospitalesRegistrarSucursal;
+        private frmHospitalesEliminarSucursal frmHospitalesEliminarSucursal;
 
 
         private string baseURL;
@@ -174,30 +183,52 @@ namespace caresoft_core_client
 
         private void anadirAseguradoraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAseguradoraRegistrarAseguradora frmAseguradoraRegistrarAseguradora = new(baseURL);
+             frmAseguradoraRegistrarAseguradora = new(baseURL);
             frmAseguradoraRegistrarAseguradora.MdiParent = this;
             frmAseguradoraRegistrarAseguradora.Show();
         }
 
         private void actualizarAseguradoraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAseguradoraActualizarAseguradora frmAseguradoraActualizarAseguradora = new(baseURL);
+            frmAseguradoraActualizarAseguradora = new(baseURL);
             frmAseguradoraActualizarAseguradora.MdiParent = this;
             frmAseguradoraActualizarAseguradora.Show();
         }
 
         private void eliminarAseguradoraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAseguradoraEliminarAseguradora frmAseguradoraEliminarAseguradora = new(baseURL);
+            frmAseguradoraEliminarAseguradora = new(baseURL);
             frmAseguradoraEliminarAseguradora.MdiParent = this;
             frmAseguradoraEliminarAseguradora.Show();
         }
 
         private void consultarAseguradorasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmAseguradoraConsultarAseguradora frmAseguradoraConsultarAseguradora = new(baseURL);
+            frmAseguradoraConsultarAseguradora = new(baseURL);
             frmAseguradoraConsultarAseguradora.MdiParent = this;
             frmAseguradoraConsultarAseguradora.Show();
+        }
+
+        private void a�adirSucursalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+             frmHospitalesRegistrarSucursal = new(baseURL);
+            frmHospitalesRegistrarSucursal.MdiParent = this;
+            frmHospitalesRegistrarSucursal.Show();
+        }
+
+        private void actualizarSucursalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmHospitalesActualizarSucursal = new(baseURL);
+            frmHospitalesActualizarSucursal.MdiParent = this;
+            frmHospitalesActualizarSucursal.Show();
+
+        }
+
+        private void eliminarSucursalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmHospitalesEliminarSucursal = new(baseURL);
+            frmHospitalesEliminarSucursal.MdiParent = this;
+            frmHospitalesEliminarSucursal.Show();
         }
     }
 }

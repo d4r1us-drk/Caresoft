@@ -2,11 +2,11 @@
 
 namespace caresoft_core_client.Inventario;
 
-public partial class frmInventarioAñadirProducto : Form
+public partial class frmInventarioAnadirProducto : Form
 {
     private readonly Client _api;
 
-    public frmInventarioAñadirProducto(string baseURL)
+    public frmInventarioAnadirProducto(string baseURL)
     {
         _api = new Client(baseURL);
         InitializeComponent();
@@ -64,7 +64,7 @@ public partial class frmInventarioAñadirProducto : Form
     {
         try
         {
-            var providers = await _api.ApiProveedorGetGetAsync();
+            var providers = await _api.ApiProveedorListAsync();
 
             if (providers != null && providers.Count > 0)
             {

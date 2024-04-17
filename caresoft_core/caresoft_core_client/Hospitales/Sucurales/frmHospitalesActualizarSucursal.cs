@@ -45,8 +45,8 @@ namespace caresoft_core_client
                 return;
             }
 
-            var selectedProduct = (Aseguradora)dbgrdProductos.SelectedRows[0].DataBoundItem;
-            txtIdentificacion.Text = selectedProduct.IdAseguradora.ToString();
+            var selectedProduct = (SucursalDto)dbgrdProductos.SelectedRows[0].DataBoundItem;
+            txtIdentificacion.Text = selectedProduct.IdSucursal.ToString();
             txtNombre.Text = selectedProduct.Nombre;
             txtDireccion.Text = selectedProduct.Direccion;
             txtTelefono.Text = selectedProduct.Telefono;

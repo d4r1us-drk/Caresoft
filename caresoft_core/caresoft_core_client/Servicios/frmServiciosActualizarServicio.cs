@@ -29,7 +29,7 @@ public partial class frmServiciosActualizarServicio : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Ha ocurrido un error al intentar cargar los tipos de servicio. {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FormHelper.InfoBox($"Ha ocurrido un error al intentar cargar los tipos de servicio.");
         }
     }
 
@@ -43,9 +43,9 @@ public partial class frmServiciosActualizarServicio : Form
                 dbgrdDatosServicios.DataSource = response;
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            MessageBox.Show($"Ha ocurrido un error al intentar cargar los servicios. {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FormHelper.InfoBox($"Ha ocurrido un error al intentar cargar los servicios.");
         }
     }
 
@@ -82,11 +82,11 @@ public partial class frmServiciosActualizarServicio : Form
             await _api.ApiServicioUpdateAsync(servicio);
             LoadServicios();
             ToggleControls();
-            MessageBox.Show("Servicio actualizado correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            FormHelper.InfoBox("Servicio actualizado correctamente");
         }
         catch (Exception)
         {
-            MessageBox.Show($"Ha ocurrido un error al actualizar un servicio. {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FormHelper.ErrorBox($"Ha ocurrido un error al actualizar un servicio.");
         }
     }
 
