@@ -167,6 +167,12 @@
     <Compile Include="views\ConsultarCuentaCliente.Designer.cs">
       <DependentUpon>ConsultarCuentaCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="views\PagoControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="views\PagoControl.Designer.cs">
+      <DependentUpon>PagoControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="views\PrincipalView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -213,6 +219,9 @@
     </Compile>
     <EmbeddedResource Include="views\ConsultarCuentaCliente.resx">
       <DependentUpon>ConsultarCuentaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="views\PagoControl.resx">
+      <DependentUpon>PagoControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="views\PrincipalView.resx">
       <DependentUpon>PrincipalView.cs</DependentUpon>

@@ -17,12 +17,14 @@ namespace CajaHospital.views
         private List<FacturaServicioDto> servicios = new List<FacturaServicioDto>();
         private List<FacturaProductoDto> productos = new List<FacturaProductoDto>();
         private readonly string _facturaCodigo;
+        private readonly int _idCuenta;
         private decimal monto = 0;
-        public frmDetallesFactura( string facturaCodigo, decimal montoTotal )
+        public frmDetallesFactura( string facturaCodigo, decimal montoTotal, int idCuenta )
         {
             InitializeComponent();
 
             _facturaCodigo = facturaCodigo;
+            _idCuenta = idCuenta;
             lblFactura.Text = "Pagar la factura codigo: " + _facturaCodigo;
 
             cargarProductos();
@@ -88,6 +90,40 @@ namespace CajaHospital.views
 
             dgvServicios.DataSource = servicios;
             dgvServicios.Refresh();
+        }
+
+        private void btnPagar_Click(object sender, EventArgs e)
+        {
+            PagoControl pago = new PagoControl(monto);
+            pago.ShowDialog();
+
+            if (pago.DialogResult == DialogResult.OK)
+            {
+                try
+                {
+                    MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["vendingLocal"].ConnectionString);
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("spPagoCrear", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("p_idCuenta", _idCuenta);
+                    cmd.Parameters.AddWithValue("p_montoPagado", monto);
+                    cmd.Parameters.AddWithValue("p_facturaCodigo", _facturaCodigo);
+
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error); ;
+                    this.DialogResult = DialogResult.Cancel;
+                    throw;
+                }
+                
+            }
         }
     }
 }
