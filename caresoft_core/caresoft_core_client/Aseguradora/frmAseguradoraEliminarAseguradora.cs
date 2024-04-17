@@ -53,6 +53,6 @@ public partial class frmAseguradoraEliminarAseguradora : Form
 
     private async void btnEliminar_Click(object sender, EventArgs e)
     {
-        FormHelper.ConfirmBox("Estas seguro que deseas eliminar la aseguradora?", DeleteAseguradoras,"Eliminar Aseguradora");
+        FormHelper.ConfirmBox("Estas seguro que deseas eliminar la aseguradora?", DeleteAseguradoras, "Eliminar Aseguradora");
     }
 }

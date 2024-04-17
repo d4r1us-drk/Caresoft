@@ -29,7 +29,6 @@ partial class frmAseguradoraEliminarAseguradora
     private void InitializeComponent()
     {
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAseguradoraEliminarAseguradora));
-        dbgrdProductos = new DataGridView();
         pnlTitulos = new Panel();
         lblTitulo = new Label();
         pnlDatos = new Panel();
@@ -37,21 +36,11 @@ partial class frmAseguradoraEliminarAseguradora
         pnlBotones = new Panel();
         btnEliminar = new Button();
         btnCancelar = new Button();
-        ((System.ComponentModel.ISupportInitialize)dbgrdProductos).BeginInit();
         pnlTitulos.SuspendLayout();
         pnlDatos.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
         pnlBotones.SuspendLayout();
         SuspendLayout();
-        // 
-        // dbgrdProductos
-        // 
-        dbgrdProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        dbgrdProductos.Dock = DockStyle.Fill;
-        dbgrdProductos.Location = new Point(0, 0);
-        dbgrdProductos.Name = "dbgrdProductos";
-        dbgrdProductos.Size = new Size(875, 504);
-        dbgrdProductos.TabIndex = 0;
         // 
         // pnlTitulos
         // 
@@ -68,14 +57,13 @@ partial class frmAseguradoraEliminarAseguradora
         lblTitulo.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
         lblTitulo.Location = new Point(350, 18);
         lblTitulo.Name = "lblTitulo";
-        lblTitulo.Size = new Size(183, 25);
+        lblTitulo.Size = new Size(204, 25);
         lblTitulo.TabIndex = 27;
-        lblTitulo.Text = "Eliminar Proveedor";
+        lblTitulo.Text = "Eliminar Aseguradora";
         // 
         // pnlDatos
         // 
         pnlDatos.Controls.Add(dataGridView1);
-        pnlDatos.Controls.Add(dbgrdProductos);
         pnlDatos.Dock = DockStyle.Fill;
         pnlDatos.Location = new Point(0, 57);
         pnlDatos.Name = "pnlDatos";
@@ -85,9 +73,10 @@ partial class frmAseguradoraEliminarAseguradora
         // dataGridView1
         // 
         dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        dataGridView1.Dock = DockStyle.Fill;
         dataGridView1.Location = new Point(0, 0);
         dataGridView1.Name = "dataGridView1";
-        dataGridView1.Size = new Size(875, 473);
+        dataGridView1.Size = new Size(875, 504);
         dataGridView1.TabIndex = 1;
         // 
         // pnlBotones
@@ -107,7 +96,7 @@ partial class frmAseguradoraEliminarAseguradora
         btnEliminar.Name = "btnEliminar";
         btnEliminar.Size = new Size(147, 32);
         btnEliminar.TabIndex = 1;
-        btnEliminar.Text = "Eliminar Proveedor";
+        btnEliminar.Text = "Eliminar Aseguradora";
         btnEliminar.UseVisualStyleBackColor = true;
         btnEliminar.Click += btnEliminar_Click;
         // 
@@ -135,8 +124,7 @@ partial class frmAseguradoraEliminarAseguradora
         MaximizeBox = false;
         MinimizeBox = false;
         Name = "frmAseguradoraEliminarAseguradora";
-        Text = "Eliminar Proveedor";
-        ((System.ComponentModel.ISupportInitialize)dbgrdProductos).EndInit();
+        Text = "Eliminar Aseguradora";
         pnlTitulos.ResumeLayout(false);
         pnlTitulos.PerformLayout();
         pnlDatos.ResumeLayout(false);
@@ -146,8 +134,6 @@ partial class frmAseguradoraEliminarAseguradora
     }
 
     #endregion
-
-    private DataGridView dbgrdProductos;
     private Panel pnlTitulos;
     private Panel pnlDatos;
     private Panel pnlBotones;
