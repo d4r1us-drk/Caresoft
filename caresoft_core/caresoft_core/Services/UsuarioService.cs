@@ -4,6 +4,7 @@ using caresoft_core.Context;
 using caresoft_core.Utils;
 using Microsoft.EntityFrameworkCore;
 using caresoft_core.Services.Interfaces;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace caresoft_core.Services;
 
@@ -163,42 +164,12 @@ public class UsuarioService(CaresoftDbContext dbContext) : IUsuarioService
         try
         {
             // Check if the argument is a usuarioCodigo or documento
-            bool isUsuarioCodigo = await dbContext.Usuarios.AnyAsync(u => u.UsuarioCodigo == codigoOdocumento);
-
-            if (isUsuarioCodigo)
-            {
-                // If it's a usuarioCodigo, get the corresponding documento
-                string? documento = await dbContext.Usuarios
-                    .Where(u => u.UsuarioCodigo == codigoOdocumento)
-                    .Select(u => u.DocumentoUsuario)
-                    .FirstOrDefaultAsync();
-
-                // Remove the perfilUsuario associated with the documento
-                var perfilUsuario = await dbContext.PerfilUsuarios.FindAsync(documento);
-                if (perfilUsuario != null)
-                {
-                    dbContext.PerfilUsuarios.Remove(perfilUsuario);
-                    await dbContext.SaveChangesAsync();
-                    _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' was deleted.");
-                    return 1;
-                }
-                _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' not found.");
-                return 0;
-            }
-            else
-            {
-                // If it's a documento, directly remove the perfilUsuario
-                var perfilUsuario = await dbContext.PerfilUsuarios.FindAsync(codigoOdocumento);
-                if (perfilUsuario != null)
-                {
-                    dbContext.PerfilUsuarios.Remove(perfilUsuario);
-                    await dbContext.SaveChangesAsync();
-                    _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' was deleted.");
-                    return 1;
-                }
-                _logHandler.LogInfo($"User with code or document '{codigoOdocumento}' not found.");
-                return 0;
-            }
+            var user = await dbContext.Usuarios.
+                Include(u => u.DocumentoUsuarioNavigation).
+                FirstOrDefaultAsync(u => u.UsuarioCodigo == codigoOdocumento || u.DocumentoUsuario == codigoOdocumento);
+            if(user != null)
+             dbContext.Usuarios.Remove(user);
+            return await dbContext.SaveChangesAsync();
         }
         catch (Exception ex)
         {

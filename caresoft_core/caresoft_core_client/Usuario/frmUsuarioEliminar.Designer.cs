@@ -68,9 +68,9 @@ partial class frmUsuarioEliminar
         lblTituloEliminarProducto.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
         lblTituloEliminarProducto.Location = new Point(343, 16);
         lblTituloEliminarProducto.Name = "lblTituloEliminarProducto";
-        lblTituloEliminarProducto.Size = new Size(173, 25);
+        lblTituloEliminarProducto.Size = new Size(158, 25);
         lblTituloEliminarProducto.TabIndex = 27;
-        lblTituloEliminarProducto.Text = "Eliminar Producto";
+        lblTituloEliminarProducto.Text = "Eliminar Usuario";
         // 
         // pnlDatos
         // 
@@ -107,7 +107,7 @@ partial class frmUsuarioEliminar
         btnEliminarProducto.Name = "btnEliminarProducto";
         btnEliminarProducto.Size = new Size(147, 32);
         btnEliminarProducto.TabIndex = 1;
-        btnEliminarProducto.Text = "Eliminar Producto";
+        btnEliminarProducto.Text = "Eliminar Usuario";
         btnEliminarProducto.UseVisualStyleBackColor = true;
         btnEliminarProducto.Click += btnEliminar_Click;
         // 
@@ -122,7 +122,7 @@ partial class frmUsuarioEliminar
         btnCancelar.UseVisualStyleBackColor = true;
         btnCancelar.Click += btnCancelar_Click;
         // 
-        // frmInventarioEliminarProducto
+        // frmUsuarioEliminar
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
@@ -134,8 +134,8 @@ partial class frmUsuarioEliminar
         Icon = (Icon)resources.GetObject("$this.Icon");
         MaximizeBox = false;
         MinimizeBox = false;
-        Name = "frmInventarioEliminarProducto";
-        Text = "Eliminar Producto";
+        Name = "frmUsuarioEliminar";
+        Text = "Eliminar Usuario";
         ((System.ComponentModel.ISupportInitialize)dbgrdProductos).EndInit();
         pnlTitulos.ResumeLayout(false);
         pnlTitulos.PerformLayout();

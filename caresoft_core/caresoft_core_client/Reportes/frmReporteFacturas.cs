@@ -2,11 +2,11 @@
 using caresoft_core_client.Utils;
 namespace caresoft_core_client;
 
-public partial class frmReporteConsultas : Form
+public partial class frmReporteFacturas : Form
 {
     private readonly Client API;
 
-    public frmReporteConsultas(string baseUrl)
+    public frmReporteFacturas(string baseUrl)
     {
         InitializeComponent();
         API = new Client(baseUrl);
@@ -22,19 +22,19 @@ public partial class frmReporteConsultas : Form
     {
         try
         {
-            var Consultas = await API.ApiConsultaGetAsync();
+            var Consultas = await API.ApiFacturaGetAsync();
 
             if (Consultas != null)
             {
-                FormHelper.InfoBox("No se encontraron consultas.");
+                FormHelper.InfoBox("No se encontraron facturas.");
             }
             else
             {
-                dbgrdDatosConsultas.DataSource = Consultas;
+                dbgrdDatosFacturas.DataSource = Consultas;
             }
         } catch(Exception)
         {
-            FormHelper.InfoBox("No se pudieron cargar los datos");
+            FormHelper.InfoBox("No se pudieron cargar los facutras");
         }
        
     }

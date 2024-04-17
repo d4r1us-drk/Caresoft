@@ -11,7 +11,7 @@ public partial class frmUsuarioEliminar : Form
     {
         _api = new Client(baseUrl);
         InitializeComponent();
-        LoadProductos();
+        LoadUsuario();
     }
 
     private void btnCancelar_Click(object sender, EventArgs e)
@@ -19,17 +19,17 @@ public partial class frmUsuarioEliminar : Form
         Close();
     }
 
-    private async void LoadProductos()
+    private async void LoadUsuario()
     {
         try
         {
-            var productos = await _api.ApiProductoGetAsync();
+            var usaurios = await _api.ApiUsuarioListAsync();
 
-            dbgrdDatosEliminarProducto.DataSource = productos;
+            dbgrdDatosEliminarProducto.DataSource = usaurios;
         }
         catch (Exception)
         {
-            FormHelper.ErrorBox("Error al cargar los productos");
+            FormHelper.ErrorBox("Error al cargar los usuarios");
         }
     }
 
@@ -39,22 +39,22 @@ public partial class frmUsuarioEliminar : Form
         {
             foreach (DataGridViewRow row in dbgrdDatosEliminarProducto.SelectedRows)
             {
-                var producto = (ProductoDto)row.DataBoundItem;
-                if (producto != null)
-                    await _api.ApiProductoDeleteAsync(producto.IdProducto);
+                var usuairo = (UsuarioDto)row.DataBoundItem;
+                if (usuairo != null)
+                    await _api.ApiUsuarioDeleteAsync(usuairo.UsuarioCodigo);
             }
-            LoadProductos();
-            FormHelper.InfoBox("Productos eliminados correctamente");
+            LoadUsuario();
+            FormHelper.InfoBox("Usuarios eliminados correctamente");
         }
         catch (Exception)
         {
-            FormHelper.ErrorBox("No se pudieron eliminar los productos");
+            FormHelper.ErrorBox("No se pudieron eliminar los Usuarios");
         }
     }
 
     private void btnEliminar_Click(object sender, EventArgs e)
     {
-        FormHelper.ConfirmBox("Estas seguro que deseas eliminar el producto?", DeleteProductos, "Eliminar Producto");
+        FormHelper.ConfirmBox("Estas seguro que deseas eliminar el usuario?", DeleteProductos, "Eliminar Usuario");
         
     }
 }

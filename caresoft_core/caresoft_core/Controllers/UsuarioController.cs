@@ -67,7 +67,8 @@ public class UsuarioController(IUsuarioService usuarioService) : ControllerBase
     public async Task<ActionResult<int>> DeleteUsuarioAsync(string codigoOdocumento)
     {
         try
-        {
+        { 
+        
             var result = await usuarioService.DeleteUsuarioAsync(codigoOdocumento);
             return Ok(result);
         }

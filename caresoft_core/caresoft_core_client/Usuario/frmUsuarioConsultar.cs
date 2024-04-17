@@ -20,7 +20,7 @@ public partial class frmUsuarioConsultar : Form
             var usuarios = await _api.ApiUsuarioListAsync();
             if(usuarios == null || usuarios.Count == 0)
             {
-                FormHelper.ErrorBox("No se encontraron productos");
+                FormHelper.ErrorBox("No se encontraron usuarios");
                 return;
             }
 
@@ -28,7 +28,7 @@ public partial class frmUsuarioConsultar : Form
         }
         catch (Exception)
         {
-            FormHelper.ErrorBox("Error al mostrar los productos");
+            FormHelper.ErrorBox("Error al mostrar los usuarios");
         }
     }
 }
