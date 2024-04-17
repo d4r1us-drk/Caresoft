@@ -284,24 +284,28 @@
             añadirAseguradoraToolStripMenuItem.Name = "añadirAseguradoraToolStripMenuItem";
             añadirAseguradoraToolStripMenuItem.Size = new Size(194, 22);
             añadirAseguradoraToolStripMenuItem.Text = "Añadir aseguradora";
+            añadirAseguradoraToolStripMenuItem.Click += añadirAseguradoraToolStripMenuItem_Click;
             // 
             // actualizarAseguradoraToolStripMenuItem
             // 
             actualizarAseguradoraToolStripMenuItem.Name = "actualizarAseguradoraToolStripMenuItem";
             actualizarAseguradoraToolStripMenuItem.Size = new Size(194, 22);
             actualizarAseguradoraToolStripMenuItem.Text = "Actualizar aseguradora";
+            actualizarAseguradoraToolStripMenuItem.Click += actualizarAseguradoraToolStripMenuItem_Click;
             // 
             // eliminarAseguradoraToolStripMenuItem
             // 
             eliminarAseguradoraToolStripMenuItem.Name = "eliminarAseguradoraToolStripMenuItem";
             eliminarAseguradoraToolStripMenuItem.Size = new Size(194, 22);
             eliminarAseguradoraToolStripMenuItem.Text = "Eliminar aseguradora";
+            eliminarAseguradoraToolStripMenuItem.Click += eliminarAseguradoraToolStripMenuItem_Click;
             // 
             // consultarAseguradorasToolStripMenuItem
             // 
             consultarAseguradorasToolStripMenuItem.Name = "consultarAseguradorasToolStripMenuItem";
             consultarAseguradorasToolStripMenuItem.Size = new Size(198, 22);
             consultarAseguradorasToolStripMenuItem.Text = "Consultar aseguradoras";
+            consultarAseguradorasToolStripMenuItem.Click += consultarAseguradorasToolStripMenuItem_Click;
             // 
             // gestionDelHospitalToolStripMenuItem
             // 

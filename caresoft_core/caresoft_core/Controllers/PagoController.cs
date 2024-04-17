@@ -1,3 +1,4 @@
+using caresoft_core.Dto;
 using caresoft_core.Models;
 using caresoft_core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -11,12 +12,12 @@ public class PagoController(IPagoService pagoService) : ControllerBase
     private readonly IPagoService _pagoService = pagoService ?? throw new ArgumentNullException(nameof(pagoService));
 
     [HttpGet("get")]
-    public async Task<ActionResult<IEnumerable<Pago>>> GetPagos()
+    public async Task<ActionResult<IEnumerable<PagoDto>>> GetPagos()
     {
         try
         {
             var pagos = await _pagoService.GetPagosAsync();
-            return Ok(pagos);
+            return Ok(pagos.Select(e => PagoDto.FromModel(e)));
         }
         catch (Exception)
         {
@@ -25,12 +26,19 @@ public class PagoController(IPagoService pagoService) : ControllerBase
     }
 
     [HttpGet("get/{idPago}")]
-    public async Task<ActionResult<Pago?>> GetPagoById(uint idPago)
+    public async Task<ActionResult<PagoDto?>> GetPagoById(uint idPago)
     {
         try
         {
             var pago = await _pagoService.GetPagoByIdAsync(idPago);
-            return Ok(pago);
+            if (pago == null)
+            {
+                return Ok(null);
+            } else
+            {
+                return Ok(PagoDto.FromModel(pago));
+
+            }
         }
         catch (Exception)
         {
@@ -39,25 +47,30 @@ public class PagoController(IPagoService pagoService) : ControllerBase
     }
 
     [HttpPost("add")]
-    public async Task<ActionResult> CreatePago(Pago pago)
+    public async Task<ActionResult> CreatePago(PagoDto pago)
     {
         try
         {
-            await _pagoService.CreatePagoAsync(pago);
+            await _pagoService.CreatePagoAsync(Pago.FromDto( pago));
             return Ok();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            if (ex.InnerException.Message.Contains("pagar"))
+            {
+                return StatusCode(400, ex.InnerException.Message);
+            }
+
             return StatusCode(500, "Internal server error");
         }
     }
 
     [HttpPut("update")]
-    public async Task<ActionResult> UpdatePago(Pago pago)
+    public async Task<ActionResult> UpdatePago(PagoDto pago)
     {
         try
         {
-            await _pagoService.UpdatePagoAsync(pago);
+            await _pagoService.UpdatePagoAsync(Pago.FromDto(pago));
             return Ok();
         }
         catch (Exception)
