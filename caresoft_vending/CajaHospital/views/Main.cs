@@ -16,7 +16,7 @@ namespace CajaHospital
     public partial class Main : Form
     {
         readonly PrincipalView _principalView;
-        readonly Pagos _pagos;
+        readonly ReporteFacturas _pagos;
         readonly ConsultarCuentaCliente _consultarCuentaCliente;
         public FacturarView _facturarPaciente;
         readonly FacturarView _facturarCargaDescarga;
@@ -28,7 +28,7 @@ namespace CajaHospital
 
             _principalView = new PrincipalView(nombre, documento) { Dock = DockStyle.Fill };
 
-            _pagos = new Pagos() { Dock = DockStyle.Fill };
+            _pagos = new ReporteFacturas() { Dock = DockStyle.Fill };
 
             _consultarCuentaCliente = new ConsultarCuentaCliente() { Dock = DockStyle.Fill };
 

@@ -261,6 +261,7 @@ namespace CajaHospital.views
                 cmd.Parameters.AddWithValue("@p_idCuenta", idCuenta);
                 cmd.Parameters.AddWithValue("@p_idSucursal", ConfigurationManager.AppSettings["noSucursal"]);
                 cmd.Parameters.AddWithValue("@p_documentoCajero", _documentoCajero);
+                cmd.Parameters.AddWithValue("@p_monto", Convert.ToDecimal(txtSubtotal.Text));
 
                 cmd.ExecuteNonQuery();
                 transaction.Commit();
@@ -316,6 +317,12 @@ namespace CajaHospital.views
                             cmd.Parameters.AddWithValue("@p_costo", costo);
                             cmd.ExecuteNonQuery();
                         }
+
+                        cmd.CommandText = "spIncrementaBalanceCuenta";
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("p_idCuenta", idCuenta);
+                        cmd.Parameters.AddWithValue("p_monto", Convert.ToDecimal(txtSubtotal.Text));
+                        cmd.ExecuteNonQuery();
 
                         transaction.Commit();
                         conn.Close();

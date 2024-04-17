@@ -138,6 +138,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dtos\FacturaDto.cs" />
+    <Compile Include="Dtos\FacturaProductoDto.cs" />
+    <Compile Include="Dtos\FacturaServicioDto.cs" />
+    <Compile Include="views\DetallesFactura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="views\DetallesFactura.Designer.cs">
+      <DependentUpon>DetallesFactura.cs</DependentUpon>
+    </Compile>
     <Compile Include="views\Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,11 +179,11 @@
     <Compile Include="views\FacturarView.Designer.cs">
       <DependentUpon>FacturarView.cs</DependentUpon>
     </Compile>
-    <Compile Include="views\Pagos.cs">
+    <Compile Include="views\ReporteFacturas.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="views\Pagos.Designer.cs">
-      <DependentUpon>Pagos.cs</DependentUpon>
+    <Compile Include="views\ReporteFacturas.Designer.cs">
+      <DependentUpon>ReporteFacturas.cs</DependentUpon>
     </Compile>
     <Compile Include="views\RegistrarPaciente.cs">
       <SubType>UserControl</SubType>
@@ -184,6 +192,9 @@
       <DependentUpon>RegistrarPaciente.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="reportes\Facturas.rdlc" />
+    <EmbeddedResource Include="views\DetallesFactura.resx">
+      <DependentUpon>DetallesFactura.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="views\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
@@ -209,8 +220,8 @@
     <EmbeddedResource Include="views\FacturarView.resx">
       <DependentUpon>FacturarView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="views\Pagos.resx">
-      <DependentUpon>Pagos.cs</DependentUpon>
+    <EmbeddedResource Include="views\ReporteFacturas.resx">
+      <DependentUpon>ReporteFacturas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="views\RegistrarPaciente.resx">
       <DependentUpon>RegistrarPaciente.cs</DependentUpon>
