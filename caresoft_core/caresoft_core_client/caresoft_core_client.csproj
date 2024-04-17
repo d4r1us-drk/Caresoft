@@ -25,7 +25,19 @@
     <Compile Update="Inventario\frmInventarioEliminarProducto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Inventario\frmInventarioRegistrarProducto.cs">
+    <Compile Update="Inventario\frmInventarioAñadirProducto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Aseguradora\frmAseguradoraActualizarAseguradora.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Aseguradora\frmAseguradoraConsultarAseguradora.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Aseguradora\frmAseguradoraEliminarAseguradora.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Aseguradora\frmAseguradoraRegistrarAseguradora.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Proveedor\frmInventarioActualizarProveedor.cs">
@@ -37,7 +49,7 @@
     <Compile Update="Proveedor\frmInventarioEliminarProveedor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Proveedor\frmIventarioRegistrarProveedor.cs">
+    <Compile Update="Proveedor\frmInventarioAñadirProveedor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Resources.Designer.cs">

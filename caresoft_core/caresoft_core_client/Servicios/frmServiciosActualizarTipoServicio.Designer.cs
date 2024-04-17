@@ -31,11 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServiciosActualizarTipoServicio));
             pnlTitulos = new Panel();
             lblTituloDatos = new Label();
-            lblProductos = new Label();
-            txtId = new TextBox();
-            lblIdProducto = new Label();
-            lblNombreProducto = new Label();
-            txtNombre = new TextBox();
+            lblTiposServicio = new Label();
+            txtIdTipoServicio = new TextBox();
+            lblIdTipoServicio = new Label();
+            lblNombreTipoServicio = new Label();
+            txtNombreTipoServicio = new TextBox();
             pnlDatos = new Panel();
             pnlBotonActualizar = new Panel();
             btnActualizar = new Button();
@@ -53,7 +53,7 @@
             // pnlTitulos
             // 
             pnlTitulos.Controls.Add(lblTituloDatos);
-            pnlTitulos.Controls.Add(lblProductos);
+            pnlTitulos.Controls.Add(lblTiposServicio);
             pnlTitulos.Dock = DockStyle.Top;
             pnlTitulos.Location = new Point(0, 0);
             pnlTitulos.Name = "pnlTitulos";
@@ -70,67 +70,67 @@
             lblTituloDatos.TabIndex = 0;
             lblTituloDatos.Text = "Datos";
             // 
-            // lblProductos
+            // lblTiposServicio
             // 
-            lblProductos.AutoSize = true;
-            lblProductos.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblProductos.Location = new Point(447, 18);
-            lblProductos.Name = "lblProductos";
-            lblProductos.Size = new Size(279, 25);
-            lblProductos.TabIndex = 1;
-            lblProductos.Text = "Tipos de Servicio Registratods";
+            lblTiposServicio.AutoSize = true;
+            lblTiposServicio.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTiposServicio.Location = new Point(432, 18);
+            lblTiposServicio.Name = "lblTiposServicio";
+            lblTiposServicio.Size = new Size(272, 25);
+            lblTiposServicio.TabIndex = 1;
+            lblTiposServicio.Text = "Tipos de Servicio Registrados";
             // 
-            // txtId
+            // txtIdTipoServicio
             // 
-            txtId.Enabled = false;
-            txtId.Location = new Point(129, 87);
-            txtId.Name = "txtId";
-            txtId.Size = new Size(148, 23);
-            txtId.TabIndex = 15;
+            txtIdTipoServicio.Enabled = false;
+            txtIdTipoServicio.Location = new Point(131, 62);
+            txtIdTipoServicio.Name = "txtIdTipoServicio";
+            txtIdTipoServicio.Size = new Size(148, 23);
+            txtIdTipoServicio.TabIndex = 15;
             // 
-            // lblIdProducto
+            // lblIdTipoServicio
             // 
-            lblIdProducto.AutoSize = true;
-            lblIdProducto.Location = new Point(22, 90);
-            lblIdProducto.Name = "lblIdProducto";
-            lblIdProducto.Size = new Size(74, 15);
-            lblIdProducto.TabIndex = 14;
-            lblIdProducto.Text = "Identificador";
+            lblIdTipoServicio.AutoSize = true;
+            lblIdTipoServicio.Location = new Point(24, 65);
+            lblIdTipoServicio.Name = "lblIdTipoServicio";
+            lblIdTipoServicio.Size = new Size(74, 15);
+            lblIdTipoServicio.TabIndex = 14;
+            lblIdTipoServicio.Text = "Identificador";
             // 
-            // lblNombreProducto
+            // lblNombreTipoServicio
             // 
-            lblNombreProducto.AutoSize = true;
-            lblNombreProducto.Location = new Point(22, 134);
-            lblNombreProducto.Name = "lblNombreProducto";
-            lblNombreProducto.Size = new Size(51, 15);
-            lblNombreProducto.TabIndex = 5;
-            lblNombreProducto.Text = "Nombre";
+            lblNombreTipoServicio.AutoSize = true;
+            lblNombreTipoServicio.Location = new Point(24, 94);
+            lblNombreTipoServicio.Name = "lblNombreTipoServicio";
+            lblNombreTipoServicio.Size = new Size(51, 15);
+            lblNombreTipoServicio.TabIndex = 5;
+            lblNombreTipoServicio.Text = "Nombre";
             // 
-            // txtNombre
+            // txtNombreTipoServicio
             // 
-            txtNombre.Location = new Point(129, 131);
-            txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(148, 23);
-            txtNombre.TabIndex = 4;
+            txtNombreTipoServicio.Location = new Point(131, 91);
+            txtNombreTipoServicio.Name = "txtNombreTipoServicio";
+            txtNombreTipoServicio.Size = new Size(148, 23);
+            txtNombreTipoServicio.TabIndex = 4;
             // 
             // pnlDatos
             // 
-            pnlDatos.Controls.Add(txtId);
-            pnlDatos.Controls.Add(lblIdProducto);
-            pnlDatos.Controls.Add(lblNombreProducto);
-            pnlDatos.Controls.Add(txtNombre);
+            pnlDatos.Controls.Add(txtIdTipoServicio);
+            pnlDatos.Controls.Add(lblIdTipoServicio);
+            pnlDatos.Controls.Add(lblNombreTipoServicio);
+            pnlDatos.Controls.Add(txtNombreTipoServicio);
             pnlDatos.Controls.Add(pnlBotonActualizar);
             pnlDatos.Dock = DockStyle.Left;
             pnlDatos.Location = new Point(0, 55);
             pnlDatos.Name = "pnlDatos";
-            pnlDatos.Size = new Size(300, 395);
+            pnlDatos.Size = new Size(300, 209);
             pnlDatos.TabIndex = 2;
             // 
             // pnlBotonActualizar
             // 
             pnlBotonActualizar.Controls.Add(btnActualizar);
             pnlBotonActualizar.Dock = DockStyle.Bottom;
-            pnlBotonActualizar.Location = new Point(0, 368);
+            pnlBotonActualizar.Location = new Point(0, 182);
             pnlBotonActualizar.Name = "pnlBotonActualizar";
             pnlBotonActualizar.Size = new Size(300, 27);
             pnlBotonActualizar.TabIndex = 3;
@@ -156,7 +156,7 @@
             dbgrdTipoServicios.Location = new Point(300, 55);
             dbgrdTipoServicios.Name = "dbgrdTipoServicios";
             dbgrdTipoServicios.ReadOnly = true;
-            dbgrdTipoServicios.Size = new Size(500, 368);
+            dbgrdTipoServicios.Size = new Size(500, 182);
             dbgrdTipoServicios.TabIndex = 3;
             // 
             // btnCancelar
@@ -185,7 +185,7 @@
             pnlBotones.Controls.Add(btnCancelar);
             pnlBotones.Controls.Add(btnCargarDatos);
             pnlBotones.Dock = DockStyle.Bottom;
-            pnlBotones.Location = new Point(300, 423);
+            pnlBotones.Location = new Point(300, 237);
             pnlBotones.Name = "pnlBotones";
             pnlBotones.Size = new Size(500, 27);
             pnlBotones.TabIndex = 4;
@@ -194,7 +194,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 264);
             Controls.Add(dbgrdTipoServicios);
             Controls.Add(pnlBotones);
             Controls.Add(pnlDatos);
@@ -216,11 +216,11 @@
 
         private Panel pnlTitulos;
         private Label lblTituloDatos;
-        private Label lblProductos;
-        private TextBox txtId;
-        private Label lblIdProducto;
-        private Label lblNombreProducto;
-        private TextBox txtNombre;
+        private Label lblTiposServicio;
+        private TextBox txtIdTipoServicio;
+        private Label lblIdTipoServicio;
+        private Label lblNombreTipoServicio;
+        private TextBox txtNombreTipoServicio;
         private Panel pnlDatos;
         private Panel pnlBotonActualizar;
         private Button btnActualizar;

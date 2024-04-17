@@ -2,12 +2,12 @@
 
 namespace caresoft_core_client
 {
-    public partial class frmInventarioRegistrarProveedor : Form
+    public partial class frmAseguradoraRegistrarAseguradora : Form
     {
 
         private readonly Client API;
 
-        public frmInventarioRegistrarProveedor(string baseURL)
+        public frmAseguradoraRegistrarAseguradora(string baseURL)
         {
             API = new(baseURL);
             InitializeComponent();

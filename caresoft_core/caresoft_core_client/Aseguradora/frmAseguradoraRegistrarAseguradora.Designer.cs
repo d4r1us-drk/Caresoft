@@ -1,6 +1,6 @@
 ﻿namespace caresoft_core_client
 {
-    partial class frmInventarioRegistrarProducto
+    partial class frmAseguradoraRegistrarAseguradora
     {
         /// <summary>
         /// Required designer variable.
@@ -29,20 +29,20 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioRegistrarProveedor));
-            lblProveedorProducto = new Label();
             lblLoteProducto = new Label();
-            txtLoteProducto = new TextBox();
+            txtCorreoProveedor = new TextBox();
             lblCostoProducto = new Label();
-            txtCostoProducto = new TextBox();
+            txtTelefonoProveedor = new TextBox();
             lblDescripcionProducto = new Label();
-            txtDescripcionProducto = new TextBox();
+            txtDireccionProveedor = new TextBox();
             lblNombreProducto = new Label();
-            txtNombreProducto = new TextBox();
+            txtNombreProveedor = new TextBox();
             lblTitulo = new Label();
             btnRegistrar = new Button();
             button1 = new Button();
             pnlInputDatos = new Panel();
-            chklbProveedores = new CheckedListBox();
+            txtRncProveedor = new TextBox();
+            label1 = new Label();
             pnlTitulo = new Panel();
             pnlBotones = new Panel();
             pnlInputDatos.SuspendLayout();
@@ -50,79 +50,70 @@
             pnlBotones.SuspendLayout();
             SuspendLayout();
             // 
-            // lblProveedorProducto
-            // 
-            lblProveedorProducto.AutoSize = true;
-            lblProveedorProducto.Location = new Point(19, 303);
-            lblProveedorProducto.Name = "lblProveedorProducto";
-            lblProveedorProducto.Size = new Size(72, 15);
-            lblProveedorProducto.TabIndex = 25;
-            lblProveedorProducto.Text = "Proveedores";
-            // 
             // lblLoteProducto
             // 
             lblLoteProducto.AutoSize = true;
-            lblLoteProducto.Location = new Point(19, 260);
+            lblLoteProducto.Location = new Point(14, 342);
             lblLoteProducto.Name = "lblLoteProducto";
-            lblLoteProducto.Size = new Size(89, 15);
+            lblLoteProducto.Size = new Size(43, 15);
             lblLoteProducto.TabIndex = 23;
-            lblLoteProducto.Text = "Lote Disponible";
+            lblLoteProducto.Text = "Correo";
             // 
-            // txtLoteProducto
+            // txtCorreoProveedor
             // 
-            txtLoteProducto.Location = new Point(126, 257);
-            txtLoteProducto.Name = "txtLoteProducto";
-            txtLoteProducto.Size = new Size(148, 23);
-            txtLoteProducto.TabIndex = 22;
+            txtCorreoProveedor.Location = new Point(121, 339);
+            txtCorreoProveedor.Name = "txtCorreoProveedor";
+            txtCorreoProveedor.Size = new Size(148, 23);
+            txtCorreoProveedor.TabIndex = 22;
             // 
             // lblCostoProducto
             // 
             lblCostoProducto.AutoSize = true;
-            lblCostoProducto.Location = new Point(19, 217);
+            lblCostoProducto.Location = new Point(14, 299);
             lblCostoProducto.Name = "lblCostoProducto";
-            lblCostoProducto.Size = new Size(38, 15);
+            lblCostoProducto.Size = new Size(52, 15);
             lblCostoProducto.TabIndex = 21;
-            lblCostoProducto.Text = "Costo";
+            lblCostoProducto.Text = "Teléfono";
             // 
-            // txtCostoProducto
+            // txtTelefonoProveedor
             // 
-            txtCostoProducto.Location = new Point(126, 214);
-            txtCostoProducto.Name = "txtCostoProducto";
-            txtCostoProducto.Size = new Size(148, 23);
-            txtCostoProducto.TabIndex = 20;
+            txtTelefonoProveedor.Location = new Point(121, 296);
+            txtTelefonoProveedor.Name = "txtTelefonoProveedor";
+            txtTelefonoProveedor.Size = new Size(148, 23);
+            txtTelefonoProveedor.TabIndex = 20;
             // 
             // lblDescripcionProducto
             // 
             lblDescripcionProducto.AutoSize = true;
-            lblDescripcionProducto.Location = new Point(19, 120);
+            lblDescripcionProducto.Location = new Point(14, 202);
             lblDescripcionProducto.Name = "lblDescripcionProducto";
-            lblDescripcionProducto.Size = new Size(69, 15);
+            lblDescripcionProducto.Size = new Size(57, 15);
             lblDescripcionProducto.TabIndex = 19;
-            lblDescripcionProducto.Text = "Descripción";
+            lblDescripcionProducto.Text = "Direccion";
             // 
-            // txtDescripcionProducto
+            // txtDireccionProveedor
             // 
-            txtDescripcionProducto.Location = new Point(126, 117);
-            txtDescripcionProducto.Multiline = true;
-            txtDescripcionProducto.Name = "txtDescripcionProducto";
-            txtDescripcionProducto.Size = new Size(148, 79);
-            txtDescripcionProducto.TabIndex = 18;
+            txtDireccionProveedor.Location = new Point(121, 199);
+            txtDireccionProveedor.Multiline = true;
+            txtDireccionProveedor.Name = "txtDireccionProveedor";
+            txtDireccionProveedor.Size = new Size(148, 79);
+            txtDireccionProveedor.TabIndex = 18;
             // 
             // lblNombreProducto
             // 
             lblNombreProducto.AutoSize = true;
-            lblNombreProducto.Location = new Point(19, 81);
+            lblNombreProducto.Location = new Point(14, 163);
             lblNombreProducto.Name = "lblNombreProducto";
             lblNombreProducto.Size = new Size(51, 15);
             lblNombreProducto.TabIndex = 17;
             lblNombreProducto.Text = "Nombre";
             // 
-            // txtNombreProducto
+            // txtNombreProveedor
             // 
-            txtNombreProducto.Location = new Point(126, 78);
-            txtNombreProducto.Name = "txtNombreProducto";
-            txtNombreProducto.Size = new Size(148, 23);
-            txtNombreProducto.TabIndex = 16;
+            txtNombreProveedor.Location = new Point(121, 160);
+            txtNombreProveedor.Name = "txtNombreProveedor";
+            txtNombreProveedor.Size = new Size(148, 23);
+            txtNombreProveedor.TabIndex = 16;
             // 
             // lblTitulo
             // 
@@ -130,9 +121,9 @@
             lblTitulo.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTitulo.Location = new Point(64, 19);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(161, 25);
+            lblTitulo.Size = new Size(171, 25);
             lblTitulo.TabIndex = 26;
-            lblTitulo.Text = "Añadir Producto";
+            lblTitulo.Text = "Añadir proveedor";
             // 
             // btnRegistrar
             // 
@@ -158,29 +149,37 @@
             // 
             // pnlInputDatos
             // 
-            pnlInputDatos.Controls.Add(chklbProveedores);
-            pnlInputDatos.Controls.Add(txtNombreProducto);
+            pnlInputDatos.Controls.Add(txtRncProveedor);
+            pnlInputDatos.Controls.Add(label1);
+            pnlInputDatos.Controls.Add(txtNombreProveedor);
             pnlInputDatos.Controls.Add(lblNombreProducto);
-            pnlInputDatos.Controls.Add(txtDescripcionProducto);
+            pnlInputDatos.Controls.Add(txtDireccionProveedor);
             pnlInputDatos.Controls.Add(lblDescripcionProducto);
-            pnlInputDatos.Controls.Add(lblProveedorProducto);
-            pnlInputDatos.Controls.Add(txtCostoProducto);
+            pnlInputDatos.Controls.Add(txtTelefonoProveedor);
             pnlInputDatos.Controls.Add(lblCostoProducto);
             pnlInputDatos.Controls.Add(lblLoteProducto);
-            pnlInputDatos.Controls.Add(txtLoteProducto);
+            pnlInputDatos.Controls.Add(txtCorreoProveedor);
             pnlInputDatos.Dock = DockStyle.Fill;
             pnlInputDatos.Location = new Point(0, 0);
             pnlInputDatos.Name = "pnlInputDatos";
             pnlInputDatos.Size = new Size(291, 466);
             pnlInputDatos.TabIndex = 29;
             // 
-            // chklbProveedores
+            // txtRncProveedor
             // 
-            chklbProveedores.FormattingEnabled = true;
-            chklbProveedores.Location = new Point(126, 303);
-            chklbProveedores.Name = "chklbProveedores";
-            chklbProveedores.Size = new Size(148, 112);
-            chklbProveedores.TabIndex = 26;
+            txtRncProveedor.Location = new Point(121, 80);
+            txtRncProveedor.Name = "txtRncProveedor";
+            txtRncProveedor.Size = new Size(148, 23);
+            txtRncProveedor.TabIndex = 24;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(14, 83);
+            label1.Name = "label1";
+            label1.Size = new Size(31, 15);
+            label1.TabIndex = 25;
+            label1.Text = "RNC";
             // 
             // pnlTitulo
             // 
@@ -201,7 +200,7 @@
             pnlBotones.Size = new Size(291, 32);
             pnlBotones.TabIndex = 31;
             // 
-            // frmInventarioRegistrar
+            // frmInventarioRegistrarProveedor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -213,8 +212,8 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "frmInventarioRegistrar";
-            Text = "Añadir producto";
+            Name = "frmInventarioRegistrarProveedor";
+            Text = "Añadir proveedor";
             pnlInputDatos.ResumeLayout(false);
             pnlInputDatos.PerformLayout();
             pnlTitulo.ResumeLayout(false);
@@ -224,22 +223,21 @@
         }
 
         #endregion
-
-        private Label lblProveedorProducto;
         private Label lblLoteProducto;
-        private TextBox txtLoteProducto;
+        private TextBox txtCorreoProveedor;
         private Label lblCostoProducto;
-        private TextBox txtCostoProducto;
+        private TextBox txtTelefonoProveedor;
         private Label lblDescripcionProducto;
-        private TextBox txtDescripcionProducto;
+        private TextBox txtDireccionProveedor;
         private Label lblNombreProducto;
-        private TextBox txtNombreProducto;
+        private TextBox txtNombreProveedor;
         private Label lblTitulo;
         private Button btnRegistrar;
         private Button button1;
         private Panel pnlInputDatos;
         private Panel pnlTitulo;
         private Panel pnlBotones;
-        private CheckedListBox chklbProveedores;
+        private TextBox txtRncProveedor;
+        private Label label1;
     }
 }

@@ -1,4 +1,3 @@
-using caresoft_core.Models;
 using caresoft_core.Dto;
 using caresoft_core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +8,7 @@ namespace caresoft_core.Controllers;
 [Route("api/[controller]")]
 public class ProveedorController(IProveedorService proveedorService) : ControllerBase
 {
-    [HttpGet("get")]
+    [HttpGet("list")]
     public async Task<ActionResult<List<ProveedorDto>?>> GetProveedores()
     {
         try
