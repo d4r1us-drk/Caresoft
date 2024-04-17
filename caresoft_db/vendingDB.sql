@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `caresoftdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `caresoftdb`;
--- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: caresoftdb
+-- Host: localhost    Database: caresoftdb
 -- ------------------------------------------------------
--- Server version	8.0.32
+-- Server version	8.0.35
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -33,6 +33,15 @@ CREATE TABLE `afeccion` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `afeccion`
+--
+
+LOCK TABLES `afeccion` WRITE;
+/*!40000 ALTER TABLE `afeccion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `afeccion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `aseguradora`
 --
 
@@ -47,8 +56,18 @@ CREATE TABLE `aseguradora` (
   `correo` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`idAseguradora`),
   UNIQUE KEY `correo` (`correo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `aseguradora`
+--
+
+LOCK TABLES `aseguradora` WRITE;
+/*!40000 ALTER TABLE `aseguradora` DISABLE KEYS */;
+INSERT INTO `aseguradora` VALUES (1,'Humanos','XXX','8092221111','humanos.@gmail.com'),(2,'Universal','XXX','8093331111','universal@gmail.com'),(3,'Mapfre','XXX','8094441111','mapfre@gmail.com'),(4,'SeNaSa','XXX','8095551111','senasa@gmail.com');
+/*!40000 ALTER TABLE `aseguradora` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `autorizacion`
@@ -67,6 +86,15 @@ CREATE TABLE `autorizacion` (
   CONSTRAINT `autorizacion_ibfk_1` FOREIGN KEY (`idAseguradora`) REFERENCES `aseguradora` (`idAseguradora`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `autorizacion`
+--
+
+LOCK TABLES `autorizacion` WRITE;
+/*!40000 ALTER TABLE `autorizacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `autorizacion` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `consulta`
@@ -97,6 +125,15 @@ CREATE TABLE `consulta` (
   CONSTRAINT `consulta_ibfk_4` FOREIGN KEY (`idAutorizacion`) REFERENCES `autorizacion` (`idAutorizacion`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `consulta`
+--
+
+LOCK TABLES `consulta` WRITE;
+/*!40000 ALTER TABLE `consulta` DISABLE KEYS */;
+/*!40000 ALTER TABLE `consulta` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -158,6 +195,15 @@ CREATE TABLE `consulta_afeccion` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `consulta_afeccion`
+--
+
+LOCK TABLES `consulta_afeccion` WRITE;
+/*!40000 ALTER TABLE `consulta_afeccion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `consulta_afeccion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `consultorio`
 --
 
@@ -174,6 +220,15 @@ CREATE TABLE `consultorio` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `consultorio`
+--
+
+LOCK TABLES `consultorio` WRITE;
+/*!40000 ALTER TABLE `consultorio` DISABLE KEYS */;
+/*!40000 ALTER TABLE `consultorio` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `cuenta`
 --
 
@@ -188,8 +243,18 @@ CREATE TABLE `cuenta` (
   PRIMARY KEY (`idCuenta`),
   UNIQUE KEY `documentoUsuario` (`documentoUsuario`),
   CONSTRAINT `cuenta_ibfk_1` FOREIGN KEY (`documentoUsuario`) REFERENCES `perfilusuario` (`documento`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cuenta`
+--
+
+LOCK TABLES `cuenta` WRITE;
+/*!40000 ALTER TABLE `cuenta` DISABLE KEYS */;
+INSERT INTO `cuenta` VALUES (1,'0',0.00,'A'),(2,'1',0.00,'A'),(3,'403',0.00,'A'),(4,'2',0.00,'A'),(5,'5',6800.00,'A'),(6,'40200162359',0.00,'A');
+/*!40000 ALTER TABLE `cuenta` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `denominaciones`
@@ -205,6 +270,16 @@ CREATE TABLE `denominaciones` (
   PRIMARY KEY (`valorDenominacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `denominaciones`
+--
+
+LOCK TABLES `denominaciones` WRITE;
+/*!40000 ALTER TABLE `denominaciones` DISABLE KEYS */;
+INSERT INTO `denominaciones` (`valorDenominacion`, `cantidadEnCaja`) VALUES (1,25),(5,25),(10,25),(25,27),(50,25),(100,21),(200,23),(500,21),(1000,13),(2000,11);
+/*!40000 ALTER TABLE `denominaciones` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `factura`
@@ -223,6 +298,7 @@ CREATE TABLE `factura` (
   `montoSubtotal` decimal(10,2) NOT NULL DEFAULT '0.00',
   `montoTotal` decimal(10,2) NOT NULL DEFAULT '0.00',
   `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `estado` enum('P','R') NOT NULL DEFAULT 'P',
   PRIMARY KEY (`facturaCodigo`),
   UNIQUE KEY `consultaCodigo` (`consultaCodigo`),
   UNIQUE KEY `idIngreso` (`idIngreso`),
@@ -236,6 +312,16 @@ CREATE TABLE `factura` (
   CONSTRAINT `factura_ibfk_5` FOREIGN KEY (`documentoCajero`) REFERENCES `perfilusuario` (`documento`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `factura`
+--
+
+LOCK TABLES `factura` WRITE;
+/*!40000 ALTER TABLE `factura` DISABLE KEYS */;
+INSERT INTO `factura` VALUES ('006abf-6f48-44f7-8d1f-8e588808',5,NULL,NULL,1,'40230375483',3400.00,3400.00,'2024-04-17 11:18:58','R');
+/*!40000 ALTER TABLE `factura` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -256,38 +342,6 @@ DELIMITER ;;
     -- If both consultaCodigo and idIngreso are provided, raise an error
     IF consultaCount > 0 AND ingresoCount > 0 THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Una factura no puede incluir una consulta y un ingreso al mismo tiempo.';
-    END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trActualizarFacturaAfterInsertFacturaIngreso` AFTER INSERT ON `factura` FOR EACH ROW BEGIN
-    DECLARE subtotal DECIMAL(10,2);
-    DECLARE total DECIMAL(10,2);
-    DECLARE costo DECIMAL(10,2);
-    
-    IF NEW.idIngreso IS NOT NULL THEN
-        SELECT montoSubtotal INTO subtotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-        SELECT costoEstancia INTO costo FROM Ingreso WHERE idIngreso = NEW.idIngreso;
-    
-        SET subtotal = subtotal + costo;
-    
-        UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
-        
-        SELECT montoTotal INTO total FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-        SET total = total + costo;
-        UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
     END IF;
 END */;;
 DELIMITER ;
@@ -326,6 +380,38 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trActualizarFacturaAfterInsertFacturaIngreso` AFTER UPDATE ON `factura` FOR EACH ROW BEGIN
+    DECLARE subtotal DECIMAL(10,2);
+    DECLARE total DECIMAL(10,2);
+    DECLARE costo DECIMAL(10,2);
+    
+    IF NEW.idIngreso IS NOT NULL THEN
+        SELECT montoSubtotal INTO subtotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
+        SELECT costoEstancia INTO costo FROM Ingreso WHERE idIngreso = NEW.idIngreso;
+    
+        SET subtotal = subtotal + costo;
+    
+        UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
+        
+        SELECT montoTotal INTO total FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
+        SET total = total + costo;
+        UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `factura_metodopago`
@@ -343,6 +429,15 @@ CREATE TABLE `factura_metodopago` (
   CONSTRAINT `factura_metodopago_ibfk_2` FOREIGN KEY (`idMetodoPago`) REFERENCES `metodopago` (`idMetodoPago`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `factura_metodopago`
+--
+
+LOCK TABLES `factura_metodopago` WRITE;
+/*!40000 ALTER TABLE `factura_metodopago` DISABLE KEYS */;
+/*!40000 ALTER TABLE `factura_metodopago` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `factura_producto`
@@ -365,54 +460,16 @@ CREATE TABLE `factura_producto` (
   CONSTRAINT `factura_producto_ibfk_3` FOREIGN KEY (`idAutorizacion`) REFERENCES `autorizacion` (`idAutorizacion`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trActualizarFacturaAfterInsertProducto` AFTER INSERT ON `factura_producto` FOR EACH ROW BEGIN
-    DECLARE subtotal DECIMAL(10,2);
-    DECLARE total DECIMAL(10,2);
-    
-    SELECT montoSubtotal INTO subtotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-    SET subtotal = subtotal + NEW.costo;
-    UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
-    
-    SELECT montoTotal INTO total FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-    SET total = total + NEW.costo;
-    UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trActualizarMontoTotalFacturaAfterUpdateProducto` AFTER UPDATE ON `factura_producto` FOR EACH ROW BEGIN
-    IF OLD.idAutorizacion IS NULL AND OLD.idAutorizacion <> NEW.idAutorizacion THEN
-        UPDATE Factura f
-        JOIN Autorizacion a ON NEW.idAutorizacion = a.idAutorizacion
-        SET f.montoTotal = f.montoSubtotal - a.montoAsegurado
-        WHERE f.facturaCodigo = NEW.facturaCodigo;
-    END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Dumping data for table `factura_producto`
+--
+
+LOCK TABLES `factura_producto` WRITE;
+/*!40000 ALTER TABLE `factura_producto` DISABLE KEYS */;
+INSERT INTO `factura_producto` VALUES ('006abf-6f48-44f7-8d1f-8e588808',1,NULL,'4',50.00);
+/*!40000 ALTER TABLE `factura_producto` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `factura_servicio`
@@ -435,54 +492,16 @@ CREATE TABLE `factura_servicio` (
   CONSTRAINT `factura_servicio_ibfk_3` FOREIGN KEY (`idAutorizacion`) REFERENCES `autorizacion` (`idAutorizacion`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trActualizarFacturaAfterInsertServicio` AFTER INSERT ON `factura_servicio` FOR EACH ROW BEGIN
-    DECLARE subtotal DECIMAL(10,2);
-    DECLARE total DECIMAL(10,2);
-    
-    SELECT montoSubtotal INTO subtotal FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-    SET subtotal = subtotal + NEW.costo;
-    UPDATE Factura SET montoSubtotal = subtotal WHERE facturaCodigo = NEW.facturaCodigo;
-    
-    SELECT montoTotal INTO total FROM Factura WHERE facturaCodigo = NEW.facturaCodigo;
-    SET total = total + NEW.costo;
-    UPDATE Factura SET montoTotal = total WHERE facturaCodigo = NEW.facturaCodigo;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trActualizarMontoTotalFacturaAfterUpdateServicio` AFTER UPDATE ON `factura_servicio` FOR EACH ROW BEGIN
-    IF OLD.idAutorizacion IS NULL AND OLD.idAutorizacion <> NEW.idAutorizacion THEN
-        UPDATE Factura f
-        JOIN Autorizacion a ON NEW.idAutorizacion = a.idAutorizacion
-        SET f.montoTotal = f.montoSubtotal - a.montoAsegurado
-        WHERE f.facturaCodigo = NEW.facturaCodigo;
-    END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Dumping data for table `factura_servicio`
+--
+
+LOCK TABLES `factura_servicio` WRITE;
+/*!40000 ALTER TABLE `factura_servicio` DISABLE KEYS */;
+INSERT INTO `factura_servicio` VALUES ('006abf-6f48-44f7-8d1f-8e588808','CPR',NULL,'1',3200.00);
+/*!40000 ALTER TABLE `factura_servicio` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ingreso`
@@ -516,6 +535,15 @@ CREATE TABLE `ingreso` (
   CONSTRAINT `ingreso_ibfk_5` FOREIGN KEY (`numSala`) REFERENCES `sala` (`numSala`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ingreso`
+--
+
+LOCK TABLES `ingreso` WRITE;
+/*!40000 ALTER TABLE `ingreso` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ingreso` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -577,6 +605,15 @@ CREATE TABLE `ingreso_afeccion` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `ingreso_afeccion`
+--
+
+LOCK TABLES `ingreso_afeccion` WRITE;
+/*!40000 ALTER TABLE `ingreso_afeccion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ingreso_afeccion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `metodopago`
 --
 
@@ -587,8 +624,18 @@ CREATE TABLE `metodopago` (
   `idMetodoPago` int unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`idMetodoPago`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `metodopago`
+--
+
+LOCK TABLES `metodopago` WRITE;
+/*!40000 ALTER TABLE `metodopago` DISABLE KEYS */;
+INSERT INTO `metodopago` VALUES (1,'Efectivo'),(2,'Tarjeta');
+/*!40000 ALTER TABLE `metodopago` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `movimientos_caja`
@@ -606,6 +653,15 @@ CREATE TABLE `movimientos_caja` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `movimientos_caja`
+--
+
+LOCK TABLES `movimientos_caja` WRITE;
+/*!40000 ALTER TABLE `movimientos_caja` DISABLE KEYS */;
+/*!40000 ALTER TABLE `movimientos_caja` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `pago`
 --
 
@@ -617,11 +673,24 @@ CREATE TABLE `pago` (
   `idCuenta` int unsigned NOT NULL,
   `montoPagado` decimal(10,2) NOT NULL,
   `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `codigoFactura` varchar(30) NOT NULL,
   PRIMARY KEY (`idPago`),
   KEY `idCuenta` (`idCuenta`),
+  KEY `fk_idPago_facturaCodigo` (`codigoFactura`),
+  CONSTRAINT `fk_idPago_facturaCodigo` FOREIGN KEY (`codigoFactura`) REFERENCES `factura` (`facturaCodigo`),
   CONSTRAINT `pago_ibfk_1` FOREIGN KEY (`idCuenta`) REFERENCES `cuenta` (`idCuenta`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pago`
+--
+
+LOCK TABLES `pago` WRITE;
+/*!40000 ALTER TABLE `pago` DISABLE KEYS */;
+INSERT INTO `pago` VALUES (1,5,3400.00,'2024-04-17 11:23:28','006abf-6f48-44f7-8d1f-8e588808');
+/*!40000 ALTER TABLE `pago` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `perfilusuario`
@@ -646,6 +715,16 @@ CREATE TABLE `perfilusuario` (
   UNIQUE KEY `numLicenciaMedica` (`numLicenciaMedica`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `perfilusuario`
+--
+
+LOCK TABLES `perfilusuario` WRITE;
+/*!40000 ALTER TABLE `perfilusuario` DISABLE KEYS */;
+INSERT INTO `perfilusuario` VALUES ('0','I',NULL,'0','0','M','2000-01-01','0','0','0','A'),('1','I',NULL,'Juan','Sport','M','2001-02-19','8092223451','juan@gmail.com','YYY','P'),('2','I',NULL,'Alexandra','Perez','F','2002-02-28','8091112222','ale@gmail.com','GGG','P'),('40200162359','I',NULL,'Keven','Chen','M','2004-03-16','8093540291','keven.chen@gmail.com','Luis Betancourt no.324','P'),('40230375483','I',NULL,'Jose Manuel','Matos Diaz','M','2024-05-25','8292850048','jose@gmail.com','XXX','A'),('403','I',NULL,'Pepito','Arrozal','M','1954-06-16','8292283456','pepito@gmail.com','Ciudad XXX','P'),('5','I',NULL,'David','Mendoza','M','2004-05-29','8097231453','david.mendoza@gmail.com','campo xxx','P');
+/*!40000 ALTER TABLE `perfilusuario` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -685,6 +764,15 @@ CREATE TABLE `prescripcion_producto` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `prescripcion_producto`
+--
+
+LOCK TABLES `prescripcion_producto` WRITE;
+/*!40000 ALTER TABLE `prescripcion_producto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `prescripcion_producto` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `prescripcion_servicio`
 --
 
@@ -702,6 +790,15 @@ CREATE TABLE `prescripcion_servicio` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `prescripcion_servicio`
+--
+
+LOCK TABLES `prescripcion_servicio` WRITE;
+/*!40000 ALTER TABLE `prescripcion_servicio` DISABLE KEYS */;
+/*!40000 ALTER TABLE `prescripcion_servicio` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `producto`
 --
 
@@ -715,8 +812,18 @@ CREATE TABLE `producto` (
   `costo` decimal(10,2) NOT NULL,
   `loteDisponible` int unsigned NOT NULL,
   PRIMARY KEY (`idProducto`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `producto`
+--
+
+LOCK TABLES `producto` WRITE;
+/*!40000 ALTER TABLE `producto` DISABLE KEYS */;
+INSERT INTO `producto` VALUES (1,'Aspirinas','Medicamento para los dolores de cabeza',50.00,99),(2,'Azitromicina Jarabe','Antialergico',72.00,99),(3,'Zyrtec Pastillas','Antialercico',75.00,99);
+/*!40000 ALTER TABLE `producto` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `proveedor`
@@ -737,6 +844,15 @@ CREATE TABLE `proveedor` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `proveedor`
+--
+
+LOCK TABLES `proveedor` WRITE;
+/*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
+/*!40000 ALTER TABLE `proveedor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `proveedor_producto`
 --
 
@@ -752,6 +868,15 @@ CREATE TABLE `proveedor_producto` (
   CONSTRAINT `proveedor_producto_ibfk_2` FOREIGN KEY (`idProducto`) REFERENCES `producto` (`idProducto`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `proveedor_producto`
+--
+
+LOCK TABLES `proveedor_producto` WRITE;
+/*!40000 ALTER TABLE `proveedor_producto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `proveedor_producto` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `reservaservicio`
@@ -776,6 +901,15 @@ CREATE TABLE `reservaservicio` (
   CONSTRAINT `reservaservicio_ibfk_3` FOREIGN KEY (`servicioCodigo`) REFERENCES `servicio` (`servicioCodigo`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reservaservicio`
+--
+
+LOCK TABLES `reservaservicio` WRITE;
+/*!40000 ALTER TABLE `reservaservicio` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reservaservicio` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -812,6 +946,15 @@ CREATE TABLE `sala` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `sala`
+--
+
+LOCK TABLES `sala` WRITE;
+/*!40000 ALTER TABLE `sala` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sala` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `servicio`
 --
 
@@ -831,6 +974,16 @@ CREATE TABLE `servicio` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `servicio`
+--
+
+LOCK TABLES `servicio` WRITE;
+/*!40000 ALTER TABLE `servicio` DISABLE KEYS */;
+INSERT INTO `servicio` VALUES ('CON1',1,'Consulta dermatologica','Consulta inicial en el area de dermatologia',2850.00),('CPR',2,'Coprologico regular','Estudio a traves de las heces fecales',3200.00),('CPRIN',2,'Coprologico intensivo','Estudio a traves de las heces fecales, de manera completa',3959.00);
+/*!40000 ALTER TABLE `servicio` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sucursal`
 --
 
@@ -847,6 +1000,16 @@ CREATE TABLE `sucursal` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `sucursal`
+--
+
+LOCK TABLES `sucursal` WRITE;
+/*!40000 ALTER TABLE `sucursal` DISABLE KEYS */;
+INSERT INTO `sucursal` VALUES (1,'Luperon','XXX','8009320540');
+/*!40000 ALTER TABLE `sucursal` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tiposervicio`
 --
 
@@ -857,8 +1020,18 @@ CREATE TABLE `tiposervicio` (
   `idTipoServicio` int unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   PRIMARY KEY (`idTipoServicio`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tiposervicio`
+--
+
+LOCK TABLES `tiposervicio` WRITE;
+/*!40000 ALTER TABLE `tiposervicio` DISABLE KEYS */;
+INSERT INTO `tiposervicio` VALUES (1,'consulta'),(2,'coprologico'),(3,'colonoscopia'),(4,'prueba de alergenos');
+/*!40000 ALTER TABLE `tiposervicio` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `usuario`
@@ -876,6 +1049,16 @@ CREATE TABLE `usuario` (
   CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`documentoUsuario`) REFERENCES `perfilusuario` (`documento`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuario`
+--
+
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES ('0','0','xlshdshafafnsdbj'),('1','40230375483','123456'),('APere','2','usuarioCaresoft1'),('DMendoz','5','usuarioCaresoft1'),('juancitoSport','1','123456'),('KChe','40200162359','usuarioCaresoft1'),('PArroza','403','usuarioCaresoft1');
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping events for database 'caresoftdb'
@@ -1724,7 +1907,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spFacturaCrear`(
     IN p_facturaCodigo VARCHAR(30),
     IN p_idCuenta INT UNSIGNED,
     IN p_idSucursal INT UNSIGNED,
-    IN p_documentoCajero VARCHAR(30)
+    IN p_documentoCajero VARCHAR(30),
+    IN p_monto decimal(10,2)
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
@@ -1735,8 +1919,8 @@ BEGIN
 
     START TRANSACTION;
 
-    INSERT INTO Factura (facturaCodigo, idCuenta, idSucursal, documentoCajero)
-    VALUES (p_facturaCodigo, p_idCuenta, p_idSucursal, p_documentoCajero);
+    INSERT INTO Factura (facturaCodigo, idCuenta, idSucursal, documentoCajero, montoSubtotal, montoTotal)
+    VALUES (p_facturaCodigo, p_idCuenta, p_idSucursal, p_documentoCajero, p_monto, p_monto);
 
     COMMIT;
 END ;;
@@ -2113,7 +2297,7 @@ BEGIN
 
     START TRANSACTION;
 
-    INSERT INTO Factura_Producto (facturaCodigo, idProducto, resultados, costo)
+    INSERT INTO factura_producto (facturaCodigo, idProducto, resultados, costo)
     VALUES (p_facturaCodigo, p_idProducto, p_resultados, p_costo);
 
     COMMIT;
@@ -2148,7 +2332,7 @@ BEGIN
 
     START TRANSACTION;
 
-    INSERT INTO Factura_Servicio (facturaCodigo, servicioCodigo, resultados, costo)
+    INSERT INTO factura_servicio (facturaCodigo, servicioCodigo, resultados, costo)
     VALUES (p_facturaCodigo, p_servicioCodigo, p_resultados, p_costo);
 
     COMMIT;
@@ -2211,6 +2395,75 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spGetTotalMovimientos`(out total int)
 BEGIN
 	Select (select sum(montoMovimiento) from movimientos_caja where tipoMovimiento = 'RC') - (select sum(montoMovimiento) from movimientos_caja where tipoMovimiento = 'DC') into total;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `spIncrementaBalanceCuenta` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spIncrementaBalanceCuenta`( in p_idCuenta int, in p_monto decimal(10,2))
+BEGIN
+	update cuenta
+    set balance = balance + p_monto
+    where idCuenta = p_idCuenta;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `spIngresarDenominaciones` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spIngresarDenominaciones`(IN p_2000 int, IN p_1000 int, IN p_500 int, IN p_200 int, IN p_100 int, IN p_50 int, IN p_25 int, IN p_10 int, IN p_5 int, IN p_1 int)
+BEGIN
+	update denominaciones
+    set cantidadEnCaja = cantidadEnCaja + p_2000
+    where valorDenominacion = 2000;
+	update denominaciones
+    set cantidadEnCaja = cantidadEnCaja + p_1000
+    where valorDenominacion = 1000;
+	update denominaciones
+    set cantidadEnCaja = cantidadEnCaja + p_500
+    where valorDenominacion = 500;
+	update denominaciones
+    set cantidadEnCaja = cantidadEnCaja + p_200
+    where valorDenominacion = 200;
+	update denominaciones
+    set cantidadEnCaja = cantidadEnCaja + p_100
+    where valorDenominacion = 100;
+	update denominaciones
+    set cantidadEnCaja = cantidadEnCaja + p_50
+    where valorDenominacion = 50;
+	update denominaciones
+    set cantidadEnCaja = cantidadEnCaja + p_25
+    where valorDenominacion = 25;
+	update denominaciones
+    set cantidadEnCaja = cantidadEnCaja + p_10
+    where valorDenominacion = 10;
+	update denominaciones
+    set cantidadEnCaja = cantidadEnCaja + p_5
+    where valorDenominacion = 5;
+	update denominaciones
+    set cantidadEnCaja = cantidadEnCaja + p_1
+    where valorDenominacion = 1;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2512,7 +2765,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spListarCuenta`(p_documentoUsuario varchar(30))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spListarCuenta`( in p_documentoUsuario varchar(30))
 BEGIN
 	select * from cuenta where documentoUsuario = p_documentoUsuario;
 END ;;
@@ -2702,7 +2955,8 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spPagoCrear`(
     IN p_idCuenta INT UNSIGNED,
-    IN p_montoPagado DECIMAL(10,2)
+    IN p_montoPagado DECIMAL(10,2),
+    IN p_facturaCodigo varchar(30)
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
@@ -2713,7 +2967,10 @@ BEGIN
 
     START TRANSACTION;
 
-    INSERT INTO Pago (idCuenta, montoPagado) VALUES (p_idCuenta, p_montoPagado);
+    INSERT INTO Pago (idCuenta, montoPagado, codigoFactura) VALUES (p_idCuenta, p_montoPagado, p_facturaCodigo);
+	UPDATE factura
+    set estado = 'R'
+    where facturaCodigo = p_facturaCodigo;
 
     COMMIT;
 END ;;
@@ -4283,4 +4540,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-14  7:04:11
+-- Dump completed on 2024-04-17 11:39:38
