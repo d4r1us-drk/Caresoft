@@ -1,8 +1,10 @@
 using caresoft_core.Context;
+using caresoft_core.Dto;
 using caresoft_core.Models;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Utils;
 using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 
 namespace caresoft_core.Services;
 
@@ -18,7 +20,7 @@ public class PagoService(CaresoftDbContext dbContext) : IPagoService
             await dbContext.SaveChangesAsync();
             return 1;
         }
-        catch (Exception ex)
+        catch (MySqlException ex)
         {
             _logHandler.LogError("Error creating Pago", ex);
             throw;
@@ -57,7 +59,7 @@ public class PagoService(CaresoftDbContext dbContext) : IPagoService
         }
     }
 
-    public async Task<Pago> GetPagoByIdAsync(uint idPago)
+    public async Task<Pago?> GetPagoByIdAsync(uint idPago)
     {
         try
         {

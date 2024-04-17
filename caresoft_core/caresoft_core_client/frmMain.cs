@@ -170,5 +170,33 @@ namespace caresoft_core_client
             frmServiciosConsultarTipoServicio.MdiParent = this;
             frmServiciosConsultarTipoServicio.Show();
         }
+
+        private void añadirAseguradoraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAseguradoraRegistrarAseguradora frmAseguradoraRegistrarAseguradora = new(baseURL);
+            frmAseguradoraRegistrarAseguradora.MdiParent = this;
+            frmAseguradoraRegistrarAseguradora.Show();
+        }
+
+        private void actualizarAseguradoraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAseguradoraActualizarAseguradora frmAseguradoraActualizarAseguradora = new(baseURL);
+            frmAseguradoraActualizarAseguradora.MdiParent = this;
+            frmAseguradoraActualizarAseguradora.Show();
+        }
+
+        private void eliminarAseguradoraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAseguradoraEliminarAseguradora frmAseguradoraEliminarAseguradora = new(baseURL);
+            frmAseguradoraEliminarAseguradora.MdiParent = this;
+            frmAseguradoraEliminarAseguradora.Show();
+        }
+
+        private void consultarAseguradorasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAseguradoraConsultarAseguradora frmAseguradoraConsultarAseguradora = new(baseURL);
+            frmAseguradoraConsultarAseguradora.MdiParent = this;
+            frmAseguradoraConsultarAseguradora.Show();
+        }
     }
 }
