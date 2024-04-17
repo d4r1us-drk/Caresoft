@@ -18,6 +18,9 @@
         <div class="cedula">
             <h3> Cedula:<asp:TextBox ID="cedulabox" runat="server" Enabled="False"></asp:TextBox>
             </h3>
+        <div class="telefono">
+            <h3> Telefono:<asp:TextBox ID="telbox" runat="server" Enabled="False"></asp:TextBox>
+            </h3>
             <div class="botonSalir">
                 <asp:Button ID="btnSalir" runat="server" Text="Salir de la cuenta" OnClick="btnSalir_Click" />
             </div>

@@ -36,11 +36,13 @@ namespace Caresoft__web
                         string apellido = reader["Apellidos"].ToString();
                         string correo = reader["Correo"].ToString();
                         string id = reader["Id"].ToString();
+                        string telefono = reader["Numero"].ToString() ;
                         
                         nombrebox.Text= nombre;
                         apellidobox.Text= apellido;
                         correobox.Text= correo;
                         cedulabox.Text= id;
+                        telbox.Text= telefono;
                         
                     }
 

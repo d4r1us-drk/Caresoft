@@ -1,4 +1,6 @@
-﻿using System;
+﻿using log4net;
+using log4net.Repository.Hierarchy;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -22,6 +24,8 @@ namespace Caresoft__web
                 CargarDatosTabla();
             }
         }
+
+        private static readonly ILog Logger = LogManager.GetLogger(System.Environment.MachineName);
 
         protected void CargarDatosTabla()
         {
@@ -149,7 +153,9 @@ namespace Caresoft__web
 
                             tblDatos.Rows.Remove(row);
                             CargarDatosTabla();
-
+                            
+                            string id = Session["UserID"].ToString();
+                            Logger.Info("Usuario: " + id + "ha realizado un pago");
                             return;
                         }
                     }

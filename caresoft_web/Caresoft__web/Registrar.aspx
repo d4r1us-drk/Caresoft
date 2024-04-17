@@ -21,7 +21,10 @@
                 Correo: <input type="text" placeholder="Correo" ID="correobox" runat="server"  />
             </div>
             <div class="input-box">
-                Identificación: <input type="text" placeholder="Cedula" ID="idbox" runat="server"  />
+                Identificación: <input type="text" placeholder="Cedula" ID="idbox" runat="server" MaxLength="11" />
+            </div>
+             <div class="input-box">
+                Telefono: <input type="text" placeholder="Telefono" ID="telbox" runat="server" MaxLength="10" />
             </div>
             <div class="input-box">
                 Contraseña: <input type="password" placeholder="Contraseña" ID="passwordbox" runat="server" />
