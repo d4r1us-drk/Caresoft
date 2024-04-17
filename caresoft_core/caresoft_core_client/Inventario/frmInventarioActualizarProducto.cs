@@ -163,7 +163,7 @@ public partial class frmInventarioActualizarProducto : Form
         txtLoteProducto.Clear();
         chklbProveedores.DataSource = null;
     }
-    
+
     private void Toggle()
     {
         txtCostoProducto.Enabled = !txtCostoProducto.Enabled;
@@ -171,5 +171,29 @@ public partial class frmInventarioActualizarProducto : Form
         txtNombreProducto.Enabled = !txtNombreProducto.Enabled;
         txtLoteProducto.Enabled = !txtLoteProducto.Enabled;
         chklbProveedores.Enabled = !chklbProveedores.Enabled;
+    }
+
+    private void txtCostoProducto_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        // Allow digits, decimal separator, and the backspace key
+        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+        {
+            e.Handled = true; // Ignore the key press event
+        }
+
+        // Allow only one decimal separator
+        if (e.KeyChar == '.' && ((TextBox)sender).Text.Contains('.'))
+        {
+            e.Handled = true; // Ignore the key press event
+        }
+    }
+
+    private void txtLoteProducto_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        // Allow digits and the backspace key
+        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+        {
+            e.Handled = true; // Ignore the key press event
+        }
     }
 }

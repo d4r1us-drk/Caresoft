@@ -2,11 +2,11 @@
 
 namespace caresoft_core_client.Inventario;
 
-public partial class frmInventarioRegistrarProducto : Form
+public partial class frmInventarioAñadirProducto : Form
 {
     private readonly Client _api;
 
-    public frmInventarioRegistrarProducto(string baseURL)
+    public frmInventarioAñadirProducto(string baseURL)
     {
         _api = new Client(baseURL);
         InitializeComponent();
@@ -52,7 +52,8 @@ public partial class frmInventarioRegistrarProducto : Form
 
             MessageBox.Show("Producto registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             ClearFields();
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
@@ -82,7 +83,7 @@ public partial class frmInventarioRegistrarProducto : Form
             MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
-    
+
     private void ClearFields()
     {
         txtNombreProducto.Clear();
@@ -90,5 +91,29 @@ public partial class frmInventarioRegistrarProducto : Form
         txtCostoProducto.Clear();
         txtLoteProducto.Clear();
         chklbProveedores.ClearSelected();
+    }
+
+    private void txtCostoProducto_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        // Allow digits, decimal separator, and the backspace key
+        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+        {
+            e.Handled = true; // Ignore the key press event
+        }
+
+        // Allow only one decimal separator
+        if (e.KeyChar == '.' && ((TextBox)sender).Text.Contains('.'))
+        {
+            e.Handled = true; // Ignore the key press event
+        }
+    }
+
+    private void txtLoteProducto_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        // Allow digits and the backspace key
+        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+        {
+            e.Handled = true; // Ignore the key press event
+        }
     }
 }

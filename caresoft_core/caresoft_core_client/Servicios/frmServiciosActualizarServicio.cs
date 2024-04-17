@@ -64,4 +64,19 @@ public partial class frmServiciosActualizarServicio : Form
             FormHelper.ErrorBox(ex.Message);
         }
     }
+
+    private void txtCostoServicio_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        // Allow digits, decimal separator, and the backspace key
+        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+        {
+            e.Handled = true; // Ignore the key press event
+        }
+
+        // Allow only one decimal separator
+        if (e.KeyChar == '.' && ((TextBox)sender).Text.Contains('.'))
+        {
+            e.Handled = true; // Ignore the key press event
+        }
+    }
 }

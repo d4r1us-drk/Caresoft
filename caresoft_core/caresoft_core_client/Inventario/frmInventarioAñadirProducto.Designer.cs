@@ -1,6 +1,6 @@
 ﻿namespace caresoft_core_client.Inventario;
 
-partial class frmInventarioRegistrarProducto
+partial class frmInventarioAñadirProducto
 {
     /// <summary>
     /// Required designer variable.
@@ -28,7 +28,7 @@ partial class frmInventarioRegistrarProducto
     /// </summary>
     private void InitializeComponent()
     {
-        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioRegistrarProducto));
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioAñadirProducto));
         lblProveedorProducto = new Label();
         lblLoteProducto = new Label();
         txtLoteProducto = new TextBox();
@@ -74,6 +74,7 @@ partial class frmInventarioRegistrarProducto
         txtLoteProducto.Name = "txtLoteProducto";
         txtLoteProducto.Size = new Size(148, 23);
         txtLoteProducto.TabIndex = 22;
+        txtLoteProducto.KeyPress += txtLoteProducto_KeyPress;
         // 
         // lblCostoProducto
         // 
@@ -90,6 +91,7 @@ partial class frmInventarioRegistrarProducto
         txtCostoProducto.Name = "txtCostoProducto";
         txtCostoProducto.Size = new Size(148, 23);
         txtCostoProducto.TabIndex = 20;
+        txtCostoProducto.KeyPress += txtCostoProducto_KeyPress;
         // 
         // lblDescripcionProducto
         // 
