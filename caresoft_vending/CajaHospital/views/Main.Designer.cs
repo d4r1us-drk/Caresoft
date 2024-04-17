@@ -51,7 +51,7 @@
             this.reportesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1091, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1305, 33);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -78,14 +78,14 @@
             // nuevoClienteToolStripMenuItem
             // 
             this.nuevoClienteToolStripMenuItem.Name = "nuevoClienteToolStripMenuItem";
-            this.nuevoClienteToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.nuevoClienteToolStripMenuItem.Size = new System.Drawing.Size(241, 34);
             this.nuevoClienteToolStripMenuItem.Text = "Nuevo cliente";
             this.nuevoClienteToolStripMenuItem.Click += new System.EventHandler(this.nuevoClienteToolStripMenuItem_Click);
             // 
             // clienteExistenteToolStripMenuItem
             // 
             this.clienteExistenteToolStripMenuItem.Name = "clienteExistenteToolStripMenuItem";
-            this.clienteExistenteToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.clienteExistenteToolStripMenuItem.Size = new System.Drawing.Size(241, 34);
             this.clienteExistenteToolStripMenuItem.Text = "Cliente existente";
             this.clienteExistenteToolStripMenuItem.Click += new System.EventHandler(this.clienteExistenteToolStripMenuItem_Click);
             // 
@@ -121,7 +121,7 @@
             // pagosToolStripMenuItem
             // 
             this.pagosToolStripMenuItem.Name = "pagosToolStripMenuItem";
-            this.pagosToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.pagosToolStripMenuItem.Size = new System.Drawing.Size(178, 34);
             this.pagosToolStripMenuItem.Text = "Facturas";
             this.pagosToolStripMenuItem.Click += new System.EventHandler(this.pagosToolStripMenuItem_Click);
             // 
@@ -129,7 +129,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1091, 735);
+            this.ClientSize = new System.Drawing.Size(1305, 854);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;

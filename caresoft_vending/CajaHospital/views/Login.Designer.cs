@@ -83,11 +83,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(409, 393);
+            this.label3.Location = new System.Drawing.Point(345, 393);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(96, 20);
+            this.label3.Size = new System.Drawing.Size(160, 20);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Documento:";
+            this.label3.Text = "Codigo o documento:";
             // 
             // label4
             // 

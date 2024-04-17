@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using caresoft_core.Dto;
 using System.Text;
-using caresoft_core.Models;
+using caresoft_integration.Models;
+using caresoft_integration.Dto;
 
 namespace caresoft_integration.Client
 {
