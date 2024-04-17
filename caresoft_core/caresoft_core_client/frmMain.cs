@@ -44,6 +44,10 @@ public partial class frmMain : Form
     private frmUsuarioEliminar frmUsuarioEliminar;
     private frmUsuarioConsultar frmUsuarioConsultar;
 
+    private frmReporteConsultas frmReporteConsultas;
+    private frmReporteIngresos frmReporteIngresos;
+    private frmReporteFacturas frmReporteFacturas;
+
     private string baseURL;
 
     public frmMain(string baseURL)
@@ -255,5 +259,33 @@ public partial class frmMain : Form
         frmUsuarioEliminar = new(baseURL);
         frmUsuarioEliminar.MdiParent = this;
         frmUsuarioEliminar.Show();
+    }
+
+    private void consultarDatosDeUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        frmUsuarioConsultar = new(baseURL);
+        frmUsuarioConsultar.MdiParent = this;
+        frmUsuarioConsultar.Show();
+    }
+
+    private void reportesDeConsultasToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        frmReporteConsultas = new(baseURL);
+        frmReporteConsultas.MdiParent = this;
+        frmReporteConsultas.Show();
+    }
+
+    private void reportesDeIngresosToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        frmReporteIngresos = new(baseURL);
+        frmReporteIngresos.MdiParent = this;
+        frmReporteIngresos.Show();
+    }
+
+    private void reportesDeFacturasToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        frmReporteFacturas = new(baseURL);
+        frmReporteFacturas.MdiParent = this;
+        frmReporteFacturas.Show();
     }
 }

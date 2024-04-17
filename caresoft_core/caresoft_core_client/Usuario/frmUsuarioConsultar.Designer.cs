@@ -50,7 +50,7 @@ partial class frmUsuarioConsultar
         dbgrdDatosConsulta.Location = new Point(0, 0);
         dbgrdDatosConsulta.Name = "dbgrdDatosConsulta";
         dbgrdDatosConsulta.ReadOnly = true;
-        dbgrdDatosConsulta.Size = new Size(800, 394);
+        dbgrdDatosConsulta.Size = new Size(958, 451);
         dbgrdDatosConsulta.TabIndex = 0;
         // 
         // lblTituloConsulta
@@ -70,7 +70,7 @@ partial class frmUsuarioConsultar
         pnlTitulo.Dock = DockStyle.Top;
         pnlTitulo.Location = new Point(0, 0);
         pnlTitulo.Name = "pnlTitulo";
-        pnlTitulo.Size = new Size(800, 56);
+        pnlTitulo.Size = new Size(958, 56);
         pnlTitulo.TabIndex = 2;
         // 
         // pnlDatos
@@ -79,16 +79,16 @@ partial class frmUsuarioConsultar
         pnlDatos.Dock = DockStyle.Fill;
         pnlDatos.Location = new Point(0, 56);
         pnlDatos.Name = "pnlDatos";
-        pnlDatos.Size = new Size(800, 394);
+        pnlDatos.Size = new Size(958, 451);
         pnlDatos.TabIndex = 3;
         // 
         // pnlBotones
         // 
         pnlBotones.Controls.Add(btnSalir);
         pnlBotones.Dock = DockStyle.Bottom;
-        pnlBotones.Location = new Point(0, 418);
+        pnlBotones.Location = new Point(0, 475);
         pnlBotones.Name = "pnlBotones";
-        pnlBotones.Size = new Size(800, 32);
+        pnlBotones.Size = new Size(958, 32);
         pnlBotones.TabIndex = 4;
         // 
         // btnSalir
@@ -105,7 +105,7 @@ partial class frmUsuarioConsultar
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(800, 450);
+        ClientSize = new Size(958, 507);
         Controls.Add(pnlBotones);
         Controls.Add(pnlDatos);
         Controls.Add(pnlTitulo);

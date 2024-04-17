@@ -33,31 +33,46 @@ partial class frmUsuarioActualizar
         lblTituloDatos = new Label();
         lblTituloProductos = new Label();
         pnlDatos = new Panel();
-        chklbProveedores = new CheckedListBox();
-        txtIdProducto = new TextBox();
-        lblIdProducto = new Label();
-        lblProveedorProducto = new Label();
-        lblLoteProducto = new Label();
-        txtLoteProducto = new TextBox();
-        lblCostoProducto = new Label();
-        txtCostoProducto = new TextBox();
-        lblDescripcionProducto = new Label();
-        txtDescripcionProducto = new TextBox();
+        dateTimeFechaNacimiento = new DateTimePicker();
+        txtDireccion = new TextBox();
+        label11 = new Label();
+        txtCorreo = new TextBox();
+        label10 = new Label();
+        txtTelefono = new TextBox();
+        label9 = new Label();
+        label8 = new Label();
+        comboGenero = new ComboBox();
+        label7 = new Label();
+        txtApellido = new TextBox();
+        label6 = new Label();
+        comboRol = new ComboBox();
+        comboTipoDocumento = new ComboBox();
+        label3 = new Label();
+        txtLicencia = new TextBox();
+        label4 = new Label();
+        txtContrasena = new TextBox();
+        label5 = new Label();
+        txtDocumento = new TextBox();
+        label2 = new Label();
+        label1 = new Label();
+        txtCodigoUsuario = new TextBox();
         lblNombreProducto = new Label();
-        txtNombreProducto = new TextBox();
+        txtNombre = new TextBox();
+        lblCostoProducto = new Label();
         pnlBotonActualizar = new Panel();
+        button1 = new Button();
         btnActualizar = new Button();
         pnlConsulta = new Panel();
         pnlBotones = new Panel();
         btnCancelar = new Button();
         btnCargarDatos = new Button();
-        dbgrdProductos = new DataGridView();
+        dbgrdUsuarios = new DataGridView();
         pnlTitulos.SuspendLayout();
         pnlDatos.SuspendLayout();
         pnlBotonActualizar.SuspendLayout();
         pnlConsulta.SuspendLayout();
         pnlBotones.SuspendLayout();
-        ((System.ComponentModel.ISupportInitialize)dbgrdProductos).BeginInit();
+        ((System.ComponentModel.ISupportInitialize)dbgrdUsuarios).BeginInit();
         SuspendLayout();
         // 
         // pnlTitulos
@@ -67,7 +82,7 @@ partial class frmUsuarioActualizar
         pnlTitulos.Dock = DockStyle.Top;
         pnlTitulos.Location = new Point(0, 0);
         pnlTitulos.Name = "pnlTitulos";
-        pnlTitulos.Size = new Size(800, 55);
+        pnlTitulos.Size = new Size(1193, 55);
         pnlTitulos.TabIndex = 0;
         // 
         // lblTituloDatos
@@ -82,144 +97,272 @@ partial class frmUsuarioActualizar
         // 
         // lblTituloProductos
         // 
-        lblTituloProductos.AutoSize = true;
         lblTituloProductos.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-        lblTituloProductos.Location = new Point(447, 18);
+        lblTituloProductos.Location = new Point(300, 18);
         lblTituloProductos.Name = "lblTituloProductos";
-        lblTituloProductos.Size = new Size(213, 25);
+        lblTituloProductos.Size = new Size(893, 25);
         lblTituloProductos.TabIndex = 1;
-        lblTituloProductos.Text = "Productos Registrados";
+        lblTituloProductos.Text = "Usuarios Registrados";
+        lblTituloProductos.TextAlign = ContentAlignment.MiddleCenter;
         // 
         // pnlDatos
         // 
-        pnlDatos.Controls.Add(chklbProveedores);
-        pnlDatos.Controls.Add(txtIdProducto);
-        pnlDatos.Controls.Add(lblIdProducto);
-        pnlDatos.Controls.Add(lblProveedorProducto);
-        pnlDatos.Controls.Add(lblLoteProducto);
-        pnlDatos.Controls.Add(txtLoteProducto);
-        pnlDatos.Controls.Add(lblCostoProducto);
-        pnlDatos.Controls.Add(txtCostoProducto);
-        pnlDatos.Controls.Add(lblDescripcionProducto);
-        pnlDatos.Controls.Add(txtDescripcionProducto);
+        pnlDatos.Controls.Add(dateTimeFechaNacimiento);
+        pnlDatos.Controls.Add(txtDireccion);
+        pnlDatos.Controls.Add(label11);
+        pnlDatos.Controls.Add(txtCorreo);
+        pnlDatos.Controls.Add(label10);
+        pnlDatos.Controls.Add(txtTelefono);
+        pnlDatos.Controls.Add(label9);
+        pnlDatos.Controls.Add(label8);
+        pnlDatos.Controls.Add(comboGenero);
+        pnlDatos.Controls.Add(label7);
+        pnlDatos.Controls.Add(txtApellido);
+        pnlDatos.Controls.Add(label6);
+        pnlDatos.Controls.Add(comboRol);
+        pnlDatos.Controls.Add(comboTipoDocumento);
+        pnlDatos.Controls.Add(label3);
+        pnlDatos.Controls.Add(txtLicencia);
+        pnlDatos.Controls.Add(label4);
+        pnlDatos.Controls.Add(txtContrasena);
+        pnlDatos.Controls.Add(label5);
+        pnlDatos.Controls.Add(txtDocumento);
+        pnlDatos.Controls.Add(label2);
+        pnlDatos.Controls.Add(label1);
+        pnlDatos.Controls.Add(txtCodigoUsuario);
         pnlDatos.Controls.Add(lblNombreProducto);
-        pnlDatos.Controls.Add(txtNombreProducto);
+        pnlDatos.Controls.Add(txtNombre);
+        pnlDatos.Controls.Add(lblCostoProducto);
         pnlDatos.Controls.Add(pnlBotonActualizar);
         pnlDatos.Dock = DockStyle.Left;
         pnlDatos.Location = new Point(0, 55);
         pnlDatos.Name = "pnlDatos";
-        pnlDatos.Size = new Size(300, 476);
+        pnlDatos.Size = new Size(300, 416);
         pnlDatos.TabIndex = 1;
         // 
-        // chklbProveedores
+        // dateTimeFechaNacimiento
         // 
-        chklbProveedores.FormattingEnabled = true;
-        chklbProveedores.Location = new Point(129, 309);
-        chklbProveedores.Name = "chklbProveedores";
-        chklbProveedores.Size = new Size(148, 112);
-        chklbProveedores.TabIndex = 27;
+        dateTimeFechaNacimiento.ImeMode = ImeMode.On;
+        dateTimeFechaNacimiento.Location = new Point(135, 328);
+        dateTimeFechaNacimiento.Name = "dateTimeFechaNacimiento";
+        dateTimeFechaNacimiento.Size = new Size(148, 23);
+        dateTimeFechaNacimiento.TabIndex = 78;
         // 
-        // txtIdProducto
+        // txtDireccion
         // 
-        txtIdProducto.Enabled = false;
-        txtIdProducto.Location = new Point(129, 39);
-        txtIdProducto.Name = "txtIdProducto";
-        txtIdProducto.Size = new Size(148, 23);
-        txtIdProducto.TabIndex = 15;
+        txtDireccion.Location = new Point(135, 183);
+        txtDireccion.Name = "txtDireccion";
+        txtDireccion.Size = new Size(148, 23);
+        txtDireccion.TabIndex = 76;
         // 
-        // lblIdProducto
+        // label11
         // 
-        lblIdProducto.AutoSize = true;
-        lblIdProducto.Location = new Point(22, 42);
-        lblIdProducto.Name = "lblIdProducto";
-        lblIdProducto.Size = new Size(85, 15);
-        lblIdProducto.TabIndex = 14;
-        lblIdProducto.Text = "Id de Producto";
+        label11.Location = new Point(18, 186);
+        label11.Name = "label11";
+        label11.Size = new Size(111, 15);
+        label11.TabIndex = 77;
+        label11.Text = "Dirección";
         // 
-        // lblProveedorProducto
+        // txtCorreo
         // 
-        lblProveedorProducto.AutoSize = true;
-        lblProveedorProducto.Location = new Point(22, 309);
-        lblProveedorProducto.Name = "lblProveedorProducto";
-        lblProveedorProducto.Size = new Size(61, 15);
-        lblProveedorProducto.TabIndex = 13;
-        lblProveedorProducto.Text = "Proveedor";
+        txtCorreo.Location = new Point(135, 357);
+        txtCorreo.Name = "txtCorreo";
+        txtCorreo.Size = new Size(148, 23);
+        txtCorreo.TabIndex = 74;
         // 
-        // lblLoteProducto
+        // label10
         // 
-        lblLoteProducto.AutoSize = true;
-        lblLoteProducto.Location = new Point(22, 266);
-        lblLoteProducto.Name = "lblLoteProducto";
-        lblLoteProducto.Size = new Size(89, 15);
-        lblLoteProducto.TabIndex = 11;
-        lblLoteProducto.Text = "Lote Disponible";
+        label10.Location = new Point(18, 360);
+        label10.Name = "label10";
+        label10.Size = new Size(122, 15);
+        label10.TabIndex = 75;
+        label10.Text = "Correo";
         // 
-        // txtLoteProducto
+        // txtTelefono
         // 
-        txtLoteProducto.Location = new Point(129, 263);
-        txtLoteProducto.Name = "txtLoteProducto";
-        txtLoteProducto.Size = new Size(148, 23);
-        txtLoteProducto.TabIndex = 10;
-        txtLoteProducto.KeyPress += txtLoteProducto_KeyPress;
+        txtTelefono.Location = new Point(135, 154);
+        txtTelefono.Name = "txtTelefono";
+        txtTelefono.Size = new Size(148, 23);
+        txtTelefono.TabIndex = 72;
         // 
-        // lblCostoProducto
+        // label9
         // 
-        lblCostoProducto.AutoSize = true;
-        lblCostoProducto.Location = new Point(22, 223);
-        lblCostoProducto.Name = "lblCostoProducto";
-        lblCostoProducto.Size = new Size(38, 15);
-        lblCostoProducto.TabIndex = 9;
-        lblCostoProducto.Text = "Costo";
+        label9.Location = new Point(18, 157);
+        label9.Name = "label9";
+        label9.Size = new Size(111, 15);
+        label9.TabIndex = 73;
+        label9.Text = "Telefono";
         // 
-        // txtCostoProducto
+        // label8
         // 
-        txtCostoProducto.Location = new Point(129, 220);
-        txtCostoProducto.Name = "txtCostoProducto";
-        txtCostoProducto.Size = new Size(148, 23);
-        txtCostoProducto.TabIndex = 8;
-        txtCostoProducto.KeyPress += txtCostoProducto_KeyPress;
+        label8.Location = new Point(18, 331);
+        label8.Name = "label8";
+        label8.Size = new Size(122, 15);
+        label8.TabIndex = 71;
+        label8.Text = "Fecha de nacimiento";
         // 
-        // lblDescripcionProducto
+        // comboGenero
         // 
-        lblDescripcionProducto.AutoSize = true;
-        lblDescripcionProducto.Location = new Point(22, 126);
-        lblDescripcionProducto.Name = "lblDescripcionProducto";
-        lblDescripcionProducto.Size = new Size(69, 15);
-        lblDescripcionProducto.TabIndex = 7;
-        lblDescripcionProducto.Text = "Descripción";
+        comboGenero.DropDownStyle = ComboBoxStyle.DropDownList;
+        comboGenero.FormattingEnabled = true;
+        comboGenero.Location = new Point(135, 125);
+        comboGenero.Name = "comboGenero";
+        comboGenero.Size = new Size(148, 23);
+        comboGenero.TabIndex = 70;
         // 
-        // txtDescripcionProducto
+        // label7
         // 
-        txtDescripcionProducto.Location = new Point(129, 123);
-        txtDescripcionProducto.Multiline = true;
-        txtDescripcionProducto.Name = "txtDescripcionProducto";
-        txtDescripcionProducto.Size = new Size(148, 79);
-        txtDescripcionProducto.TabIndex = 6;
+        label7.Location = new Point(18, 128);
+        label7.Name = "label7";
+        label7.Size = new Size(111, 15);
+        label7.TabIndex = 69;
+        label7.Text = "Genero";
+        // 
+        // txtApellido
+        // 
+        txtApellido.Location = new Point(135, 299);
+        txtApellido.Name = "txtApellido";
+        txtApellido.Size = new Size(148, 23);
+        txtApellido.TabIndex = 67;
+        // 
+        // label6
+        // 
+        label6.Location = new Point(18, 305);
+        label6.Name = "label6";
+        label6.Size = new Size(101, 15);
+        label6.TabIndex = 68;
+        label6.Text = "Apellido";
+        // 
+        // comboRol
+        // 
+        comboRol.DropDownStyle = ComboBoxStyle.DropDownList;
+        comboRol.FormattingEnabled = true;
+        comboRol.Location = new Point(135, 67);
+        comboRol.Name = "comboRol";
+        comboRol.Size = new Size(148, 23);
+        comboRol.TabIndex = 66;
+        // 
+        // comboTipoDocumento
+        // 
+        comboTipoDocumento.DropDownStyle = ComboBoxStyle.DropDownList;
+        comboTipoDocumento.FormattingEnabled = true;
+        comboTipoDocumento.Location = new Point(135, 38);
+        comboTipoDocumento.Name = "comboTipoDocumento";
+        comboTipoDocumento.Size = new Size(148, 23);
+        comboTipoDocumento.TabIndex = 65;
+        // 
+        // label3
+        // 
+        label3.Location = new Point(18, 38);
+        label3.Name = "label3";
+        label3.Size = new Size(111, 15);
+        label3.TabIndex = 64;
+        label3.Text = "Tipo de documento";
+        // 
+        // txtLicencia
+        // 
+        txtLicencia.Enabled = false;
+        txtLicencia.Location = new Point(135, 270);
+        txtLicencia.Name = "txtLicencia";
+        txtLicencia.Size = new Size(148, 23);
+        txtLicencia.TabIndex = 62;
+        // 
+        // label4
+        // 
+        label4.Location = new Point(18, 273);
+        label4.Name = "label4";
+        label4.Size = new Size(101, 15);
+        label4.TabIndex = 63;
+        label4.Text = "# Licencia";
+        // 
+        // txtContrasena
+        // 
+        txtContrasena.Location = new Point(135, 212);
+        txtContrasena.Name = "txtContrasena";
+        txtContrasena.PasswordChar = '*';
+        txtContrasena.Size = new Size(148, 23);
+        txtContrasena.TabIndex = 60;
+        // 
+        // label5
+        // 
+        label5.Location = new Point(18, 215);
+        label5.Name = "label5";
+        label5.Size = new Size(101, 15);
+        label5.TabIndex = 61;
+        label5.Text = "Contraseña";
+        // 
+        // txtDocumento
+        // 
+        txtDocumento.Location = new Point(135, 241);
+        txtDocumento.Name = "txtDocumento";
+        txtDocumento.Size = new Size(148, 23);
+        txtDocumento.TabIndex = 58;
+        // 
+        // label2
+        // 
+        label2.Location = new Point(18, 244);
+        label2.Name = "label2";
+        label2.Size = new Size(101, 15);
+        label2.TabIndex = 59;
+        label2.Text = "Documento";
+        // 
+        // label1
+        // 
+        label1.Location = new Point(18, 70);
+        label1.Name = "label1";
+        label1.Size = new Size(111, 15);
+        label1.TabIndex = 57;
+        label1.Text = "Rol";
+        // 
+        // txtCodigoUsuario
+        // 
+        txtCodigoUsuario.Location = new Point(135, 6);
+        txtCodigoUsuario.Name = "txtCodigoUsuario";
+        txtCodigoUsuario.Size = new Size(148, 23);
+        txtCodigoUsuario.TabIndex = 53;
         // 
         // lblNombreProducto
         // 
-        lblNombreProducto.AutoSize = true;
-        lblNombreProducto.Location = new Point(22, 86);
+        lblNombreProducto.Location = new Point(18, 9);
         lblNombreProducto.Name = "lblNombreProducto";
-        lblNombreProducto.Size = new Size(51, 15);
-        lblNombreProducto.TabIndex = 5;
-        lblNombreProducto.Text = "Nombre";
+        lblNombreProducto.Size = new Size(111, 15);
+        lblNombreProducto.TabIndex = 54;
+        lblNombreProducto.Text = "Código usuario";
         // 
-        // txtNombreProducto
+        // txtNombre
         // 
-        txtNombreProducto.Location = new Point(129, 83);
-        txtNombreProducto.Name = "txtNombreProducto";
-        txtNombreProducto.Size = new Size(148, 23);
-        txtNombreProducto.TabIndex = 4;
+        txtNombre.Location = new Point(135, 96);
+        txtNombre.Name = "txtNombre";
+        txtNombre.Size = new Size(148, 23);
+        txtNombre.TabIndex = 55;
+        // 
+        // lblCostoProducto
+        // 
+        lblCostoProducto.Location = new Point(18, 99);
+        lblCostoProducto.Name = "lblCostoProducto";
+        lblCostoProducto.Size = new Size(111, 15);
+        lblCostoProducto.TabIndex = 56;
+        lblCostoProducto.Text = "Nombre";
         // 
         // pnlBotonActualizar
         // 
+        pnlBotonActualizar.Controls.Add(button1);
         pnlBotonActualizar.Controls.Add(btnActualizar);
         pnlBotonActualizar.Dock = DockStyle.Bottom;
-        pnlBotonActualizar.Location = new Point(0, 449);
+        pnlBotonActualizar.Location = new Point(0, 389);
         pnlBotonActualizar.Name = "pnlBotonActualizar";
         pnlBotonActualizar.Size = new Size(300, 27);
         pnlBotonActualizar.TabIndex = 3;
+        // 
+        // button1
+        // 
+        button1.Dock = DockStyle.Fill;
+        button1.Location = new Point(0, 0);
+        button1.Name = "button1";
+        button1.Size = new Size(300, 27);
+        button1.TabIndex = 3;
+        button1.Text = "Actualizar";
+        button1.UseVisualStyleBackColor = true;
         // 
         // btnActualizar
         // 
@@ -236,11 +379,11 @@ partial class frmUsuarioActualizar
         // 
         pnlConsulta.AutoScroll = true;
         pnlConsulta.Controls.Add(pnlBotones);
-        pnlConsulta.Controls.Add(dbgrdProductos);
+        pnlConsulta.Controls.Add(dbgrdUsuarios);
         pnlConsulta.Dock = DockStyle.Fill;
         pnlConsulta.Location = new Point(300, 55);
         pnlConsulta.Name = "pnlConsulta";
-        pnlConsulta.Size = new Size(500, 476);
+        pnlConsulta.Size = new Size(893, 416);
         pnlConsulta.TabIndex = 2;
         // 
         // pnlBotones
@@ -248,15 +391,15 @@ partial class frmUsuarioActualizar
         pnlBotones.Controls.Add(btnCancelar);
         pnlBotones.Controls.Add(btnCargarDatos);
         pnlBotones.Dock = DockStyle.Bottom;
-        pnlBotones.Location = new Point(0, 449);
+        pnlBotones.Location = new Point(0, 389);
         pnlBotones.Name = "pnlBotones";
-        pnlBotones.Size = new Size(500, 27);
+        pnlBotones.Size = new Size(893, 27);
         pnlBotones.TabIndex = 1;
         // 
         // btnCancelar
         // 
         btnCancelar.Dock = DockStyle.Right;
-        btnCancelar.Location = new Point(410, 0);
+        btnCancelar.Location = new Point(803, 0);
         btnCancelar.Name = "btnCancelar";
         btnCancelar.Size = new Size(90, 27);
         btnCancelar.TabIndex = 1;
@@ -275,25 +418,25 @@ partial class frmUsuarioActualizar
         btnCargarDatos.UseVisualStyleBackColor = true;
         btnCargarDatos.Click += btnCargarDatos_Click;
         // 
-        // dbgrdProductos
+        // dbgrdUsuarios
         // 
-        dbgrdProductos.AllowUserToAddRows = false;
-        dbgrdProductos.AllowUserToDeleteRows = false;
-        dbgrdProductos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-        dbgrdProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        dbgrdProductos.Dock = DockStyle.Fill;
-        dbgrdProductos.Location = new Point(0, 0);
-        dbgrdProductos.Name = "dbgrdProductos";
-        dbgrdProductos.ReadOnly = true;
-        dbgrdProductos.Size = new Size(500, 476);
-        dbgrdProductos.TabIndex = 0;
+        dbgrdUsuarios.AllowUserToAddRows = false;
+        dbgrdUsuarios.AllowUserToDeleteRows = false;
+        dbgrdUsuarios.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+        dbgrdUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        dbgrdUsuarios.Dock = DockStyle.Fill;
+        dbgrdUsuarios.Location = new Point(0, 0);
+        dbgrdUsuarios.Name = "dbgrdUsuarios";
+        dbgrdUsuarios.ReadOnly = true;
+        dbgrdUsuarios.Size = new Size(893, 416);
+        dbgrdUsuarios.TabIndex = 0;
         // 
-        // frmInventarioActualizarProducto
+        // frmUsuarioActualizar
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         CancelButton = btnCancelar;
-        ClientSize = new Size(800, 531);
+        ClientSize = new Size(1193, 471);
         Controls.Add(pnlConsulta);
         Controls.Add(pnlDatos);
         Controls.Add(pnlTitulos);
@@ -301,9 +444,9 @@ partial class frmUsuarioActualizar
         Icon = (Icon)resources.GetObject("$this.Icon");
         MaximizeBox = false;
         MinimizeBox = false;
-        Name = "frmInventarioActualizarProducto";
+        Name = "frmUsuarioActualizar";
         StartPosition = FormStartPosition.CenterScreen;
-        Text = "Actualizar Producto";
+        Text = "Actualizar usuario";
         pnlTitulos.ResumeLayout(false);
         pnlTitulos.PerformLayout();
         pnlDatos.ResumeLayout(false);
@@ -311,7 +454,7 @@ partial class frmUsuarioActualizar
         pnlBotonActualizar.ResumeLayout(false);
         pnlConsulta.ResumeLayout(false);
         pnlBotones.ResumeLayout(false);
-        ((System.ComponentModel.ISupportInitialize)dbgrdProductos).EndInit();
+        ((System.ComponentModel.ISupportInitialize)dbgrdUsuarios).EndInit();
         ResumeLayout(false);
     }
 
@@ -321,23 +464,38 @@ partial class frmUsuarioActualizar
     private Panel pnlDatos;
     private Panel pnlConsulta;
     private Label lblTituloDatos;
-    private DataGridView dbgrdProductos;
+    private DataGridView dbgrdUsuarios;
     private Panel pnlBotones;
     private Button btnCancelar;
     private Button btnCargarDatos;
     private Panel pnlBotonActualizar;
     private Button btnActualizar;
     private Label lblTituloProductos;
+    private DateTimePicker dateTimeFechaNacimiento;
+    private TextBox txtDireccion;
+    private Label label11;
+    private TextBox txtCorreo;
+    private Label label10;
+    private TextBox txtTelefono;
+    private Label label9;
+    private Label label8;
+    private ComboBox comboGenero;
+    private Label label7;
+    private TextBox txtApellido;
+    private Label label6;
+    private ComboBox comboRol;
+    private ComboBox comboTipoDocumento;
+    private Label label3;
+    private TextBox txtLicencia;
+    private Label label4;
+    private TextBox txtContrasena;
+    private Label label5;
+    private TextBox txtDocumento;
+    private Label label2;
+    private Label label1;
+    private TextBox txtCodigoUsuario;
     private Label lblNombreProducto;
-    private TextBox txtNombreProducto;
-    private Label lblDescripcionProducto;
-    private TextBox txtDescripcionProducto;
+    private TextBox txtNombre;
     private Label lblCostoProducto;
-    private TextBox txtCostoProducto;
-    private Label lblLoteProducto;
-    private TextBox txtLoteProducto;
-    private Label lblProveedorProducto;
-    private TextBox txtIdProducto;
-    private Label lblIdProducto;
-    private CheckedListBox chklbProveedores;
+    private Button button1;
 }

@@ -404,18 +404,21 @@
             reportesDeConsultasToolStripMenuItem.Name = "reportesDeConsultasToolStripMenuItem";
             reportesDeConsultasToolStripMenuItem.Size = new Size(189, 22);
             reportesDeConsultasToolStripMenuItem.Text = "Reportes de consultas";
+            reportesDeConsultasToolStripMenuItem.Click += reportesDeConsultasToolStripMenuItem_Click;
             // 
             // reportesDeIngresosToolStripMenuItem
             // 
             reportesDeIngresosToolStripMenuItem.Name = "reportesDeIngresosToolStripMenuItem";
             reportesDeIngresosToolStripMenuItem.Size = new Size(189, 22);
             reportesDeIngresosToolStripMenuItem.Text = "Reportes de ingresos";
+            reportesDeIngresosToolStripMenuItem.Click += reportesDeIngresosToolStripMenuItem_Click;
             // 
             // reportesDeFacturasToolStripMenuItem
             // 
             reportesDeFacturasToolStripMenuItem.Name = "reportesDeFacturasToolStripMenuItem";
             reportesDeFacturasToolStripMenuItem.Size = new Size(189, 22);
             reportesDeFacturasToolStripMenuItem.Text = "Reportes de facturas";
+            reportesDeFacturasToolStripMenuItem.Click += reportesDeFacturasToolStripMenuItem_Click;
             // 
             // usuariosToolStripMenuItem
             // 
@@ -457,6 +460,7 @@
             consultarDatosDeUsuariosToolStripMenuItem.Name = "consultarDatosDeUsuariosToolStripMenuItem";
             consultarDatosDeUsuariosToolStripMenuItem.Size = new Size(220, 22);
             consultarDatosDeUsuariosToolStripMenuItem.Text = "Consultar datos de usuarios";
+            consultarDatosDeUsuariosToolStripMenuItem.Click += consultarDatosDeUsuariosToolStripMenuItem_Click;
             // 
             // frmMain
             // 

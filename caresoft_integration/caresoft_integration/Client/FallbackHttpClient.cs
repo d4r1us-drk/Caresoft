@@ -165,13 +165,14 @@ public class FallbackHttpClient
         try
         {
             int idAseguradora = checked((int)aseguradora.IdAseguradora);
-            return await API.ApiAseguradoraUpdateAsync(
-                idAseguradora,
-                aseguradora.Nombre,
-                aseguradora.Direccion,
-                aseguradora.Telefono,
-                aseguradora.Correo,
-                aseguradora.Autorizacions);
+            await API.ApiAseguradoraUpdateAsync(
+               idAseguradora,
+               aseguradora.Nombre,
+               aseguradora.Direccion,
+               aseguradora.Telefono,
+               aseguradora.Correo,
+               aseguradora.Autorizacions.Select(e => caresoft_integration.Models.Autorizacion.ToCoreApi(e)));
+            return 1;
 
         }
         catch (OverflowException)
@@ -330,7 +331,7 @@ public class FallbackHttpClient
             {
                 IdAutorizacion = (uint)a.IdAutorizacion,
                 IdAseguradora = (uint)a.IdAseguradora, // Asumiendo que tienes un campo de ID de aseguradora.
-                Fecha = a.FechaAutorizacion, // Asumiendo que tienes un campo de fecha.
+                Fecha = a.Fecha.Date, // Asumiendo que tienes un campo de fecha.
                 MontoAsegurado = (decimal)a.MontoAsegurado, // Asumiendo que tienes un campo para el monto de cobertura.
             }).ToList();
 

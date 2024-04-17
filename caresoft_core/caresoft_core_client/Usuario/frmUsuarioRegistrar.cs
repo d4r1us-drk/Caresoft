@@ -1,119 +1,183 @@
 ﻿using caresoft_core.CoreWebApi;
+using caresoft_core_client.Utils;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace caresoft_core_client.Usuario;
-
-public partial class frmUsuarioRegistrar : Form
+namespace caresoft_core_client.Usuario
 {
-    private readonly Client _api;
-
-    public frmUsuarioRegistrar(string baseURL)
+    public partial class frmUsuarioRegistrar : Form
     {
-        _api = new Client(baseURL);
-        InitializeComponent();
-        LoadProviders();
-    }
-
-    private void btnCancelar_Click(object sender, EventArgs e)
-    {
-        Close();
-    }
-
-    private async void btnRegistrar_Click(object sender, EventArgs e)
-    {
-        // Get selected providers
-        var selectedProviders = new List<ProveedorDto>();
-        foreach (object itemChecked in chklbProveedores.CheckedItems)
+        private readonly Client _api;
+        public frmUsuarioRegistrar(string baseUrl)
         {
-            selectedProviders.Add((ProveedorDto)itemChecked);
+            _api = new Client(baseUrl);
+            InitializeComponent();
+            LoadGeneros();
+            LoadRoles();
+            LoadTipoDocumentos();
         }
-
-        // Create the new product object
-        var newProduct = new ProductoDto
+        private void LoadGeneros()
         {
-            Nombre = txtNombreProducto.Text.Trim(),
-            Descripcion = txtDescripcionProducto.Text.Trim(),
-            Costo = double.Parse(txtCostoProducto.Text),
-            LoteDisponible = int.Parse(txtLoteProducto.Text)
+            var generos = new List<object>
+        {
+            new
+            {
+                Key = "F",
+                Value = "Femenino"
+            },
+            new
+            {
+                Key = "M",
+                Value = "Masculino"
+            },
         };
-        try
+            comboGenero.DataSource = generos;
+            comboGenero.DisplayMember = "Value";
+            comboGenero.ValueMember = "Key";
+
+        }
+
+        private void LoadRoles()
         {
-            await _api.ApiProductoAddAsync(null, newProduct.Nombre, newProduct.Descripcion, newProduct.Costo, newProduct.LoteDisponible);
-
-            var productos = await _api.ApiProductoGetAsync();
-            var nuevoProducto = productos.FirstOrDefault(p => p.Nombre == newProduct.Nombre && p.Descripcion == newProduct.Descripcion && p.Costo == newProduct.Costo && p.LoteDisponible == newProduct.LoteDisponible);
-
-            if (nuevoProducto == null) return;
-            int idProducto = nuevoProducto.IdProducto;
-
-            foreach (var provider in selectedProviders)
+            var roles = new List<object>
+        {
+            new {
+                Key = "A",
+                Value = "Administrador"
+            },
+            new
             {
-                await _api.ApiProductoAddProviderAsync(idProducto, provider.RncProveedor);
+                Key = "P",
+                Value = "Paciente"
+            },
+            new
+            {
+                Key = "M",
+                Value = "Médico"
+            },
+            new
+            {
+                Key = "E",
+                Value = "Enfermero"
+            },
+            new
+            {
+                Key = "C",
+                Value = "Cajero"
+            },
+
+        };
+            comboRol.DataSource = roles;
+            comboRol.DisplayMember = "Value";
+            comboRol.ValueMember = "Key";
+        }
+
+        private void LoadTipoDocumentos()
+        {
+            var tipoDocumentos = new List<object>
+        {
+             new
+             {
+                 Key = "I",
+                 Value = "Identificación"
+             },
+             new
+             {
+                    Key = "P",
+                    Value = "Pasaporte"
+                },
+
+        };
+            comboTipoDocumento.DataSource = tipoDocumentos;
+            comboTipoDocumento.DisplayMember = "Value";
+            comboTipoDocumento.ValueMember = "Key";
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private async void btnRegistrar_Click(object sender, EventArgs e)
+        {
+            var codigoUsuario = txtCodigoUsuario.Text;
+            var contrasena = txtContrasena.Text;
+            string? tipoDocumento = comboTipoDocumento.SelectedValue?.ToString();
+            string? rol = comboRol.SelectedValue?.ToString();
+            string? genero = comboGenero.SelectedValue?.ToString();
+            var documento = txtDocumento.Text;
+            var licenciaText = txtLicencia.Text;
+            var nombre = txtNombre.Text;
+            var apellido = txtApellido.Text;
+            var fechaNacimiento = dateTimeFechaNacimiento.Value;
+            var telefono = txtTelefono.Text;
+            var correo = txtCorreo.Text;
+            var direccion = txtDireccion.Text;
+            if (
+                string.IsNullOrEmpty(codigoUsuario) ||
+                string.IsNullOrEmpty(contrasena) ||
+                string.IsNullOrEmpty(tipoDocumento) ||
+                string.IsNullOrEmpty(rol) ||
+                string.IsNullOrEmpty(genero) ||
+                string.IsNullOrEmpty(documento) ||
+                string.IsNullOrEmpty(nombre) ||
+                string.IsNullOrEmpty(apellido) ||
+                string.IsNullOrEmpty(telefono) ||
+                string.IsNullOrEmpty(correo) ||
+                string.IsNullOrEmpty(direccion)
+                )
+            {
+                FormHelper.WarningBox("Todos los campos son obligatorios");
+                return;
+            }
+            int? licencia = null;
+            if (!string.IsNullOrEmpty(licenciaText))
+            {
+                try
+                {
+                    licencia = int.Parse(licenciaText);
+                }
+                catch (Exception)
+                {
+                    FormHelper.WarningBox("La licencia debe ser un número");
+                    return;
+                }
             }
 
-            MessageBox.Show("Producto registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ClearFields();
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-    }
-
-    private async void LoadProviders()
-    {
-        try
-        {
-            var providers = await _api.ApiProveedorListAsync();
-
-            if (providers != null && providers.Count > 0)
+            try
             {
-                // Populate the providers in the checked list box
-                chklbProveedores.DataSource = providers;
-                chklbProveedores.DisplayMember = "Nombre";
-                chklbProveedores.ValueMember = "RncProveedor";
+                await _api.ApiUsuarioAddAsync(codigoUsuario, documento, contrasena, tipoDocumento, licencia, nombre, apellido, genero, fechaNacimiento, telefono, correo, direccion, rol);
+                FormHelper.InfoBox("Usuario creado correctamente");
+
             }
-            else
+            catch (Exception)
             {
-                MessageBox.Show("No se encontraron proveedores.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                FormHelper.ErrorBox("No se pudo crear el usuario");
             }
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-    }
 
-    private void ClearFields()
-    {
-        txtNombreProducto.Clear();
-        txtDescripcionProducto.Clear();
-        txtCostoProducto.Clear();
-        txtLoteProducto.Clear();
-        chklbProveedores.ClearSelected();
-    }
-
-    private void txtCostoProducto_KeyPress(object sender, KeyPressEventArgs e)
-    {
-        // Allow digits, decimal separator, and the backspace key
-        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
-        {
-            e.Handled = true; // Ignore the key press event
         }
 
-        // Allow only one decimal separator
-        if (e.KeyChar == '.' && ((TextBox)sender).Text.Contains('.'))
+        private void comboRol_SelectedIndexChanged(object sender, EventArgs e)
         {
-            e.Handled = true; // Ignore the key press event
-        }
-    }
-
-    private void txtLoteProducto_KeyPress(object sender, KeyPressEventArgs e)
-    {
-        // Allow digits and the backspace key
-        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-        {
-            e.Handled = true; // Ignore the key press event
+            if(comboTipoDocumento.SelectedValue?.ToString() is string rol)
+            {
+                if(rol == "M" || rol == "E")
+                {
+                    txtLicencia.Enabled = true;
+                }
+                else
+                {
+                    txtLicencia.Enabled = false;
+                    txtLicencia.Text = "";
+                }
+            }
         }
     }
 }

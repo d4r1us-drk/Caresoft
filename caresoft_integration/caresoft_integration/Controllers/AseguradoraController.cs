@@ -33,6 +33,7 @@ public class AseguradoraController : ControllerBase
     [HttpPut("update/{id}")]
     public async Task<IActionResult> UpdateAseguradora([FromRoute] uint id, [FromBody] Aseguradora aseguradora)
     {
+
         aseguradora.IdAseguradora = id; // Asegúrate de que el ID es el correcto
         var result = await _aseguradoraService.UpdateAseguradora(aseguradora);
         if (result == 1) return Ok();
