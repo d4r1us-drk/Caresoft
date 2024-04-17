@@ -68,13 +68,5 @@ namespace CajaHospital.views
             conn.Close();
         }
 
-        private void nud_ValueChanged(object sender, EventArgs e)
-        {
-            btnCambiosMonedas.Enabled = true;
-        }
-
-
-        //TODO: Implementar logica de recarga y descarga de caja
-
     }
 }

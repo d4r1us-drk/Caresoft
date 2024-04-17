@@ -1,238 +1,85 @@
-using caresoft_integration.Models;
+using caresoft_integration.Client;
 using caresoft_integration.Dto;
+using caresoft_integration.Models;
 using caresoft_integration.Services.Interfaces;
-using caresoft_integration.Utils;
-using Microsoft.EntityFrameworkCore;
-using caresoft_integration.Context;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace caresoft_integration.Services;
-
-public class FacturaService(CaresoftDbContext dbContext) : IFacturaService
+namespace caresoft_integration.Services
 {
-    private readonly LogHandler<FacturaService> _logHandler = new();
-
-    public async Task<int> AddFacturaAsync(FacturaDto facturaDto)
+    public class FacturaService : IFacturaService
     {
-        try
-        {
-            var factura = Factura.FromDto(facturaDto);
-            dbContext.Facturas.Add(factura);
-            return await dbContext.SaveChangesAsync();
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Something went wrong while creating a Factura.", ex);
-            throw;
-        }
-    }
+        private readonly FallbackHttpClient _fallbackHttpClient;
 
-    public async Task<int> UpdateFacturaAsync(FacturaDto facturaDto)
-    {
-        try
+        public FacturaService(FallbackHttpClient fallbackHttpClient)
         {
-            var factura = Factura.FromDto(facturaDto);
-            dbContext.Facturas.Update(factura);
-            return await dbContext.SaveChangesAsync();
+            _fallbackHttpClient = fallbackHttpClient;
         }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Something went wrong while updating a Factura.", ex);
-            throw;
-        }
-    }
 
-    public async Task<int> DeleteFacturaAsync(string facturaCodigo)
-    {
-        try
+        public async Task<int> AddFacturaAsync(FacturaDto facturaDto)
         {
-            var factura = await dbContext.Facturas.FirstOrDefaultAsync(f => f.FacturaCodigo == facturaCodigo);
-            if (factura != null)
-            {
-                dbContext.Facturas.Remove(factura);
-                return await dbContext.SaveChangesAsync();
-            }
-            return 0; // Return 0 if no record is deleted
+            return await _fallbackHttpClient.AddFacturaAsync(facturaDto);
         }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Something went wrong while trying to delete a Factura.", ex);
-            throw;
-        }
-    }
 
-    public async Task<IEnumerable<FacturaDto>> GetFacturasAsync()
-    {
-        try
+        public async Task<int> UpdateFacturaAsync(FacturaDto facturaDto)
         {
-            var facturas = await dbContext.Facturas.ToListAsync();
-            return facturas.Select(FacturaDto.FromModel);
+            return await _fallbackHttpClient.UpdateFacturaAsync(facturaDto);
         }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Something went wrong while trying to get Facturas data.", ex);
-            throw;
-        }
-    }
 
-    public async Task<int> AddFacturaServicioAsync(FacturaServicioDto facturaServicioDto)
-    {
-        try
+        public async Task<int> DeleteFacturaAsync(string facturaCodigo)
         {
-            var facturaServicio = FacturaServicio.FromDto(facturaServicioDto);
-            dbContext.FacturaServicios.Add(facturaServicio);
-            return await dbContext.SaveChangesAsync();
+            return await _fallbackHttpClient.DeleteFacturaAsync(facturaCodigo);
         }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Something went wrong while trying to make a FacturaServicio relation.", ex);
-            throw;
-        }
-    }
 
-    public async Task<int> DeleteFacturaServicioAsync(string facturaCodigo, string servicioCodigo)
-    {
-        try
+        public async Task<IEnumerable<FacturaDto>> GetFacturasAsync()
         {
-            var facturaServicio = await dbContext.FacturaServicios.FirstOrDefaultAsync(fs => fs.FacturaCodigo == facturaCodigo && fs.ServicioCodigo == servicioCodigo);
-            if (facturaServicio != null)
-            {
-                dbContext.FacturaServicios.Remove(facturaServicio);
-                return await dbContext.SaveChangesAsync();
-            }
-            return 0; // Return 0 if no record is deleted
+            return await _fallbackHttpClient.GetFacturasAsync();
         }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Something went wrong while trying to delete a FacturaServicio relation.", ex);
-            throw;
-        }
-    }
 
-    public async Task<IEnumerable<FacturaServicioDto>> GetFacturaServiciosAsync(string facturaCodigo)
-    {
-        try
+        public async Task<int> AddFacturaServicioAsync(FacturaServicioDto facturaServicioDto)
         {
-            var facturaServicios = await dbContext.FacturaServicios
-                .Where(fs => fs.FacturaCodigo == facturaCodigo)
-                .ToListAsync();
+            return await _fallbackHttpClient.AddFacturaServicioAsync(facturaServicioDto);
+        }
 
-            return facturaServicios.Select(FacturaServicioDto.FromModel);
-        }
-        catch (Exception ex)
+        public async Task<int> DeleteFacturaServicioAsync(string facturaCodigo, string servicioCodigo)
         {
-            _logHandler.LogError("Something went wrong while trying to get FacturaServicio relations.", ex);
-            throw;
+            return await _fallbackHttpClient.DeleteFacturaServicioAsync(facturaCodigo, servicioCodigo);
         }
-    }
 
-    public async Task<int> AddFacturaProductoAsync(FacturaProductoDto facturaProductoDto)
-    {
-        try
+        public async Task<IEnumerable<FacturaServicioDto>> GetFacturaServiciosAsync(string facturaCodigo)
         {
-            var facturaProducto = FacturaProducto.FromDto(facturaProductoDto);
-            dbContext.FacturaProductos.Add(facturaProducto);
-            return await dbContext.SaveChangesAsync();
+            return (IEnumerable<FacturaServicioDto>)await _fallbackHttpClient.GetFacturaServiciosAsync(facturaCodigo);
         }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Something went wrong while trying to make a FacturaProducto relation.", ex);
-            throw;
-        }
-    }
 
-    public async Task<int> DeleteFacturaProductoAsync(string facturaCodigo, uint idProducto)
-    {
-        try
+        public async Task<int> AddFacturaProductoAsync(FacturaProductoDto facturaProductoDto)
         {
-            var facturaProducto = await dbContext.FacturaProductos.FirstOrDefaultAsync(fp => fp.FacturaCodigo == facturaCodigo && fp.IdProducto == idProducto);
-            if (facturaProducto != null)
-            {
-                dbContext.FacturaProductos.Remove(facturaProducto);
-                return await dbContext.SaveChangesAsync();
-            }
-            return 0; // Return 0 if no record is deleted
+            return await _fallbackHttpClient.AddFacturaProductoAsync(facturaProductoDto);
         }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Something went wrong while trying to delete a FacturaProducto relation.", ex);
-            throw;
-        }
-    }
 
-    public async Task<IEnumerable<FacturaProductoDto>> GetFacturaProductosAsync(string facturaCodigo)
-    {
-        try
+        public async Task<int> DeleteFacturaProductoAsync(string facturaCodigo, uint idProducto)
         {
-            var facturaProductos = await dbContext.FacturaProductos
-                .Where(fp => fp.FacturaCodigo == facturaCodigo)
-                .ToListAsync();
+            return await _fallbackHttpClient.DeleteFacturaProductoAsync(facturaCodigo, idProducto);
+        }
 
-            return facturaProductos.Select(FacturaProductoDto.FromModel);
-        }
-        catch (Exception ex)
+        public async Task<IEnumerable<FacturaProductoDto>> GetFacturaProductosAsync(string facturaCodigo)
         {
-            _logHandler.LogError("Something went wrong while trying to get FacturaProductos relations.", ex);
-            throw;
+            return await _fallbackHttpClient.GetFacturaProductosAsync(facturaCodigo);
         }
-    }
 
-    public async Task<int> AddFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
-    {
-        try
+        public async Task<int> AddFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
         {
-            var factura = await dbContext.Facturas.FirstOrDefaultAsync(f => f.FacturaCodigo == facturaCodigo);
-            if (factura != null)
-            {
-                var metodoPago = await dbContext.MetodoPagos.FirstOrDefaultAsync(mp => mp.IdMetodoPago == idMetodoPago);
-                if (metodoPago != null)
-                {
-                    factura.IdMetodoPagos.Add(metodoPago);
-                    return await dbContext.SaveChangesAsync();
-                }
-            }
-            return 0; // Return 0 if no record is added
+            return await _fallbackHttpClient.AddFacturaMetodoPagoAsync(facturaCodigo, idMetodoPago);
         }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Something went wrong while trying to make a FacturaMetodoPago relation.", ex);
-            throw;
-        }
-    }
 
-    public async Task<int> DeleteFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
-    {
-        try
+        public async Task<int> DeleteFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
         {
-            var factura = await dbContext.Facturas.FirstOrDefaultAsync(f => f.FacturaCodigo == facturaCodigo);
-            if (factura != null)
-            {
-                var metodoPago = factura.IdMetodoPagos.FirstOrDefault(mp => mp.IdMetodoPago == idMetodoPago);
-                if (metodoPago != null)
-                {
-                    factura.IdMetodoPagos.Remove(metodoPago);
-                    return await dbContext.SaveChangesAsync();
-                }
-            }
-            return 0; // Return 0 if no record is deleted
+            return await _fallbackHttpClient.DeleteFacturaMetodoPagoAsync(facturaCodigo, idMetodoPago);
         }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Something went wrong while trying to delete a FacturaMetodoPago relation.", ex);
-            throw;
-        }
-    }
 
-    public async Task<IEnumerable<MetodoPago>> GetMetodoPagosAsync(string facturaCodigo)
-    {
-        try
+        public async Task<IEnumerable<MetodoPago>> GetMetodoPagosAsync(string facturaCodigo)
         {
-            var factura = await dbContext.Facturas.FirstOrDefaultAsync(f => f.FacturaCodigo == facturaCodigo);
-            return factura?.IdMetodoPagos.ToList() ?? new List<MetodoPago>();
-        }
-        catch (Exception ex)
-        {
-            _logHandler.LogError("Something went wrong while trying to get FacturaMetodoPagos relations.", ex);
-            throw;
+            return (IEnumerable<MetodoPago>)await _fallbackHttpClient.GetMetodoPagosAsync(facturaCodigo);
         }
     }
 }

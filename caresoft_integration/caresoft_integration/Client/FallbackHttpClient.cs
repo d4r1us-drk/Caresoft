@@ -532,8 +532,6 @@ public class FallbackHttpClient
         }
     }
 
-
-
     // Métodos CRUD y adicionales para ReservaServicio
 
     public async Task<List<caresoft_integration.Dto.ReservaServicioDto>> GetReservaServiciosListAsync()
@@ -666,5 +664,364 @@ public class FallbackHttpClient
     }
 
 
+    // Metodos CRUD y adicionales para Factura
+
+    public async Task<int> AddFacturaAsync(caresoft_integration.Dto.FacturaDto facturaDto)
+    {
+        try
+        {
+            return await API.ApiFacturaAddAsync(
+                facturaDto.FacturaCodigo,
+                (int?)facturaDto.IdCuenta,
+                facturaDto.ConsultaCodigo,
+                (int?)facturaDto.IdIngreso,
+                (int?)facturaDto.IdSucursal,
+                facturaDto.DocumentoCajero,
+                (double?)facturaDto.MontoSubtotal,
+                (double?)facturaDto.MontoTotal,
+                facturaDto.Fecha.ToUniversalTime()
+            );
+        }
+        catch (Exception)
+        {
+            var factura = new caresoft_integration.Models.Factura
+            {
+                FacturaCodigo = facturaDto.FacturaCodigo,
+                IdCuenta = facturaDto.IdCuenta,
+                ConsultaCodigo = facturaDto.ConsultaCodigo,
+                IdIngreso = facturaDto.IdIngreso,
+                IdSucursal = facturaDto.IdSucursal,
+                DocumentoCajero = facturaDto.DocumentoCajero,
+                MontoSubtotal = facturaDto.MontoSubtotal,
+                MontoTotal = facturaDto.MontoTotal,
+                Fecha = facturaDto.Fecha
+            };
+
+            _dbContext.Facturas.Add(factura);
+            await _dbContext.SaveChangesAsync();
+            return 1; 
+        }
+    }
+    public async Task<int> UpdateFacturaAsync(caresoft_integration.Dto.FacturaDto facturaDto)
+    {
+        try
+        {
+            return await API.ApiFacturaUpdateAsync(
+                facturaDto.FacturaCodigo,
+                (int?)facturaDto.IdCuenta,
+                facturaDto.ConsultaCodigo,
+                (int?)facturaDto.IdIngreso,
+                (int?)facturaDto.IdSucursal,
+                facturaDto.DocumentoCajero,
+                (double?)facturaDto.MontoSubtotal,
+                (double?)facturaDto.MontoTotal,
+                facturaDto.Fecha.ToUniversalTime()
+            );
+        }
+        catch (Exception)
+        {
+            var existingFactura = _dbContext.Facturas.FirstOrDefault(f => f.FacturaCodigo == facturaDto.FacturaCodigo);
+            if (existingFactura != null)
+            {
+                // Mapeo de propiedades de FacturaDto a Factura
+                existingFactura.IdCuenta = facturaDto.IdCuenta;
+                existingFactura.ConsultaCodigo = facturaDto.ConsultaCodigo;
+                existingFactura.IdIngreso = facturaDto.IdIngreso;
+                existingFactura.IdSucursal = facturaDto.IdSucursal;
+                existingFactura.DocumentoCajero = facturaDto.DocumentoCajero;
+                existingFactura.MontoSubtotal = facturaDto.MontoSubtotal;
+                existingFactura.MontoTotal = facturaDto.MontoTotal;
+                existingFactura.Fecha = facturaDto.Fecha;
+
+                _dbContext.Update(existingFactura);
+                await _dbContext.SaveChangesAsync();
+            }
+            return 1;
+        }
+    }
+    public async Task<int> DeleteFacturaAsync(string facturaCodigo)
+    {
+        try
+        {
+            return await API.ApiFacturaDeleteAsync(facturaCodigo);
+        }
+        catch (Exception)
+        {
+            var facturaToDelete = _dbContext.Facturas.FirstOrDefault(f => f.FacturaCodigo == facturaCodigo);
+            if (facturaToDelete != null)
+            {
+                _dbContext.Facturas.Remove(facturaToDelete);
+                await _dbContext.SaveChangesAsync();
+            }
+            return 1;
+        }
+    }
+    public async Task<List<caresoft_integration.Dto.FacturaDto>> GetFacturasAsync()
+    {
+        try
+        {
+            var facturasFromApi = await API.ApiFacturaGetAsync();
+            return facturasFromApi.Select(f => new caresoft_integration.Dto.FacturaDto
+            {
+                FacturaCodigo = f.FacturaCodigo,
+                IdCuenta = (uint)f.IdCuenta,
+                ConsultaCodigo = f.ConsultaCodigo,
+                IdIngreso = (uint?)f.IdIngreso, 
+                IdSucursal = (uint)f.IdSucursal, 
+                DocumentoCajero = f.DocumentoCajero,
+                MontoSubtotal = (decimal)f.MontoSubtotal,
+                MontoTotal = (decimal)f.MontoTotal,
+                Fecha = f.Fecha.UtcDateTime
+            }).ToList();
+        }
+        catch (Exception)
+        {
+            var facturas = await _dbContext.Facturas.ToListAsync();
+            return facturas.Select(f => new caresoft_integration.Dto.FacturaDto
+            {
+                FacturaCodigo = f.FacturaCodigo,
+                IdCuenta = f.IdCuenta,
+                ConsultaCodigo = f.ConsultaCodigo,
+                IdIngreso = f.IdIngreso,
+                IdSucursal = f.IdSucursal,
+                DocumentoCajero = f.DocumentoCajero,
+                MontoSubtotal = f.MontoSubtotal,
+                MontoTotal = f.MontoTotal,
+                Fecha = f.Fecha
+            }).ToList();
+        }
+    }
+    public async Task<int> AddFacturaServicioAsync(FacturaServicioDto facturaServicioDto)
+    {
+        try
+        {
+            return await API.ApiFacturaAddFacturaServicioAsync(
+                facturaServicioDto.FacturaCodigo,
+                facturaServicioDto.ServicioCodigo,
+                (int?)facturaServicioDto.IdAutorizacion,
+                facturaServicioDto.Resultados,
+                (double?)facturaServicioDto.Costo
+            );
+        }
+        catch (Exception)
+        {
+            var facturaServicio = new caresoft_integration.Models.FacturaServicio
+            {
+                FacturaCodigo = facturaServicioDto.FacturaCodigo,
+                ServicioCodigo = facturaServicioDto.ServicioCodigo,
+                IdAutorizacion = facturaServicioDto.IdAutorizacion, 
+                Resultados = facturaServicioDto.Resultados,
+                Costo = (decimal)facturaServicioDto.Costo 
+            };
+
+            _dbContext.FacturaServicios.Add(facturaServicio);
+            await _dbContext.SaveChangesAsync();
+            return 1; 
+        }
+    }
+    public async Task<int> DeleteFacturaServicioAsync(string facturaCodigo, string servicioCodigo)
+    {
+        try
+        {
+            return await API.ApiFacturaDeleteFacturaServicioAsync(facturaCodigo, servicioCodigo);
+        }
+        catch (Exception)
+        {
+            var facturaServicio = await _dbContext.FacturaServicios
+                .FindAsync(facturaCodigo, servicioCodigo);
+            if (facturaServicio != null)
+            {
+                _dbContext.FacturaServicios.Remove(facturaServicio);
+                await _dbContext.SaveChangesAsync();
+            }
+            return 1; 
+        }
+    }
+    public async Task<List<caresoft_integration.Dto.ServicioDto>> GetFacturaServiciosAsync(string facturaCodigo)
+    {
+        try
+        {
+            var serviciosFromApi = await API.ApiFacturaGetFacturaServiciosAsync(facturaCodigo);
+            return serviciosFromApi.Select(s => new caresoft_integration.Dto.ServicioDto
+            {
+                ServicioCodigo = s.ServicioCodigo,
+                IdTipoServicio = (uint)s.IdTipoServicio,
+                Nombre = s.Nombre,
+                Descripcion = s.Descripcion,
+                Costo = (decimal)s.Costo
+            }).ToList();
+        }
+        catch (Exception)
+        {
+            var servicios = await _dbContext.Servicios
+                .Where(s => s.FacturaServicios.Any(f => f.FacturaCodigo == facturaCodigo)).ToListAsync();
+            return servicios.Select(s => new caresoft_integration.Dto.ServicioDto
+            {
+                ServicioCodigo = s.ServicioCodigo,
+                IdTipoServicio = s.IdTipoServicio,
+                Nombre = s.Nombre,
+                Descripcion = s.Descripcion,
+                Costo = s.Costo
+            }).ToList();
+        }
+    }
+    public async Task<int> AddFacturaProductoAsync(caresoft_integration.Dto.FacturaProductoDto facturaProductoDto)
+    {
+        try
+        {
+            return await API.ApiFacturaAddFacturaProductoAsync(
+                facturaProductoDto.FacturaCodigo,
+                (int?)facturaProductoDto.IdProducto,
+                (int?)facturaProductoDto.IdAutorizacion,
+                facturaProductoDto.Resultados,
+                (double?)facturaProductoDto.Costo
+            );
+        }
+        catch (Exception)
+        {
+            var facturaProducto = new caresoft_integration.Models.FacturaProducto
+            {
+                FacturaCodigo = facturaProductoDto.FacturaCodigo,
+                IdProducto = facturaProductoDto.IdProducto,
+                IdAutorizacion = facturaProductoDto.IdAutorizacion,
+                Resultados = facturaProductoDto.Resultados,
+                Costo = facturaProductoDto.Costo
+            };
+
+            _dbContext.FacturaProductos.Add(facturaProducto);
+            await _dbContext.SaveChangesAsync();
+            return 1; 
+        }
+    }
+    public async Task<int> DeleteFacturaProductoAsync(string facturaCodigo, uint idProducto)
+    {
+        try
+        {
+            return await API.ApiFacturaDeleteFacturaProductoAsync(facturaCodigo, (int)idProducto);
+        }
+        catch (Exception)
+        {
+            var facturaProducto = await _dbContext.FacturaProductos
+                .FindAsync(facturaCodigo, idProducto);
+            if (facturaProducto != null)
+            {
+                _dbContext.FacturaProductos.Remove(facturaProducto);
+                await _dbContext.SaveChangesAsync();
+            }
+            return 1; 
+        }
+    }
+    public async Task<List<caresoft_integration.Dto.FacturaProductoDto>> GetFacturaProductosAsync(string facturaCodigo)
+    {
+        try
+        {
+            var facturaProductosFromApi = await API.ApiFacturaGetFacturaProductosAsync(facturaCodigo);
+            return facturaProductosFromApi.Select(fp => new caresoft_integration.Dto.FacturaProductoDto
+            {
+                FacturaCodigo = fp.FacturaCodigo,
+                IdProducto = (uint)fp.IdProducto,
+                IdAutorizacion = (uint?)fp.IdAutorizacion,
+                Resultados = fp.Resultados,
+                Costo = (decimal)fp.Costo
+            }).ToList();
+        }
+        catch (Exception)
+        {
+            var facturaProductos = await _dbContext.FacturaProductos
+                .Where(fp => fp.FacturaCodigo == facturaCodigo).ToListAsync();
+            return facturaProductos.Select(fp => new caresoft_integration.Dto.FacturaProductoDto
+            {
+                FacturaCodigo = fp.FacturaCodigo,
+                IdProducto = fp.IdProducto,
+                IdAutorizacion = fp.IdAutorizacion,
+                Resultados = fp.Resultados,
+                Costo = fp.Costo
+            }).ToList();
+        }
+    }
+    public async Task<int> AddFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
+    {
+        try
+        {
+            return await API.ApiFacturaAddFacturaMetodoPagoAsync(facturaCodigo, (int)idMetodoPago);
+        }
+        catch (Exception)
+        {
+            var factura = await _dbContext.Facturas
+                            .Include(f => f.IdMetodoPagos) 
+                            .FirstOrDefaultAsync(f => f.FacturaCodigo == facturaCodigo);
+
+            if (factura != null)
+            {
+                var metodoPago = await _dbContext.MetodoPagos.FindAsync(idMetodoPago);
+                if (metodoPago == null)
+                {
+                    metodoPago = new caresoft_integration.Models.MetodoPago
+                    {
+                        IdMetodoPago = idMetodoPago,
+                    };
+                    _dbContext.MetodoPagos.Add(metodoPago);
+                    await _dbContext.SaveChangesAsync();  
+                }
+                factura.IdMetodoPagos.Add(metodoPago);
+                await _dbContext.SaveChangesAsync();
+                return 1;  
+            }
+            else
+            {
+                return 0;  
+            }
+        }
+    }
+    public async Task<int> DeleteFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
+    {
+        try
+        {
+            return await API.ApiFacturaDeleteFacturaMetodoPagoAsync(facturaCodigo, (int)idMetodoPago);
+        }
+        catch (Exception)
+        {
+            var factura = await _dbContext.Facturas
+                .Include(f => f.IdMetodoPagos)
+                .FirstOrDefaultAsync(f => f.FacturaCodigo == facturaCodigo);
+            if (factura != null)
+            {
+                var metodoPago = factura.IdMetodoPagos.FirstOrDefault(mp => mp.IdMetodoPago == idMetodoPago);
+                if (metodoPago != null)
+                {
+                    factura.IdMetodoPagos.Remove(metodoPago);
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            return 1; 
+        }
+    }
+    public async Task<List<caresoft_integration.Dto.MetodoPagoDto>> GetMetodoPagosAsync(string facturaCodigo)
+    {
+        try
+        {
+            var metodoPagosFromApi = await API.ApiFacturaGetMetodoPagosAsync(facturaCodigo);
+            return metodoPagosFromApi.Select(mp => new caresoft_integration.Dto.MetodoPagoDto
+            {
+                IdMetodoPago = (uint)mp.IdMetodoPago,
+                Nombre = mp.Nombre
+            }).ToList();
+        }
+        catch (Exception)
+        {
+            var factura = await _dbContext.Facturas
+                .Include(f => f.IdMetodoPagos)
+                .FirstOrDefaultAsync(f => f.FacturaCodigo == facturaCodigo);
+            if (factura != null)
+            {
+                return factura.IdMetodoPagos.Select(mp => new caresoft_integration.Dto.MetodoPagoDto
+                {
+                    IdMetodoPago = (uint)mp.IdMetodoPago,
+                    Nombre = mp.Nombre
+                }).ToList();
+            }
+            return new List<caresoft_integration.Dto.MetodoPagoDto>();
+        }
+    }
 
 }

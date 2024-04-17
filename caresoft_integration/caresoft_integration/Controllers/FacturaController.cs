@@ -1,192 +1,112 @@
-using caresoft_integration.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using caresoft_integration.Services.Interfaces;
 using caresoft_integration.Dto;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using caresoft_integration.Models;
 
-namespace caresoft_integration.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class FacturaController(IFacturaService facturaService) : ControllerBase
+namespace caresoft_integration.Controllers
 {
-    [HttpPost("add")]
-    public async Task<IActionResult> AddFacturaAsync([FromQuery] FacturaDto facturaDto)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class FacturaController : ControllerBase
     {
-        try
-        {
-            var affectedRows = await facturaService.AddFacturaAsync(facturaDto);
-            return Ok(affectedRows);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
+        private readonly IFacturaService _facturaService;
 
-    [HttpPut("update")]
-    public async Task<IActionResult> UpdateFacturaAsync([FromQuery] FacturaDto facturaDto)
-    {
-        try
+        public FacturaController(IFacturaService facturaService)
         {
-            var affectedRows = await facturaService.UpdateFacturaAsync(facturaDto);
-            return Ok(affectedRows);
+            _facturaService = facturaService;
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
 
-    [HttpDelete("delete/{facturaCodigo}")]
-    public async Task<IActionResult> DeleteFacturaAsync(string facturaCodigo)
-    {
-        try
+        [HttpPost("add")]
+        public async Task<ActionResult<int>> AddFacturaAsync([FromBody] FacturaDto facturaDto)
         {
-            var affectedRows = await facturaService.DeleteFacturaAsync(facturaCodigo);
-            return Ok(affectedRows);
+            var result = await _facturaService.AddFacturaAsync(facturaDto);
+            return Ok(result);
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
 
-    [HttpGet("get")]
-    public async Task<IActionResult> GetFacturasAsync()
-    {
-        try
+        [HttpPut("update")]
+        public async Task<ActionResult<int>> UpdateFacturaAsync([FromBody] FacturaDto facturaDto)
         {
-            var facturas = await facturaService.GetFacturasAsync();
-            return Ok(facturas);
+            var result = await _facturaService.UpdateFacturaAsync(facturaDto);
+            return Ok(result);
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
 
-    [HttpPost("addFacturaServicio")]
-    public async Task<IActionResult> AddFacturaServicioAsync([FromQuery] FacturaServicioDto facturaServicioDto)
-    {
-        try
+        [HttpDelete("delete/{facturaCodigo}")]
+        public async Task<ActionResult<int>> DeleteFacturaAsync(string facturaCodigo)
         {
-            var affectedRows = await facturaService.AddFacturaServicioAsync(facturaServicioDto);
-            return Ok(affectedRows);
+            var result = await _facturaService.DeleteFacturaAsync(facturaCodigo);
+            return Ok(result);
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
 
-    [HttpDelete("deleteFacturaServicio/{facturaCodigo}/{servicioCodigo}")]
-    public async Task<IActionResult> DeleteFacturaServicioAsync(string facturaCodigo, string servicioCodigo)
-    {
-        try
+        [HttpGet("get")]
+        public async Task<ActionResult<IEnumerable<FacturaDto>>> GetFacturasAsync()
         {
-            var affectedRows = await facturaService.DeleteFacturaServicioAsync(facturaCodigo, servicioCodigo);
-            return Ok(affectedRows);
+            var result = await _facturaService.GetFacturasAsync();
+            return Ok(result);
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
 
-    [HttpGet("getFacturaServicios/{facturaCodigo}")]
-    public async Task<IActionResult> GetFacturaServiciosAsync(string facturaCodigo)
-    {
-        try
+        [HttpPost("addFacturaServicio")]
+        public async Task<ActionResult<int>> AddFacturaServicioAsync([FromBody] FacturaServicioDto facturaServicioDto)
         {
-            var facturaServicios = await facturaService.GetFacturaServiciosAsync(facturaCodigo);
-            return Ok(facturaServicios);
+            var result = await _facturaService.AddFacturaServicioAsync(facturaServicioDto);
+            return Ok(result);
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
 
-    [HttpPost("addFacturaProducto")]
-    public async Task<IActionResult> AddFacturaProductoAsync([FromQuery] FacturaProductoDto facturaProductoDto)
-    {
-        try
+        [HttpDelete("deleteFacturaServicio/{facturaCodigo}/{servicioCodigo}")]
+        public async Task<ActionResult<int>> DeleteFacturaServicioAsync(string facturaCodigo, string servicioCodigo)
         {
-            var affectedRows = await facturaService.AddFacturaProductoAsync(facturaProductoDto);
-            return Ok(affectedRows);
+            var result = await _facturaService.DeleteFacturaServicioAsync(facturaCodigo, servicioCodigo);
+            return Ok(result);
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
 
-    [HttpDelete("deleteFacturaProducto/{facturaCodigo}/{idProducto}")]
-    public async Task<IActionResult> DeleteFacturaProductoAsync(string facturaCodigo, uint idProducto)
-    {
-        try
+        [HttpGet("getFacturaServicios/{facturaCodigo}")]
+        public async Task<ActionResult<IEnumerable<FacturaServicioDto>>> GetFacturaServiciosAsync(string facturaCodigo)
         {
-            var affectedRows = await facturaService.DeleteFacturaProductoAsync(facturaCodigo, idProducto);
-            return Ok(affectedRows);
+            var result = await _facturaService.GetFacturaServiciosAsync(facturaCodigo);
+            return Ok(result);
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
 
-    [HttpGet("getFacturaProductos/{facturaCodigo}")]
-    public async Task<IActionResult> GetFacturaProductosAsync(string facturaCodigo)
-    {
-        try
+        [HttpPost("addFacturaProducto")]
+        public async Task<ActionResult<int>> AddFacturaProductoAsync([FromBody] FacturaProductoDto facturaProductoDto)
         {
-            var facturaProductos = await facturaService.GetFacturaProductosAsync(facturaCodigo);
-            return Ok(facturaProductos);
+            var result = await _facturaService.AddFacturaProductoAsync(facturaProductoDto);
+            return Ok(result);
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
 
-    [HttpPost("addFacturaMetodoPago/{facturaCodigo}/{idMetodoPago}")]
-    public async Task<IActionResult> AddFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
-    {
-        try
+        [HttpDelete("deleteFacturaProducto/{facturaCodigo}/{idProducto}")]
+        public async Task<ActionResult<int>> DeleteFacturaProductoAsync(string facturaCodigo, uint idProducto)
         {
-            var affectedRows = await facturaService.AddFacturaMetodoPagoAsync(facturaCodigo, idMetodoPago);
-            return Ok(affectedRows);
+            var result = await _facturaService.DeleteFacturaProductoAsync(facturaCodigo, idProducto);
+            return Ok(result);
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
 
-    [HttpDelete("deleteFacturaMetodoPago/{facturaCodigo}/{idMetodoPago}")]
-    public async Task<IActionResult> DeleteFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
-    {
-        try
+        [HttpGet("getFacturaProductos/{facturaCodigo}")]
+        public async Task<ActionResult<IEnumerable<FacturaProductoDto>>> GetFacturaProductosAsync(string facturaCodigo)
         {
-            var affectedRows = await facturaService.DeleteFacturaMetodoPagoAsync(facturaCodigo, idMetodoPago);
-            return Ok(affectedRows);
+            var result = await _facturaService.GetFacturaProductosAsync(facturaCodigo);
+            return Ok(result);
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-    }
 
-    [HttpGet("getMetodoPagos/{facturaCodigo}")]
-    public async Task<IActionResult> GetMetodoPagosAsync(string facturaCodigo)
-    {
-        try
+        [HttpPost("addMetodoPago/{facturaCodigo}/{idMetodoPago}")]
+        public async Task<ActionResult<int>> AddFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
         {
-            var metodoPagos = await facturaService.GetMetodoPagosAsync(facturaCodigo);
-            return Ok(metodoPagos);
+            var result = await _facturaService.AddFacturaMetodoPagoAsync(facturaCodigo, idMetodoPago);
+            return Ok(result);
         }
-        catch (Exception ex)
+
+        [HttpDelete("deleteMetodoPago/{facturaCodigo}/{idMetodoPago}")]
+        public async Task<ActionResult<int>> DeleteFacturaMetodoPagoAsync(string facturaCodigo, uint idMetodoPago)
         {
-            return StatusCode(500, ex.Message);
+            var result = await _facturaService.DeleteFacturaMetodoPagoAsync(facturaCodigo, idMetodoPago);
+            return Ok(result);
+        }
+
+        [HttpGet("getMetodoPagos/{facturaCodigo}")]
+        public async Task<ActionResult<IEnumerable<MetodoPago>>> GetMetodoPagosAsync(string facturaCodigo)
+        {
+            var result = await _facturaService.GetMetodoPagosAsync(facturaCodigo);
+            return Ok(result);
         }
     }
 }
