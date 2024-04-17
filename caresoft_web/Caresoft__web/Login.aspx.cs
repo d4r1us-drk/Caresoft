@@ -2,9 +2,12 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
+using log4net;
+
 
 namespace Caresoft__web
 {
+
     public partial class Cuenta : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -12,9 +15,12 @@ namespace Caresoft__web
 
         }
 
+        private static readonly ILog Logger = LogManager.GetLogger(System.Environment.MachineName);
+
+
         protected void login_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(userbox.Value) || string.IsNullOrEmpty(passwordbox.Value))
+            if (string.IsNullOrEmpty(idbox.Value) || string.IsNullOrEmpty(passwordbox.Value))
             {
                 Response.Redirect(Request.RawUrl);
             }
@@ -30,7 +36,7 @@ namespace Caresoft__web
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        command.Parameters.AddWithValue("@Id", userbox.Value);
+                        command.Parameters.AddWithValue("@Id", idbox.Value);
                         command.Parameters.AddWithValue("@Contraseña", passwordbox.Value);
 
                         SqlParameter isValidParameter = command.Parameters.Add("@Valido", SqlDbType.Int);
@@ -42,8 +48,9 @@ namespace Caresoft__web
 
                         if (isValid)
                         {
+                            Session["UserID"]= idbox.Value;
+                            Logger.Info(idbox.Value + " inició sesión exitosamente.");
 
-                            Session["UserID"]= userbox.Value;
                             Response.Redirect("/Account.aspx");
                         }
                         else
@@ -59,5 +66,6 @@ namespace Caresoft__web
         {
             Response.Redirect("/Registrar.aspx");
         }
+
     }
 }

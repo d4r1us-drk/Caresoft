@@ -1,4 +1,5 @@
 ﻿using Google.Protobuf.WellKnownTypes;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using log4net;
 namespace Caresoft__web
 {
     public partial class Registrar : System.Web.UI.Page
@@ -16,6 +17,8 @@ namespace Caresoft__web
         {
 
         }
+
+        private static readonly ILog Logger = LogManager.GetLogger(System.Environment.MachineName);
 
         protected void Button1_Click(object sender, EventArgs e)
         {
@@ -44,7 +47,10 @@ namespace Caresoft__web
                         cmd.Parameters.AddWithValue("@Correo", correobox.Value.ToString());
                         cmd.Parameters.AddWithValue("@Id", idbox.Value.ToString());
                         cmd.Parameters.AddWithValue("@Contraseña", passwordbox.Value.ToString());
+                        cmd.Parameters.AddWithValue("@Numero", telbox.Value.ToString());
                         cmd.ExecuteNonQuery();
+
+                        Logger.Info("Usuario: " + idbox.Value + " registrado con exito");
                     }
                         Response.Redirect("~/Login.aspx");
                 }

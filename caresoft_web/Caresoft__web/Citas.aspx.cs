@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Web.UI;
-
+using log4net;
 namespace Caresoft__web
 {
     public partial class WebForm3 : Page
@@ -14,6 +14,8 @@ namespace Caresoft__web
                 Response.Redirect("/Login.aspx");
             }
         }
+
+        private static readonly ILog Logger = LogManager.GetLogger(System.Environment.MachineName);
 
         protected void ButtonAgendarCita_Click(object sender, EventArgs e)
         {
@@ -38,9 +40,10 @@ namespace Caresoft__web
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@Identificacion", userId);
-                    cmd.Parameters.AddWithValue("@Fecha", fecha);
+                    cmd.Parameters.AddWithValue("@Fecha", Convert.ToDateTime(fecha));
                     cmd.Parameters.AddWithValue("@Hora", hora);
 
+                    Logger.Info("Usuario: " + userId + " ha realizado una cita.");
                     con.Open();
                     cmd.ExecuteNonQuery();
                 }
