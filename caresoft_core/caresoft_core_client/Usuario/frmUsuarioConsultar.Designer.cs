@@ -1,6 +1,6 @@
-﻿namespace caresoft_core_client.Inventario;
+﻿namespace caresoft_core_client.Usuario;
 
-partial class frmInventarioConsultaProductos
+partial class frmUsuarioConsultar
 {
     /// <summary>
     /// Required designer variable.
@@ -28,7 +28,7 @@ partial class frmInventarioConsultaProductos
     /// </summary>
     private void InitializeComponent()
     {
-        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioConsultaProductos));
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmUsuarioConsultar));
         dbgrdDatosConsulta = new DataGridView();
         lblTituloConsulta = new Label();
         pnlTitulo = new Panel();
@@ -61,7 +61,7 @@ partial class frmInventarioConsultaProductos
         lblTituloConsulta.Name = "lblTituloConsulta";
         lblTituloConsulta.Size = new Size(254, 56);
         lblTituloConsulta.TabIndex = 1;
-        lblTituloConsulta.Text = "Consulta Productos";
+        lblTituloConsulta.Text = "Consulta Usuarios";
         lblTituloConsulta.TextAlign = ContentAlignment.MiddleCenter;
         // 
         // pnlTitulo
@@ -101,7 +101,7 @@ partial class frmInventarioConsultaProductos
         btnSalir.Text = "Salir";
         btnSalir.UseVisualStyleBackColor = true;
         // 
-        // frmInventarioConsultaProductos
+        // frmUsuarioConsultar
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
@@ -110,8 +110,8 @@ partial class frmInventarioConsultaProductos
         Controls.Add(pnlDatos);
         Controls.Add(pnlTitulo);
         Icon = (Icon)resources.GetObject("$this.Icon");
-        Name = "frmInventarioConsultaProductos";
-        Text = "Consulta Productos";
+        Name = "frmUsuarioConsultar";
+        Text = "Consulta Usuarios";
         ((System.ComponentModel.ISupportInitialize)dbgrdDatosConsulta).EndInit();
         pnlTitulo.ResumeLayout(false);
         pnlDatos.ResumeLayout(false);

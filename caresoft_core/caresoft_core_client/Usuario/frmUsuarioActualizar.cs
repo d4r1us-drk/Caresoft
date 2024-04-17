@@ -1,13 +1,13 @@
 ﻿using caresoft_core.CoreWebApi;
 using caresoft_core_client.Utils;
 
-namespace caresoft_core_client.Inventario;
+namespace caresoft_core_client.Usuario;
 
-public partial class frmInventarioActualizarProducto : Form
+public partial class frmUsuarioActualizar : Form
 {
     private readonly Client _api;
 
-    public frmInventarioActualizarProducto(string baseUrl)
+    public frmUsuarioActualizar(string baseUrl)
     {
         _api = new Client(baseUrl);
         InitializeComponent();

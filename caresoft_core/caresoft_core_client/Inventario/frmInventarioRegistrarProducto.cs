@@ -1,12 +1,12 @@
 ﻿using caresoft_core.CoreWebApi;
 
-namespace caresoft_core_client.Aseguradora;
+namespace caresoft_core_client.Inventario;
 
-public partial class frmInventarioAnadirProducto : Form
+public partial class frmInventarioRegistrarProducto : Form
 {
     private readonly Client _api;
 
-    public frmInventarioAnadirProducto(string baseURL)
+    public frmInventarioRegistrarProducto(string baseURL)
     {
         _api = new Client(baseURL);
         InitializeComponent();

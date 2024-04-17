@@ -374,21 +374,21 @@
             // añadirSucursalToolStripMenuItem
             // 
             añadirSucursalToolStripMenuItem.Name = "añadirSucursalToolStripMenuItem";
-            añadirSucursalToolStripMenuItem.Size = new Size(180, 22);
+            añadirSucursalToolStripMenuItem.Size = new Size(172, 22);
             añadirSucursalToolStripMenuItem.Text = "Añadir sucursal";
             añadirSucursalToolStripMenuItem.Click += añadirSucursalToolStripMenuItem_Click;
             // 
             // actualizarSucursalToolStripMenuItem
             // 
             actualizarSucursalToolStripMenuItem.Name = "actualizarSucursalToolStripMenuItem";
-            actualizarSucursalToolStripMenuItem.Size = new Size(180, 22);
+            actualizarSucursalToolStripMenuItem.Size = new Size(172, 22);
             actualizarSucursalToolStripMenuItem.Text = "Actualizar sucursal";
             actualizarSucursalToolStripMenuItem.Click += actualizarSucursalToolStripMenuItem_Click;
             // 
             // eliminarSucursalToolStripMenuItem
             // 
             eliminarSucursalToolStripMenuItem.Name = "eliminarSucursalToolStripMenuItem";
-            eliminarSucursalToolStripMenuItem.Size = new Size(180, 22);
+            eliminarSucursalToolStripMenuItem.Size = new Size(172, 22);
             eliminarSucursalToolStripMenuItem.Text = "Eliminar sucursal";
             eliminarSucursalToolStripMenuItem.Click += eliminarSucursalToolStripMenuItem_Click;
             // 
@@ -436,18 +436,21 @@
             añadirUsuarioToolStripMenuItem.Name = "añadirUsuarioToolStripMenuItem";
             añadirUsuarioToolStripMenuItem.Size = new Size(233, 22);
             añadirUsuarioToolStripMenuItem.Text = "Añadir usuario";
+            añadirUsuarioToolStripMenuItem.Click += añadirUsuarioToolStripMenuItem_Click;
             // 
             // actualizarDatosDeUnUsuarioToolStripMenuItem
             // 
             actualizarDatosDeUnUsuarioToolStripMenuItem.Name = "actualizarDatosDeUnUsuarioToolStripMenuItem";
             actualizarDatosDeUnUsuarioToolStripMenuItem.Size = new Size(233, 22);
             actualizarDatosDeUnUsuarioToolStripMenuItem.Text = "Actualizar datos de un usuario";
+            actualizarDatosDeUnUsuarioToolStripMenuItem.Click += actualizarDatosDeUnUsuarioToolStripMenuItem_Click;
             // 
             // eliminarUnUsuarioToolStripMenuItem
             // 
             eliminarUnUsuarioToolStripMenuItem.Name = "eliminarUnUsuarioToolStripMenuItem";
             eliminarUnUsuarioToolStripMenuItem.Size = new Size(233, 22);
             eliminarUnUsuarioToolStripMenuItem.Text = "Eliminar un usuario";
+            eliminarUnUsuarioToolStripMenuItem.Click += eliminarUnUsuarioToolStripMenuItem_Click;
             // 
             // consultarDatosDeUsuariosToolStripMenuItem
             // 

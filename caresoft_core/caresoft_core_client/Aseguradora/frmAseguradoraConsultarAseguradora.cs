@@ -5,31 +5,31 @@ namespace caresoft_core_client.Aseguradora;
 
 public partial class frmAseguradoraConsultarAseguradora : Form
 {
-    private readonly Client API;
+    private readonly Client _api;
+
     public frmAseguradoraConsultarAseguradora(string baseUrl)
     {
-        this.API = new Client(baseUrl);
+        _api = new Client(baseUrl);
         InitializeComponent();
-        this.LoadData();
+        LoadData();
     }
-
 
     private async void LoadData()
     {
         try
         {
-            var proveedor = await this.API.ApiAseguradoraGetGetAsync();
+            var proveedor = await _api.ApiAseguradoraGetGetAsync();
             if(proveedor == null || proveedor.Count == 0)
             {
                 FormHelper.InfoBox("No se encontraron aseguradoras");
                 return;
             }
 
-            this.dataGridView1.DataSource = proveedor;
-        } catch (Exception)
+            dataGridView1.DataSource = proveedor;
+        } 
+        catch (Exception)
         {
             FormHelper.ErrorBox("No se pudieron cargar las aseguradoras");
         }
-       
     }
 }

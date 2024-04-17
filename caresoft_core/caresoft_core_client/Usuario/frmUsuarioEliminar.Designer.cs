@@ -1,6 +1,6 @@
-﻿namespace caresoft_core_client.Inventario;
+﻿namespace caresoft_core_client.Usuario;
 
-partial class frmInventarioEliminarProducto
+partial class frmUsuarioEliminar 
 {
     /// <summary>
     /// Required designer variable.
@@ -28,7 +28,7 @@ partial class frmInventarioEliminarProducto
     /// </summary>
     private void InitializeComponent()
     {
-        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioEliminarProducto));
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmUsuarioEliminar));
         dbgrdProductos = new DataGridView();
         pnlTitulos = new Panel();
         lblTituloEliminarProducto = new Label();

@@ -1,6 +1,6 @@
-﻿namespace caresoft_core_client.Aseguradora;
+﻿namespace caresoft_core_client.Usuario;
 
-partial class frmInventarioAnadirProducto
+partial class frmUsuarioRegistrar 
 {
     /// <summary>
     /// Required designer variable.
@@ -28,7 +28,7 @@ partial class frmInventarioAnadirProducto
     /// </summary>
     private void InitializeComponent()
     {
-        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioAnadirProducto));
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmUsuarioRegistrar));
         lblProveedorProducto = new Label();
         lblLoteProducto = new Label();
         txtLoteProducto = new TextBox();

@@ -1,12 +1,12 @@
 ﻿using caresoft_core.CoreWebApi;
 using caresoft_core_client.Utils;
 
-namespace caresoft_core_client.Inventario;
+namespace caresoft_core_client.Usuario;
 
-public partial class frmInventarioConsultaProductos : Form
+public partial class frmUsuarioConsultar : Form
 {
     private readonly Client _api;
-    public frmInventarioConsultaProductos(string baseUrl)
+    public frmUsuarioConsultar(string baseUrl)
     {
         _api = new Client(baseUrl);
         InitializeComponent();
@@ -17,15 +17,16 @@ public partial class frmInventarioConsultaProductos : Form
     {
         try
         {
-            var productos = await this._api.ApiProductoGetAsync();
-            if(productos == null || productos.Count == 0)
+            var usuarios = await _api.ApiUsuarioListAsync();
+            if(usuarios == null || usuarios.Count == 0)
             {
                 FormHelper.ErrorBox("No se encontraron productos");
                 return;
             }
 
-            this.dbgrdDatosConsulta.DataSource = productos;
-        } catch (Exception ex)
+            dbgrdDatosConsulta.DataSource = usuarios;
+        }
+        catch (Exception)
         {
             FormHelper.ErrorBox("Error al mostrar los productos");
         }
