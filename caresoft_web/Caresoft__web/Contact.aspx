@@ -3,9 +3,9 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <main aria-labelledby="title">
         <h2 id="title"><%: Title %></h2>
-            Avenida Random<br />
-            Calle Aleatoria<br />
+            Address: Av. Winston Churchill 1452<br />
+            Santo Domingo <br />
             <abbr title="Phone">P:</abbr>
-            8099990000
+            8091234567
     </main>
 </asp:Content>
