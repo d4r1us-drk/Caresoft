@@ -1,76 +1,107 @@
-﻿namespace caresoft_core_client.Inventario
+﻿namespace caresoft_core_client.Proveedor;
+
+partial class frmInventarioConsultaProveedor
 {
-    partial class frmInventarioConsultaProveedor
+    /// <summary>
+    /// Required designer variable.
+    /// </summary>
+    private System.ComponentModel.IContainer components = null;
+
+    /// <summary>
+    /// Clean up any resources being used.
+    /// </summary>
+    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+    protected override void Dispose(bool disposing)
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+        if (disposing && (components != null))
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
+            components.Dispose();
         }
-
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioConsultaProveedor));
-            dataGridView1 = new DataGridView();
-            label1 = new Label();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            SuspendLayout();
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(0, 48);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(800, 403);
-            dataGridView1.TabIndex = 0;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold);
-            label1.Location = new Point(12, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(207, 25);
-            label1.TabIndex = 1;
-            label1.Text = "Consulta Proveedores";
-            // 
-            // frmInventarioConsultaProveedor
-            // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(label1);
-            Controls.Add(dataGridView1);
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "frmInventarioConsultaProveedor";
-            Text = "Consulta Proveedores";
-            Load += frmInventarioConsultaProductos_Load;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
-        }
-
-        #endregion
-
-        private DataGridView dataGridView1;
-        private Label label1;
+        base.Dispose(disposing);
     }
+
+    #region Windows Form Designer generated code
+
+    /// <summary>
+    /// Required method for Designer support - do not modify
+    /// the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent()
+    {
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioConsultaProveedor));
+        dbgrdDatosConsulta = new DataGridView();
+        lblTituloConsulta = new Label();
+        pnlTitulo = new Panel();
+        pnlDatos = new Panel();
+        ((System.ComponentModel.ISupportInitialize)dbgrdDatosConsulta).BeginInit();
+        pnlTitulo.SuspendLayout();
+        pnlDatos.SuspendLayout();
+        SuspendLayout();
+        // 
+        // dbgrdDatosConsulta
+        // 
+        dbgrdDatosConsulta.AllowUserToAddRows = false;
+        dbgrdDatosConsulta.AllowUserToDeleteRows = false;
+        dbgrdDatosConsulta.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+        dbgrdDatosConsulta.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        dbgrdDatosConsulta.Dock = DockStyle.Fill;
+        dbgrdDatosConsulta.Location = new Point(0, 0);
+        dbgrdDatosConsulta.MultiSelect = false;
+        dbgrdDatosConsulta.Name = "dbgrdDatosConsulta";
+        dbgrdDatosConsulta.ReadOnly = true;
+        dbgrdDatosConsulta.Size = new Size(802, 404);
+        dbgrdDatosConsulta.TabIndex = 0;
+        // 
+        // lblTituloConsulta
+        // 
+        lblTituloConsulta.AutoSize = true;
+        lblTituloConsulta.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold);
+        lblTituloConsulta.Location = new Point(12, 11);
+        lblTituloConsulta.Name = "lblTituloConsulta";
+        lblTituloConsulta.Size = new Size(207, 25);
+        lblTituloConsulta.TabIndex = 1;
+        lblTituloConsulta.Text = "Consulta Proveedores";
+        // 
+        // pnlTitulo
+        // 
+        pnlTitulo.Controls.Add(lblTituloConsulta);
+        pnlTitulo.Dock = DockStyle.Top;
+        pnlTitulo.Location = new Point(0, 0);
+        pnlTitulo.Name = "pnlTitulo";
+        pnlTitulo.Size = new Size(802, 48);
+        pnlTitulo.TabIndex = 2;
+        // 
+        // pnlDatos
+        // 
+        pnlDatos.AutoScroll = true;
+        pnlDatos.Controls.Add(dbgrdDatosConsulta);
+        pnlDatos.Dock = DockStyle.Fill;
+        pnlDatos.Location = new Point(0, 48);
+        pnlDatos.Name = "pnlDatos";
+        pnlDatos.Size = new Size(802, 404);
+        pnlDatos.TabIndex = 3;
+        // 
+        // frmInventarioConsultaProveedor
+        // 
+        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleMode = AutoScaleMode.Font;
+        ClientSize = new Size(802, 452);
+        Controls.Add(pnlDatos);
+        Controls.Add(pnlTitulo);
+        Icon = (Icon)resources.GetObject("$this.Icon");
+        Name = "frmInventarioConsultaProveedor";
+        Text = "Consulta Proveedores";
+        ((System.ComponentModel.ISupportInitialize)dbgrdDatosConsulta).EndInit();
+        pnlTitulo.ResumeLayout(false);
+        pnlTitulo.PerformLayout();
+        pnlDatos.ResumeLayout(false);
+        ResumeLayout(false);
+    }
+
+    #endregion
+
+    private DataGridView dbgrdDatosConsulta;
+    private Label lblTituloConsulta;
+    private Panel pnlTitulo;
+    private Panel pnlDatos;
 }

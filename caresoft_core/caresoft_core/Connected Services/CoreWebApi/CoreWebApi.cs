@@ -5627,7 +5627,7 @@ namespace caresoft_core.CoreWebApi
         public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ProveedorDto>> ApiProveedorGetGetAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Proveedor/get");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Proveedor/list");
 
             var client_ = new System.Net.Http.HttpClient();
             var disposeClient_ = false;
@@ -5690,15 +5690,15 @@ namespace caresoft_core.CoreWebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ProveedorDto> ApiProveedorGetGetAsync(int rncProveedor)
+        public virtual System.Threading.Tasks.Task<ProveedorDto> ApiProveedorGetAsync(int rncProveedor)
         {
-            return ApiProveedorGetGetAsync(rncProveedor, System.Threading.CancellationToken.None);
+            return ApiProveedorGetAsync(rncProveedor, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ProveedorDto> ApiProveedorGetGetAsync(int rncProveedor, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ProveedorDto> ApiProveedorGetAsync(int rncProveedor, System.Threading.CancellationToken cancellationToken)
         {
             if (rncProveedor == null)
                 throw new System.ArgumentNullException("rncProveedor");

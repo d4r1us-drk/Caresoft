@@ -13,50 +13,39 @@ namespace caresoft_core_client
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
-            
             Close();
         }
 
         private async void btnRegistrar_Click(object sender, EventArgs e)
         {
-            // Get input values
-            int rnc;
             try
             {
-                rnc = Convert.ToInt32(txtRncProveedor.Text.Trim());
-            } catch (Exception ex)
-            {
-                MessageBox.Show("El RNC debe ser un número entero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            string nombre = txtNombreProveedor.Text.Trim();
-            string direccion = txtDireccionProveedor.Text.Trim();
-            string telefono = txtTelefonoProveedor.Text;
-            string correo = txtCorreoProveedor.Text;
-
-            // Get selected providers
-            var newProvider = new ProveedorDto
-            {
-                RncProveedor = rnc,
-                Nombre = nombre,
-                Direccion = direccion,
-                Telefono = telefono,
-                Correo = correo
-            };
-            try
-            {
-
-                await API.ApiProveedorAddAsync(rncProveedor: newProvider.RncProveedor, nombre: newProvider.Nombre, direccion: newProvider.Direccion, telefono: newProvider.Telefono, correo: newProvider.Correo);
+                var newProvider = new ProveedorDto
+                {
+                    RncProveedor = int.Parse(txtRncProveedor.Text),
+                    Nombre = txtNombreProveedor.Text.Trim(),
+                    Direccion = txtDireccionProveedor.Text.Trim(),
+                    Telefono = txtTelefonoProveedor.Text,
+                    Correo = txtCorreoProveedor.Text
+                };
+                await API.ApiProveedorAddAsync(newProvider.RncProveedor, newProvider.Nombre, newProvider.Direccion, newProvider.Telefono, newProvider.Correo);
                 MessageBox.Show("Proveedor registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                MessageBox.Show($"El proveedor ya existe", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ocurrio un error al introducir un proveedor {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
 
-      
+        private void txtRncProveedor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

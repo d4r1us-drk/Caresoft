@@ -1,6 +1,6 @@
-﻿namespace caresoft_core_client
+﻿namespace caresoft_core_client.Proveedor
 {
-    partial class frmInventarioEliminarProveedor
+    partial class FrmInventarioEliminarProveedor
     {
         /// <summary>
         /// Required designer variable.
@@ -28,19 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioEliminarProveedor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmInventarioEliminarProveedor));
             dbgrdProductos = new DataGridView();
             pnlTitulos = new Panel();
             lblTitulo = new Label();
             pnlDatos = new Panel();
-            dataGridView1 = new DataGridView();
+            dbgrdDatosEliminarProveedor = new DataGridView();
             pnlBotones = new Panel();
             btnEliminar = new Button();
             btnCancelar = new Button();
             ((System.ComponentModel.ISupportInitialize)dbgrdProductos).BeginInit();
             pnlTitulos.SuspendLayout();
             pnlDatos.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dbgrdDatosEliminarProveedor).BeginInit();
             pnlBotones.SuspendLayout();
             SuspendLayout();
             // 
@@ -66,7 +66,7 @@
             // 
             lblTitulo.AutoSize = true;
             lblTitulo.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitulo.Location = new Point(350, 18);
+            lblTitulo.Location = new Point(345, 16);
             lblTitulo.Name = "lblTitulo";
             lblTitulo.Size = new Size(183, 25);
             lblTitulo.TabIndex = 27;
@@ -74,7 +74,7 @@
             // 
             // pnlDatos
             // 
-            pnlDatos.Controls.Add(dataGridView1);
+            pnlDatos.Controls.Add(dbgrdDatosEliminarProveedor);
             pnlDatos.Controls.Add(dbgrdProductos);
             pnlDatos.Dock = DockStyle.Fill;
             pnlDatos.Location = new Point(0, 57);
@@ -82,13 +82,13 @@
             pnlDatos.Size = new Size(875, 504);
             pnlDatos.TabIndex = 2;
             // 
-            // dataGridView1
+            // dbgrdDatosEliminarProveedor
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(0, 0);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(875, 473);
-            dataGridView1.TabIndex = 1;
+            dbgrdDatosEliminarProveedor.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dbgrdDatosEliminarProveedor.Location = new Point(0, 0);
+            dbgrdDatosEliminarProveedor.Name = "dbgrdDatosEliminarProveedor";
+            dbgrdDatosEliminarProveedor.Size = new Size(875, 473);
+            dbgrdDatosEliminarProveedor.TabIndex = 1;
             // 
             // pnlBotones
             // 
@@ -107,7 +107,7 @@
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(147, 32);
             btnEliminar.TabIndex = 1;
-            btnEliminar.Text = "Eliminar Producto";
+            btnEliminar.Text = "Eliminar Proovedor";
             btnEliminar.UseVisualStyleBackColor = true;
             btnEliminar.Click += btnEliminar_Click;
             // 
@@ -122,7 +122,7 @@
             btnCancelar.UseVisualStyleBackColor = true;
             btnCancelar.Click += btnCancelar_Click;
             // 
-            // frmProveedorEliminar
+            // FrmInventarioEliminarProveedor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -134,13 +134,13 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "frmProveedorEliminar";
+            Name = "FrmInventarioEliminarProveedor";
             Text = "Eliminar Proveedor";
             ((System.ComponentModel.ISupportInitialize)dbgrdProductos).EndInit();
             pnlTitulos.ResumeLayout(false);
             pnlTitulos.PerformLayout();
             pnlDatos.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dbgrdDatosEliminarProveedor).EndInit();
             pnlBotones.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -154,6 +154,6 @@
         private Label lblTitulo;
         private Button btnEliminar;
         private Button btnCancelar;
-        private DataGridView dataGridView1;
+        private DataGridView dbgrdDatosEliminarProveedor;
     }
 }

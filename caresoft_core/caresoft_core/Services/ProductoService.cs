@@ -4,6 +4,7 @@ using caresoft_core.Utils;
 using caresoft_core.Services.Interfaces;
 using caresoft_core.Context;
 using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 
 namespace caresoft_core.Services;
 
@@ -97,14 +98,17 @@ public class ProductoService(CaresoftDbContext dbContext) : IProductoService
     {
         try
         {
-            var producto = await dbContext.Productos.FindAsync(idProducto);
-            var proveedor = await dbContext.Proveedors.FindAsync(rncProveedor);
-            if (producto != null && proveedor != null)
-            {
-                producto.RncProveedors.Remove(proveedor);
-                return await dbContext.SaveChangesAsync();
-            }
-            return 0; // Return 0 if either the product or the provider doesn't exist
+            // Construct the SQL command to delete the relationship from the bridge table
+            var sql = "DELETE FROM Proveedor_Producto WHERE IdProducto = @idProducto AND RncProveedor = @rncProveedor";
+
+            // Execute the raw SQL command
+            var parameters = new[] {
+                new MySqlParameter("@idProducto", idProducto),
+                new MySqlParameter("@rncProveedor", rncProveedor)
+            };
+            var result = await dbContext.Database.ExecuteSqlRawAsync(sql, parameters);
+
+            return result;
         }
         catch (Exception ex)
         {
