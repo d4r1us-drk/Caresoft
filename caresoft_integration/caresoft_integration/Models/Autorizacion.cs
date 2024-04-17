@@ -35,4 +35,24 @@ public partial class Autorizacion
             MontoAsegurado = autorizacionDto.MontoAsegurado
         };
     }
+    public static Autorizacion FromCoreApi(caresoft_integration.CoreAPI.Autorizacion autorizacion)
+    {
+        return new Autorizacion
+        {
+            IdAutorizacion = (uint)autorizacion.IdAutorizacion,
+            IdAseguradora = (uint)autorizacion.IdAseguradora,
+            Fecha = autorizacion.Fecha.Date,
+            MontoAsegurado = (decimal)autorizacion.MontoAsegurado
+        };
+    }
+    public static caresoft_integration.CoreAPI.Autorizacion ToCoreApi(Autorizacion autorizacion)
+    {
+        return new()
+        {
+            IdAutorizacion = (int)autorizacion.IdAutorizacion,
+            IdAseguradora = (int)autorizacion.IdAseguradora,
+            Fecha = autorizacion.Fecha,
+            MontoAsegurado = (double)autorizacion.MontoAsegurado
+        };
+    }
 }

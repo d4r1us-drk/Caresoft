@@ -95,6 +95,7 @@ public class Program(IConfiguration configuration)
         {
             app.UseSwagger();
             app.UseSwaggerUI();
+           
         }
 
         app.UseCors("AllowAll"); // Asegúrate de llamar a UseCors antes de UseRouting y UseEndpoints.

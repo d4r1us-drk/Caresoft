@@ -16,9 +16,6 @@
 
 namespace caresoft_integration.CoreAPI
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
     using System = global::System;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.19.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.3.0))")]
@@ -4694,7 +4691,7 @@ namespace caresoft_integration.CoreAPI
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Pago>> ApiPagoGetGetAsync()
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PagoDto>> ApiPagoGetGetAsync()
         {
             return ApiPagoGetGetAsync(System.Threading.CancellationToken.None);
         }
@@ -4702,7 +4699,7 @@ namespace caresoft_integration.CoreAPI
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Pago>> ApiPagoGetGetAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PagoDto>> ApiPagoGetGetAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Pago/get");
@@ -4739,7 +4736,7 @@ namespace caresoft_integration.CoreAPI
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<Pago>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<PagoDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4768,7 +4765,7 @@ namespace caresoft_integration.CoreAPI
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<Pago> ApiPagoGetGetAsync(int idPago)
+        public virtual System.Threading.Tasks.Task<PagoDto> ApiPagoGetGetAsync(int idPago)
         {
             return ApiPagoGetGetAsync(idPago, System.Threading.CancellationToken.None);
         }
@@ -4776,7 +4773,7 @@ namespace caresoft_integration.CoreAPI
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Pago> ApiPagoGetGetAsync(int idPago, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagoDto> ApiPagoGetGetAsync(int idPago, System.Threading.CancellationToken cancellationToken)
         {
             if (idPago == null)
                 throw new System.ArgumentNullException("idPago");
@@ -4817,7 +4814,7 @@ namespace caresoft_integration.CoreAPI
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Pago>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PagoDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4846,7 +4843,7 @@ namespace caresoft_integration.CoreAPI
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiPagoAddAsync(Pago body)
+        public virtual System.Threading.Tasks.Task ApiPagoAddAsync(PagoDto body)
         {
             return ApiPagoAddAsync(body, System.Threading.CancellationToken.None);
         }
@@ -4854,7 +4851,7 @@ namespace caresoft_integration.CoreAPI
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiPagoAddAsync(Pago body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task ApiPagoAddAsync(PagoDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Pago/add");
@@ -4918,7 +4915,7 @@ namespace caresoft_integration.CoreAPI
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task ApiPagoUpdateAsync(Pago body)
+        public virtual System.Threading.Tasks.Task ApiPagoUpdateAsync(PagoDto body)
         {
             return ApiPagoUpdateAsync(body, System.Threading.CancellationToken.None);
         }
@@ -4926,7 +4923,7 @@ namespace caresoft_integration.CoreAPI
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task ApiPagoUpdateAsync(Pago body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task ApiPagoUpdateAsync(PagoDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Pago/update");
@@ -5619,18 +5616,18 @@ namespace caresoft_integration.CoreAPI
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ProveedorDto>> ApiProveedorGetGetAsync()
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ProveedorDto>> ApiProveedorListAsync()
         {
-            return ApiProveedorGetGetAsync(System.Threading.CancellationToken.None);
+            return ApiProveedorListAsync(System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ProveedorDto>> ApiProveedorGetGetAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ProveedorDto>> ApiProveedorListAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Proveedor/get");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Proveedor/list");
 
             var client_ = new System.Net.Http.HttpClient();
             var disposeClient_ = false;
@@ -5693,15 +5690,15 @@ namespace caresoft_integration.CoreAPI
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ProveedorDto> ApiProveedorGetGetAsync(int rncProveedor)
+        public virtual System.Threading.Tasks.Task<ProveedorDto> ApiProveedorGetAsync(int rncProveedor)
         {
-            return ApiProveedorGetGetAsync(rncProveedor, System.Threading.CancellationToken.None);
+            return ApiProveedorGetAsync(rncProveedor, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ProveedorDto> ApiProveedorGetGetAsync(int rncProveedor, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ProveedorDto> ApiProveedorGetAsync(int rncProveedor, System.Threading.CancellationToken cancellationToken)
         {
             if (rncProveedor == null)
                 throw new System.ArgumentNullException("rncProveedor");
@@ -8345,11 +8342,6 @@ namespace caresoft_integration.CoreAPI
             var result = System.Convert.ToString(value, cultureInfo);
             return result == null ? "" : result;
         }
-
-        internal async Task<int> ApiAseguradoraUpdateAsync(int idAseguradora, string nombre, string direccion, string telefono, string correo, ICollection<Models.Autorizacion> autorizacions)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.19.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.3.0))")]
@@ -8430,8 +8422,6 @@ namespace caresoft_integration.CoreAPI
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.19.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.3.0))")]
     public partial class AutorizacionDto
     {
-        internal readonly DateTime FechaAutorizacion;
-
         [Newtonsoft.Json.JsonProperty("idAutorizacion", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int IdAutorizacion { get; set; }
 
@@ -8899,6 +8889,23 @@ namespace caresoft_integration.CoreAPI
 
         [Newtonsoft.Json.JsonProperty("idCuentaNavigation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Cuentum IdCuentaNavigation { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.19.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.3.0))")]
+    public partial class PagoDto
+    {
+        [Newtonsoft.Json.JsonProperty("idPago", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int IdPago { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("idCuenta", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int IdCuenta { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("montoPagado", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double MontoPagado { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("fecha", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset Fecha { get; set; }
 
     }
 
