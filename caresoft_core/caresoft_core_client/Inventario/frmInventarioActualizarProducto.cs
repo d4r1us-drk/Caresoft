@@ -10,7 +10,7 @@ public partial class frmInventarioActualizarProducto : Form
     {
         _api = new Client(baseUrl);
         InitializeComponent();
-        Toggle();
+        ToggleControls();
         LoadProductos();
     }
 
@@ -107,7 +107,7 @@ public partial class frmInventarioActualizarProducto : Form
     {
         if (dbgrdProductos.SelectedRows.Count == 0)
         {
-            MessageBox.Show("Please select a product to update.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Por favor selecciona un producto a actualizar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
 
@@ -119,14 +119,14 @@ public partial class frmInventarioActualizarProducto : Form
         txtCostoProducto.Text = selectedProduct.Costo.ToString();
         txtLoteProducto.Text = selectedProduct.LoteDisponible.ToString();
         await LoadProveedores(selectedProduct.IdProducto);
-        Toggle();
+        ToggleControls();
     }
 
     private async void btnActualizar_Click(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(txtIdProducto.Text))
         {
-            MessageBox.Show("Please select a product to update.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Por favor carga los datos de un producto a actualizar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
 
@@ -143,14 +143,14 @@ public partial class frmInventarioActualizarProducto : Form
         {
             await _api.ApiProductoUpdateAsync(producto.IdProducto, producto.Nombre, producto.Descripcion, producto.Costo, producto.LoteDisponible);
             await UpdateProveedores(producto.IdProducto);
-            MessageBox.Show("Product updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("El producto ha sido actualizado con exito.", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             ClearFields();
             LoadProductos();
-            Toggle();
+            ToggleControls();
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Error updating product: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Ha ocurrido un error al intentar actualizar el producto. {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -164,7 +164,7 @@ public partial class frmInventarioActualizarProducto : Form
         chklbProveedores.DataSource = null;
     }
 
-    private void Toggle()
+    private void ToggleControls()
     {
         txtCostoProducto.Enabled = !txtCostoProducto.Enabled;
         txtDescripcionProducto.Enabled = !txtDescripcionProducto.Enabled;

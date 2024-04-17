@@ -20,24 +20,25 @@ public partial class frmServiciosAnadirServicio : Form
             var response = await _api.ApiTipoServicioGetAsync();
             if (response != null)
             {
-                listBoxTipoServicios.DataSource = response;
-                listBoxTipoServicios.DisplayMember = "Nombre";
+                lstbxTipoServicios.DataSource = response;
+                lstbxTipoServicios.DisplayMember = "Nombre";
+                lstbxTipoServicios.ValueMember = "IdTipoServicio";
             }
         }
         catch (Exception ex)
         {
-            FormHelper.ErrorBox(ex.Message);
+            MessageBox.Show($"Ha ocurrido un error al intentar cargar los tipos de servicio. {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
     private async void btnRegistrar_Click(object sender, EventArgs e)
     {
-        if (listBoxTipoServicios.SelectedItem == null)
+        if (lstbxTipoServicios.SelectedItem == null)
         {
-            FormHelper.WarningBox("Seleccione un tipo de servicio");
+            MessageBox.Show("Seleccione un tipo de servicio", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
-        var tipoServicio = (TipoServicioDto)listBoxTipoServicios.SelectedItem;
+        var tipoServicio = (TipoServicioDto)lstbxTipoServicios.SelectedItem;
 
         try
         {
@@ -50,11 +51,11 @@ public partial class frmServiciosAnadirServicio : Form
                 IdTipoServicio = tipoServicio.IdTipoServicio
             };
             await _api.ApiServicioAddAsync(servicioDto);
-            FormHelper.InfoBox("Servicio creado correctamente");
+            MessageBox.Show("Servicio creado correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         catch (Exception ex)
         {
-            FormHelper.ErrorBox("El servicio ya existe");
+            MessageBox.Show($"Ha ocurrido un error al añadir un servicio. {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 

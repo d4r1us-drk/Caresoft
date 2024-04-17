@@ -31,44 +31,100 @@ partial class frmInventarioConsultaProductos
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioConsultaProductos));
         dbgrdDatosConsulta = new DataGridView();
         lblTituloConsulta = new Label();
+        pnlTitulo = new Panel();
+        pnlDatos = new Panel();
+        pnlBotones = new Panel();
+        btnSalir = new Button();
         ((System.ComponentModel.ISupportInitialize)dbgrdDatosConsulta).BeginInit();
+        pnlTitulo.SuspendLayout();
+        pnlDatos.SuspendLayout();
+        pnlBotones.SuspendLayout();
         SuspendLayout();
         // 
         // dbgrdDatosConsulta
         // 
+        dbgrdDatosConsulta.AllowUserToAddRows = false;
+        dbgrdDatosConsulta.AllowUserToDeleteRows = false;
         dbgrdDatosConsulta.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        dbgrdDatosConsulta.Location = new Point(0, 48);
+        dbgrdDatosConsulta.Dock = DockStyle.Fill;
+        dbgrdDatosConsulta.Location = new Point(0, 0);
         dbgrdDatosConsulta.Name = "dbgrdDatosConsulta";
-        dbgrdDatosConsulta.Size = new Size(800, 403);
+        dbgrdDatosConsulta.ReadOnly = true;
+        dbgrdDatosConsulta.Size = new Size(800, 394);
         dbgrdDatosConsulta.TabIndex = 0;
         // 
         // lblTituloConsulta
         // 
-        lblTituloConsulta.AutoSize = true;
+        lblTituloConsulta.Dock = DockStyle.Left;
         lblTituloConsulta.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold);
-        lblTituloConsulta.Location = new Point(12, 9);
+        lblTituloConsulta.Location = new Point(0, 0);
         lblTituloConsulta.Name = "lblTituloConsulta";
-        lblTituloConsulta.Size = new Size(187, 25);
+        lblTituloConsulta.Size = new Size(254, 56);
         lblTituloConsulta.TabIndex = 1;
         lblTituloConsulta.Text = "Consulta Productos";
+        lblTituloConsulta.TextAlign = ContentAlignment.MiddleCenter;
+        // 
+        // pnlTitulo
+        // 
+        pnlTitulo.Controls.Add(lblTituloConsulta);
+        pnlTitulo.Dock = DockStyle.Top;
+        pnlTitulo.Location = new Point(0, 0);
+        pnlTitulo.Name = "pnlTitulo";
+        pnlTitulo.Size = new Size(800, 56);
+        pnlTitulo.TabIndex = 2;
+        // 
+        // pnlDatos
+        // 
+        pnlDatos.Controls.Add(dbgrdDatosConsulta);
+        pnlDatos.Dock = DockStyle.Fill;
+        pnlDatos.Location = new Point(0, 56);
+        pnlDatos.Name = "pnlDatos";
+        pnlDatos.Size = new Size(800, 394);
+        pnlDatos.TabIndex = 3;
+        // 
+        // pnlBotones
+        // 
+        pnlBotones.Controls.Add(btnSalir);
+        pnlBotones.Dock = DockStyle.Bottom;
+        pnlBotones.Location = new Point(0, 418);
+        pnlBotones.Name = "pnlBotones";
+        pnlBotones.Size = new Size(800, 32);
+        pnlBotones.TabIndex = 4;
+        // 
+        // btnSalir
+        // 
+        btnSalir.Dock = DockStyle.Left;
+        btnSalir.Location = new Point(0, 0);
+        btnSalir.Name = "btnSalir";
+        btnSalir.Size = new Size(75, 32);
+        btnSalir.TabIndex = 5;
+        btnSalir.Text = "Salir";
+        btnSalir.UseVisualStyleBackColor = true;
         // 
         // frmInventarioConsultaProductos
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(800, 450);
-        Controls.Add(lblTituloConsulta);
-        Controls.Add(dbgrdDatosConsulta);
+        Controls.Add(pnlBotones);
+        Controls.Add(pnlDatos);
+        Controls.Add(pnlTitulo);
         Icon = (Icon)resources.GetObject("$this.Icon");
         Name = "frmInventarioConsultaProductos";
         Text = "Consulta Productos";
         ((System.ComponentModel.ISupportInitialize)dbgrdDatosConsulta).EndInit();
+        pnlTitulo.ResumeLayout(false);
+        pnlDatos.ResumeLayout(false);
+        pnlBotones.ResumeLayout(false);
         ResumeLayout(false);
-        PerformLayout();
     }
 
     #endregion
 
     private DataGridView dbgrdDatosConsulta;
     private Label lblTituloConsulta;
+    private Panel pnlTitulo;
+    private Panel pnlDatos;
+    private Panel pnlBotones;
+    private Button btnSalir;
 }

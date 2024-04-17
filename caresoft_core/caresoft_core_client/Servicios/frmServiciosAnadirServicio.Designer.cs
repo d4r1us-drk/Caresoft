@@ -38,7 +38,7 @@
             txtCosto = new TextBox();
             lblCostoProducto = new Label();
             lblProveedorProducto = new Label();
-            listBoxTipoServicios = new ListBox();
+            lstbxTipoServicios = new ListBox();
             pnlBotones = new Panel();
             btnRegistrar = new Button();
             button1 = new Button();
@@ -128,14 +128,14 @@
             lblProveedorProducto.TabIndex = 38;
             lblProveedorProducto.Text = "Tipo servicio";
             // 
-            // listBoxTipoServicios
+            // lstbxTipoServicios
             // 
-            listBoxTipoServicios.FormattingEnabled = true;
-            listBoxTipoServicios.ItemHeight = 15;
-            listBoxTipoServicios.Location = new Point(134, 196);
-            listBoxTipoServicios.Name = "listBoxTipoServicios";
-            listBoxTipoServicios.Size = new Size(148, 124);
-            listBoxTipoServicios.TabIndex = 40;
+            lstbxTipoServicios.FormattingEnabled = true;
+            lstbxTipoServicios.ItemHeight = 15;
+            lstbxTipoServicios.Location = new Point(134, 196);
+            lstbxTipoServicios.Name = "lstbxTipoServicios";
+            lstbxTipoServicios.Size = new Size(148, 124);
+            lstbxTipoServicios.TabIndex = 40;
             // 
             // pnlBotones
             // 
@@ -191,7 +191,7 @@
             panel1.Controls.Add(label1);
             panel1.Controls.Add(txtCosto);
             panel1.Controls.Add(lblDescripcionProducto);
-            panel1.Controls.Add(listBoxTipoServicios);
+            panel1.Controls.Add(lstbxTipoServicios);
             panel1.Controls.Add(txtDescripcion);
             panel1.Controls.Add(lblProveedorProducto);
             panel1.Controls.Add(lblNombreProducto);
@@ -235,7 +235,7 @@
         private TextBox txtCosto;
         private Label lblCostoProducto;
         private Label lblProveedorProducto;
-        private ListBox listBoxTipoServicios;
+        private ListBox lstbxTipoServicios;
         private Panel pnlBotones;
         private Button btnRegistrar;
         private Button button1;
