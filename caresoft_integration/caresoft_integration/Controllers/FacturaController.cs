@@ -1,8 +1,8 @@
-using caresoft_core.Services.Interfaces;
+using caresoft_integration.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using caresoft_core.Dto;
+using caresoft_integration.Dto;
 
-namespace caresoft_core.Controllers;
+namespace caresoft_integration.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

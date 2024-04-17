@@ -37,7 +37,7 @@ namespace caresoft_core_client.Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                FormHelper.ErrorBox(ex.Message);
             }
         }
 
@@ -54,12 +54,12 @@ namespace caresoft_core_client.Servicios
                 try
                 {
                     await API.ApiTipoServicioDeleteAsync(tipoServicio.IdTipoServicio);
-                    MessageBox.Show("Tipo de servicio eliminado correctamente");
+                    FormHelper.InfoBox("Tipo de servicio eliminado correctamente");
                     await LoadData();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    FormHelper.ErrorBox(ex.Message);
                 }
             }
         }

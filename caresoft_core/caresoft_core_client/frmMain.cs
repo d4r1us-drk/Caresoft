@@ -20,6 +20,12 @@ namespace caresoft_core_client
         private frmServiciosAnadirTipoServicio frmServiciosAnadirTipoServicio;
         private frmServiciosActualizarTipoServicio frmServiciosActualizarTipoServicio;
         private frmServiciosEliminarTipoServicio frmServiciosEliminarTipoServicio;
+        private frmServiciosConsultarTipoServicio frmServiciosConsultarTipoServicio;
+
+        private frmServiciosActualizarServicio frmServiciosActualizarServicio;
+        private frmServiciosAnadirServicio frmServiciosAnadirServicio;
+        private frmServiciosEliminarServicio frmServiciosEliminarServicio;
+        private frmServiciosConsultarServicio frmServiciosConsultarServicio;
 
 
         private string baseURL;
@@ -128,6 +134,41 @@ namespace caresoft_core_client
             frmServiciosEliminarTipoServicio = new(baseURL);
             frmServiciosEliminarTipoServicio.MdiParent = this;
             frmServiciosEliminarTipoServicio.Show();
+        }
+
+        private void añadirServicioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmServiciosAnadirServicio = new(baseURL);
+            frmServiciosAnadirServicio.MdiParent = this;
+            frmServiciosAnadirServicio.Show();
+        }
+
+        private void actualizarServicioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmServiciosActualizarServicio = new(baseURL);
+            frmServiciosActualizarServicio.MdiParent = this;
+            frmServiciosActualizarServicio.Show();
+        }
+
+        private void eliminarServicioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmServiciosEliminarServicio = new(baseURL);
+            frmServiciosEliminarServicio.MdiParent = this;
+            frmServiciosEliminarServicio.Show();
+        }
+
+        private void consultaDeServiciosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmServiciosConsultarServicio = new(baseURL);
+            frmServiciosConsultarServicio.MdiParent = this;
+            frmServiciosConsultarServicio.Show();
+        }
+
+        private void consultaTipoDeServiciosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmServiciosConsultarTipoServicio = new(baseURL);
+            frmServiciosConsultarTipoServicio.MdiParent = this;
+            frmServiciosConsultarTipoServicio.Show();
         }
     }
 }

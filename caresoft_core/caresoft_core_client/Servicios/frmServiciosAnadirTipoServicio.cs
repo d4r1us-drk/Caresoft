@@ -31,11 +31,11 @@ namespace caresoft_core_client.Servicios
             try
             {
                 await API.ApiTipoServicioAddAsync(null,txtNombre.Text);
-                MessageBox.Show("Tipo de servicio añadido correctamente");
+                FormHelper.InfoBox("Tipo de servicio añadido correctamente");
 
             } catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                FormHelper.ErrorBox(ex.Message);
             }
 
 

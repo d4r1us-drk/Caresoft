@@ -46,6 +46,7 @@ public class ProveedorController(IProveedorService proveedorService) : Controlle
     {
         try
         {
+
             var result = await proveedorService.CreateProveedorAsync(proveedor);
             if (result == 0)
             {
@@ -69,7 +70,7 @@ public class ProveedorController(IProveedorService proveedorService) : Controlle
             {
                 return NotFound($"Proveedor with RNC {proveedor.RncProveedor} not found");
             }
-            return NoContent();
+            return Ok();
         }
         catch (Exception ex)
         {
@@ -87,7 +88,7 @@ public class ProveedorController(IProveedorService proveedorService) : Controlle
             {
                 return NotFound($"Proveedor with RNC {rncProveedor} not found");
             }
-            return NoContent();
+            return Ok();
         }
         catch (Exception ex)
         {

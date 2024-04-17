@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioConsultaProveedor));
             dataGridView1 = new DataGridView();
             label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -51,14 +52,15 @@
             label1.TabIndex = 1;
             label1.Text = "Consulta Proveedores";
             // 
-            // frmProveedorConsulta
+            // frmInventarioConsultaProveedor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(label1);
             Controls.Add(dataGridView1);
-            Name = "frmProveedorConsulta";
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Name = "frmInventarioConsultaProveedor";
             Text = "Consulta Proveedores";
             Load += frmInventarioConsultaProductos_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();

@@ -1,7 +1,7 @@
-using caresoft_core.Dto;
-using caresoft_core.Models;
+using caresoft_integration.Dto;
+using caresoft_integration.Models;
 
-namespace caresoft_core.Services.Interfaces;
+namespace caresoft_integration.Services.Interfaces;
 
 public interface IUsuarioService
 {

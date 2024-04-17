@@ -2,7 +2,7 @@ using NLog;
 using NLog.Config;
 using NLog.Targets;
 
-namespace caresoft_core.Utils;
+namespace caresoft_integration.Utils;
 
 /// <summary>
 /// Clase que maneja el registro de eventos de registro en la aplicación. Permite registrar

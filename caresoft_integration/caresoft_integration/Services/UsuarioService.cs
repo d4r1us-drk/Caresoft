@@ -1,146 +1,54 @@
-using caresoft_core.Models;
-using caresoft_core.Dto;
-using caresoft_core.Context;
-using caresoft_core.Utils;
-using Microsoft.EntityFrameworkCore;
-using caresoft_core.Services.Interfaces;
-using caresoft_integration.Client;
-using System;
+using caresoft_integration.Dto;
+using caresoft_integration.Models;
+using caresoft_integration.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace caresoft_core.Services;
-
-public class UsuarioService : IUsuarioService
+namespace caresoft_integration.Services
 {
-    private readonly CaresoftDbContext _dbContext;
-    private readonly CoreApiClient _coreApiClient;
-    private readonly LogHandler<UsuarioService> _logHandler = new();
-
-    public UsuarioService(CaresoftDbContext dbContext, CoreApiClient coreApiClient)
+    public class UsuarioService : IUsuarioService
     {
-        _dbContext = dbContext;
-        _coreApiClient = coreApiClient;
-    }
+        private readonly FallbackHttpClient _fallbackHttpClient;
 
-    public async Task<UsuarioDto?> GetUsuarioByIdAsync(string id)
-    {
-        try
+        public UsuarioService(FallbackHttpClient fallbackHttpClient)
         {
-            return await _coreApiClient.GetUsuarioByIdAsync(id);
+            _fallbackHttpClient = fallbackHttpClient;
         }
-        catch (Exception)
+
+        public async Task<List<UsuarioDto>> GetUsuariosListAsync()
         {
-            var usuario = await _dbContext.Usuarios
-                .Where(u => u.UsuarioCodigo == id)
-                .Include(u => u.DocumentoUsuarioNavigation)
-                .FirstOrDefaultAsync();
-
-            return usuario != null ? UsuarioDto.FromModel(usuario) : null;
+            return await _fallbackHttpClient.GetUsuariosListAsync();
         }
-    }
 
-    public async Task<List<UsuarioDto>> GetUsuariosListAsync()
-    {
-        try
+        public async Task<UsuarioDto?> GetUsuarioByIdAsync(string id)
         {
-            return await _coreApiClient.GetUsuariosListAsync();
+            return await _fallbackHttpClient.GetUsuarioByIdAsync(id);
         }
-        catch (Exception)
+
+        public async Task<int> AddUsuarioAsync (UsuarioDto usuarioDto)
         {
-            var usuarios = await _dbContext.Usuarios
-                .Include(u => u.DocumentoUsuarioNavigation)
-                .ToListAsync();
-
-            return usuarios.ConvertAll(UsuarioDto.FromModel);
+            return await _fallbackHttpClient.AddUsuarioAsync(usuarioDto);
         }
-    }
 
-    public async Task<int> AddUsuarioAsync(UsuarioDto usuarioDto)
-    {
-        try
+        public async Task<int> UpdateUsuarioAsync(UsuarioDto usuarioDto)
         {
-            return await _coreApiClient.AddUsuarioAsync(usuarioDto);
+            return await _fallbackHttpClient.UpdateUsuarioAsync(usuarioDto);
         }
-        catch (Exception)
+
+        public async Task<int> DeleteUsuarioAsync(string codigoOdocumento)
         {
-            var usuario = Usuario.FromDto(usuarioDto);
-            var perfilUsuario = PerfilUsuario.FromDto(usuarioDto);
-
-            _dbContext.Usuarios.Add(usuario);
-            _dbContext.PerfilUsuarios.Add(perfilUsuario);
-
-            await _dbContext.SaveChangesAsync();
-            return 1;
+            return await _fallbackHttpClient.DeleteUsuarioAsync(codigoOdocumento);
         }
-    }
 
-    public async Task<int> UpdateUsuarioAsync(UsuarioDto usuarioDto)
-    {
-        try
+        public async Task<int> ToggleUsuarioCuentaAsync(string codigoOdocumento)
         {
-            return await _coreApiClient.UpdateUsuarioAsync(usuarioDto);
+            return await _fallbackHttpClient.ToggleUsuarioCuentaAsync(codigoOdocumento);
         }
-        catch (Exception)
-        {
-            var usuario = await _dbContext.Usuarios.FindAsync(usuarioDto.UsuarioCodigo);
-            if (usuario == null) return 0;
 
-            _dbContext.Entry(usuario).CurrentValues.SetValues(usuarioDto);
-            await _dbContext.SaveChangesAsync();
-            return 1;
-        }
-    }
-
-    public async Task<int> DeleteUsuarioAsync(string codigoOdocumento)
-    {
-        try
+        public async Task<CuentumDto?> GetCuentaByUsuarioCodigoOrDocumentoAsync(string codigoOdocumento)
         {
-            return await _coreApiClient.DeleteUsuarioAsync(codigoOdocumento);
+            return await _fallbackHttpClient.GetCuentaByUsuarioCodigoOrDocumentoAsync(codigoOdocumento);
         }
-        catch (Exception)
-        {
-            var usuario = await _dbContext.Usuarios.FindAsync(codigoOdocumento);
-            if (usuario == null) return 0;
 
-            _dbContext.Usuarios.Remove(usuario);
-            await _dbContext.SaveChangesAsync();
-            return 1;
-        }
-    }
-
-    public async Task<int> ToggleUsuarioCuentaAsync(string codigoOdocumento)
-    {
-        try
-        {
-            return await _coreApiClient.ToggleUsuarioCuentaAsync(codigoOdocumento);
-        }
-        catch (Exception)
-        {
-            // Example for toggling account state locally, specifics need real implementation
-            var cuenta = await _dbContext.Cuenta.FindAsync(codigoOdocumento);
-            if (cuenta == null) return 0;
-
-            cuenta.Estado = cuenta.Estado == "A" ? "D" : "A";
-            _dbContext.Update(cuenta);
-            await _dbContext.SaveChangesAsync();
-            return 1;
-        }
-    }
-
-    public async Task<CuentumDto?> GetCuentaByUsuarioCodigoOrDocumentoAsync(string codigoOdocumento)
-    {
-        try
-        {
-            return await _coreApiClient.GetCuentaByUsuarioCodigoOrDocumentoAsync(codigoOdocumento);
-        }
-        catch (Exception)
-        {
-            var cuenta = await _dbContext.Cuenta
-                .Include(c => c.DocumentoUsuarioNavigation)
-                .FirstOrDefaultAsync(c => c.DocumentoUsuario == codigoOdocumento);
-
-            return cuenta != null ? CuentumDto.FromModel(cuenta) : null;
-        }
     }
 }

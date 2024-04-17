@@ -47,11 +47,12 @@ namespace caresoft_core_client
             };
             try
             {
+
                 await API.ApiProveedorAddAsync(rncProveedor: newProvider.RncProveedor, nombre: newProvider.Nombre, direccion: newProvider.Direccion, telefono: newProvider.Telefono, correo: newProvider.Correo);
-                MessageBox.Show("Producto registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Proveedor registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"El proveedor ya existe", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }

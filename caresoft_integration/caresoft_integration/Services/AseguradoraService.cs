@@ -1,76 +1,41 @@
-﻿using caresoft_core.Models;
-using caresoft_core.Dto;
-using caresoft_core.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using caresoft_core.Context;
-using caresoft_core.Utils;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using caresoft_integration.Models;
+using caresoft_integration.Services.Interfaces;
 using caresoft_integration.Client;
 
 public class AseguradoraService : IAseguradoraService
 {
-    private readonly CaresoftDbContext _dbContext;
-    private readonly CoreApiClient _coreApiClient;
-    private readonly LogHandler<AseguradoraService> _logHandler = new();
+    private readonly FallbackHttpClient _fallbackHttpClient;
 
-    public AseguradoraService(CaresoftDbContext dbContext, CoreApiClient coreApiClient)
+    public AseguradoraService(FallbackHttpClient fallbackHttpClient)
     {
-        _dbContext = dbContext;
-        _coreApiClient = coreApiClient;
+        _fallbackHttpClient = fallbackHttpClient;
     }
 
     public async Task<int> CreateAseguradora(Aseguradora aseguradora)
     {
-        var result = await _coreApiClient.CreateAseguradora(aseguradora);
-        if (result == 1) return result;
-
-        if (!AseguradoraExists(aseguradora.IdAseguradora))
-        {
-            _dbContext.Aseguradoras.Add(aseguradora);
-            await _dbContext.SaveChangesAsync();
-            return 1;
-        }
-        return 0;
+        return await _fallbackHttpClient.CreateAseguradoraAsync(aseguradora);
     }
 
     public async Task<List<Aseguradora>> GetAllAseguradoras()
     {
-        var aseguradoras = await _coreApiClient.GetAllAseguradoras();
-        if (aseguradoras.Any()) return aseguradoras;
-
-        return await _dbContext.Aseguradoras.ToListAsync();
+        return await _fallbackHttpClient.GetAseguradorasAsync();
     }
 
-    public async Task<Aseguradora> GetAseguradoraById(uint id)
+    public async Task<Aseguradora?> GetAseguradoraById(uint id)
     {
-        var aseguradora = await _coreApiClient.GetAseguradoraById(id);
-        return aseguradora ?? await _dbContext.Aseguradoras.FindAsync(id);
+        var aseguradoras = await GetAllAseguradoras();
+        return aseguradoras.Find(a => a.IdAseguradora == id);
     }
 
     public async Task<int> UpdateAseguradora(Aseguradora aseguradora)
     {
-        var result = await _coreApiClient.UpdateAseguradora(aseguradora);
-        if (result == 1) return result;
-
-        _dbContext.Entry(aseguradora).State = EntityState.Modified;
-        await _dbContext.SaveChangesAsync();
-        return 1;
+        return await _fallbackHttpClient.UpdateAseguradoraAsync(aseguradora);
     }
 
     public async Task<int> DeleteAseguradora(uint id)
     {
-        var result = await _coreApiClient.DeleteAseguradora(id);
-        if (result == 1) return result;
-
-        var aseguradora = await _dbContext.Aseguradoras.FindAsync(id);
-        if (aseguradora == null) return 0;
-
-        _dbContext.Aseguradoras.Remove(aseguradora);
-        await _dbContext.SaveChangesAsync();
-        return 1;
-    }
-
-    private bool AseguradoraExists(uint id)
-    {
-        return _dbContext.Aseguradoras.Any(e => e.IdAseguradora == id);
+        return await _fallbackHttpClient.DeleteAseguradoraAsync(id);
     }
 }

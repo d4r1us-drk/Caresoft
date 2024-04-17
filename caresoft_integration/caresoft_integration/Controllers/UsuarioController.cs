@@ -1,112 +1,110 @@
-using caresoft_core.Dto;
-using caresoft_core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using caresoft_integration.Dto;
+using caresoft_integration.Services.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace caresoft_core.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class UsuarioController(IUsuarioService usuarioService) : ControllerBase
+namespace caresoft_integration.Controllers
 {
-    [HttpGet("get/{codigoODocumento}")]
-    public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosByIdAsync(string codigoODocumento)
+    [ApiController]
+    [Route("api/usuarios")]
+    public class UsuariosController : ControllerBase
     {
-        try
-        {
-            var usuario = await usuarioService.GetUsuarioByIdAsync(codigoODocumento);
-            return Ok(usuario);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
-        }
-    }
+        private readonly IUsuarioService _usuarioService;
 
-    [HttpGet("list")]
-    public async Task<ActionResult<List<UsuarioDto>>> GetUsuariosListAsync()
-    {
-        try
+        public UsuariosController(IUsuarioService usuarioService)
         {
-            var usuarios = await usuarioService.GetUsuariosListAsync();
-            return Ok(usuarios);
+            _usuarioService = usuarioService;
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
-        }
-    }
 
-    [HttpPost("add")]
-    public async Task<IActionResult> AddUsuarioAsync([FromQuery] UsuarioDto usuario) {
-        try
+        [HttpGet("list")]
+        public async Task<ActionResult<List<UsuarioDto>>> GetAllUsuarios()
         {
-            var result = await usuarioService.AddUsuarioAsync(usuario);
-            return Ok(result);
-        } 
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
+            return Ok(await _usuarioService.GetUsuariosListAsync());
         }
-    }
-    [HttpPut("update")]
 
-    public async Task<ActionResult<int>> UpdateUsuarioAsync([FromQuery] UsuarioDto usuario)
-    {
-        try
+        [HttpGet("{codigoOdocumento}")]
+        public async Task<ActionResult<UsuarioDto>> GetUsuario(string codigoOdocumento)
         {
-            var result = await usuarioService.UpdateUsuarioAsync(usuario);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
-        }
-    }
-
-    [HttpDelete("delete/{codigoOdocumento}")]
-    public async Task<ActionResult<int>> DeleteUsuarioAsync(string codigoOdocumento)
-    {
-        try
-        {
-            var result = await usuarioService.DeleteUsuarioAsync(codigoOdocumento);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
-        }
-    }
-
-    [HttpGet("cuenta/{codigoOdocumento}")]
-    public async Task<ActionResult<CuentumDto>> GetCuentaByUsuarioCodigoOrDocumentoAsync(string codigoOdocumento)
-    {
-        try
-        {
-            var cuenta = await usuarioService.GetCuentaByUsuarioCodigoOrDocumentoAsync(codigoOdocumento);
-            if (cuenta != null)
+            var usuario = await _usuarioService.GetUsuarioByIdAsync(codigoOdocumento);
+            if (usuario != null)
             {
-                return Ok(cuenta);
+                return Ok(usuario);
             }
+            else
+            {
+                return NotFound();
+            }
+        }
 
-            return NotFound();
-        }
-        catch (Exception ex)
+        [HttpPost("add")]
+        public async Task<ActionResult> AddUsuario([FromBody] UsuarioDto usuarioDto)
         {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
+            var resultado = await _usuarioService.AddUsuarioAsync(usuarioDto);
+            if (resultado == 1)
+            {
+                return CreatedAtAction(nameof(GetUsuario), new { codigoOdocumento = usuarioDto.UsuarioCodigo }, usuarioDto);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
-    }
 
-    [HttpPut("toggle-state-cuenta/{codigoOdocumento}")]
-    public async Task<ActionResult<int>> ToggleUsuarioCuentaAsync(string codigoOdocumento)
-    {
-        try
+        [HttpPut("update")]
+        public async Task<ActionResult> UpdateUsuario([FromBody] UsuarioDto usuarioDto)
         {
-            var result = await usuarioService.ToggleUsuarioCuentaAsync(codigoOdocumento);
-            return Ok(result);
+            var resultado = await _usuarioService.UpdateUsuarioAsync(usuarioDto);
+            if (resultado == 1)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
-        catch (Exception ex)
+
+        [HttpDelete("delete/{codigoOdocumento}")]
+        public async Task<ActionResult> DeleteUsuario(string codigoOdocumento)
         {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
+            var resultado = await _usuarioService.DeleteUsuarioAsync(codigoOdocumento);
+            if (resultado == 1)
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPut("toggle-state-cuenta/{codigoOdocumento}")]
+        public async Task<ActionResult> ToggleEstadoCuenta(string codigoOdocumento)
+        {
+            var resultado = await _usuarioService.ToggleUsuarioCuentaAsync(codigoOdocumento);
+            if (resultado == 1)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("cuenta/{codigoOdocumento}")]
+        public async Task<ActionResult<CuentumDto>> GetCuentaUsuario(string codigoOdocumento)
+        {
+            var cuentaDto = await _usuarioService.GetCuentaByUsuarioCodigoOrDocumentoAsync(codigoOdocumento);
+            if (cuentaDto != null)
+            {
+                return Ok(cuentaDto);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }

@@ -1,96 +1,78 @@
-using caresoft_core.Models;
-using caresoft_core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using caresoft_integration.Services.Interfaces;
+using caresoft_integration.Models;
+using System.Threading.Tasks;
 
-namespace caresoft_core.Controllers;
-
-[ApiController]
 [Route("api/[controller]")]
-public class AfeccionController(IAfeccionService afeccionService) : ControllerBase
+[ApiController]
+public class AfeccionController : ControllerBase
 {
-    [HttpGet("get")]
-    public async Task<ActionResult<IEnumerable<Afeccion>>> GetAfecciones()
-    {
-        try
-        {
-            var afecciones = await afeccionService.GetAfeccionesAsync();
-            return Ok(afecciones);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
-        }
-    }
+    private readonly IAfeccionService _afeccionService;
 
-    [HttpGet("get/{id}")]
-    public async Task<ActionResult<Afeccion>> GetAfeccionById(uint id)
+    public AfeccionController(IAfeccionService afeccionService)
     {
-        try
-        {
-            var afeccion = await afeccionService.GetAfeccionByIdAsync(id);
-            if (afeccion == null)
-            {
-                return NotFound();
-            }
-            return Ok(afeccion);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
-        }
+        _afeccionService = afeccionService;
     }
 
     [HttpPost("add")]
-    public async Task<IActionResult> CreateAfeccion([FromQuery] Afeccion afeccion)
+    public async Task<IActionResult> AddAfeccion([FromBody] Afeccion afeccion)
+    {
+        var result = await _afeccionService.CreateAfeccionAsync(afeccion);
+        if (result == 1)
+        {
+            return Ok("Afeccion added successfully.");
+        }
+        return BadRequest("Failed to add Afeccion.");
+    }
+
+    [HttpGet("get")]
+    public async Task<IActionResult> GetAllAfecciones()
+    {
+        var afecciones = await _afeccionService.GetAfeccionesAsync();
+        return Ok(afecciones);
+    }
+
+    [HttpGet("get/{id}")]
+    public async Task<IActionResult> GetAfeccionById(uint id)
+    {
+        var afeccion = await _afeccionService.GetAfeccionByIdAsync(id);
+        if (afeccion != null)
+        {
+            return Ok(afeccion);
+        }
+        return NotFound($"Afeccion with ID {id} not found.");
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateAfeccion(Afeccion afeccion)
     {
         try
         {
-            var result = await afeccionService.CreateAfeccionAsync(afeccion);
-            if (result == 1)
-            {
-                return Ok("Afeccion created successfully");
-            }
-            return BadRequest("Unable to create afeccion");
+            await _afeccionService.UpdateAfeccionAsync(afeccion);
+            return Ok();
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
+            return StatusCode(500, ex.Message);
         }
     }
 
-    [HttpPut("update/")]
-    public async Task<IActionResult> UpdateAfeccion([FromQuery] Afeccion afeccion)
-    {
-        try
-        {
-            var result = await afeccionService.UpdateAfeccionAsync(afeccion);
-            if (result == 1)
-            {
-                return Ok("Afeccion updated successfully");
-            }
-            return NotFound("Afeccion not found");
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
-        }
-    }
-
-    [HttpDelete("delete/{id}")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAfeccion(uint id)
     {
         try
         {
-            var result = await afeccionService.DeleteAfeccionAsync(id);
-            if (result == 1)
+            var result = await _afeccionService.DeleteAfeccionAsync(id);
+            if (result == 0)
             {
-                return Ok("Afeccion deleted successfully");
+                return NotFound();
             }
-            return NotFound("Afeccion not found");
+            return Ok();
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
+            return StatusCode(500, ex.Message);
         }
     }
+
 }

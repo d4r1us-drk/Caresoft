@@ -80,7 +80,7 @@ public class ReservaServicioService : IReservaServicioService
     {
         try
         {
-            var reserva = await _dbContext.ReservaServicios.FindAsync(idReserva);
+            var reserva = (await _dbContext.ReservaServicios.Where(e => e.IdReserva == idReserva).ToListAsync()).FirstOrDefault();
             if (reserva != null)
             {
                 reserva.Estado = reserva.Estado == "P" ? "R" : "P";

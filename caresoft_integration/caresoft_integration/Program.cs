@@ -1,11 +1,11 @@
-using caresoft_core.Services;
-using caresoft_core.Services.Interfaces;
-using caresoft_core.Context;
+using caresoft_integration.Services;
+using caresoft_integration.Services.Interfaces;
+using caresoft_integration.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using caresoft_integration.Client;
 
-namespace caresoft_core;
+namespace caresoft_integration;
 
 public class Program(IConfiguration configuration)
 {
@@ -54,8 +54,18 @@ public class Program(IConfiguration configuration)
 
         services.AddHttpClient<CoreApiClient>(client =>
         {
-            client.BaseAddress = new Uri("http://api.core.example.com/"); // URL del API del core
+            client.BaseAddress = new Uri("https://localhost:7038/"); // URL del API del core
         });
+
+        // Registro de FallbackHttpClient
+        services.AddScoped<FallbackHttpClient>(provider =>
+        {
+            var httpClientFactory = provider.GetRequiredService<IHttpClientFactory>();
+            var dbContext = provider.GetRequiredService<CaresoftDbContext>();
+            var httpClient = httpClientFactory.CreateClient("CoreApiClient");
+            return new FallbackHttpClient(httpClient, dbContext);
+        });
+
 
         services.AddScoped<IUsuarioService, UsuarioService>();
         services.AddScoped<IReservaServicioService, ReservaServicioService>();

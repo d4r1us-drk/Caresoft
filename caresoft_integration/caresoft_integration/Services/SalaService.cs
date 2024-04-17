@@ -1,16 +1,16 @@
-﻿using caresoft_core.Models;
-using caresoft_core.Dto;
-using caresoft_core.Services.Interfaces;
-using caresoft_core.Utils;
+﻿using caresoft_integration.Models;
+using caresoft_integration.Dto;
+using caresoft_integration.Services.Interfaces;
+using caresoft_integration.Utils;
 using Microsoft.EntityFrameworkCore;
-using caresoft_core.Context;
+using caresoft_integration.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using caresoft_integration.Client;
 
-namespace caresoft_core.Services
+namespace caresoft_integration.Services
 {
     public class SalaService : ISalaService
     {

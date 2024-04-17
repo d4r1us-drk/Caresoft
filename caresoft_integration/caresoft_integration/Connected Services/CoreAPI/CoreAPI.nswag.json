@@ -1,0 +1,6045 @@
+﻿{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "caresoft_core",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Afeccion/get": {
+      "get": {
+        "tags": [
+          "Afeccion"
+        ],
+        "operationId": "getAll",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Afeccion"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Afeccion"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Afeccion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Afeccion/get/{id}": {
+      "get": {
+        "tags": [
+          "Afeccion"
+        ],
+        "operationId": "get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Afeccion"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Afeccion"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Afeccion"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Afeccion/add": {
+      "post": {
+        "tags": [
+          "Afeccion"
+        ],
+        "operationId": "add",
+        "parameters": [
+          {
+            "name": "IdAfeccion",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Descripcion",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConsultaCodigos",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Consultum"
+              }
+            }
+          },
+          {
+            "name": "IdIngresos",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Ingreso"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Afeccion/update": {
+      "put": {
+        "tags": [
+          "Afeccion"
+        ],
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "IdAfeccion",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Descripcion",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConsultaCodigos",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Consultum"
+              }
+            }
+          },
+          {
+            "name": "IdIngresos",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Ingreso"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Afeccion/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Afeccion"
+        ],
+        "operationId": "delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Aseguradora/get": {
+      "get": {
+        "tags": [
+          "Aseguradora"
+        ],
+        "operationId": "getAll2",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Aseguradora"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Aseguradora"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Aseguradora"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Aseguradora/get/{id}": {
+      "get": {
+        "tags": [
+          "Aseguradora"
+        ],
+        "operationId": "get2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Aseguradora"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Aseguradora"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Aseguradora"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Aseguradora/update": {
+      "put": {
+        "tags": [
+          "Aseguradora"
+        ],
+        "operationId": "update2",
+        "parameters": [
+          {
+            "name": "IdAseguradora",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Direccion",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Telefono",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Correo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Autorizacions",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Autorizacion"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Aseguradora/add": {
+      "post": {
+        "tags": [
+          "Aseguradora"
+        ],
+        "operationId": "add2",
+        "parameters": [
+          {
+            "name": "IdAseguradora",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Direccion",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Telefono",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Correo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Autorizacions",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Autorizacion"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Aseguradora/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Aseguradora"
+        ],
+        "operationId": "delete2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Autorizacion/get": {
+      "get": {
+        "tags": [
+          "Autorizacion"
+        ],
+        "operationId": "getAll3",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AutorizacionDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AutorizacionDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AutorizacionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Autorizacion/get/{id}": {
+      "get": {
+        "tags": [
+          "Autorizacion"
+        ],
+        "operationId": "get3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AutorizacionDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AutorizacionDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AutorizacionDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Autorizacion/update": {
+      "put": {
+        "tags": [
+          "Autorizacion"
+        ],
+        "operationId": "update3",
+        "parameters": [
+          {
+            "name": "IdAutorizacion",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IdAseguradora",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Fecha",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "MontoAsegurado",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Autorizacion/add": {
+      "post": {
+        "tags": [
+          "Autorizacion"
+        ],
+        "operationId": "add3",
+        "parameters": [
+          {
+            "name": "IdAutorizacion",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IdAseguradora",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Fecha",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "MontoAsegurado",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "idIngreso",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "consultaCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "facturaCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "servicioCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idProducto",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Autorizacion/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Autorizacion"
+        ],
+        "operationId": "delete3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Consulta/add": {
+      "post": {
+        "tags": [
+          "Consulta"
+        ],
+        "operationId": "add4",
+        "parameters": [
+          {
+            "name": "ConsultaCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DocumentoPaciente",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DocumentoMedico",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IdConsultorio",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IdAutorizacion",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Fecha",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "Motivo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Comentarios",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Estado",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Costo",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Consulta/update": {
+      "put": {
+        "tags": [
+          "Consulta"
+        ],
+        "operationId": "update4",
+        "parameters": [
+          {
+            "name": "ConsultaCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DocumentoPaciente",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DocumentoMedico",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IdConsultorio",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IdAutorizacion",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Fecha",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "Motivo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Comentarios",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Estado",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Costo",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Consulta/delete/{consultaCodigo}": {
+      "delete": {
+        "tags": [
+          "Consulta"
+        ],
+        "operationId": "delete4",
+        "parameters": [
+          {
+            "name": "consultaCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Consulta/get": {
+      "get": {
+        "tags": [
+          "Consulta"
+        ],
+        "operationId": "getAll4",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConsultaDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConsultaDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConsultaDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Consulta/addServicio/{consultaCodigo}/{servicioCodigo}": {
+      "post": {
+        "tags": [
+          "Consulta"
+        ],
+        "operationId": "addServicio",
+        "parameters": [
+          {
+            "name": "consultaCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "servicioCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Consulta/deleteServicio/{consultaCodigo}/{servicioCodigo}": {
+      "delete": {
+        "tags": [
+          "Consulta"
+        ],
+        "operationId": "deleteServicio",
+        "parameters": [
+          {
+            "name": "consultaCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "servicioCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Consulta/getServicios/{consultaCodigo}": {
+      "get": {
+        "tags": [
+          "Consulta"
+        ],
+        "operationId": "getServicios",
+        "parameters": [
+          {
+            "name": "consultaCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ServicioDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ServicioDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ServicioDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Consulta/addProducto/{consultaCodigo}/{idProducto}/{cantidad}": {
+      "post": {
+        "tags": [
+          "Consulta"
+        ],
+        "operationId": "addProducto",
+        "parameters": [
+          {
+            "name": "consultaCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idProducto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "cantidad",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Consulta/deleteProducto/{consultaCodigo}/{idProducto}/{cantidad}": {
+      "delete": {
+        "tags": [
+          "Consulta"
+        ],
+        "operationId": "deleteProducto",
+        "parameters": [
+          {
+            "name": "consultaCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idProducto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "cantidad",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Consulta/getProductos/{consultaCodigo}": {
+      "get": {
+        "tags": [
+          "Consulta"
+        ],
+        "operationId": "getProductos",
+        "parameters": [
+          {
+            "name": "consultaCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductoDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductoDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductoDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Consultorio/get": {
+      "get": {
+        "tags": [
+          "Consultorio"
+        ],
+        "operationId": "getAll5",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Consultorio"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Consultorio"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Consultorio"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Consultorio/get/{id}": {
+      "get": {
+        "tags": [
+          "Consultorio"
+        ],
+        "operationId": "get4",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Consultorio"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Consultorio"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Consultorio"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Consultorio/add": {
+      "post": {
+        "tags": [
+          "Consultorio"
+        ],
+        "operationId": "add5",
+        "parameters": [
+          {
+            "name": "IdConsultorio",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Direccion",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Telefono",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Consulta",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Consultum"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Consultorio/update": {
+      "put": {
+        "tags": [
+          "Consultorio"
+        ],
+        "operationId": "update5",
+        "parameters": [
+          {
+            "name": "IdConsultorio",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Direccion",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Telefono",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Consulta",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Consultum"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Consultorio/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Consultorio"
+        ],
+        "operationId": "delete5",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Factura/add": {
+      "post": {
+        "tags": [
+          "Factura"
+        ],
+        "operationId": "add6",
+        "parameters": [
+          {
+            "name": "FacturaCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IdCuenta",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "ConsultaCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IdIngreso",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IdSucursal",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "DocumentoCajero",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "MontoSubtotal",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "MontoTotal",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "Fecha",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Factura/update": {
+      "put": {
+        "tags": [
+          "Factura"
+        ],
+        "operationId": "update6",
+        "parameters": [
+          {
+            "name": "FacturaCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IdCuenta",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "ConsultaCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IdIngreso",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IdSucursal",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "DocumentoCajero",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "MontoSubtotal",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "MontoTotal",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "Fecha",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Factura/delete/{facturaCodigo}": {
+      "delete": {
+        "tags": [
+          "Factura"
+        ],
+        "operationId": "delete6",
+        "parameters": [
+          {
+            "name": "facturaCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Factura/get": {
+      "get": {
+        "tags": [
+          "Factura"
+        ],
+        "operationId": "getAll6",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FacturaDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FacturaDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FacturaDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Factura/addFacturaServicio": {
+      "post": {
+        "tags": [
+          "Factura"
+        ],
+        "operationId": "addFacturaServicio",
+        "parameters": [
+          {
+            "name": "FacturaCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ServicioCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IdAutorizacion",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Resultados",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Costo",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Factura/deleteFacturaServicio/{facturaCodigo}/{servicioCodigo}": {
+      "delete": {
+        "tags": [
+          "Factura"
+        ],
+        "operationId": "deleteFacturaServicio",
+        "parameters": [
+          {
+            "name": "facturaCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "servicioCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Factura/getFacturaServicios/{facturaCodigo}": {
+      "get": {
+        "tags": [
+          "Factura"
+        ],
+        "operationId": "getFacturaServicios",
+        "parameters": [
+          {
+            "name": "facturaCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ServicioDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ServicioDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ServicioDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Factura/addFacturaProducto": {
+      "post": {
+        "tags": [
+          "Factura"
+        ],
+        "operationId": "addFacturaProducto",
+        "parameters": [
+          {
+            "name": "FacturaCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IdProducto",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IdAutorizacion",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Resultados",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Costo",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Factura/deleteFacturaProducto/{facturaCodigo}/{idProducto}": {
+      "delete": {
+        "tags": [
+          "Factura"
+        ],
+        "operationId": "deleteFacturaProducto",
+        "parameters": [
+          {
+            "name": "facturaCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idProducto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Factura/getFacturaProductos/{facturaCodigo}": {
+      "get": {
+        "tags": [
+          "Factura"
+        ],
+        "operationId": "getFacturaProductos",
+        "parameters": [
+          {
+            "name": "facturaCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FacturaProductoDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FacturaProductoDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FacturaProductoDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Factura/addFacturaMetodoPago/{facturaCodigo}/{idMetodoPago}": {
+      "post": {
+        "tags": [
+          "Factura"
+        ],
+        "operationId": "addFacturaMetodoPago",
+        "parameters": [
+          {
+            "name": "facturaCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idMetodoPago",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Factura/deleteFacturaMetodoPago/{facturaCodigo}/{idMetodoPago}": {
+      "delete": {
+        "tags": [
+          "Factura"
+        ],
+        "operationId": "deleteFacturaMetodoPago",
+        "parameters": [
+          {
+            "name": "facturaCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idMetodoPago",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Factura/getMetodoPagos/{facturaCodigo}": {
+      "get": {
+        "tags": [
+          "Factura"
+        ],
+        "operationId": "getMetodoPagos",
+        "parameters": [
+          {
+            "name": "facturaCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MetodoPagoDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MetodoPagoDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MetodoPagoDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Ingreso/add": {
+      "post": {
+        "tags": [
+          "Ingreso"
+        ],
+        "operationId": "add7",
+        "parameters": [
+          {
+            "name": "IdIngreso",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "DocumentoPaciente",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DocumentoEnfermero",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DocumentoMedico",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConsultaCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IdAutorizacion",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "NumSala",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "CostoEstancia",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "FechaIngreso",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "FechaAlta",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Ingreso/update/{id}": {
+      "put": {
+        "tags": [
+          "Ingreso"
+        ],
+        "operationId": "update7",
+        "parameters": [
+          {
+            "name": "IdIngreso",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "DocumentoPaciente",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DocumentoEnfermero",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DocumentoMedico",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ConsultaCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IdAutorizacion",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "NumSala",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "CostoEstancia",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "FechaIngreso",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "FechaAlta",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Ingreso/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Ingreso"
+        ],
+        "operationId": "delete7",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Ingreso/get": {
+      "get": {
+        "tags": [
+          "Ingreso"
+        ],
+        "operationId": "getAll7",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IngresoDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IngresoDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IngresoDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Ingreso/get/{id}": {
+      "get": {
+        "tags": [
+          "Ingreso"
+        ],
+        "operationId": "get5",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngresoDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngresoDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngresoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Ingreso/{idIngreso}/afecciones/{idAfeccion}": {
+      "post": {
+        "tags": [
+          "Ingreso"
+        ],
+        "operationId": "afeccionesPOST",
+        "parameters": [
+          {
+            "name": "idIngreso",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idAfeccion",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Ingreso"
+        ],
+        "operationId": "afeccionesDELETE",
+        "parameters": [
+          {
+            "name": "idIngreso",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idAfeccion",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Ingreso/{idIngreso}/afecciones": {
+      "get": {
+        "tags": [
+          "Ingreso"
+        ],
+        "operationId": "afeccionesAll",
+        "parameters": [
+          {
+            "name": "idIngreso",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Afeccion"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Afeccion"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Afeccion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MetodoPago/add": {
+      "post": {
+        "tags": [
+          "MetodoPago"
+        ],
+        "operationId": "add8",
+        "parameters": [
+          {
+            "name": "IdMetodoPago",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/MetodoPago/get": {
+      "get": {
+        "tags": [
+          "MetodoPago"
+        ],
+        "operationId": "getAll8",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MetodoPagoDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MetodoPagoDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MetodoPagoDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MetodoPago/update": {
+      "put": {
+        "tags": [
+          "MetodoPago"
+        ],
+        "operationId": "update8",
+        "parameters": [
+          {
+            "name": "IdMetodoPago",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/MetodoPago/delete/{id}": {
+      "delete": {
+        "tags": [
+          "MetodoPago"
+        ],
+        "operationId": "delete8",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Pago/get": {
+      "get": {
+        "tags": [
+          "Pago"
+        ],
+        "operationId": "getAll9",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pago"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pago"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pago"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Pago/get/{idPago}": {
+      "get": {
+        "tags": [
+          "Pago"
+        ],
+        "operationId": "get6",
+        "parameters": [
+          {
+            "name": "idPago",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pago"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pago"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pago"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Pago/add": {
+      "post": {
+        "tags": [
+          "Pago"
+        ],
+        "operationId": "add9",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pago"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pago"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pago"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Pago/update": {
+      "put": {
+        "tags": [
+          "Pago"
+        ],
+        "operationId": "update9",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pago"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pago"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pago"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Pago/delete/{idPago}": {
+      "delete": {
+        "tags": [
+          "Pago"
+        ],
+        "operationId": "delete9",
+        "parameters": [
+          {
+            "name": "idPago",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Producto/get": {
+      "get": {
+        "tags": [
+          "Producto"
+        ],
+        "operationId": "getAll10",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductoDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductoDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductoDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Producto/add": {
+      "post": {
+        "tags": [
+          "Producto"
+        ],
+        "operationId": "add10",
+        "parameters": [
+          {
+            "name": "IdProducto",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Descripcion",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Costo",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "LoteDisponible",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Producto/update": {
+      "put": {
+        "tags": [
+          "Producto"
+        ],
+        "operationId": "update10",
+        "parameters": [
+          {
+            "name": "IdProducto",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Descripcion",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Costo",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "LoteDisponible",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Producto/delete/{idProducto}": {
+      "delete": {
+        "tags": [
+          "Producto"
+        ],
+        "operationId": "delete10",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Producto/add-provider/{idProducto}/{rncProveedor}": {
+      "post": {
+        "tags": [
+          "Producto"
+        ],
+        "operationId": "add-provider",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "rncProveedor",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Producto/delete-provider/{idProducto}/{rncProveedor}": {
+      "delete": {
+        "tags": [
+          "Producto"
+        ],
+        "operationId": "delete-provider",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "rncProveedor",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Producto/{idProducto}/proveedores": {
+      "get": {
+        "tags": [
+          "Producto"
+        ],
+        "operationId": "proveedores",
+        "parameters": [
+          {
+            "name": "idProducto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProveedorDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProveedorDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProveedorDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Proveedor/get": {
+      "get": {
+        "tags": [
+          "Proveedor"
+        ],
+        "operationId": "getAll11",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProveedorDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProveedorDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProveedorDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Proveedor/get/{rncProveedor}": {
+      "get": {
+        "tags": [
+          "Proveedor"
+        ],
+        "operationId": "get7",
+        "parameters": [
+          {
+            "name": "rncProveedor",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProveedorDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProveedorDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProveedorDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Proveedor/add": {
+      "post": {
+        "tags": [
+          "Proveedor"
+        ],
+        "operationId": "add11",
+        "parameters": [
+          {
+            "name": "RncProveedor",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Direccion",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Telefono",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Correo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Proveedor/update": {
+      "put": {
+        "tags": [
+          "Proveedor"
+        ],
+        "operationId": "update11",
+        "parameters": [
+          {
+            "name": "RncProveedor",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Direccion",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Telefono",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Correo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Proveedor/delete/{rncProveedor}": {
+      "delete": {
+        "tags": [
+          "Proveedor"
+        ],
+        "operationId": "delete11",
+        "parameters": [
+          {
+            "name": "rncProveedor",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ReservaServicio/get": {
+      "get": {
+        "tags": [
+          "ReservaServicio"
+        ],
+        "operationId": "getAll12",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReservaServicioDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReservaServicioDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReservaServicioDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ReservaServicio/add": {
+      "post": {
+        "tags": [
+          "ReservaServicio"
+        ],
+        "operationId": "add12",
+        "parameters": [
+          {
+            "name": "IdReserva",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "DocumentoPaciente",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DocumentoMedico",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ServicioCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "FechaReservada",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "Estado",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ReservaServicio/update": {
+      "put": {
+        "tags": [
+          "ReservaServicio"
+        ],
+        "operationId": "update12",
+        "parameters": [
+          {
+            "name": "IdReserva",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "DocumentoPaciente",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DocumentoMedico",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ServicioCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "FechaReservada",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "Estado",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ReservaServicio/toggle-state/{id}": {
+      "put": {
+        "tags": [
+          "ReservaServicio"
+        ],
+        "operationId": "toggle-state",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ReservaServicio/delete/{id}": {
+      "delete": {
+        "tags": [
+          "ReservaServicio"
+        ],
+        "operationId": "delete12",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Sala/add": {
+      "post": {
+        "tags": [
+          "Sala"
+        ],
+        "operationId": "add13",
+        "parameters": [
+          {
+            "name": "NumSala",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Estado",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Sala/get": {
+      "get": {
+        "tags": [
+          "Sala"
+        ],
+        "operationId": "getAll13",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SalaDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SalaDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SalaDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Sala/update/{numSala}": {
+      "put": {
+        "tags": [
+          "Sala"
+        ],
+        "operationId": "update13",
+        "parameters": [
+          {
+            "name": "numSala",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Sala/delete/{numSala}": {
+      "delete": {
+        "tags": [
+          "Sala"
+        ],
+        "operationId": "delete13",
+        "parameters": [
+          {
+            "name": "numSala",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Servicio/add": {
+      "post": {
+        "tags": [
+          "Servicio"
+        ],
+        "operationId": "add14",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServicioDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServicioDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServicioDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Servicio/get": {
+      "get": {
+        "tags": [
+          "Servicio"
+        ],
+        "operationId": "getAll14",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ServicioDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ServicioDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ServicioDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Servicio/update": {
+      "put": {
+        "tags": [
+          "Servicio"
+        ],
+        "operationId": "update14",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServicioDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServicioDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServicioDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Servicio/delete/{servicioCodigo}": {
+      "delete": {
+        "tags": [
+          "Servicio"
+        ],
+        "operationId": "delete14",
+        "parameters": [
+          {
+            "name": "servicioCodigo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Sucursal": {
+      "post": {
+        "tags": [
+          "Sucursal"
+        ],
+        "operationId": "SucursalPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SucursalDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SucursalDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SucursalDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Sucursal"
+        ],
+        "operationId": "SucursalAll",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SucursalDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SucursalDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SucursalDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Sucursal"
+        ],
+        "operationId": "SucursalPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SucursalDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SucursalDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SucursalDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Sucursal/{id}": {
+      "delete": {
+        "tags": [
+          "Sucursal"
+        ],
+        "operationId": "SucursalDELETE",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/TipoServicio/add": {
+      "post": {
+        "tags": [
+          "TipoServicio"
+        ],
+        "operationId": "add15",
+        "parameters": [
+          {
+            "name": "IdTipoServicio",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/TipoServicio/get": {
+      "get": {
+        "tags": [
+          "TipoServicio"
+        ],
+        "operationId": "getAll15",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TipoServicioDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TipoServicioDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TipoServicioDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/TipoServicio/update": {
+      "put": {
+        "tags": [
+          "TipoServicio"
+        ],
+        "operationId": "update15",
+        "parameters": [
+          {
+            "name": "IdTipoServicio",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/TipoServicio/delete/{id}": {
+      "delete": {
+        "tags": [
+          "TipoServicio"
+        ],
+        "operationId": "delete15",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Usuario/get/{codigoODocumento}": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "operationId": "get8",
+        "parameters": [
+          {
+            "name": "codigoODocumento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuario/list": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "operationId": "list",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuario/add": {
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "operationId": "add16",
+        "parameters": [
+          {
+            "name": "UsuarioCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Documento",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "UsuarioContra",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "TipoDocumento",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "NumLicenciaMedica",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Apellido",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Genero",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "FechaNacimiento",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "Telefono",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Correo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Direccion",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Rol",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Usuario/update": {
+      "put": {
+        "tags": [
+          "Usuario"
+        ],
+        "operationId": "update16",
+        "parameters": [
+          {
+            "name": "UsuarioCodigo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Documento",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "UsuarioContra",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "TipoDocumento",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "NumLicenciaMedica",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Apellido",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Genero",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "FechaNacimiento",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "Telefono",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Correo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Direccion",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Rol",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuario/delete/{codigoOdocumento}": {
+      "delete": {
+        "tags": [
+          "Usuario"
+        ],
+        "operationId": "delete16",
+        "parameters": [
+          {
+            "name": "codigoOdocumento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuario/cuenta/{codigoOdocumento}": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "operationId": "cuenta",
+        "parameters": [
+          {
+            "name": "codigoOdocumento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CuentumDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CuentumDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CuentumDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuario/toggle-state-cuenta/{codigoOdocumento}": {
+      "put": {
+        "tags": [
+          "Usuario"
+        ],
+        "operationId": "toggle-state-cuenta",
+        "parameters": [
+          {
+            "name": "codigoOdocumento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Afeccion": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idAfeccion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "consultaCodigos": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Consultum"
+            }
+          },
+          "idIngresos": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Ingreso"
+            }
+          }
+        }
+      },
+      "Aseguradora": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idAseguradora": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono": {
+            "type": "string",
+            "nullable": true
+          },
+          "correo": {
+            "type": "string",
+            "nullable": true
+          },
+          "autorizacions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Autorizacion"
+            }
+          }
+        }
+      },
+      "Autorizacion": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idAutorizacion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idAseguradora": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fecha": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "montoAsegurado": {
+            "type": "number",
+            "format": "double"
+          },
+          "consulta": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Consultum"
+            }
+          },
+          "facturaProducto": {
+            "$ref": "#/components/schemas/FacturaProducto"
+          },
+          "facturaServicio": {
+            "$ref": "#/components/schemas/FacturaServicio"
+          },
+          "idAseguradoraNavigation": {
+            "$ref": "#/components/schemas/Aseguradora"
+          },
+          "ingresos": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Ingreso"
+            }
+          }
+        }
+      },
+      "AutorizacionDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idAutorizacion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idAseguradora": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fecha": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "montoAsegurado": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "ConsultaDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "consultaCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentoPaciente": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentoMedico": {
+            "type": "string",
+            "nullable": true
+          },
+          "idConsultorio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idAutorizacion": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "fecha": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "motivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "comentarios": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "costo": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "Consultorio": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idConsultorio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono": {
+            "type": "string",
+            "nullable": true
+          },
+          "consulta": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Consultum"
+            }
+          }
+        }
+      },
+      "Consultum": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "consultaCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentoPaciente": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentoMedico": {
+            "type": "string",
+            "nullable": true
+          },
+          "idConsultorio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idAutorizacion": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "fecha": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "motivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "comentarios": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "costo": {
+            "type": "number",
+            "format": "double"
+          },
+          "documentoMedicoNavigation": {
+            "$ref": "#/components/schemas/PerfilUsuario"
+          },
+          "documentoPacienteNavigation": {
+            "$ref": "#/components/schemas/PerfilUsuario"
+          },
+          "factura": {
+            "$ref": "#/components/schemas/Factura"
+          },
+          "idAutorizacionNavigation": {
+            "$ref": "#/components/schemas/Autorizacion"
+          },
+          "idConsultorioNavigation": {
+            "$ref": "#/components/schemas/Consultorio"
+          },
+          "prescripcionProductos": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/PrescripcionProducto"
+            }
+          },
+          "idAfeccions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Afeccion"
+            }
+          },
+          "servicioCodigos": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Servicio"
+            }
+          }
+        }
+      },
+      "Cuentum": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idCuenta": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentoUsuario": {
+            "type": "string",
+            "nullable": true
+          },
+          "balance": {
+            "type": "number",
+            "format": "double"
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentoUsuarioNavigation": {
+            "$ref": "#/components/schemas/PerfilUsuario"
+          },
+          "facturas": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Factura"
+            }
+          },
+          "pagos": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Pago"
+            }
+          }
+        }
+      },
+      "CuentumDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idCuenta": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "balance": {
+            "type": "number",
+            "format": "double"
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Factura": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "facturaCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "idCuenta": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "consultaCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "idIngreso": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idSucursal": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentoCajero": {
+            "type": "string",
+            "nullable": true
+          },
+          "montoSubtotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "montoTotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "fecha": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "consultaCodigoNavigation": {
+            "$ref": "#/components/schemas/Consultum"
+          },
+          "documentoCajeroNavigation": {
+            "$ref": "#/components/schemas/PerfilUsuario"
+          },
+          "facturaProductos": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/FacturaProducto"
+            }
+          },
+          "facturaServicios": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/FacturaServicio"
+            }
+          },
+          "idCuentaNavigation": {
+            "$ref": "#/components/schemas/Cuentum"
+          },
+          "idIngresoNavigation": {
+            "$ref": "#/components/schemas/Ingreso"
+          },
+          "idSucursalNavigation": {
+            "$ref": "#/components/schemas/Sucursal"
+          },
+          "idMetodoPagos": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/MetodoPago"
+            }
+          }
+        }
+      },
+      "FacturaDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "facturaCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "idCuenta": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "consultaCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "idIngreso": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idSucursal": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentoCajero": {
+            "type": "string",
+            "nullable": true
+          },
+          "montoSubtotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "montoTotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "fecha": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FacturaProducto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "facturaCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "idProducto": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idAutorizacion": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "resultados": {
+            "type": "string",
+            "nullable": true
+          },
+          "costo": {
+            "type": "number",
+            "format": "double"
+          },
+          "facturaCodigoNavigation": {
+            "$ref": "#/components/schemas/Factura"
+          },
+          "idAutorizacionNavigation": {
+            "$ref": "#/components/schemas/Autorizacion"
+          },
+          "idProductoNavigation": {
+            "$ref": "#/components/schemas/Producto"
+          }
+        }
+      },
+      "FacturaProductoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "facturaCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "idProducto": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idAutorizacion": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "resultados": {
+            "type": "string",
+            "nullable": true
+          },
+          "costo": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "FacturaServicio": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "facturaCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "servicioCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "idAutorizacion": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "resultados": {
+            "type": "string",
+            "nullable": true
+          },
+          "costo": {
+            "type": "number",
+            "format": "double"
+          },
+          "facturaCodigoNavigation": {
+            "$ref": "#/components/schemas/Factura"
+          },
+          "idAutorizacionNavigation": {
+            "$ref": "#/components/schemas/Autorizacion"
+          },
+          "servicioCodigoNavigation": {
+            "$ref": "#/components/schemas/Servicio"
+          }
+        }
+      },
+      "Ingreso": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idIngreso": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentoPaciente": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentoEnfermero": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentoMedico": {
+            "type": "string",
+            "nullable": true
+          },
+          "consultaCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "idAutorizacion": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "numSala": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "costoEstancia": {
+            "type": "number",
+            "format": "double"
+          },
+          "fechaIngreso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaAlta": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "documentoEnfermeroNavigation": {
+            "$ref": "#/components/schemas/PerfilUsuario"
+          },
+          "documentoMedicoNavigation": {
+            "$ref": "#/components/schemas/PerfilUsuario"
+          },
+          "documentoPacienteNavigation": {
+            "$ref": "#/components/schemas/PerfilUsuario"
+          },
+          "factura": {
+            "$ref": "#/components/schemas/Factura"
+          },
+          "idAutorizacionNavigation": {
+            "$ref": "#/components/schemas/Autorizacion"
+          },
+          "numSalaNavigation": {
+            "$ref": "#/components/schemas/Sala"
+          },
+          "idAfeccions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Afeccion"
+            }
+          }
+        }
+      },
+      "IngresoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idIngreso": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentoPaciente": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentoEnfermero": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentoMedico": {
+            "type": "string",
+            "nullable": true
+          },
+          "consultaCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "idAutorizacion": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "numSala": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "costoEstancia": {
+            "type": "number",
+            "format": "double"
+          },
+          "fechaIngreso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaAlta": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "MetodoPago": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idMetodoPago": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "facturaCodigos": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Factura"
+            }
+          }
+        }
+      },
+      "MetodoPagoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idMetodoPago": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Pago": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idPago": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idCuenta": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "montoPagado": {
+            "type": "number",
+            "format": "double"
+          },
+          "fecha": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "idCuentaNavigation": {
+            "$ref": "#/components/schemas/Cuentum"
+          }
+        }
+      },
+      "PerfilUsuario": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "documento": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipoDocumento": {
+            "type": "string",
+            "nullable": true
+          },
+          "numLicenciaMedica": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "apellido": {
+            "type": "string",
+            "nullable": true
+          },
+          "genero": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaNacimiento": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "telefono": {
+            "type": "string",
+            "nullable": true
+          },
+          "correo": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "rol": {
+            "type": "string",
+            "nullable": true
+          },
+          "consultumDocumentoMedicoNavigations": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Consultum"
+            }
+          },
+          "consultumDocumentoPacienteNavigations": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Consultum"
+            }
+          },
+          "cuentum": {
+            "$ref": "#/components/schemas/Cuentum"
+          },
+          "facturas": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Factura"
+            }
+          },
+          "ingresoDocumentoEnfermeroNavigations": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Ingreso"
+            }
+          },
+          "ingresoDocumentoMedicoNavigations": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Ingreso"
+            }
+          },
+          "ingresoDocumentoPacienteNavigations": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Ingreso"
+            }
+          },
+          "reservaServicioDocumentoMedicoNavigations": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ReservaServicio"
+            }
+          },
+          "reservaServicioDocumentoPacienteNavigations": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ReservaServicio"
+            }
+          },
+          "usuario": {
+            "$ref": "#/components/schemas/Usuario"
+          }
+        }
+      },
+      "PrescripcionProducto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "consultaCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "idProducto": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cantidad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "consultaCodigoNavigation": {
+            "$ref": "#/components/schemas/Consultum"
+          },
+          "idProductoNavigation": {
+            "$ref": "#/components/schemas/Producto"
+          }
+        }
+      },
+      "Producto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idProducto": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "costo": {
+            "type": "number",
+            "format": "double"
+          },
+          "loteDisponible": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "facturaProductos": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/FacturaProducto"
+            }
+          },
+          "prescripcionProductos": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/PrescripcionProducto"
+            }
+          },
+          "rncProveedors": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Proveedor"
+            }
+          }
+        }
+      },
+      "ProductoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idProducto": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "costo": {
+            "type": "number",
+            "format": "double"
+          },
+          "loteDisponible": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Proveedor": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rncProveedor": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono": {
+            "type": "string",
+            "nullable": true
+          },
+          "correo": {
+            "type": "string",
+            "nullable": true
+          },
+          "idProductos": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Producto"
+            }
+          }
+        }
+      },
+      "ProveedorDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rncProveedor": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono": {
+            "type": "string",
+            "nullable": true
+          },
+          "correo": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ReservaServicio": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idReserva": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentoPaciente": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentoMedico": {
+            "type": "string",
+            "nullable": true
+          },
+          "servicioCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaReservada": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentoMedicoNavigation": {
+            "$ref": "#/components/schemas/PerfilUsuario"
+          },
+          "documentoPacienteNavigation": {
+            "$ref": "#/components/schemas/PerfilUsuario"
+          },
+          "servicioCodigoNavigation": {
+            "$ref": "#/components/schemas/Servicio"
+          }
+        }
+      },
+      "ReservaServicioDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idReserva": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentoPaciente": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentoMedico": {
+            "type": "string",
+            "nullable": true
+          },
+          "servicioCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaReservada": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Sala": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "numSala": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "ingresos": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Ingreso"
+            }
+          }
+        }
+      },
+      "SalaDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "numSala": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Servicio": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "servicioCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "idTipoServicio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "costo": {
+            "type": "number",
+            "format": "double"
+          },
+          "facturaServicios": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/FacturaServicio"
+            }
+          },
+          "idTipoServicioNavigation": {
+            "$ref": "#/components/schemas/TipoServicio"
+          },
+          "reservaServicios": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ReservaServicio"
+            }
+          },
+          "consultaCodigos": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Consultum"
+            }
+          }
+        }
+      },
+      "ServicioDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "servicioCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "idTipoServicio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "costo": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "Sucursal": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idSucursal": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono": {
+            "type": "string",
+            "nullable": true
+          },
+          "facturas": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Factura"
+            }
+          }
+        }
+      },
+      "SucursalDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idSucursal": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "TipoServicio": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idTipoServicio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "servicios": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Servicio"
+            }
+          }
+        }
+      },
+      "TipoServicioDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idTipoServicio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Usuario": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "usuarioCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentoUsuario": {
+            "type": "string",
+            "nullable": true
+          },
+          "usuarioContra": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentoUsuarioNavigation": {
+            "$ref": "#/components/schemas/PerfilUsuario"
+          }
+        }
+      },
+      "UsuarioDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "usuarioCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "documento": {
+            "type": "string",
+            "nullable": true
+          },
+          "usuarioContra": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipoDocumento": {
+            "type": "string",
+            "nullable": true
+          },
+          "numLicenciaMedica": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "apellido": {
+            "type": "string",
+            "nullable": true
+          },
+          "genero": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaNacimiento": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "telefono": {
+            "type": "string",
+            "nullable": true
+          },
+          "correo": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "rol": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    }
+  }
+}

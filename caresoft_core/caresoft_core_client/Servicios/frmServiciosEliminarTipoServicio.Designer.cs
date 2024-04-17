@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServiciosEliminarTipoServicio));
             lblTitulo = new Label();
             pnlTitulos = new Panel();
             dataGridView1 = new DataGridView();
@@ -107,6 +108,7 @@
             Controls.Add(pnlTitulos);
             Controls.Add(dataGridView1);
             Controls.Add(pnlBotones);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmServiciosEliminarTipoServicio";
             Text = "Eliminar Tipo de Servicio";
             pnlTitulos.ResumeLayout(false);

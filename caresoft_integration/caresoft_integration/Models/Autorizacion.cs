@@ -1,9 +1,12 @@
-﻿using caresoft_core.Dto;
+﻿using caresoft_integration.Dto;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace caresoft_core.Models;
+namespace caresoft_integration.Models;
 
 public partial class Autorizacion
 {
+    [NotMapped]
+    public object CodigoAutorizacion { get; set; }
     public uint IdAutorizacion { get; set; }
 
     public uint IdAseguradora { get; set; }

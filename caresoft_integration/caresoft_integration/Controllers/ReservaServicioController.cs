@@ -1,93 +1,120 @@
-using caresoft_core.Dto;
-using caresoft_core.Utils;
-using caresoft_core.Services.Interfaces;
+using caresoft_integration.Dto;
+using caresoft_integration.Services;
+using caresoft_integration.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace caresoft_core.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class ReservaServicioController(IReservaServicioService reservaServicioService) : ControllerBase
+namespace caresoft_integration.Controllers
 {
-    private readonly LogHandler<ReservaServicioController> _logHandler = new();
-
-    [HttpGet("get")]
-    public async Task<ActionResult<List<ReservaServicioDto>>> GetReservaServiciosListAsync()
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ReservaServicioController : ControllerBase
     {
-        try
-        {
-            var reservas = await reservaServicioService.GetReservaServiciosListAsync();
+        private readonly IReservaServicioService _reservaServicioService;
 
-            return Ok(reservas);
-        }
-        catch (Exception ex)
+        public ReservaServicioController(IReservaServicioService reservaServicioService)
         {
-            _logHandler.LogFatal("An error occurred while fetching reservation services.", ex);
-            return StatusCode(500, "An error occurred while fetching reservation services.");
+            _reservaServicioService = reservaServicioService;
         }
-    }
 
-    [HttpPost("add")]
-    public async Task<ActionResult> AddReservaServicioAsync([FromQuery] ReservaServicioDto reserva)
-    {
-        try
+        [HttpGet("get")]
+        public async Task<ActionResult<List<ReservaServicioDto>>> GetReservaServiciosListAsync()
         {
-            var result = await reservaServicioService.AddReservaServicioAsync(reserva);
-
-            return result == 1 ? Ok("Reserva servicio added successfully.") : StatusCode(500, "An error occurred while adding reserva servicio.");
+            try
+            {
+                var reservaServicios = await _reservaServicioService.GetReservaServiciosListAsync();
+                return Ok(reservaServicios);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            _logHandler.LogFatal("An error occurred while adding reserva servicio.", ex);
-            return StatusCode(500, "An error occurred while adding reserva servicio.");
-        }
-    }
 
-    [HttpPut("update")]
-    public async Task<ActionResult> UpdateReservaServicioAsync([FromQuery] ReservaServicioDto reserva)
-    {
-        try
+        [HttpPost("add")]
+        public async Task<IActionResult> AddReservaServicioAsync([FromBody] ReservaServicioDto reservaServicioDto)
         {
-            var result = await reservaServicioService.UpdateReservaServicioAsync(reserva);
-
-            return result > 0 ? Ok("Reserva servicio updated successfully.") : StatusCode(500, "An error occurred while updating a reserva de servicio.");
+            try
+            {
+                var result = await _reservaServicioService.AddReservaServicioAsync(reservaServicioDto);
+                if (result == 1)
+                {
+                    return Ok("Reserva servicio added successfully.");
+                }
+                else
+                {
+                    return BadRequest("Failed to add reserva servicio.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            _logHandler.LogFatal("An error occurred while updating a reserva de servicio.", ex);
-            return StatusCode(500, "An error occurred while updating a reserva de servicio.");
-        }
-    }
 
-    [HttpPut("toggle-state/{id}")]
-    public async Task<ActionResult> ToggleEstadoReservaServicioAsync(uint id)
-    {
-        try
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateReservaServicioAsync([FromBody] ReservaServicioDto reservaServicioDto)
         {
-            var result = await reservaServicioService.ToggleEstadoReservaServicioAsync(id);
-
-            return result > 0 ? Ok("Reserva servicio state toggled successfully.") : StatusCode(500, $"An error occurred while toggling reserva servicio state. Reserva servicio with ID {id} not found.");
+            try
+            {
+                var result = await _reservaServicioService.UpdateReservaServicioAsync(reservaServicioDto);
+                if (result == 1)
+                {
+                    return Ok("Reserva servicio updated successfully.");
+                }
+                else
+                {
+                    return BadRequest("Failed to update reserva servicio.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            _logHandler.LogFatal("An error occurred while toggling reserva de servicio state.", ex);
-            return StatusCode(500, "An error occurred while toggling reserva servicio state.");
-        }
-    }
 
-    [HttpDelete("delete/{id}")]
-    public async Task<ActionResult> DeleteReservaServicioAsync(uint id)
-    {
-        try
+        [HttpPut("toggle-state/{id}")]
+        public async Task<IActionResult> ToggleEstadoReservaServicioAsync(int id)
         {
-            var result = await reservaServicioService.DeleteReservaServicioAsync(id);
-
-            return result > 0 ? Ok("Reserva servicio deleted successfully.") : StatusCode(500, $"An error occurred while deleting reserva servicio. Reserva servicio with ID {id} not found.");
+            try
+            {
+                var result = await _reservaServicioService.ToggleEstadoReservaServicioAsync(id);
+                if (result == 1)
+                {
+                    return Ok("Reserva servicio state toggled successfully.");
+                }
+                else
+                {
+                    return NotFound($"Reserva servicio with ID {id} not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
-        catch (Exception ex)
+
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteReservaServicioAsync(int idReserva)
         {
-            _logHandler.LogFatal("An error occurred while deleting reserva servicio.", ex);
-            return StatusCode(500, "An error occurred while deleting reserva servicio.");
+            try
+            {
+                var result = await _reservaServicioService.DeleteReservaServicioAsync(idReserva);
+                if (result == 1)
+                {
+                    return Ok("Reserva servicio state toggled successfully.");
+                }
+                else
+                {
+                    return NotFound($"Reserva servicio with ID {idReserva} not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
     }
 }

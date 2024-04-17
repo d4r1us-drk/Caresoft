@@ -68,7 +68,7 @@ public class ConsultorioController(IConsultorioService consultorioService) : Con
             {
                 return NotFound();
             }
-            return NoContent();
+            return Ok();
         }
         catch (Exception ex)
         {
@@ -86,7 +86,7 @@ public class ConsultorioController(IConsultorioService consultorioService) : Con
             {
                 return NotFound();
             }
-            return NoContent();
+            return Ok();
         }
         catch (Exception ex)
         {

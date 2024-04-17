@@ -1,26 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using caresoft_core.Models;
-using caresoft_core.Dto;
-using caresoft_core.Services.Interfaces;
+using caresoft_integration.Models;
+using caresoft_integration.Dto;
+using caresoft_integration.Services.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Linq;
 
-namespace caresoft_core.Controllers;
+namespace caresoft_integration.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AutorizacionController(IAutorizacionService autorizacionService) : ControllerBase
+public class AutorizacionController : ControllerBase
 {
+    private readonly IAutorizacionService _autorizacionService;
+
+    public AutorizacionController(IAutorizacionService autorizacionService)
+    {
+        _autorizacionService = autorizacionService;
+    }
+
     [HttpGet("get")]
-    public async Task<ActionResult<IEnumerable<AutorizacionDto>>> GetAutorizacions()
+    public async Task<ActionResult<IEnumerable<AutorizacionDto>>> GetAllAutorizaciones()
     {
         try
         {
-            return (await autorizacionService.GetAutorizaciones())
-                .Select(s => AutorizacionDto.FromAutorizacion(s))
-                .ToList();
+            var autorizaciones = await _autorizacionService.GetAllAutorizacionesAsync();
+            return Ok(autorizaciones.Select(a => AutorizacionDto.FromAutorizacion(a)));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Error al obtener las autorizaciones");
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
 
@@ -29,57 +38,48 @@ public class AutorizacionController(IAutorizacionService autorizacionService) : 
     {
         try
         {
-            var autorizacion = await autorizacionService.GetAutorizacionById(id);
-
+            var autorizacion = await _autorizacionService.GetAutorizacionByIdAsync(id);
             if (autorizacion == null)
-            {
                 return NotFound();
-            }
-
             return AutorizacionDto.FromAutorizacion(autorizacion);
-        } catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Error al obtener la autorizacion");
         }
-
-    }
-
-    [HttpPut("update")]
-    public async Task<IActionResult> PutAutorizacion([FromQuery] AutorizacionDto autorizacionDto)
-    {
-        try
+        catch (Exception ex)
         {
-            var autorizacion = Autorizacion.FromDto(autorizacionDto);
-            await autorizacionService.UpdateAutorizacionAsync(autorizacion);
-            return Ok();
-        } catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Error al actualizar la autorizacion");
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
-
     }
 
     [HttpPost("add")]
-    public async Task<ActionResult<Autorizacion>> PostAutorizacion([FromQuery] AutorizacionDto autorizacionDto,
-        int? idIngreso,
-        string? consultaCodigo,
-        string? facturaCodigo,
-        string? servicioCodigo,
-        int? idProducto)
+    public async Task<ActionResult<Autorizacion>> AddAutorizacion([FromBody] AutorizacionDto autorizacionDto)
     {
         try
         {
             var autorizacion = Autorizacion.FromDto(autorizacionDto);
-            var result = await autorizacionService.AddAutorizacion(autorizacion, idIngreso, consultaCodigo, facturaCodigo, servicioCodigo, idProducto);
-            if(result == 0)
-            {
+            var result = await _autorizacionService.CreateAutorizacionAsync(autorizacion, null); // Assuming Aseguradora is managed separately
+            if (result == 0)
                 return BadRequest();
-            }
             return CreatedAtAction("GetAutorizacion", new { id = autorizacion.IdAutorizacion }, autorizacion);
         }
-        catch(Exception)
+        catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Error al crear la autorizacion");
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+
+    [HttpPut("update")]
+    public async Task<IActionResult> UpdateAutorizacion([FromBody] AutorizacionDto autorizacionDto)
+    {
+        try
+        {
+            var autorizacion = Autorizacion.FromDto(autorizacionDto);
+            var result = await _autorizacionService.UpdateAutorizacionAsync(autorizacion, null); // Assuming Aseguradora is managed separately
+            if (result == 0)
+                return NotFound();
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
 
@@ -88,17 +88,14 @@ public class AutorizacionController(IAutorizacionService autorizacionService) : 
     {
         try
         {
-            var result = await autorizacionService.DeleteAutorizacionAsync(id);
-            if(result == 0)
-            {
+            var result = await _autorizacionService.DeleteAutorizacionAsync(id);
+            if (result == 0)
                 return NotFound();
-            }
             return Ok();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Error al eliminar la autorizacion");
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
-
     }
 }

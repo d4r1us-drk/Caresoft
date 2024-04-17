@@ -37,7 +37,7 @@ namespace caresoft_core_client.Servicios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                FormHelper.ErrorBox(ex.Message);
             }
         }
 

@@ -1,6 +1,6 @@
-using caresoft_core.Dto;
+using caresoft_integration.Dto;
 
-namespace caresoft_core.Services.Interfaces;
+namespace caresoft_integration.Services.Interfaces;
 
 public interface IProductoService
 {

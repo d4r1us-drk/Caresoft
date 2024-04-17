@@ -53,6 +53,7 @@
             eliminarTipoDeServicioToolStripMenuItem = new ToolStripMenuItem();
             eliminarServicioToolStripMenuItem = new ToolStripMenuItem();
             consultaDeServiciosToolStripMenuItem = new ToolStripMenuItem();
+            consultaTipoDeServiciosToolStripMenuItem = new ToolStripMenuItem();
             segurosMedicosToolStripMenuItem = new ToolStripMenuItem();
             gestionarAseguradorasToolStripMenuItem = new ToolStripMenuItem();
             añadirAseguradoraToolStripMenuItem = new ToolStripMenuItem();
@@ -196,7 +197,7 @@
             // 
             // serviciosToolStripMenuItem
             // 
-            serviciosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gestionarServiciosToolStripMenuItem1, consultaDeServiciosToolStripMenuItem });
+            serviciosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { gestionarServiciosToolStripMenuItem1, consultaDeServiciosToolStripMenuItem, consultaTipoDeServiciosToolStripMenuItem });
             serviciosToolStripMenuItem.Name = "serviciosToolStripMenuItem";
             serviciosToolStripMenuItem.Size = new Size(65, 20);
             serviciosToolStripMenuItem.Text = "Servicios";
@@ -205,7 +206,7 @@
             // 
             gestionarServiciosToolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { añadirTipoDeServicioToolStripMenuItem, añadirServicioToolStripMenuItem, actualizarTipoDeServicioToolStripMenuItem, actualizarServicioToolStripMenuItem, eliminarTipoDeServicioToolStripMenuItem, eliminarServicioToolStripMenuItem });
             gestionarServiciosToolStripMenuItem1.Name = "gestionarServiciosToolStripMenuItem1";
-            gestionarServiciosToolStripMenuItem1.Size = new Size(185, 22);
+            gestionarServiciosToolStripMenuItem1.Size = new Size(209, 22);
             gestionarServiciosToolStripMenuItem1.Text = "Gestionar servicios";
             // 
             // añadirTipoDeServicioToolStripMenuItem
@@ -220,6 +221,7 @@
             añadirServicioToolStripMenuItem.Name = "añadirServicioToolStripMenuItem";
             añadirServicioToolStripMenuItem.Size = new Size(209, 22);
             añadirServicioToolStripMenuItem.Text = "Añadir servicio";
+            añadirServicioToolStripMenuItem.Click += añadirServicioToolStripMenuItem_Click;
             // 
             // actualizarTipoDeServicioToolStripMenuItem
             // 
@@ -233,6 +235,7 @@
             actualizarServicioToolStripMenuItem.Name = "actualizarServicioToolStripMenuItem";
             actualizarServicioToolStripMenuItem.Size = new Size(209, 22);
             actualizarServicioToolStripMenuItem.Text = "Actualizar servicio";
+            actualizarServicioToolStripMenuItem.Click += actualizarServicioToolStripMenuItem_Click;
             // 
             // eliminarTipoDeServicioToolStripMenuItem
             // 
@@ -246,12 +249,21 @@
             eliminarServicioToolStripMenuItem.Name = "eliminarServicioToolStripMenuItem";
             eliminarServicioToolStripMenuItem.Size = new Size(209, 22);
             eliminarServicioToolStripMenuItem.Text = "Eliminar servicio";
+            eliminarServicioToolStripMenuItem.Click += eliminarServicioToolStripMenuItem_Click;
             // 
             // consultaDeServiciosToolStripMenuItem
             // 
             consultaDeServiciosToolStripMenuItem.Name = "consultaDeServiciosToolStripMenuItem";
-            consultaDeServiciosToolStripMenuItem.Size = new Size(185, 22);
+            consultaDeServiciosToolStripMenuItem.Size = new Size(209, 22);
             consultaDeServiciosToolStripMenuItem.Text = "Consulta de servicios";
+            consultaDeServiciosToolStripMenuItem.Click += consultaDeServiciosToolStripMenuItem_Click;
+            // 
+            // consultaTipoDeServiciosToolStripMenuItem
+            // 
+            consultaTipoDeServiciosToolStripMenuItem.Name = "consultaTipoDeServiciosToolStripMenuItem";
+            consultaTipoDeServiciosToolStripMenuItem.Size = new Size(209, 22);
+            consultaTipoDeServiciosToolStripMenuItem.Text = "Consulta tipo de servicios";
+            consultaTipoDeServiciosToolStripMenuItem.Click += consultaTipoDeServiciosToolStripMenuItem_Click;
             // 
             // segurosMedicosToolStripMenuItem
             // 
@@ -513,5 +525,6 @@
         private ToolStripMenuItem actualizarDatosDeUnUsuarioToolStripMenuItem;
         private ToolStripMenuItem eliminarUnUsuarioToolStripMenuItem;
         private ToolStripMenuItem consultarDatosDeUsuariosToolStripMenuItem;
+        private ToolStripMenuItem consultaTipoDeServiciosToolStripMenuItem;
     }
 }
