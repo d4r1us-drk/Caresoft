@@ -60,7 +60,6 @@ partial class frmUsuarioActualizar
         txtNombre = new TextBox();
         lblCostoProducto = new Label();
         pnlBotonActualizar = new Panel();
-        button1 = new Button();
         btnActualizar = new Button();
         pnlConsulta = new Panel();
         pnlBotones = new Panel();
@@ -241,6 +240,7 @@ partial class frmUsuarioActualizar
         comboRol.Name = "comboRol";
         comboRol.Size = new Size(148, 23);
         comboRol.TabIndex = 66;
+        comboRol.SelectedIndexChanged += comboRol_SelectedIndexChanged;
         // 
         // comboTipoDocumento
         // 
@@ -346,23 +346,12 @@ partial class frmUsuarioActualizar
         // 
         // pnlBotonActualizar
         // 
-        pnlBotonActualizar.Controls.Add(button1);
         pnlBotonActualizar.Controls.Add(btnActualizar);
         pnlBotonActualizar.Dock = DockStyle.Bottom;
         pnlBotonActualizar.Location = new Point(0, 389);
         pnlBotonActualizar.Name = "pnlBotonActualizar";
         pnlBotonActualizar.Size = new Size(300, 27);
         pnlBotonActualizar.TabIndex = 3;
-        // 
-        // button1
-        // 
-        button1.Dock = DockStyle.Fill;
-        button1.Location = new Point(0, 0);
-        button1.Name = "button1";
-        button1.Size = new Size(300, 27);
-        button1.TabIndex = 3;
-        button1.Text = "Actualizar";
-        button1.UseVisualStyleBackColor = true;
         // 
         // btnActualizar
         // 
@@ -497,5 +486,4 @@ partial class frmUsuarioActualizar
     private Label lblNombreProducto;
     private TextBox txtNombre;
     private Label lblCostoProducto;
-    private Button button1;
 }

@@ -16,7 +16,7 @@ public partial class frmUsuarioActualizar : Form
         LoadGeneros();
         LoadRoles();
         LoadTipoDocumentos();
-        
+
     }
     private void LoadGeneros()
     {
@@ -123,7 +123,7 @@ public partial class frmUsuarioActualizar : Form
         }
 
         var selectedProduct = (UsuarioDto)dbgrdUsuarios.SelectedRows[0].DataBoundItem;
-        
+
         txtCodigoUsuario.Text = selectedProduct.UsuarioCodigo;
         txtContrasena.Text = selectedProduct.UsuarioContra;
         comboTipoDocumento.SelectedValue = selectedProduct.TipoDocumento;
@@ -216,7 +216,7 @@ public partial class frmUsuarioActualizar : Form
         txtTelefono.Text = "";
         txtCorreo.Text = "";
         txtDireccion.Text = "";
-        
+
     }
 
     private void DisableControls()
@@ -251,11 +251,20 @@ public partial class frmUsuarioActualizar : Form
         txtCorreo.Enabled = true;
         txtDireccion.Enabled = true;
 
-        if(comboRol.SelectedValue?.ToString() == "M" || comboRol.SelectedValue?.ToString() == "E")
+        if (comboRol.SelectedValue?.ToString() == "M" || comboRol.SelectedValue?.ToString() == "E")
         {
             txtLicencia.Enabled = true;
         }
     }
 
- 
+    private void comboRol_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (comboRol.SelectedValue?.ToString() == "M" || comboRol.SelectedValue?.ToString() == "E")
+        {
+            txtLicencia.Enabled = true;
+        } else
+        {
+            txtLicencia.Enabled = true;
+        }
+    }
 }

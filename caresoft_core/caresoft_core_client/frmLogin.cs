@@ -52,6 +52,7 @@ public partial class frmLogin : Form
                 if (userData.Rol != "A")
             {
                 MessageBox.Show("Solo usuarios del rol administrador están permitidos acceder al CORE.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             _logHandler.LogInfo($"Inicio de sesión exitoso por usuario con código o documento {txtNombreUsuario.Text}");
             txtNombreUsuario.Text = "";

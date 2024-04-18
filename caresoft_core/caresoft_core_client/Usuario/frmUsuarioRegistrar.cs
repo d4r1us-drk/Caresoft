@@ -166,17 +166,13 @@ namespace caresoft_core_client.Usuario
 
         private void comboRol_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(comboTipoDocumento.SelectedValue?.ToString() is string rol)
+            if (comboRol.SelectedValue?.ToString() == "M" || comboRol.SelectedValue?.ToString() == "E")
             {
-                if(rol == "M" || rol == "E")
-                {
-                    txtLicencia.Enabled = true;
-                }
-                else
-                {
-                    txtLicencia.Enabled = false;
-                    txtLicencia.Text = "";
-                }
+                txtLicencia.Enabled = true;
+            }
+            else
+            {
+                txtLicencia.Enabled = true;
             }
         }
     }
