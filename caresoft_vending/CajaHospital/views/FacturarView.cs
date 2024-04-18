@@ -318,14 +318,6 @@ namespace CajaHospital.views
                             cmd.ExecuteNonQuery();
                         }
 
-                        cmd.CommandText = "spIncrementaBalanceCuenta";
-                        cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("p_idCuenta", idCuenta);
-                        cmd.Parameters.AddWithValue("p_monto", Convert.ToDecimal(txtSubtotal.Text));
-                        cmd.ExecuteNonQuery();
-
-                        transaction.Commit();
-                        conn.Close();
                     }
                     catch (Exception ex)
                     {
@@ -335,6 +327,14 @@ namespace CajaHospital.views
                     }
 
                 }
+                cmd.CommandText = "spIncrementaBalanceCuenta";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("p_idCuenta", idCuenta);
+                cmd.Parameters.AddWithValue("p_monto", Convert.ToDecimal(txtSubtotal.Text));
+                cmd.ExecuteNonQuery();
+
+                transaction.Commit();
+                conn.Close();
 
                 MessageBox.Show("Se ha registrado la factura con exito", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

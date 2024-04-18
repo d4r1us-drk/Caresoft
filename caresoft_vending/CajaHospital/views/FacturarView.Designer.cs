@@ -156,6 +156,11 @@
             // cboAseguradora
             // 
             this.cboAseguradora.FormattingEnabled = true;
+            this.cboAseguradora.Items.AddRange(new object[] {
+            "Humanos",
+            "Universal",
+            "Mapfre",
+            "SeNaSa"});
             this.cboAseguradora.Location = new System.Drawing.Point(70, 509);
             this.cboAseguradora.Name = "cboAseguradora";
             this.cboAseguradora.Size = new System.Drawing.Size(195, 28);

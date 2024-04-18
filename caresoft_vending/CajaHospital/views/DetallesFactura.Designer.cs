@@ -119,6 +119,8 @@
             // cboMetodoPago
             // 
             this.cboMetodoPago.FormattingEnabled = true;
+            this.cboMetodoPago.Items.AddRange(new object[] {
+            "Efectivo"});
             this.cboMetodoPago.Location = new System.Drawing.Point(544, 559);
             this.cboMetodoPago.Name = "cboMetodoPago";
             this.cboMetodoPago.Size = new System.Drawing.Size(156, 28);

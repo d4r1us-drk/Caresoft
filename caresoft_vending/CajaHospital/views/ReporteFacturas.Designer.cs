@@ -40,6 +40,7 @@
             this.btnFiltrar = new System.Windows.Forms.Button();
             this.btnReestablecer = new System.Windows.Forms.Button();
             this.btnPagar = new System.Windows.Forms.Button();
+            this.btnRecibo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -150,18 +151,31 @@
             this.btnPagar.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.btnPagar.Enabled = false;
             this.btnPagar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPagar.Location = new System.Drawing.Point(54, 570);
+            this.btnPagar.Location = new System.Drawing.Point(53, 514);
             this.btnPagar.Name = "btnPagar";
-            this.btnPagar.Size = new System.Drawing.Size(172, 92);
+            this.btnPagar.Size = new System.Drawing.Size(172, 70);
             this.btnPagar.TabIndex = 12;
             this.btnPagar.Text = "Pagar factura";
             this.btnPagar.UseVisualStyleBackColor = false;
             this.btnPagar.Click += new System.EventHandler(this.btnPagar_Click);
             // 
+            // btnRecibo
+            // 
+            this.btnRecibo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.btnRecibo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRecibo.Location = new System.Drawing.Point(53, 603);
+            this.btnRecibo.Name = "btnRecibo";
+            this.btnRecibo.Size = new System.Drawing.Size(172, 59);
+            this.btnRecibo.TabIndex = 13;
+            this.btnRecibo.Text = "Ver recibo";
+            this.btnRecibo.UseVisualStyleBackColor = false;
+            this.btnRecibo.Click += new System.EventHandler(this.btnRecibo_Click);
+            // 
             // ReporteFacturas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnRecibo);
             this.Controls.Add(this.btnPagar);
             this.Controls.Add(this.btnReestablecer);
             this.Controls.Add(this.btnFiltrar);
@@ -198,5 +212,6 @@
         private System.Windows.Forms.Button btnFiltrar;
         private System.Windows.Forms.Button btnReestablecer;
         private System.Windows.Forms.Button btnPagar;
+        private System.Windows.Forms.Button btnRecibo;
     }
 }

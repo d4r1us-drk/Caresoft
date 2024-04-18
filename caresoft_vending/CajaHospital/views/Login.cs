@@ -20,6 +20,7 @@ namespace CajaHospital
     public partial class Login : Form
     {
         private readonly HttpClient _http = new HttpClient();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public Login()
         {
             InitializeComponent();
@@ -28,23 +29,27 @@ namespace CajaHospital
 
         private async Task<UsuarioDto> getUsuarios(string documento)
         {
+            log.Info("Solicitando informacion al core a través de la capa de integración");
+
             try
             {
                 var res = await _http.GetAsync($"/api/usuarios/{documento}");
                 res.EnsureSuccessStatusCode();
                 var data = await res.Content.ReadAsStringAsync();
-                MessageBox.Show(data);
+                //MessageBox.Show(data);
                 return JsonConvert.DeserializeObject<UsuarioDto>(data);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
                 return null;
             }
         }
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
+            log.Info("Se ha registrado un intento de login");
+
             string documento = txtDoc.Text;
             var tipoDoc = cboTipoDoc.SelectedIndex == 1 ? 'I' : 'P';
             string clave = txtClave.Text;
@@ -56,14 +61,17 @@ namespace CajaHospital
             {
                     if (usuario.UsuarioCodigo == documento && usuario.TipoDocumento == tipoDoc.ToString() && usuario.UsuarioContra == clave)
                     {
+                        nombre = usuario.Nombre + usuario.Apellido;
                         MessageBox.Show($"Inicio de sesion exitoso! \nUsuario: {nombre}", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        nombre = usuario.Nombre + usuario.Apellido;        
+                    log.Info($"Se ha iniciado sesión de manera satisfactoria: codigoUsuario = {usuario.UsuarioCodigo}");
                     } else
                     {
                         MessageBox.Show("Inicio de sesion fallido, por favor valide sus datos", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    log.Error($"Inicio de sesion fallido, credenciales utilizadas: {documento} y clave {clave}");
                     }
             } else
             {
+                log.Info("Intentando obtener el inicio de sesion desde la base de datos local...");
                 try
                 {
                     MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["vendingLocal"].ConnectionString);
@@ -85,10 +93,12 @@ namespace CajaHospital
                         {
                             nombre = $"{reader.GetString("nombre")} {reader.GetString("apellido")}";
                             MessageBox.Show($"Inicio de sesion exitoso! \nUsuario: {nombre}", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            //log.Info($"Se ha iniciado sesión de manera satisfactoria: codigoUsuario = {usuario.UsuarioCodigo}");
                         }
                         else
                         {
                             MessageBox.Show("Inicio de sesion fallido, por favor valide sus datos", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            log.Error($"Inicio de sesion fallido, credenciales utilizadas: {documento} y clave {clave}");
                             return;
                         }
                         //MessageBox.Show(reader.GetString("usuarioContra"));
@@ -99,7 +109,7 @@ namespace CajaHospital
                 catch (Exception)
                 {
                     MessageBox.Show("Error en el inicio de sesion, contacte al administrador", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    throw;
+                    return;
                 }
             }
 
@@ -108,7 +118,7 @@ namespace CajaHospital
             //    return; 
             //}
 
-            using (Main frmMain = new Main(nombre, documento))
+            using (Main frmMain = new Main(nombre, (usuario != null) ? usuario.Documento : documento))
             {
                 this.Hide(); // Se oculta la ventana actual
                 frmMain.ShowDialog(); // Se usa 'Show dialog' para que no se ejecute lo siguiente hasta que se cierre la ventana

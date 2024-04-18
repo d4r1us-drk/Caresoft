@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,7 +16,7 @@ namespace CajaHospital.views
 {
     public partial class ReporteFacturas : UserControl
     {
-        private List<FacturaDto> _facturas = new List<FacturaDto>();
+        public List<FacturaDto> _facturas = new List<FacturaDto>();
         public ReporteFacturas()
         {
             InitializeComponent();
@@ -119,6 +120,78 @@ namespace CajaHospital.views
                     MessageBox.Show("Esta factura ya fue pagada");
                 }
             }
+        }
+
+        public List<FacturaProductoDto> cargarProductos(string codigoFactura)
+        {
+            List<FacturaProductoDto> productos = new List<FacturaProductoDto>();
+            FacturaProductoDto producto = new FacturaProductoDto();
+
+            MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["vendingLocal"].ConnectionString);
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("spFacturaListarProductos", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@p_facturaCodigo", codigoFactura);
+
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                producto.FacturaCodigo = codigoFactura;
+                producto.IdProducto = reader.GetUInt32("idProducto");
+                producto.Resultados = reader.GetString("resultados");
+                producto.Costo = reader.GetDecimal("costo");
+
+                productos.Add(producto);
+            }
+
+            return productos;
+        }
+        public List<FacturaServicioDto> cargarServicios(string codigoFactura)
+        {
+            List<FacturaServicioDto> servicios = new List<FacturaServicioDto>();
+            FacturaServicioDto servicio = new FacturaServicioDto();
+
+            MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["vendingLocal"].ConnectionString);
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("spFacturaListarServicios", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@p_facturaCodigo", codigoFactura);
+
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                servicio.FacturaCodigo = codigoFactura;
+                servicio.ServicioCodigo = reader.GetString("servicioCodigo");
+                servicio.Resultados = reader.GetString("resultados");
+                servicio.Costo = reader.GetDecimal("costo");
+
+                servicios.Add(servicio);
+            }
+
+            return servicios;
+        }
+
+        private void btnRecibo_Click(object sender, EventArgs e)
+        {
+            List<FacturaDto> factura = new List<FacturaDto> ();
+            List<FacturaProductoDto> productos = new List<FacturaProductoDto> ();
+            List<FacturaServicioDto> servicios = new List<FacturaServicioDto> ();
+
+            if (dgvFacturas.SelectedRows.Count > 0)
+            {
+                factura.Add(_facturas.Find(x => x.FacturaCodigo == dgvFacturas.SelectedRows[0].Cells[0].Value.ToString()));
+
+                productos = cargarProductos(factura[0].FacturaCodigo);
+                servicios = cargarServicios(factura[0].FacturaCodigo);
+
+                ReciboFacturas reciboView = new ReciboFacturas(factura, servicios, productos);
+                reciboView.ShowDialog();
+            }
+
         }
     }
 }

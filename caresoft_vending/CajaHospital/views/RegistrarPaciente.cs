@@ -38,7 +38,7 @@ namespace CajaHospital.views
                 var res = await _http.PostAsync($"/api/usuarios/add", data);
                 if (res.IsSuccessStatusCode)
                 {
-                    MessageBox.Show("Cuenta creada con exito!", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show("Cuenta creada con exito!", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 return true;
             }
@@ -49,7 +49,7 @@ namespace CajaHospital.views
             }
         }
 
-        private void CrearCuenta()
+        private async void CrearCuenta()
         {
             string documento = txtDoc.Text;
             char tipoDoc = cboTipoDoc.SelectedIndex == 1 ? 'I' : 'P';
@@ -70,7 +70,7 @@ namespace CajaHospital.views
             usuario.TipoDocumento = tipoDoc.ToString();
             usuario.Nombre = nombre;
             usuario.Apellido = apellido;
-            usuario.NumLicenciaMedica = 0;
+            usuario.NumLicenciaMedica = null;
             usuario.Genero = genero.ToString();
             usuario.Correo = correo;
             usuario.Rol = "P";
@@ -78,8 +78,8 @@ namespace CajaHospital.views
             usuario.Telefono = telefono;
             usuario.Direccion = direccion;
 
-            if (CrearUsuario(usuario).Result == false)
-            {
+            bool result = await CrearUsuario(usuario);
+
                 try
                 {
                     MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["vendingLocal"].ConnectionString);
@@ -114,8 +114,6 @@ namespace CajaHospital.views
                     MessageBox.Show(ex.Message, ex.Source);
                 };
             }
-
-        }
 
         private void btnReestablecer_Click(object sender, EventArgs e)
         {
