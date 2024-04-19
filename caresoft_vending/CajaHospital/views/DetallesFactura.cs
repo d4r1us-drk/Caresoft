@@ -19,6 +19,8 @@ namespace CajaHospital.views
         private readonly string _facturaCodigo;
         private readonly int _idCuenta;
         private decimal monto = 0;
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public frmDetallesFactura( string facturaCodigo, decimal montoTotal, int idCuenta )
         {
             InitializeComponent();
@@ -49,6 +51,7 @@ namespace CajaHospital.views
             cmd.Parameters.AddWithValue("@p_facturaCodigo", _facturaCodigo);
 
             MySqlDataReader reader = cmd.ExecuteReader();
+            log.Info($"Cargando productos para factura {_facturaCodigo}...");
 
             while (reader.Read())
             {
@@ -76,6 +79,7 @@ namespace CajaHospital.views
             cmd.Parameters.AddWithValue("@p_facturaCodigo", _facturaCodigo);
 
             MySqlDataReader reader = cmd.ExecuteReader();
+            log.Info($"Cargando servicios para factura {_facturaCodigo}...");
 
             while (reader.Read())
             {
@@ -110,10 +114,13 @@ namespace CajaHospital.views
                     cmd.Parameters.AddWithValue("p_montoPagado", monto);
                     cmd.Parameters.AddWithValue("p_facturaCodigo", _facturaCodigo);
 
+                    log.Info($"Procesando pago para cuenta {_idCuenta}...");
                     cmd.ExecuteNonQuery();
                     conn.Close();
 
                     this.DialogResult = DialogResult.OK;
+                    log.Info($"Pago exitoso para cuenta: {_idCuenta}");
+                    log.Info($"Codigo de factura: {_facturaCodigo}");
                     this.Close();
                 }
                 catch (Exception ex)

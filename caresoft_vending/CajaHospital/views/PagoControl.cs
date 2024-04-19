@@ -18,6 +18,8 @@ namespace CajaHospital.views
         private readonly decimal _monto;
         private readonly decimal _montoAcumulado;
         private Dictionary<int, int> cantidadDenominaciones = new Dictionary<int,int>();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public PagoControl(decimal montoTotal)
         {
             InitializeComponent();
@@ -335,13 +337,16 @@ namespace CajaHospital.views
                 cmd.Parameters.AddWithValue("p_5", (int)n5.Value);
                 cmd.Parameters.AddWithValue("p_1", (int)n1.Value);
 
+                log.Info("Ingresando denominaciones...");
                 cmd.ExecuteNonQuery();
+                log.Info("Denominaciones ingresadas");
                 conn.Close();
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
+                log.Error("Algo salio mal", ex);
                 MessageBox.Show(ex.Message, "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error); ;
                 this.DialogResult = DialogResult.Cancel;
                 throw;

@@ -24,6 +24,8 @@ namespace CajaHospital.views
         private Dictionary<string, int> servicios_costos = new Dictionary<string, int>();
         private Dictionary<string, int> productos = new Dictionary<string, int>();
         private Dictionary<int, int> productos_costos = new Dictionary<int, int>();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public FacturarView( char tipoFactura, string documentoCajero = "" )
         {
             InitializeComponent();
@@ -54,6 +56,7 @@ namespace CajaHospital.views
                         cmd.Parameters.Clear();
 
                         MySqlDataReader reader = cmd.ExecuteReader();
+                        log.Info("Consultando servicios...");
 
                         while (reader.Read())
                         {
@@ -75,6 +78,7 @@ namespace CajaHospital.views
                         cmd.Parameters.AddWithValue("@p_costo", null);
 
                         reader = cmd.ExecuteReader();
+                        log.Info("Consultando productos...");
 
                         while (reader.Read())
                         {
@@ -92,6 +96,7 @@ namespace CajaHospital.views
                     {
                         MessageBox.Show("Algo salió mal", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         MessageBox.Show(ex.Message, ex.Source);
+                        log.Error("Algo salió mal", ex);
                     };
 
                     break;
@@ -121,6 +126,7 @@ namespace CajaHospital.views
 
         private string CalcularSubtotal()
         {
+            log.Info("Calculando subtotal...");
             string seleccionado;
             int subtotal = 0;
 
@@ -152,14 +158,16 @@ namespace CajaHospital.views
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("p_documentoUsuario", txtDoc.Text);
                 MySqlDataReader reader = cmd.ExecuteReader();
+                log.Info($"Recuperando cuenta con el documento {txtDoc.Text}...");
                 reader.Read();
                 int cuenta = reader.GetInt32("idCuenta");
                 conn.Close();
 
                 return cuenta;
             }
-            catch (Exception)
+            catch (Exception err)
             {
+                log.Error("No se pudo recuperar la cuenta", err);
                 return -1;
                 throw;
             }
@@ -245,6 +253,7 @@ namespace CajaHospital.views
             if (idCuenta == -1 )
             {
                 MessageBox.Show("No se ha encontrado la cuenta especificada", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                log.Warn($"No se ha encontrado la cuenta especificada!");
                 return;
             }
 
@@ -264,7 +273,9 @@ namespace CajaHospital.views
                 cmd.Parameters.AddWithValue("@p_monto", Convert.ToDecimal(txtSubtotal.Text));
 
                 cmd.ExecuteNonQuery();
+                log.Info($"Creando factura #{facturaCodigo}...");
                 transaction.Commit();
+                log.Info($"Factura creada correctamente con ID: {facturaCodigo}");
                 conn.Close();
 
                 Dictionary<string, int> cantidades = new Dictionary<string, int>();
@@ -301,6 +312,7 @@ namespace CajaHospital.views
                             cmd.Parameters.AddWithValue("@p_servicioCodigo", codigo);
                             cmd.Parameters.AddWithValue("@p_resultados", cantidades[seleccionado]);
                             cmd.Parameters.AddWithValue("@p_costo", costo);
+                            log.Info($"Relacionando servicio {codigo} con factura {facturaCodigo}...");
                             cmd.ExecuteNonQuery();
                         }
                         else
@@ -315,13 +327,16 @@ namespace CajaHospital.views
                             cmd.Parameters.AddWithValue("@p_idProducto", codigo);
                             cmd.Parameters.AddWithValue("@p_resultados", cantidades[seleccionado]);
                             cmd.Parameters.AddWithValue("@p_costo", costo);
+                            log.Info($"Relacionando producto {codigo} con factura {facturaCodigo}...");
                             cmd.ExecuteNonQuery();
                         }
 
                     }
                     catch (Exception ex)
                     {
+                        log.Error($"Algo salio mal, la factura no se registro", ex);
                         MessageBox.Show("Algo salio mal, la factura no se registro", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                         transaction.Rollback();
                         throw ex;
                     }
@@ -331,9 +346,11 @@ namespace CajaHospital.views
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("p_idCuenta", idCuenta);
                 cmd.Parameters.AddWithValue("p_monto", Convert.ToDecimal(txtSubtotal.Text));
+                log.Info($"Incrementando balance de la cuenta {idCuenta}...");
                 cmd.ExecuteNonQuery();
 
                 transaction.Commit();
+                log.Info($"Balance de la cuenta {idCuenta} incrementado ${txtSubtotal.Text}");
                 conn.Close();
 
                 MessageBox.Show("Se ha registrado la factura con exito", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -341,6 +358,7 @@ namespace CajaHospital.views
             }
             catch (Exception ex)
             {
+                log.Error("Algo salió mal", ex);
                 MessageBox.Show("Algo salió mal", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 MessageBox.Show(ex.Message, ex.Source);
             };

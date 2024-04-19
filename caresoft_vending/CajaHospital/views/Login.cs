@@ -29,7 +29,7 @@ namespace CajaHospital
 
         private async Task<UsuarioDto> getUsuarios(string documento)
         {
-            log.Info("Solicitando informacion al core a través de la capa de integración");
+            log.Info("Solicitando informacion al core a través de la capa de integración...");
 
             try
             {
@@ -67,7 +67,7 @@ namespace CajaHospital
                     } else
                     {
                         MessageBox.Show("Inicio de sesion fallido, por favor valide sus datos", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    log.Error($"Inicio de sesion fallido, credenciales utilizadas: {documento} y clave {clave}");
+                    log.Warn($"Inicio de sesion fallido, credenciales utilizadas: {documento} y clave {clave}");
                     }
             } else
             {
@@ -92,13 +92,13 @@ namespace CajaHospital
                         if (reader.GetString("usuarioContra") == clave && reader.GetChar("tipoDocumento") == tipoDoc && (reader.GetChar("rol") == 'C' || reader.GetChar("rol") == 'A'))
                         {
                             nombre = $"{reader.GetString("nombre")} {reader.GetString("apellido")}";
+                            log.Info($"Se ha iniciado sesión de manera satisfactoria para usuario {documento}");
                             MessageBox.Show($"Inicio de sesion exitoso! \nUsuario: {nombre}", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            //log.Info($"Se ha iniciado sesión de manera satisfactoria: codigoUsuario = {usuario.UsuarioCodigo}");
                         }
                         else
                         {
                             MessageBox.Show("Inicio de sesion fallido, por favor valide sus datos", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            log.Error($"Inicio de sesion fallido, credenciales utilizadas: {documento} y clave {clave}");
+                            log.Warn($"Inicio de sesion fallido, credenciales utilizadas: {documento} y clave {clave}");
                             return;
                         }
                         //MessageBox.Show(reader.GetString("usuarioContra"));
@@ -106,8 +106,9 @@ namespace CajaHospital
 
                     conn.Close();
                 }
-                catch (Exception)
+                catch (Exception err)
                 {
+                    log.Error($"Error en el inicio de sesion", err);
                     MessageBox.Show("Error en el inicio de sesion, contacte al administrador", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }

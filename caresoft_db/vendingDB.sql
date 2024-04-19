@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `caresoftdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `caresoftdb`;
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
--- Host: localhost    Database: caresoftdb
+-- Host: 127.0.0.1    Database: caresoftdb
 -- ------------------------------------------------------
--- Server version	8.0.35
+-- Server version	8.0.32
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -611,6 +611,34 @@ CREATE TABLE `ingreso_afeccion` (
 LOCK TABLES `ingreso_afeccion` WRITE;
 /*!40000 ALTER TABLE `ingreso_afeccion` DISABLE KEYS */;
 /*!40000 ALTER TABLE `ingreso_afeccion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `log`
+--
+
+DROP TABLE IF EXISTS `log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `log` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `Date` datetime NOT NULL,
+  `Thread` varchar(255) NOT NULL,
+  `Level` varchar(50) NOT NULL,
+  `Logger` varchar(255) NOT NULL,
+  `Message` varchar(4000) NOT NULL,
+  `Exception` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `log`
+--
+
+LOCK TABLES `log` WRITE;
+/*!40000 ALTER TABLE `log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `log` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -4540,4 +4568,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-17 11:39:38
+-- Dump completed on 2024-04-19  9:12:17

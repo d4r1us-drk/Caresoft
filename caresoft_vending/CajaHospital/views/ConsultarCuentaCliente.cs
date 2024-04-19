@@ -15,6 +15,7 @@ namespace CajaHospital.views
 {
     public partial class ConsultarCuentaCliente : UserControl
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public ConsultarCuentaCliente()
         {
             InitializeComponent();
@@ -54,10 +55,12 @@ namespace CajaHospital.views
                 cmd.Parameters.AddWithValue("@p_rol", null);
 
                 MySqlDataReader reader = cmd.ExecuteReader();
+                log.Info("Solicitando paciente...");
 
                 if (!reader.HasRows)
                 {
                     MessageBox.Show("Paciente no encontrado, por favor valide los datos", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    log.Warn("Paciente no encontrado, datos erroneos?");
                     return;
                 }
 
@@ -65,6 +68,7 @@ namespace CajaHospital.views
                 {
                     if (reader.GetChar("tipoDocumento") == tipoDoc && reader.GetChar("rol") == 'P')
                     {
+                        log.Info($"Paciente de documento #{documento} encontrado, rellenando formulario...");
                         textBoxNombre.Text = $"{reader.GetString("nombre")} {reader.GetString("apellido")}";
                         textBoxGenero.Text = reader.GetString("genero") == "M"? "Masculino" : "Femenino";
                         textBoxTelefono.Text = reader.GetString("telefono");
@@ -76,6 +80,7 @@ namespace CajaHospital.views
                     else
                     {
                         MessageBox.Show("Paciente no encontrado, por favor valide los datos", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        log.Warn("Paciente no encontrado, datos erroneos?");
                         return;
                     }
                 }
@@ -99,9 +104,10 @@ namespace CajaHospital.views
 
                 conn.Close();
             }
-            catch (Exception)
+            catch (Exception err)
             {
                 MessageBox.Show("Error al consultar datos, contacte al administrador", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                log.Error("Error al consultar datos", err);
                 throw;
             }
 

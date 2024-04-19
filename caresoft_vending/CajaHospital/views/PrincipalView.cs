@@ -15,6 +15,7 @@ namespace CajaHospital.views
 {
     public partial class PrincipalView : UserControl
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         //Esta es una funcion que se encarga de devolver el valor almacenado en 
         //base de datos para la denominacion correspondiente.
@@ -25,7 +26,9 @@ namespace CajaHospital.views
             cmd.Parameters.AddWithValue("@valor_denominacion", denominacion);
             cmd.Parameters.AddWithValue("@cantidad", MySqlDbType.Int32);
             cmd.Parameters["@cantidad"].Direction = ParameterDirection.Output;
+            log.Info($"Solicitando denominaciones...");
             cmd.ExecuteNonQuery();
+            log.Info($"Denominaciones solicitadas");
             return Convert.ToInt32(cmd.Parameters["@cantidad"].Value);
         }
 
@@ -49,7 +52,9 @@ namespace CajaHospital.views
             cmd.Parameters.AddWithValue("@totalCaja", MySqlDbType.Int32);
             cmd.Parameters["@totalCaja"].Direction = ParameterDirection.Output;
 
+            log.Info($"Consultando total de la caja...");
             cmd.ExecuteNonQuery();
+            log.Info($"Total de la caja consultado");
             int totalCaja = Convert.ToInt32(cmd.Parameters["@totalCaja"].Value);
             txtTotalCaja.Text = totalCaja.ToString();
             txtInicialDia.Text = totalCaja.ToString();

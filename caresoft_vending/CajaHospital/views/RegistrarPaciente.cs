@@ -14,6 +14,8 @@ namespace CajaHospital.views
     public partial class RegistrarPaciente : UserControl
     {
         private readonly HttpClient _http = new HttpClient();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public RegistrarPaciente()
         {
             InitializeComponent();
@@ -100,16 +102,18 @@ namespace CajaHospital.views
                     cmd.Parameters.AddWithValue("@p_direccion", direccion);
                     cmd.Parameters.AddWithValue("@p_usuarioCodigo", usuarioCodigo);
                     cmd.Parameters.AddWithValue("@p_usuarioContra", usuarioContra);
-
+                    log.Info($"Creando usuario de tipo paciente con documento {documento}");
                     cmd.ExecuteNonQuery();
 
                     conn.Close();
+                    log.Info($"Usuario de tipo paciente creado con exito con documento {documento}");
 
-                    MessageBox.Show("Cuenta creada con exito!", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Cuenta creada con exito!", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CuentaCreada?.Invoke(this, new CrearCuentaArgs { Documento = documento, TipoDoc = tipoDoc });
                 }
                 catch (Exception ex)
                 {
+                log.Error($"Algo salió mal", ex);
                     MessageBox.Show("Algo salió mal", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     MessageBox.Show(ex.Message, ex.Source);
                 };

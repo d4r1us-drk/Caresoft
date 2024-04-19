@@ -17,6 +17,8 @@ namespace CajaHospital.views
     public partial class ReporteFacturas : UserControl
     {
         public List<FacturaDto> _facturas = new List<FacturaDto>();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public ReporteFacturas()
         {
             InitializeComponent();
@@ -70,7 +72,9 @@ namespace CajaHospital.views
             cmd.Parameters.AddWithValue("p_documentoCajero", documentoCajero);
             cmd.Parameters.AddWithValue("p_fechaInicio", fechaInicio);
             cmd.Parameters.AddWithValue("p_fechaFin", fechaFin);
+            log.Info("Consultando facturas...");
             MySqlDataReader reader = cmd.ExecuteReader();
+            log.Info("Facturas consultadas");
 
             while (reader.Read())
             {
@@ -134,7 +138,9 @@ namespace CajaHospital.views
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@p_facturaCodigo", codigoFactura);
 
+            log.Info($"Listando productos de la factura #{codigoFactura}...");
             MySqlDataReader reader = cmd.ExecuteReader();
+            log.Info($"Productos de la factura #{codigoFactura} listados");
 
             while (reader.Read())
             {
@@ -160,7 +166,9 @@ namespace CajaHospital.views
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@p_facturaCodigo", codigoFactura);
 
+            log.Info($"Listando servicios de la factura #{codigoFactura}...");
             MySqlDataReader reader = cmd.ExecuteReader();
+            log.Info($"Servicios de la factura #{codigoFactura} listados");
 
             while (reader.Read())
             {
