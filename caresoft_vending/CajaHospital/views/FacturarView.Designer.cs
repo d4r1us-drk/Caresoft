@@ -45,9 +45,6 @@
             this.btnCrearFactura = new System.Windows.Forms.Button();
             this.txtSubtotal = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.chkRecarga = new System.Windows.Forms.CheckBox();
-            this.rbnRecarga = new System.Windows.Forms.RadioButton();
-            this.rbnDescarga = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // lblTitulo
@@ -65,7 +62,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(66, 278);
+            this.label2.Location = new System.Drawing.Point(83, 138);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(186, 20);
             this.label2.TabIndex = 2;
@@ -74,7 +71,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(66, 370);
+            this.label3.Location = new System.Drawing.Point(83, 230);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(149, 20);
             this.label3.TabIndex = 4;
@@ -87,14 +84,14 @@
             "-",
             "Cedula",
             "Pasaporte"});
-            this.cboTipoDoc.Location = new System.Drawing.Point(70, 407);
+            this.cboTipoDoc.Location = new System.Drawing.Point(87, 267);
             this.cboTipoDoc.Name = "cboTipoDoc";
             this.cboTipoDoc.Size = new System.Drawing.Size(195, 28);
             this.cboTipoDoc.TabIndex = 9;
             // 
             // txtDoc
             // 
-            this.txtDoc.Location = new System.Drawing.Point(70, 321);
+            this.txtDoc.Location = new System.Drawing.Point(87, 181);
             this.txtDoc.Name = "txtDoc";
             this.txtDoc.Size = new System.Drawing.Size(195, 26);
             this.txtDoc.TabIndex = 10;
@@ -147,7 +144,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(66, 472);
+            this.label5.Location = new System.Drawing.Point(83, 332);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(101, 20);
             this.label5.TabIndex = 16;
@@ -161,7 +158,7 @@
             "Universal",
             "Mapfre",
             "SeNaSa"});
-            this.cboAseguradora.Location = new System.Drawing.Point(70, 509);
+            this.cboAseguradora.Location = new System.Drawing.Point(87, 369);
             this.cboAseguradora.Name = "cboAseguradora";
             this.cboAseguradora.Size = new System.Drawing.Size(195, 28);
             this.cboAseguradora.TabIndex = 17;
@@ -188,7 +185,7 @@
             // 
             // btnCrearFactura
             // 
-            this.btnCrearFactura.Location = new System.Drawing.Point(70, 593);
+            this.btnCrearFactura.Location = new System.Drawing.Point(87, 556);
             this.btnCrearFactura.Name = "btnCrearFactura";
             this.btnCrearFactura.Size = new System.Drawing.Size(195, 63);
             this.btnCrearFactura.TabIndex = 20;
@@ -212,48 +209,10 @@
             this.label6.TabIndex = 22;
             this.label6.Text = "Monto Subtotal";
             // 
-            // chkRecarga
-            // 
-            this.chkRecarga.AutoSize = true;
-            this.chkRecarga.Location = new System.Drawing.Point(70, 134);
-            this.chkRecarga.Name = "chkRecarga";
-            this.chkRecarga.Size = new System.Drawing.Size(292, 24);
-            this.chkRecarga.TabIndex = 23;
-            this.chkRecarga.Text = "Es una carga o descarga de la caja?";
-            this.chkRecarga.UseVisualStyleBackColor = true;
-            this.chkRecarga.CheckedChanged += new System.EventHandler(this.chkRecarga_CheckedChanged);
-            // 
-            // rbnRecarga
-            // 
-            this.rbnRecarga.AutoSize = true;
-            this.rbnRecarga.Location = new System.Drawing.Point(70, 190);
-            this.rbnRecarga.Name = "rbnRecarga";
-            this.rbnRecarga.Size = new System.Drawing.Size(95, 24);
-            this.rbnRecarga.TabIndex = 24;
-            this.rbnRecarga.TabStop = true;
-            this.rbnRecarga.Text = "Recarga";
-            this.rbnRecarga.UseVisualStyleBackColor = true;
-            this.rbnRecarga.CheckedChanged += new System.EventHandler(this.rbnRecarga_CheckedChanged);
-            // 
-            // rbnDescarga
-            // 
-            this.rbnDescarga.AutoSize = true;
-            this.rbnDescarga.Location = new System.Drawing.Point(195, 190);
-            this.rbnDescarga.Name = "rbnDescarga";
-            this.rbnDescarga.Size = new System.Drawing.Size(103, 24);
-            this.rbnDescarga.TabIndex = 25;
-            this.rbnDescarga.TabStop = true;
-            this.rbnDescarga.Text = "Descarga";
-            this.rbnDescarga.UseVisualStyleBackColor = true;
-            this.rbnDescarga.CheckedChanged += new System.EventHandler(this.rbnRecarga_CheckedChanged);
-            // 
             // FacturarView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.rbnDescarga);
-            this.Controls.Add(this.rbnRecarga);
-            this.Controls.Add(this.chkRecarga);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtSubtotal);
             this.Controls.Add(this.btnCrearFactura);
@@ -299,8 +258,5 @@
         private System.Windows.Forms.Button btnCrearFactura;
         private System.Windows.Forms.TextBox txtSubtotal;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.CheckBox chkRecarga;
-        private System.Windows.Forms.RadioButton rbnRecarga;
-        private System.Windows.Forms.RadioButton rbnDescarga;
     }
 }

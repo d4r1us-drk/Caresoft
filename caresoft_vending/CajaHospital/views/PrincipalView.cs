@@ -24,6 +24,7 @@ namespace CajaHospital.views
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@valor_denominacion", denominacion);
+            cmd.Parameters.AddWithValue("@p_idSucursal", Convert.ToUInt32(ConfigurationManager.AppSettings["noCaja"]));
             cmd.Parameters.AddWithValue("@cantidad", MySqlDbType.Int32);
             cmd.Parameters["@cantidad"].Direction = ParameterDirection.Output;
             log.Info($"Solicitando denominaciones...");
@@ -49,6 +50,7 @@ namespace CajaHospital.views
             MySqlCommand cmd = new MySqlCommand("spGetTotalCaja", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@p_idSucursal", Convert.ToUInt32(ConfigurationManager.AppSettings["noCaja"]));
             cmd.Parameters.AddWithValue("@totalCaja", MySqlDbType.Int32);
             cmd.Parameters["@totalCaja"].Direction = ParameterDirection.Output;
 

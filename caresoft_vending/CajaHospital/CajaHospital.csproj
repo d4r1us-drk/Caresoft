@@ -156,10 +156,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\CuadreDto.cs" />
     <Compile Include="Dtos\FacturaDto.cs" />
     <Compile Include="Dtos\FacturaProductoDto.cs" />
     <Compile Include="Dtos\FacturaServicioDto.cs" />
     <Compile Include="Dtos\UsuarioDto.cs" />
+    <Compile Include="views\CuadreCaja.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="views\CuadreCaja.Designer.cs">
+      <DependentUpon>CuadreCaja.cs</DependentUpon>
+    </Compile>
     <Compile Include="views\DetallesFactura.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -205,6 +212,12 @@
     <Compile Include="views\FacturarView.Designer.cs">
       <DependentUpon>FacturarView.cs</DependentUpon>
     </Compile>
+    <Compile Include="views\ReciboCuadre.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="views\ReciboCuadre.Designer.cs">
+      <DependentUpon>ReciboCuadre.cs</DependentUpon>
+    </Compile>
     <Compile Include="views\ReciboFacturas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -223,7 +236,11 @@
     <Compile Include="views\RegistrarPaciente.Designer.cs">
       <DependentUpon>RegistrarPaciente.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="reportes\Cuadres.rdlc" />
     <EmbeddedResource Include="reportes\Facturas.rdlc" />
+    <EmbeddedResource Include="views\CuadreCaja.resx">
+      <DependentUpon>CuadreCaja.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="views\DetallesFactura.resx">
       <DependentUpon>DetallesFactura.cs</DependentUpon>
     </EmbeddedResource>
@@ -255,6 +272,9 @@
     <EmbeddedResource Include="views\FacturarView.resx">
       <DependentUpon>FacturarView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="views\ReciboCuadre.resx">
+      <DependentUpon>ReciboCuadre.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="views\ReciboFacturas.resx">
       <DependentUpon>ReciboFacturas.cs</DependentUpon>
     </EmbeddedResource>
@@ -266,6 +286,7 @@
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\CajaHospital.views.ReporteFacturas.datasource" />
+    <None Include="Properties\DataSources\CuadreDto.datasource" />
     <None Include="Properties\DataSources\FacturaDto.datasource" />
     <None Include="Properties\DataSources\FacturaProductoDto.datasource" />
     <None Include="Properties\DataSources\FacturaServicioDto.datasource" />

@@ -43,8 +43,6 @@ namespace CajaHospital.views
             {
                 case 'E':
                     lblTitulo.Text = "Generar factura para paciente";
-                    chkRecarga.Checked = false;
-                    chkRecarga_CheckedChanged(sender, e);
 
                     try
                     {
@@ -99,11 +97,6 @@ namespace CajaHospital.views
                         log.Error("Algo salió mal", ex);
                     };
 
-                    break;
-                case 'C':
-                    lblTitulo.Text = "Cargar o recargar la caja";
-                    chkRecarga.Checked = true;
-                    chkRecarga_CheckedChanged(sender, e);
                     break;
                 default:
                     break;
@@ -171,45 +164,6 @@ namespace CajaHospital.views
                 return -1;
                 throw;
             }
-        }
-
-        private void chkRecarga_CheckedChanged(object sender, EventArgs e)
-        {
-            if ( chkRecarga.Checked)
-            {
-                rbnDescarga.Enabled = true;
-                rbnRecarga.Enabled = true;
-                txtDoc.Enabled = false;
-                cboTipoDoc.Enabled = false;
-                lsbDisponibles.Enabled = false;
-                lsbSeleccionados.Enabled = false;
-                txtPrecio.Enabled = false;
-                cboAseguradora.Enabled = false;
-                btnAgregar.Enabled = false;
-                btnRemover.Enabled = false;
-                txtSubtotal.Enabled = true;
-                txtSubtotal.ReadOnly = false;
-                btnCrearFactura.Text = rbnRecarga.Checked ? "Recargar caja" : "Descargar caja";
-            } else
-            {
-                rbnDescarga.Enabled = false;
-                rbnRecarga.Enabled = false;
-                txtDoc.Enabled = true;
-                cboTipoDoc.Enabled = true;
-                lsbDisponibles.Enabled = true;
-                lsbSeleccionados.Enabled = true;
-                txtPrecio.Enabled = true;
-                txtPrecio.ReadOnly = true;
-                txtSubtotal.Enabled = true;
-                txtSubtotal.ReadOnly = true;
-                cboAseguradora.Enabled = true;
-                btnCrearFactura.Text = "Crear factura";
-            }
-        }
-
-        private void rbnRecarga_CheckedChanged(object sender, EventArgs e)
-        {
-            btnCrearFactura.Text = rbnRecarga.Checked ? "Recargar caja" : "Descargar caja";
         }
 
         private void lsbDisponibles_SelectedIndexChanged(object sender, EventArgs e)

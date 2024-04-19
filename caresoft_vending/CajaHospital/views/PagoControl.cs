@@ -336,6 +336,7 @@ namespace CajaHospital.views
                 cmd.Parameters.AddWithValue("p_10", (int)n10.Value);
                 cmd.Parameters.AddWithValue("p_5", (int)n5.Value);
                 cmd.Parameters.AddWithValue("p_1", (int)n1.Value);
+                cmd.Parameters.AddWithValue("p_idSucursal", Convert.ToUInt32(ConfigurationManager.AppSettings["noCaja"]));
 
                 log.Info("Ingresando denominaciones...");
                 cmd.ExecuteNonQuery();

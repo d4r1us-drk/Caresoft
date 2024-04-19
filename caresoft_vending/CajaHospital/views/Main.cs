@@ -21,11 +21,13 @@ namespace CajaHospital
         public FacturarView _facturarPaciente;
         readonly FacturarView _facturarCargaDescarga;
         readonly RegistrarPaciente _registrarPaciente;
+        private readonly string _documentoCajero;
 
         public Main(string nombre, string documento)
         {
             InitializeComponent();
 
+            _documentoCajero = documento;
             _principalView = new PrincipalView(nombre, documento) { Dock = DockStyle.Fill };
 
             _pagos = new ReporteFacturas() { Dock = DockStyle.Fill };
@@ -106,6 +108,19 @@ namespace CajaHospital
         private void cargaODescargaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SwapView(_facturarCargaDescarga);
+        }
+
+        private void cuadresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CuadreCaja cuadreCajaView = new CuadreCaja(Convert.ToDecimal(_principalView.Controls["txtTotalCaja"].Text), _documentoCajero);
+            cuadreCajaView.ShowDialog();
+            if (cuadreCajaView.DialogResult == DialogResult.OK)
+            {
+                MessageBox.Show("Cuadre realizado con exito!", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            } else if (cuadreCajaView.DialogResult == DialogResult.Abort)
+            {
+                MessageBox.Show("Algo salio mal al realizar el cuadre, contacte al administrador", "Mensaje del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } 
         }
     }
 }

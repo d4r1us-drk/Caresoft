@@ -39,6 +39,7 @@
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pagosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cuadresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -113,10 +114,11 @@
             // reportesToolStripMenuItem
             // 
             this.reportesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pagosToolStripMenuItem});
+            this.pagosToolStripMenuItem,
+            this.cuadresToolStripMenuItem});
             this.reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
-            this.reportesToolStripMenuItem.Size = new System.Drawing.Size(98, 29);
-            this.reportesToolStripMenuItem.Text = "Reportes";
+            this.reportesToolStripMenuItem.Size = new System.Drawing.Size(184, 29);
+            this.reportesToolStripMenuItem.Text = "Procesos y reportes";
             // 
             // pagosToolStripMenuItem
             // 
@@ -124,6 +126,13 @@
             this.pagosToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.pagosToolStripMenuItem.Text = "Facturas";
             this.pagosToolStripMenuItem.Click += new System.EventHandler(this.pagosToolStripMenuItem_Click);
+            // 
+            // cuadresToolStripMenuItem
+            // 
+            this.cuadresToolStripMenuItem.Name = "cuadresToolStripMenuItem";
+            this.cuadresToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.cuadresToolStripMenuItem.Text = "Cuadres";
+            this.cuadresToolStripMenuItem.Click += new System.EventHandler(this.cuadresToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -155,5 +164,6 @@
         private System.Windows.Forms.ToolStripMenuItem cerrarSesionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nuevoClienteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clienteExistenteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cuadresToolStripMenuItem;
     }
 }
